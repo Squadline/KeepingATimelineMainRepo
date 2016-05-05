@@ -23,7 +23,7 @@ public class AccountSettings extends AppCompatActivity {
         setContentView(R.layout.activity_account_settings);
 
         //initializes the list of settings to go into the ListView class.
-        String[] settings = {"Setting1", "Setting2", "Setting3"};
+        String[] settings = {"Change Username", "Change Password"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,settings);
         ListView myList = (ListView) findViewById(R.id.listview);
 
@@ -37,6 +37,10 @@ public class AccountSettings extends AppCompatActivity {
                     case 0:
                         Intent newActivity = new Intent("com.koreaaaa2gmail.actualproject.Setting1");
                         startActivity(newActivity);
+                        break;
+                    case 1:
+                        Intent newActivity1 = new Intent("com.koreaaaa2gmail.actualproject.ChangePassword");
+                        startActivity(newActivity1);
                         break;
                 }
             }
