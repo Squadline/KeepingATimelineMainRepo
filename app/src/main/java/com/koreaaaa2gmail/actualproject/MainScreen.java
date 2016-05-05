@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
 public class MainScreen extends AppCompatActivity {
 
@@ -14,6 +17,22 @@ public class MainScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
+
+        String[] settings = {"Settings", "Log Out"};
+        ListView myList = (ListView) findViewById(R.id.left_drawer);
+        myList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,settings));
+        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch( position ) {
+                    case 0:
+                        Intent newActivity = new Intent("com.koreaaaa2gmail.actualproject.AccountSettings");
+                        startActivity(newActivity);
+                        break;
+                }
+            }
+        });
+
         //call the method here.
         OnClickButtonListener();
     }
