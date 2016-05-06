@@ -8,15 +8,28 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainScreen"
-            android:label="K.A.T">
+        /* main screen needs android.intent.action.MAIN and the LAUNCHER
+        * how does android know to use Login Activity? is it from "name"*/
+        <activity
+            android:name=".LoginActivity"
+            android:label="Welcome to SquadLine!">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AccountSettings"
+        <activity
+            android:name=".MainScreen"
+            android:label="K.A.T">
+            <intent-filter>
+                <action android:name="com.koreaaaa2gmail.actualproject.MainScreen" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".AccountSettings"
             android:label="Account Settings">
             <intent-filter>
                 <action android:name="com.koreaaaa2gmail.actualproject.AccountSettings" />
@@ -24,7 +37,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".Setting1"
+        <activity
+            android:name=".Setting1"
             android:label="Change Username">
             <intent-filter>
                 <action android:name="com.koreaaaa2gmail.actualproject.Setting1" />
@@ -32,7 +46,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ChangePassword"
+        <activity
+            android:name=".ChangePassword"
             android:label="Change Password">
             <intent-filter>
                 <action android:name="com.koreaaaa2gmail.actualproject.ChangePassword" />
@@ -40,6 +55,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
