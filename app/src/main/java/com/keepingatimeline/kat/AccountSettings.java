@@ -1,4 +1,4 @@
-package com.koreaaaa2gmail.actualproject;
+package com.keepingatimeline.kat;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import java.util.List;
 
 /**
  * By:
@@ -35,11 +33,11 @@ public class AccountSettings extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch( position ) {
                     case 0:
-                        Intent newActivity = new Intent("com.koreaaaa2gmail.actualproject.Setting1");
+                        Intent newActivity = new Intent("com.keepingatimeline.kat.Setting1");
                         startActivity(newActivity);
                         break;
                     case 1:
-                        Intent newActivity1 = new Intent("com.koreaaaa2gmail.actualproject.ChangePassword");
+                        Intent newActivity1 = new Intent("com.keepingatimeline.kat.ChangePassword");
                         startActivity(newActivity1);
                         break;
                 }

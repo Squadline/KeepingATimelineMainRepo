@@ -4,4 +4,5 @@
     <string name="create_an_account">Create An Account</string>
     <string name="i_e_ggillespie_ucsd_edu">i.e. ggillespie@ucsd.edu</string>
     <string name="login">Login</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>

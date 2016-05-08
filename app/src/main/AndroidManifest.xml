@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.koreaaaa2gmail.actualproject" >
+    package="com.keepingatimeline.kat">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -9,77 +9,75 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-<<<<<<< HEAD
-        android:theme="@style/AppTheme" >
-        <activity android:name=".MainScreen" >
-=======
         android:theme="@style/AppTheme">
+
         /* main screen needs android.intent.action.MAIN and the LAUNCHER
         * how does android know to use Login Activity? is it from "name"*/
         <activity
-            android:name=".LoginActivity"
+            android:name="com.keepingatimeline.kat.LoginActivity"
             android:label="Welcome to SquadLine!">
->>>>>>> ff1b5502c5ec938546e5f0c637e25389114281d5
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-        <activity android:name=".AccountSettings" >
-=======
+
         <activity
-            android:name=".MainScreen"
+            android:name="com.keepingatimeline.kat.MainScreen"
             android:label="K.A.T">
+
             <intent-filter>
-                <action android:name="com.koreaaaa2gmail.actualproject.MainScreen" />
+                <action android:name="com.keepingatimeline.kat.MainScreen" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name=".AccountSettings"
+            android:name="com.keepingatimeline.kat.AccountSettings"
             android:label="Account Settings">
->>>>>>> ff1b5502c5ec938546e5f0c637e25389114281d5
+
             <intent-filter>
-                <action android:name="com.koreaaaa2gmail.actualproject.AccountSettings" />
+                <action android:name="com.keepingatimeline.kat.AccountSettings" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-        <activity android:name=".Setting1" >
-=======
+
         <activity
-            android:name=".Setting1"
+            android:name="com.keepingatimeline.kat.Setting1"
             android:label="Change Username">
->>>>>>> ff1b5502c5ec938546e5f0c637e25389114281d5
+
             <intent-filter>
-                <action android:name="com.koreaaaa2gmail.actualproject.Setting1" />
+                <action android:name="com.keepingatimeline.kat.Setting1" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-        <activity android:name=".Timelineshower" >
-            <intent-filter>
-                <action android:name="com.koreaaaa2gmail.actualproject.Timelineshower" />
-=======
+
         <activity
-            android:name=".ChangePassword"
+            android:name="com.keepingatimeline.kat.Timelineshower"
+            android:lavel="Timeline Shower" >
+            <intent-filter>
+                <action android:name="com.keepingatimeline.kat.Timelineshower" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.keepingatimeline.kat.ChangePassword"
             android:label="Change Password">
             <intent-filter>
-                <action android:name="com.koreaaaa2gmail.actualproject.ChangePassword" />
->>>>>>> ff1b5502c5ec938546e5f0c637e25389114281d5
+                <action android:name="com.keepingatimeline.kat.ChangePassword" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-=======
-
->>>>>>> ff1b5502c5ec938546e5f0c637e25389114281d5
     </application>
 
 </manifest>
+

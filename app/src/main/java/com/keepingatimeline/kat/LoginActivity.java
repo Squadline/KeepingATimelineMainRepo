@@ -1,4 +1,4 @@
-package com.koreaaaa2gmail.actualproject;
+package com.keepingatimeline.kat;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,10 +9,6 @@ import android.widget.TextView;
    Main login screen, this is what launches on start
  */
 public class LoginActivity extends AppCompatActivity {
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +23,14 @@ public class LoginActivity extends AppCompatActivity {
         assert forgotPass != null;
         forgotPass.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                Intent newActivity = new Intent("com.koreaaaa2gmail.actualproject.ChangePassword");
+                Intent newActivity = new Intent("com.keepingatimeline.kat.ChangePassword");
                 startActivity(newActivity);
             }
         });
     }
     /* on clicking log in button, direct to Main screen activity */
     public void LoginSuccess(View view) {
-        Intent newActivity = new Intent("com.koreaaaa2gmail.actualproject.MainScreen");
+        Intent newActivity = new Intent("com.keepingatimeline.kat.MainScreen");
         startActivity(newActivity);
     }
 

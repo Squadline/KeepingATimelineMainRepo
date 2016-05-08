@@ -1,4 +1,4 @@
-package com.koreaaaa2gmail.actualproject;
+package com.keepingatimeline.kat;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

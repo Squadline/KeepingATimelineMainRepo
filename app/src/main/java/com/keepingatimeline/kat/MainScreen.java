@@ -1,4 +1,4 @@
-package com.koreaaaa2gmail.actualproject;
+package com.keepingatimeline.kat;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -50,7 +50,7 @@ public class MainScreen extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch( position ) {
                     case 0:
-                        Intent newActivity = new Intent("com.koreaaaa2gmail.actualproject.AccountSettings");
+                        Intent newActivity = new Intent("com.keepingatimeline.kat.AccountSettings");
                         startActivity(newActivity);
                         break;
                 }
@@ -58,8 +58,6 @@ public class MainScreen extends AppCompatActivity {
         });
 
         //call the method here.
-<<<<<<< HEAD
-        OnClickButtonListener();
         t = (TextView)findViewById(R.id.textUser);
         b = (Button)findViewById(R.id.button2);
         inp = (EditText)findViewById(R.id.editText);
@@ -89,7 +87,7 @@ public class MainScreen extends AppCompatActivity {
         tl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newActivity = new Intent("com.koreaaaa2gmail.actualproject.Timelineshower");
+                Intent newActivity = new Intent("com.keepingatimeline.kat.Timelineshower");
                 startActivity(newActivity);
             }
         });
@@ -105,37 +103,5 @@ public class MainScreen extends AppCompatActivity {
                 r.child("FirstName").setValue(inp.getText().toString());
             }
         });
-
-
-
-
-
-
-=======
-        //OnClickButtonListener();
->>>>>>> ff1b5502c5ec938546e5f0c637e25389114281d5
     }
-
-
-    /**
-     * By: Byung
-     * Description:
-     *      The code that responds to clicking a button. When button is clicked, it goes to the new
-     *      activity (or screen) and the code below does that.
-    public void OnClickButtonListener() {
-        //fetches the object that you want it to respond on a click
-        accSettings = (Button)findViewById(R.id.button);
-        accSettings.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //Inside the new intent, there is the address. The address is where the new activity lies on.
-                        //Fetch it from the corresponding xml file
-                        Intent intent = new Intent("com.koreaaaa2gmail.actualproject.AccountSettings");
-                        startActivity(intent);
-                    }
-                }
-        );
-    }
-    */
 }

@@ -1,6 +1,5 @@
-package com.koreaaaa2gmail.actualproject;
+package com.keepingatimeline.kat;
 
-import android.app.ListActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
@@ -11,7 +10,6 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
