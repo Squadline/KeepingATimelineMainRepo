@@ -29,6 +29,11 @@ public class MainScreen extends AppCompatActivity {
     private Button adText;
     private Button tl;
 
+    /**
+     * By: Dana
+     * Description:
+     *      The code to bring up the sidebar thing.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +58,7 @@ public class MainScreen extends AppCompatActivity {
         });
 
         //call the method here.
+<<<<<<< HEAD
         OnClickButtonListener();
         t = (TextView)findViewById(R.id.textUser);
         b = (Button)findViewById(R.id.button2);
@@ -105,15 +111,17 @@ public class MainScreen extends AppCompatActivity {
 
 
 
+=======
+        //OnClickButtonListener();
+>>>>>>> ff1b5502c5ec938546e5f0c637e25389114281d5
     }
 
+
     /**
-     * By:
-     *      Byung
+     * By: Byung
      * Description:
      *      The code that responds to clicking a button. When button is clicked, it goes to the new
      *      activity (or screen) and the code below does that.
-     **/
     public void OnClickButtonListener() {
         //fetches the object that you want it to respond on a click
         accSettings = (Button)findViewById(R.id.button);
@@ -129,4 +137,5 @@ public class MainScreen extends AppCompatActivity {
                 }
         );
     }
+    */
 }

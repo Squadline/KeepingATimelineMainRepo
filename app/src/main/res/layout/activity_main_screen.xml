@@ -14,6 +14,7 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context="com.koreaaaa2gmail.actualproject.MainScreen">
 
+<<<<<<< HEAD
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,6 +64,8 @@
             android:layout_below="@+id/button3"
             android:layout_toEndOf="@+id/editText" />
 
+=======
+>>>>>>> ff1b5502c5ec938546e5f0c637e25389114281d5
     </RelativeLayout>
     <ListView android:id="@+id/left_drawer"
         android:layout_width="240dp"
