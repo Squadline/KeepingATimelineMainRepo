@@ -10,66 +10,55 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         /* main screen needs android.intent.action.MAIN and the LAUNCHER
         * how does android know to use Login Activity? is it from "name"*/
         <activity
-            android:name="com.keepingatimeline.kat.LoginActivity"
+            android:name=".LoginActivity"
             android:label="Welcome to SquadLine!">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.keepingatimeline.kat.MainScreen"
+            android:name=".MainScreen"
             android:label="K.A.T">
-
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.MainScreen" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.keepingatimeline.kat.AccountSettings"
+            android:name=".AccountSettings"
             android:label="Account Settings">
-
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.AccountSettings" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.keepingatimeline.kat.Setting1"
+            android:name=".Setting1"
             android:label="Change Username">
-
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.Setting1" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.keepingatimeline.kat.Timelineshower"
-            android:label="Timeline Shower" >
+            android:name=".Timelineshower"
+            android:label="Timeline Shower">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.Timelineshower" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.keepingatimeline.kat.ChangePassword"
+            android:name=".ChangePassword"
             android:label="Change Password">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.ChangePassword" />
@@ -77,7 +66,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".TimelineSettings"
+            android:label="Timeline Settings">
+            <intent-filter>
+                <action android:name="com.keepingatimeline.kat.TimelineSettings" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
-

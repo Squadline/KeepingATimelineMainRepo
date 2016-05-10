@@ -28,6 +28,8 @@ public class MainScreen extends AppCompatActivity {
     private EditText inp;
     private Button adText;
     private Button tl;
+    // timeline settings tester button - Darren
+    private Button tSettings;
 
     /**
      * By: Dana
@@ -63,6 +65,8 @@ public class MainScreen extends AppCompatActivity {
         inp = (EditText)findViewById(R.id.editText);
         adText = (Button)findViewById(R.id.button3);
         tl = (Button)findViewById(R.id.button5);
+        // timeline settings tester button - Darren
+        tSettings = (Button) findViewById(R.id.t_settings);
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +92,15 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent newActivity = new Intent("com.keepingatimeline.kat.Timelineshower");
+                startActivity(newActivity);
+            }
+        });
+
+        // testing button to view Timeline Settings - Darren
+        tSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newActivity = new Intent("com.keepingatimeline.kat.TimelineSettings");
                 startActivity(newActivity);
             }
         });

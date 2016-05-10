@@ -62,6 +62,14 @@
             android:layout_below="@+id/button2"
             android:layout_toEndOf="@+id/button3" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Eunji"
+            android:id="@+id/t_settings"
+            android:layout_below="@+id/button5"
+            android:layout_alignParentStart="true" />
+
     </RelativeLayout>
     <ListView android:id="@+id/left_drawer"
         android:layout_width="240dp"
