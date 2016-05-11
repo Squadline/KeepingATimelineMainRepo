@@ -3,6 +3,8 @@ package com.keepingatimeline.kat;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -43,6 +45,10 @@ public class MainScreen extends AppCompatActivity {
         setContentView(R.layout.activity_main_screen);
         Firebase.setAndroidContext(this);
         db = new Firebase("https://fiery-fire-8218.firebaseio.com/");
+
+        // Uses a Toolbar as an ActionBar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
 
         String[] settings = {"Settings", "Log Out"};
@@ -126,5 +132,14 @@ public class MainScreen extends AppCompatActivity {
                 r.child("FirstName").setValue(inp.getText().toString());
             }
         });
+    }
+
+    /**
+     * Trevor's shit: Creates Buttons on Toolbar
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
     }
 }
