@@ -3,6 +3,8 @@ package com.keepingatimeline.kat;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,6 +30,7 @@ public class MainScreen extends AppCompatActivity {
     private EditText inp;
     private Button adText;
     private Button tl;
+    private Button sign_up;
     // timeline settings tester button - Darren
     private Button tSettings;
 
@@ -42,6 +45,10 @@ public class MainScreen extends AppCompatActivity {
         setContentView(R.layout.activity_main_screen);
         Firebase.setAndroidContext(this);
         db = new Firebase("https://fiery-fire-8218.firebaseio.com/");
+
+        // Uses a Toolbar as an ActionBar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
 
         String[] settings = {"Settings", "Log Out"};
@@ -67,6 +74,7 @@ public class MainScreen extends AppCompatActivity {
         tl = (Button)findViewById(R.id.button5);
         // timeline settings tester button - Darren
         tSettings = (Button) findViewById(R.id.t_settings);
+        sign_up = (Button) findViewById(R.id.sign_up);
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +104,14 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
+        sign_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newActivity = new Intent("com.keepingatimeline.kat.RegistrationScreen");
+                startActivity(newActivity);
+            }
+        });
+
         // testing button to view Timeline Settings - Darren
         tSettings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,5 +132,14 @@ public class MainScreen extends AppCompatActivity {
                 r.child("FirstName").setValue(inp.getText().toString());
             }
         });
+    }
+
+    /**
+     * Trevor's shit: Creates Buttons on Toolbar
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
     }
 }

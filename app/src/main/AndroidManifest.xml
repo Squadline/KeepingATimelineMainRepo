@@ -23,7 +23,8 @@
         </activity>
         <activity
             android:name=".MainScreen"
-            android:label="K.A.T">
+            android:label=""
+            android:theme="@style/AppTheme.Toolbar">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.MainScreen" />
 
@@ -70,6 +71,15 @@
             android:label="Timeline Settings">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.TimelineSettings" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".RegistrationScreen"
+            android:label="Sign_up">
+            <intent-filter>
+                <action android:name="com.keepingatimeline.kat.RegistrationScreen" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

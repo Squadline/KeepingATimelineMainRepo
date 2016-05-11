@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#005dd2cb"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="148dp"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="Username: "
+            android:id="@+id/textView2"
+            android:textSize="15dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="75dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="Password: "
+            android:id="@+id/password_text"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="25dp"
+            android:textSize="15dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="Password again:"
+            android:id="@+id/comfirm_password_text"
+            android:textSize="15dp"
+            android:layout_weight="0.13"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="Email: "
+            android:id="@+id/email_text"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="25dp"
+            android:textSize="15dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="First name: "
+            android:id="@+id/first_name_text"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="25dp"
+            android:textSize="15dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="Last name: "
+            android:id="@+id/last_name_text"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="25dp"
+            android:textSize="15dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="190dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginLeft="-150dp"
+        android:gravity="right">
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="Reset"
+            android:id="@+id/reset_button"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="-15dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/username_input"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="65dp"
+            android:inputType="text" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/password_input"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:password="true" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/password2_input"
+            android:layout_marginTop="10dp"
+            android:password="true" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/email_input"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/firstname_input"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/lastname_input"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="190dp"
+        android:layout_height="150dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginLeft="-190dp"
+        android:gravity="left">
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:id="@+id/submit_button"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
+
+</LinearLayout>
