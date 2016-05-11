@@ -28,6 +28,7 @@ public class MainScreen extends AppCompatActivity {
     private EditText inp;
     private Button adText;
     private Button tl;
+    private Button sign_up;
     // timeline settings tester button - Darren
     private Button tSettings;
 
@@ -92,6 +93,14 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent newActivity = new Intent("com.keepingatimeline.kat.Timelineshower");
+                startActivity(newActivity);
+            }
+        });
+
+        sign_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newActivity = new Intent("com.keepingatimeline.kat.RegistrationScreen");
                 startActivity(newActivity);
             }
         });

@@ -19,11 +19,20 @@ public class LoginActivity extends AppCompatActivity {
         Activity
          */
         TextView forgotPass = (TextView) findViewById(R.id.forgotPassword);
+        TextView registration = (TextView) findViewById(R.id.createAccount);
         /* assert not null just a formality */
         assert forgotPass != null;
         forgotPass.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 Intent newActivity = new Intent("com.keepingatimeline.kat.ChangePassword");
+                startActivity(newActivity);
+            }
+        });
+
+        assert registration != null;
+        registration.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent newActivity = new Intent("com.keepingatimeline.kat.RegistrationScreen");
                 startActivity(newActivity);
             }
         });
