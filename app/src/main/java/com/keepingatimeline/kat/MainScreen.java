@@ -68,6 +68,7 @@ public class MainScreen extends AppCompatActivity {
         tl = (Button)findViewById(R.id.button5);
         // timeline settings tester button - Darren
         tSettings = (Button) findViewById(R.id.t_settings);
+        sign_up = (Button) findViewById(R.id.sign_up);
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
