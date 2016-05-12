@@ -10,20 +10,21 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        /* main screen needs android.intent.action.MAIN and the LAUNCHER
-        * how does android know to use Login Activity? is it from "name"*/
+
         <activity
             android:name=".LoginActivity"
-            android:label="Welcome to SquadLine!">
+            android:label="KAT"
+            android:theme="@style/AppTheme.Toolbar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".MainScreen"
-            android:label=""
+            android:label="Kat Box"
             android:theme="@style/AppTheme.Toolbar">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.MainScreen" />
@@ -31,6 +32,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".AccountSettings"
             android:label="Account Settings">
@@ -40,15 +42,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Setting1"
-            android:label="Change Username">
-            <intent-filter>
-                <action android:name="com.keepingatimeline.kat.Setting1" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".Timelineshower"
             android:label="Timeline Shower">
@@ -58,6 +52,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ChangePassword"
             android:label="Change Password">
@@ -67,6 +62,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity android:name=".TimelineSettings"
             android:label="Timeline Settings">
             <intent-filter>
@@ -75,6 +71,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".RegistrationScreen"
             android:label="Sign_up">

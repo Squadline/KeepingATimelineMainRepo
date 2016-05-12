@@ -16,7 +16,7 @@
             android:minHeight="?attr/actionBarSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary" >
+            android:background="?attr/colorPrimary"/>
 
             <!-- Toolbar Settings -->
             <TextView
@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Squadline"
+                android:text="KAT"
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
                 <!--
                 android:text="HOME"
@@ -34,16 +34,12 @@
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
                 -->
 
-<<<<<<< HEAD
         <EditText
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:id="@+id/editText"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true" />
-=======
-        </android.support.v7.widget.Toolbar>
->>>>>>> 5655c3f0438c67ead1339eb9cae1f2dea2e634c6
 
         <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -129,6 +125,16 @@
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="left"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:background="#FFFFFF"/>
+
+    <ExpandableListView
+        android:id="@+id/right_drawer"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"

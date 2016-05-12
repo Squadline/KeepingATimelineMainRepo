@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -35,14 +36,21 @@ public class MainScreen extends AppCompatActivity {
     private Button tSettings;
 
     /**
-     * By: Dana
+     * By: Dana, Byung, Jimmy, Trevor
      * Description:
-     *      The code to bring up the sidebar thing.
+     *      Contains various snippets of code that implement the following functionality:
+     *          Left Scrollbar (account settings and such)
+     *          Right Scrollbar (to be moved when timeline function becomes fully functional)
+     *
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //standard shit. Its there in the beginning
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
+
+        //firebase initialization!!
         Firebase.setAndroidContext(this);
         db = new Firebase("https://fiery-fire-8218.firebaseio.com/");
 
@@ -50,7 +58,7 @@ public class MainScreen extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        //The left scroll bar containing account settings, log out and such
         String[] settings = {"Settings", "Log Out"};
         ListView myList = (ListView) findViewById(R.id.left_drawer);
         myList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,settings));
@@ -72,10 +80,12 @@ public class MainScreen extends AppCompatActivity {
         inp = (EditText)findViewById(R.id.editText);
         adText = (Button)findViewById(R.id.button3);
         tl = (Button)findViewById(R.id.button5);
+
         // timeline settings tester button - Darren
         tSettings = (Button) findViewById(R.id.t_settings);
         sign_up = (Button) findViewById(R.id.sign_up);
 
+        //Sets the first name? by
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,6 +106,7 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
+        // takes us to timelineshower (lol. shower.)
         tl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,6 +115,7 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
+        // takes us to registration screen
         sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,6 +133,7 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
+        // test push by Jimmy for the user swag
         adText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
