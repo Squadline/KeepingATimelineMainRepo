@@ -35,13 +35,6 @@
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
                 -->
 
-        <EditText
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true" />
-
         </android.support.v7.widget.Toolbar>
 
         <RelativeLayout
@@ -86,6 +79,13 @@
                 android:text="Change first name"
                 android:id="@+id/button3"
                 android:layout_below="@+id/button" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" />
 
             <Button
                 android:layout_width="wrap_content"
