@@ -3,39 +3,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:weightSum="1"
     android:background="@color/colorPrimary"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="10dp"
-    tools:context="com.keepingatimeline.kat.LoginActivity"
-    android:weightSum="1">
+    tools:context="com.keepingatimeline.kat.LoginActivity" >
 
     <ImageView
-        android:layout_width="191dp"
-        android:layout_height="wrap_content"
         android:id="@+id/imageView"
-        android:src="@mipmap/ic_launcher"
-        android:layout_weight="0.35" />
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.35"
+        android:src="@mipmap/ic_launcher" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="20dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp" >
+        android:paddingTop="50dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp" >
 
         <EditText
             android:id="@+id/loginEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="2.5dp"
             android:padding="10dp"
             android:background="@color/white"
             android:inputType="textEmailAddress"
             android:ems="10"
             android:clickable="true"
-            android:hint="@string/i_e_ggillespie_ucsd_edu" />
+            android:hint="@string/emailHint" />
 
         <EditText
             android:id="@+id/loginPassword"
@@ -46,30 +45,36 @@
             android:background="@color/white"
             android:inputType="textPassword"
             android:ems="10"
-            android:hint="Password" />
+            android:hint="@string/passwordHint" />
 
         <Button
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@string/login"
+            android:text="@string/loginBtn"
             android:textAllCaps="false" />
 
         <TextView
             android:id="@+id/forgotPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:gravity="center_horizontal"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/forgot_password"
+            android:text="@string/forgotPassword"
+            android:textColor="@color/white"
             android:linksClickable="true" />
 
         <TextView
             android:id="@+id/createAccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/create_an_account"
+            android:text="@string/signUp"
+            android:textColor="@color/white"
             android:linksClickable="false" />
 
     </LinearLayout>
