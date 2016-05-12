@@ -33,17 +33,14 @@
                 android:textColor="@android:color/black"
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
                 -->
-
-<<<<<<< HEAD
         <EditText
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:id="@+id/editText"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true" />
-=======
+
         </android.support.v7.widget.Toolbar>
->>>>>>> 5655c3f0438c67ead1339eb9cae1f2dea2e634c6
 
         <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
