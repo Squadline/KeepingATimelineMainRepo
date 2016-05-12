@@ -33,15 +33,13 @@
                 android:textColor="@android:color/black"
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
                 -->
-<<<<<<< HEAD
+
         <EditText
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:id="@+id/editText"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true" />
-=======
->>>>>>> 369e25c9a8ce60ea8c5f08815483c2db25cb5e64
 
         </android.support.v7.widget.Toolbar>
 
@@ -86,15 +84,7 @@
                 android:layout_height="wrap_content"
                 android:text="Change first name"
                 android:id="@+id/button3"
-                android:layout_below="@+id/button"
-                android:layout_toStartOf="@+id/editText" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/editText"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true" />
+                android:layout_below="@+id/button" />
 
             <Button
                 android:layout_width="wrap_content"
