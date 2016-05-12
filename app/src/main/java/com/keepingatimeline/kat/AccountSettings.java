@@ -11,6 +11,7 @@ import android.widget.ListView;
 /**
  * By:
  *      Byung
+ *
  * Description:
  *      This code creates a list of settings using the ListView class.
  **/
@@ -33,12 +34,8 @@ public class AccountSettings extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch( position ) {
                     case 0:
-                        Intent newActivity = new Intent("com.keepingatimeline.kat.Setting1");
+                        Intent newActivity = new Intent("com.keepingatimeline.kat.ChangePassword");
                         startActivity(newActivity);
-                        break;
-                    case 1:
-                        Intent newActivity1 = new Intent("com.keepingatimeline.kat.ChangePassword");
-                        startActivity(newActivity1);
                         break;
                 }
             }
