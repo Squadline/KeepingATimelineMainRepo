@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Actual Project</string>
     <string name="forgotPassword">Forgot Password?</string>
-    <string name="signUp">Sign Up</string>
+    <string name="signUp">Don\'t have an account? Sign Up.</string>
     <string name="emailHint">i.e. ggillespie@ucsd.edu</string>
     <string name="passwordHint">Password</string>
     <string name="loginBtn">Log In</string>

@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1"
     android:background="@color/colorPrimary"
-    android:gravity="center"
-    android:orientation="vertical"
-    tools:context="com.keepingatimeline.kat.LoginActivity" >
+    tools:context="com.keepingatimeline.kat.LoginActivity">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="190dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.35"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/loginLayout"
+        android:layout_marginBottom="60dp"
         android:src="@mipmap/ic_launcher" />
 
     <LinearLayout
+        android:id="@+id/loginLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/signUpLayout"
         android:orientation="vertical"
-        android:paddingTop="50dp"
         android:paddingLeft="30dp"
-        android:paddingRight="30dp" >
+        android:paddingRight="30dp"
+        android:paddingBottom="50dp">
 
         <EditText
             android:id="@+id/loginEmail"
@@ -66,17 +68,29 @@
             android:textColor="@color/white"
             android:linksClickable="true" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/signUpLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:background="@color/colorPrimaryDark">
+        
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.2dp"
+            android:background="@color/white" />
+
         <TextView
-            android:id="@+id/createAccount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:padding="10dp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/signUp"
-            android:textColor="@color/white"
-            android:linksClickable="false" />
+            android:id="@+id/signUpText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:padding="20dp"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>
