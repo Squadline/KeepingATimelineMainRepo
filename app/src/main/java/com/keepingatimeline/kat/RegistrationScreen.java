@@ -2,6 +2,8 @@ package com.keepingatimeline.kat;
 
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Credentials;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -9,11 +11,20 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
@@ -21,14 +32,10 @@ import com.firebase.client.FirebaseError;
 import java.util.Map;
 
 public class RegistrationScreen extends AppCompatActivity {
-    private EditText name;
     private EditText password1;
-    private EditText password2;
     private EditText emailAdd;
     private EditText name1st;
     private EditText name2nd;
-
-    private Button CLR;
     private Button submitUp;
 
     @Override
@@ -37,28 +44,11 @@ public class RegistrationScreen extends AppCompatActivity {
         setContentView(R.layout.activity_registration_screen);
         Firebase.setAndroidContext(this);
 
-        name = (EditText) findViewById(R.id.username_input);
         password1 = (EditText) findViewById(R.id.password_input);
-        password2 = (EditText) findViewById(R.id.password2_input);
         emailAdd = (EditText) findViewById(R.id.email_input);
         name1st = (EditText) findViewById(R.id.firstname_input);
         name2nd = (EditText) findViewById(R.id.lastname_input);
-
-        CLR = (Button) findViewById(R.id.reset_button);
         submitUp = (Button) findViewById(R.id.submit_button);
-
-        CLR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                name.setText("");
-                password1.setText("");
-                password2.setText("");
-                emailAdd.setText("");
-                name1st.setText("");
-                name2nd.setText("");
-                name.requestFocus();
-            }
-        });
 
         submitUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +71,27 @@ public class RegistrationScreen extends AppCompatActivity {
             }
         });
 
-    }
+        TextView signInText = (TextView)findViewById(R.id.signInText);
 
+        SpannableString signInString = new SpannableString("Already have an account? Sign In.");
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View signInText) {
+                finish();
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                ds.setUnderlineText(false);
+            }
+        };
+
+        signInString.setSpan(clickableSpan, 25, 33, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        signInString.setSpan(new StyleSpan(Typeface.BOLD), 25, 33, 0);
+        signInString.setSpan(new ForegroundColorSpan(Color.WHITE), 25, 33, 0);
+        signInText.setMovementMethod(LinkMovementMethod.getInstance());
+        signInText.setHighlightColor(Color.TRANSPARENT);
+        signInText.setText(signInString, TextView.BufferType.SPANNABLE);
+
+    }
 }

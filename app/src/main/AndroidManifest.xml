@@ -13,7 +13,7 @@
 
         <activity
             android:name=".LoginActivity"
-            android:label="KAT"
+            android:label=""
             android:theme="@style/AppTheme.Toolbar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -74,7 +74,8 @@
 
         <activity
             android:name=".RegistrationScreen"
-            android:label="Sign_up">
+            android:label=""
+            android:theme="@style/AppTheme.Toolbar">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.RegistrationScreen" />
 
