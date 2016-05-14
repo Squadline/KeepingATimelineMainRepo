@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4B0082"
+    android:background="@color/registrationPrimary"
     tools:context="com.keepingatimeline.kat.RegistrationScreen">
 
     <ImageView
@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:layout_marginRight="2.5dp"
+                android:layout_marginEnd="2.5dp"
                 android:layout_marginBottom="2.5dp"
                 android:padding="10dp"
                 android:background="@color/white"
@@ -98,7 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
-        android:background="#2E0854">
+        android:background="@color/registrationSecondary">
 
         <View
             android:layout_width="wrap_content"

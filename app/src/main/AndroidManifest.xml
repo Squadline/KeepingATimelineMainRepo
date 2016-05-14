@@ -14,7 +14,7 @@
         <activity
             android:name=".LoginActivity"
             android:label=""
-            android:theme="@style/AppTheme.Toolbar">
+            android:theme="@style/AppTheme.LoginPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,7 +25,7 @@
         <activity
             android:name=".MainScreen"
             android:label="Kat Box"
-            android:theme="@style/AppTheme.Toolbar">
+            android:theme="@style/AppTheme.MainScreen">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.MainScreen" />
 
@@ -75,7 +75,7 @@
         <activity
             android:name=".RegistrationScreen"
             android:label=""
-            android:theme="@style/AppTheme.Toolbar">
+            android:theme="@style/AppTheme.RegistrationPage">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.RegistrationScreen" />
 
