@@ -24,15 +24,15 @@
         android:orientation="vertical"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
-        android:paddingBottom="90dp">
+        android:paddingBottom="100dp">
 
         <EditText
             android:id="@+id/loginEmail"
             android:inputType="textEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="2.5dp"
-            android:padding="10dp"
+            android:layout_marginBottom="3dp"
+            android:padding="6dp"
             android:background="@color/white"
             android:ems="10"
             android:clickable="true"
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:padding="10dp"
+            android:padding="6dp"
             android:background="@color/white"
             android:ems="10"
             android:hint="@string/password" />
@@ -54,6 +54,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginLeft="-4.5dp"
+            android:layout_marginRight="-4.5dp"
             android:padding="10dp"
             android:text="@string/loginBtn"
             android:textAllCaps="false" />
