@@ -69,6 +69,8 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
 
     public View getView(final int position, View convertView, ViewGroup parent)
     {
+        Log.d("getView", "getView was called");
+
         View v = convertView;
         if (v == null) {
             LayoutInflater inf = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

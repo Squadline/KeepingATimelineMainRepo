@@ -6,6 +6,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,8 @@ public class MainScreen extends AppCompatActivity {
     private Firebase db;
     private ArrayList<String> holder = new ArrayList<>();
     private ArrayList<String> small = new ArrayList<>();
+    private TimelineAdapter inflateTimeline;
+    private ListView timelineList;
 
     /**
      * By: Dana, Byung, Jimmy, Trevor
@@ -68,18 +71,17 @@ public class MainScreen extends AppCompatActivity {
                 }
             }
         });
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
+        // moved this from onStart() --Dana
         Firebase.setAndroidContext(this);
         db = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/trevor/Timelines");
 
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("DB_Load", "Asking Firebase for data.");
+                holder.clear();
+                small.clear();
                 for (DataSnapshot time: dataSnapshot.getChildren()){
                     holder.add(time.getKey());
                     small.add("Admin: " + time.getValue());
@@ -92,9 +94,16 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
-        TimelineAdapter inflateTimeline = new TimelineAdapter(holder,small,this);
-        ListView timelineList = (ListView) findViewById(R.id.timelineList);
+        inflateTimeline = new TimelineAdapter(holder,small,this);
+        timelineList = (ListView) findViewById(R.id.timelineList);
         timelineList.setAdapter(inflateTimeline);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        inflateTimeline.notifyDataSetChanged(); //updates adapter --Dana
     }
 
     /**
