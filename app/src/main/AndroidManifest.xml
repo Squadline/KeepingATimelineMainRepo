@@ -3,7 +3,7 @@
     package="com.keepingatimeline.kat">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +16,7 @@
             android:label=""
             android:theme="@style/AppTheme.LoginPage">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -44,9 +44,9 @@
             android:name=".Timelineshower"
             android:label="Timeline Shower"
             android:theme="@style/AppTheme">
-
-        <intent-filter>
+            <intent-filter>
                 <action android:name="com.keepingatimeline.kat.Timelineshower" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -65,15 +65,14 @@
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.TimelineSettings" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".AddEvent"
             android:label="Add an Event">
             <intent-filter>
-                <action android:name="com.keepingatimeline.kat.AddEvent"/>
+                <action android:name="com.keepingatimeline.kat.AddEvent" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -86,7 +85,14 @@
                 <action android:name="com.keepingatimeline.kat.RegistrationScreen" />
 
                 <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".RecoverPassword"
+            android:label="Recover Password">
+            <intent-filter>
+                <action android:name="com.keepingatimeline.kat.RecoverPasswordScreen" />
 
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
     </application>
