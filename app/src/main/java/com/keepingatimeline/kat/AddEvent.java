@@ -1,4 +1,4 @@
-package com.koreaaaa2gmail.actualproject;
+package com.keepingatimeline.kat;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,11 +14,11 @@ public class AddEvent extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_event);
+        setContentView(com.keepingatimeline.kat.R.layout.activity_add_event);
 
-        quoteView = findViewById(R.id.AddQuoteEvent);
-        photoView = findViewById(R.id.AddPhotoEvent);
-        textView = findViewById(R.id.AddTextEvent);
+        quoteView = findViewById(com.keepingatimeline.kat.R.id.AddQuoteEvent);
+        photoView = findViewById(com.keepingatimeline.kat.R.id.AddPhotoEvent);
+        textView = findViewById(com.keepingatimeline.kat.R.id.AddTextEvent);
 
         //Hide the Photo and Text Views
         photoView.setVisibility(View.GONE);
@@ -29,21 +29,21 @@ public class AddEvent extends AppCompatActivity {
         boolean checked = ((RadioButton)view).isChecked();
 
         switch(view.getId()) {
-            case R.id.radioQuote:
+            case com.keepingatimeline.kat.R.id.radioQuote:
                 if(checked) {
                     quoteView.setVisibility(View.VISIBLE);
                     photoView.setVisibility(View.GONE);
                     textView.setVisibility(View.GONE);
                 }
                 break;
-            case R.id.radioText:
+            case com.keepingatimeline.kat.R.id.radioText:
                 if(checked) {
                     textView.setVisibility(View.VISIBLE);
                     photoView.setVisibility(View.GONE);
                     quoteView.setVisibility(View.GONE);
                 }
                 break;
-            case R.id.radioPhoto:
+            case com.keepingatimeline.kat.R.id.radioPhoto:
                 if(checked) {
                     photoView.setVisibility(View.VISIBLE);
                     textView.setVisibility(View.GONE);

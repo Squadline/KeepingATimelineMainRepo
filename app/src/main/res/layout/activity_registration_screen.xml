@@ -3,31 +3,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/loginPrimary"
-    tools:context="com.keepingatimeline.kat.LoginActivity">
+    android:background="@color/registrationPrimary"
+    tools:context="com.keepingatimeline.kat.RegistrationScreen">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/loginLayout"
+        android:layout_above="@+id/registerLayout"
         android:layout_marginBottom="43dp"
         android:src="@mipmap/ic_launcher" />
 
     <LinearLayout
-        android:id="@+id/loginLayout"
+        android:id="@+id/registerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/signUpLayout"
+        android:layout_above="@+id/signInLayout"
         android:orientation="vertical"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         android:paddingBottom="100dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <EditText
+                android:id="@+id/firstname_input"
+                android:inputType="textPersonName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="3dp"
+                android:padding="6dp"
+                android:background="@color/white"
+                android:ems="10"
+                android:hint="@string/firstName" />
+
+            <EditText
+                android:id="@+id/lastname_input"
+                android:inputType="textPersonName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_marginBottom="3dp"
+                android:padding="6dp"
+                android:background="@color/white"
+                android:ems="10"
+                android:hint="@string/lastName" />
+
+        </LinearLayout>
+
         <EditText
-            android:id="@+id/loginEmail"
+            android:id="@+id/email_input"
             android:inputType="textEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,11 +68,10 @@
             android:padding="6dp"
             android:background="@color/white"
             android:ems="10"
-            android:clickable="true"
-            android:hint="@string/emailHint" />
+            android:hint="@string/email" />
 
         <EditText
-            android:id="@+id/loginPassword"
+            android:id="@+id/password_input"
             android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,44 +82,33 @@
             android:hint="@string/password" />
 
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/submit_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="-4.5dp"
             android:layout_marginRight="-4.5dp"
             android:padding="10dp"
-            android:text="@string/loginBtn"
+            android:text="@string/signUp"
             android:textAllCaps="false" />
-
-        <TextView
-            android:id="@+id/forgotPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:gravity="center_horizontal"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/forgotPassword"
-            android:textColor="@color/white"
-            android:linksClickable="true" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/signUpLayout"
+        android:id="@+id/signInLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
-        android:background="@color/loginSecondary">
-        
+        android:background="@color/registrationSecondary">
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="0.2dp"
             android:background="@color/white" />
 
         <TextView
-            android:id="@+id/signUpText"
+            android:id="@+id/signInText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Actual Project</string>
+
     <string name="forgot_password">Forgot Password?</string>
     <string name="create_an_account">Create An Account</string>
     <string name="i_e_ggillespie_ucsd_edu">i.e. ggillespie@ucsd.edu</string>
@@ -26,4 +27,20 @@
     <string name="quoteRadio">Quote</string>
     <string name="textRadio">Text</string>
     <string name="photoRadio">Photo</string>
+
+    <!--Login Page Strings-->
+    <string name="email">Email</string>
+    <string name="emailHint">i.e. ggillespie@ucsd.edu</string>
+    <string name="password">Password</string>
+    <string name="loginBtn">Log In</string>
+    <string name="forgotPassword">Forgot Password?</string>
+    <string name="signUp">Sign Up</string>
+
+    <!--Registration Page Strings-->
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main2">Main2Activity</string>
+>>>>>>> 12a3da32a4cb240e15db1b9f98c9a3ee1e1c503d
 </resources>
