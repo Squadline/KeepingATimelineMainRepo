@@ -49,7 +49,7 @@ public class MainScreen extends AppCompatActivity {
         drawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
 
         //The left scroll bar containing account settings, log out and such
-        String[] settings = {"Settings", "Log Out"};
+        String[] settings = {"Settings", "Add Event Test", "Log Out"};
         ListView myList = (ListView) findViewById(R.id.left_drawer);
         myList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,settings));
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
