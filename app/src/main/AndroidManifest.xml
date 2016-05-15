@@ -22,7 +22,7 @@
         </activity>
         <activity
             android:name=".MainScreen"
-            android:label="Kat Box"
+            android:label=""
             android:theme="@style/AppTheme.MainScreen">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.MainScreen" />

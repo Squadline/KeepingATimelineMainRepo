@@ -7,35 +7,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class MainScreen extends AppCompatActivity {
 
-    private static Button accSettings;
     private Firebase db;
-    private TextView t;
-    private Button b;
-    private EditText inp;
-    private Button adText;
-    private Button tl;
-    private Button sign_up;
-    // timeline settings tester button - Darren
-    private Button tSettings;
+    private ArrayList<String> holder = new ArrayList<>();
+    private ArrayList<String> small = new ArrayList<>();
 
     /**
      * By: Dana, Byung, Jimmy, Trevor
@@ -47,14 +38,8 @@ public class MainScreen extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        //standard shit. Its there in the beginning
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-
-        //firebase initialization!!
-        Firebase.setAndroidContext(this);
-        db = new Firebase("https://fiery-fire-8218.firebaseio.com/");
 
         // Uses a Toolbar as an ActionBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -66,7 +51,7 @@ public class MainScreen extends AppCompatActivity {
         //The left scroll bar containing account settings, log out and such
         String[] settings = {"Settings", "Log Out"};
         ListView myList = (ListView) findViewById(R.id.left_drawer);
-        myList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,settings));
+        myList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,settings));
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -78,78 +63,33 @@ public class MainScreen extends AppCompatActivity {
                 }
             }
         });
+    }
 
-        //call the method here.
-        t = (TextView)findViewById(R.id.textUser);
-        b = (Button)findViewById(R.id.button2);
-        inp = (EditText)findViewById(R.id.editText);
-        adText = (Button)findViewById(R.id.button3);
-        tl = (Button)findViewById(R.id.button5);
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-        // timeline settings tester button - Darren
-        tSettings = (Button) findViewById(R.id.t_settings);
-        sign_up = (Button) findViewById(R.id.sign_up);
+        Firebase.setAndroidContext(this);
+        db = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/trevor/Timelines");
 
-        //Sets the first name? by
-        b.setOnClickListener(new View.OnClickListener() {
+        db.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                db = new Firebase("https://fiery-fire-8218.firebaseio.com/Users");
-                Firebase swagref =  db.child("swag/FirstName");
-                swagref.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        String stuff = dataSnapshot.getValue(String.class);
-                        t.setText(stuff);
-                    }
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot time: dataSnapshot.getChildren()){
+                    holder.add(time.getKey());
+                    small.add("Admin: " + time.getValue());
+                }
+            }
 
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
 
-                    }
-                });
             }
         });
 
-        // takes us to timelineshower (lol. shower.)
-        tl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent newActivity = new Intent("com.keepingatimeline.kat.Timelineshower");
-                startActivity(newActivity);
-            }
-        });
-
-        // takes us to registration screen
-        sign_up.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent newActivity = new Intent("com.keepingatimeline.kat.RegistrationScreen");
-                startActivity(newActivity);
-            }
-        });
-
-        // testing button to view Timeline Settings - Darren
-        tSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent newActivity = new Intent("com.keepingatimeline.kat.TimelineSettings");
-                startActivity(newActivity);
-            }
-        });
-
-        // test push by Jimmy for the user swag
-        adText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Firebase r = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/swag");
-                Firebase d = r.push();
-                Map<String, String> post = new HashMap<String, String>();
-                post.put("input", inp.getText().toString());
-                d.setValue(post);
-                r.child("FirstName").setValue(inp.getText().toString());
-            }
-        });
+        TimelineAdapter inflateTimeline = new TimelineAdapter(holder,small,this);
+        ListView timelineList = (ListView) findViewById(R.id.timelineList);
+        timelineList.setAdapter(inflateTimeline);
     }
 
     /**
@@ -159,5 +99,17 @@ public class MainScreen extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_timeline:
+                Intent newActivity = new Intent("com.keepingatimeline.kat.Timelineshower");
+                startActivity(newActivity);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

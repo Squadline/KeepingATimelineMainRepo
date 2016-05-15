@@ -12,7 +12,7 @@
         android:layout_height="140dp"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/loginLayout"
-        android:layout_marginBottom="42dp"
+        android:layout_marginBottom="43dp"
         android:src="@mipmap/ic_launcher" />
 
     <LinearLayout
