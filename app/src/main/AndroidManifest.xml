@@ -64,6 +64,7 @@
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.TimelineSettings" />
 
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
 

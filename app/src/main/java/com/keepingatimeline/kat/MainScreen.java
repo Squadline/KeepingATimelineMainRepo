@@ -60,6 +60,11 @@ public class MainScreen extends AppCompatActivity {
                         Intent newActivity = new Intent("com.keepingatimeline.kat.AccountSettings");
                         startActivity(newActivity);
                         break;
+
+                    case 1:
+                        Intent addEventActivity = new Intent("com.keepingatimeline.kat.AddEvent");
+                        startActivity(addEventActivity);
+                        break;
                 }
             }
         });
