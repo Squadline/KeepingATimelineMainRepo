@@ -15,7 +15,7 @@
             android:label=""
             android:theme="@style/AppTheme.LoginPage">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -64,6 +64,16 @@
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.TimelineSettings" />
 
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".AddEvent"
+            android:label="Add an Event">
+            <intent-filter>
+                <action android:name="com.keepingatimeline.kat.AddEvent"/>
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -75,6 +85,7 @@
                 <action android:name="com.keepingatimeline.kat.RegistrationScreen" />
 
                 <category android:name="android.intent.category.DEFAULT" />
+
             </intent-filter>
         </activity>
     </application>
