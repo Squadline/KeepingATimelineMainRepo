@@ -33,16 +33,16 @@ public class Timelineshower extends AppCompatActivity {
     private Firebase db2;
     private Firebase db3;
     private Button b;
+    private TimelineAdapter plz;
+    private ListView list;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timelineshower_front);
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+        //moved everything below from onStart() --Dana
+
         setContentView(R.layout.activity_timelineshower_front);
         Firebase.setAndroidContext(this);
         db = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/swag/Timelines");
@@ -67,44 +67,50 @@ public class Timelineshower extends AppCompatActivity {
 
         b = (Button) findViewById(R.id.button4);
         b.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              Intent newActivity = new Intent("com.keepingatimeline.kat.MainScreen");
-              startActivity(newActivity);
+            @Override
+            public void onClick(View v) {
+                Intent newActivity = new Intent("com.keepingatimeline.kat.MainScreen");
+                startActivity(newActivity);
 
-              //SHOULD ALWAYS USE UPDATE CHILDREN so you don't overwrite, used "put" as an example
-              // updateChildren does not require you to make a seperate map reference, can just store by key value pair
-              //add timelines to user portion of db, use update children to retaiin data
-              db2 = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/swag/Timelines");
-              Map<String, String> t = new HashMap<String, String>();
-              t.put("name of timeline", "admin/author");
-              db2.setValue(t);
+                //SHOULD ALWAYS USE UPDATE CHILDREN so you don't overwrite, used "put" as an example
+                // updateChildren does not require you to make a seperate map reference, can just store by key value pair
+                //add timelines to user portion of db, use update children to retaiin data
+                db2 = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/swag/Timelines");
+                Map<String, String> t = new HashMap<String, String>();
+                t.put("name of timeline", "admin/author");
+                db2.setValue(t);
 
-              //add timelines to timeline portion of db, should be using update children to retain data
-              db3 = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines");
-              Firebase newRef = db3.push();     //generated new unique id
-              Map<String, String> t2 = new HashMap<String, String>();
-              t2.put("Events", "added in a different section");
-              t2.put("admin", "whoever the admin is");
-              t2.put("name", "name of timeline");
-              t2.put("privacy", "set privacy level");
-              newRef.setValue(t2);          //set all the above data to the unique id
+                //add timelines to timeline portion of db, should be using update children to retain data
+                db3 = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines");
+                Firebase newRef = db3.push();     //generated new unique id
+                Map<String, String> t2 = new HashMap<String, String>();
+                t2.put("Events", "added in a different section");
+                t2.put("admin", "whoever the admin is");
+                t2.put("name", "name of timeline");
+                t2.put("privacy", "set privacy level");
+                newRef.setValue(t2);          //set all the above data to the unique id
 
-              //get the unique id, can also search into unique id and pull name to search
-              String id = newRef.getKey();
+                //get the unique id, can also search into unique id and pull name to search
+                String id = newRef.getKey();
 
               /*have to go down one level lower in db, the unique can be grabbed through parsing and
               then concat into the url with a '+', can also be called through the child method */
-              Firebase dbx = newRef.child("users"); //
-              Map<String, String> tx = new HashMap<String, String>();
-              tx.put("some user", "indication they are in, should always be true");
-              dbx.setValue(tx);
-        }
+                Firebase dbx = newRef.child("users"); //
+                Map<String, String> tx = new HashMap<String, String>();
+                tx.put("some user", "indication they are in, should always be true");
+                dbx.setValue(tx);
+            }
         });
 
-        TimelineAdapter plz = new TimelineAdapter(holder,small,this);
-        ListView list = (ListView) findViewById(R.id.listView);
+        plz = new TimelineAdapter(holder,small,this);
+        list = (ListView) findViewById(R.id.listView);
         list.setAdapter(plz);
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        plz.notifyDataSetChanged();
     }
 }
