@@ -98,7 +98,7 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
                 alert.setMessage("Do you want to enter this timeline?");
                 alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
-                        Intent newActivity = new Intent("com.keepingatimeline.kat.MainScreen");
+                        Intent newActivity = new Intent("com.keepingatimeline.kat.ViewTimeline");
                         context.startActivity(newActivity);
                     }
                 })

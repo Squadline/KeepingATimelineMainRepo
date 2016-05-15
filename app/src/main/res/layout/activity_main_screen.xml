@@ -4,7 +4,8 @@
     android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:context="com.keepingatimeline.kat.MainScreen">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,7 +13,6 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/toolbar"
             android:minHeight="?attr/actionBarSize"
             android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Hinker"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:textColor="@color/white"
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
                 <!--
