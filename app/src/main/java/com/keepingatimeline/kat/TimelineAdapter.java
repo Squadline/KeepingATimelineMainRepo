@@ -53,6 +53,7 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
     @Override
     public int getCount()
     {
+        Log.d("getView", "Count: " + holder.size());
         return holder.size();
     }
 

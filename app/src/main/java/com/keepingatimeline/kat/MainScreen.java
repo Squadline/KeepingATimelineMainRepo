@@ -72,6 +72,10 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
+        inflateTimeline = new TimelineAdapter(holder,small,this);
+        timelineList = (ListView) findViewById(R.id.timelineList);
+        timelineList.setAdapter(inflateTimeline);
+
         // moved this from onStart() --Dana
         Firebase.setAndroidContext(this);
         db = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/trevor/Timelines");
@@ -86,6 +90,7 @@ public class MainScreen extends AppCompatActivity {
                     holder.add(time.getKey());
                     small.add("Admin: " + time.getValue());
                 }
+                inflateTimeline.notifyDataSetChanged();
             }
 
             @Override
@@ -93,10 +98,6 @@ public class MainScreen extends AppCompatActivity {
 
             }
         });
-
-        inflateTimeline = new TimelineAdapter(holder,small,this);
-        timelineList = (ListView) findViewById(R.id.timelineList);
-        timelineList.setAdapter(inflateTimeline);
     }
 
     @Override
