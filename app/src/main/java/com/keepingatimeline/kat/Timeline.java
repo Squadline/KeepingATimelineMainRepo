@@ -12,7 +12,7 @@ import java.lang.String;
 public class Timeline
 {
   private int tlId;
-  private LinkedList<Entry> entryArray; // entry, event, whatever
+  private LinkedList<Entry> entryList; // entry, event, whatever
   private String title;
   private String des;
     private boolean admin; 
@@ -21,7 +21,41 @@ public class Timeline
   {
     tlId = id;
     // use User.fbRef to grab title and description of tl using tlId
-    User.fbRef
+    if( User.fbRef.authData() != null )
+    {
+      
+      User.fbRef.child(User.TIMELINE + tlId + User.NAME ).addListenerForSingleValueEvent( newValueEventListener() 
+          {
+            @Override
+            public void onDataChange(DataSnapshot ss)
+            {
+              title = ss.getValue();
+            }
+
+            @Override
+            public void onCancelled(FirebaseError err)
+            {
+              Log.e("Read Timeline Name failed: " + err.getMessage() );
+            }
+          });
+
+      User.fbRef.child(User.TIMELINE + User.tlId + User.DES ).addListenerForSingleValueEvent( newValueEventListener()
+          {
+            @Override
+            public void onDataChange(DataSnapshot ss)
+            {
+              des = ss.getValue();
+            }
+
+            @Override
+            public void onCancelled(FirebaseError err)
+            {
+              Log.e("Read Timeline Description failed: " + err.getMessage() );
+            }
+          });
+    } else { //hopefully, ref id was not null. 
+      Log.e("No Auth Data in TL Constructor :(");
+    }
     // title = sfdfd
     // des = fsdfsf
   }
@@ -40,14 +74,55 @@ public class Timeline
   public boolean enumEntry()
   { 
     // grab list of entry ids from Timeline table using tlId
+ 
+    User.fbRef.child(User.TIMELINE + tlId + "/" + User.TLENTRY).addListenerForSingleValueEvent( new ValueEventListener()
+      {
+        @Override
+        public void onDataChange(DataSnapshot ss)
+        {
+          GenericTypeIndicator<List<int>> t = new GenericTypeIndicator<List<int>>() { };
+          List<int> eIDs = snapshot.getValue(t);
+          if(eIDs == null)
+          {
+            Log.i("Timeline", "Empty Entry IDs");
+          } else {
+            Iterator<int> it = eIDs.iterator();
+            while( it.hasNext() )
+            {
+              entryList.add( new Event( it.next() ) );
+              //tlList.getLast().getMeta(); // gets name n descrip
+            }
+          }
+        }
+        
+        @Override
+        public void onCancelled(FirebaseError err)
+        {
+          Log.e("Read entry failed: " + err.getMessage() );   
+        }
+      });
+      
+
+
+   
+    //return true if ok or false if not ok
+    if(tlList.size() == 0) // for whatever reason
+      return false;
+    return true;
 
     // make Entry objects, load into entryArray. 
   
   }
 
-  public int getId();
-  public String getTitle();
-  public String getDes();
-  public boolean setTitle();
-  public boolean setDes();
+  public int getId(); // do we need this?
+  public String getTitle()
+  {
+    return title;
+  }
+  public String getDescription()
+  {
+    return des;
+  }
+  
+
 }

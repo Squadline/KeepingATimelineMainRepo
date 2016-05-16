@@ -25,9 +25,11 @@ public class User
   public static Firebase fbRef;
    public static final String FBBASE = "https://fiery-fire-8218.firebaseio.com/";
   public static final String USER   = "users/";
-  public static final String TL     = "tl/";
+  public static final String TLID   = "tl/";
   public static final String NAME   = "name/";
-  public static final String DES   = "des/";
+  public static final String DES    = "des/";
+  public static final String TIMELINE = "timeline/";
+
   //private String eMail;
   private LinkedList<Timeline> tlList;
  
@@ -60,7 +62,7 @@ public class User
     Firebase fbTl = fb.child(USER + /*WHATEVER ID GOES IN HERE*/ + "/" + TL);
     //make new emptyish timelines and add to tlArray
      
-    fbTl.addValueEventListener( new ValueEventListener()
+    fbTl.addListenerForSingleValueEvent( new ValueEventListener()
       {
         @Override
         public void onDataChange(DataSnapshot ss)
