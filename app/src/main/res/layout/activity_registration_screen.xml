@@ -12,8 +12,8 @@
         android:layout_height="140dp"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/registerLayout"
-        android:layout_marginBottom="42dp"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_marginBottom="43dp"
+        android:src="@mipmap/web_hi_res_512" />
 
     <LinearLayout
         android:id="@+id/registerLayout"

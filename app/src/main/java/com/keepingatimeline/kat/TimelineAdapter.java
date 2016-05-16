@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,12 +37,14 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
 
     public TimelineAdapter(ArrayList<String> h, Context c)
     {
+        super();
         this.holder = h;
         this.context = c;
     }
 
     public TimelineAdapter(ArrayList<String> h, ArrayList<String> s, Context c)
     {
+        super();
         this.holder = h;
         this.small = s;
         this.context = c;
@@ -50,6 +53,7 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
     @Override
     public int getCount()
     {
+        Log.d("getView", "Count: " + holder.size());
         return holder.size();
     }
 
@@ -68,6 +72,8 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
 
     public View getView(final int position, View convertView, ViewGroup parent)
     {
+        Log.d("getView", "getView was called, " + position);
+
         View v = convertView;
         if (v == null) {
             LayoutInflater inf = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -97,7 +103,7 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
                 alert.setMessage("Do you want to enter this timeline?");
                 alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
-                        Intent newActivity = new Intent("com.keepingatimeline.kat.MainScreen");
+                        Intent newActivity = new Intent("com.keepingatimeline.kat.ViewTimeline");
                         context.startActivity(newActivity);
                     }
                 })
