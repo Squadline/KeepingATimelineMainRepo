@@ -7,6 +7,11 @@
     <color name="white">#FFFFFF</color>
     <color name="loginPrimary">#3F51B5</color>
     <color name="loginSecondary">#303F9F</color>
+
     <color name="registrationPrimary">#4B0082</color>
     <color name="registrationSecondary">#2E0854</color>
+
+    <color name="viewPrimary">#3F51B5</color>
+    <color name="viewSecondary">#303F9F</color>
+    <color name="viewAccent">#4B0082</color>
 </resources>
