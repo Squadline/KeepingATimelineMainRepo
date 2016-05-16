@@ -38,7 +38,7 @@ public class Timelineshower extends AppCompatActivity {
     private Firebase db2;
     private Firebase db3;
     private Button b;
-    private TimelineAdapter plz;
+    private TimelineAdapter timelineAdapter;
     private ListView list;
     private Button c;
     private Context context;
@@ -49,6 +49,30 @@ public class Timelineshower extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timelineshower_front);
+
+        timelineAdapter = new TimelineAdapter(holder,small,this);
+        ListView list = (ListView) findViewById(R.id.listView);
+        list.setAdapter(timelineAdapter);
+
+        Firebase.setAndroidContext(this);
+        db = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/swag/Timelines");
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                holder.clear();
+                small.clear();
+                for (DataSnapshot time: dataSnapshot.getChildren()){
+                    holder.add((String) time.getKey());
+                    small.add("Admin: " + (String) time.getValue());
+                }
+                timelineAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
         /*
         c = (Button) findViewById(R.id.button5);
@@ -69,9 +93,8 @@ public class Timelineshower extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
 
         getMenuInflater().inflate(R.menu.fab_menu, menu);
-        return true;
-    }
-
+    return true;
+}
 
 
 
@@ -110,22 +133,6 @@ public class Timelineshower extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         setContentView(R.layout.activity_timelineshower_front);
-        Firebase.setAndroidContext(this);
-        db = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/swag/Timelines");
-        db.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot time: dataSnapshot.getChildren()){
-                    holder.add((String) time.getKey());
-                    small.add("Admin: " + (String) time.getValue());
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
 
         floatButton = (ImageButton) findViewById(R.id.fab);
         floatButton.setOnClickListener(new View.OnClickListener() {
@@ -180,10 +187,6 @@ public class Timelineshower extends AppCompatActivity {
               dbx.setValue(tx);
         }
         });
-
-        TimelineAdapter plz = new TimelineAdapter(holder,small,this);
-        ListView list = (ListView) findViewById(R.id.listView);
-        list.setAdapter(plz);
 
     }
 }
