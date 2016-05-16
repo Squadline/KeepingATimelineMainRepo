@@ -3,7 +3,7 @@
     package="com.keepingatimeline.kat">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -111,6 +111,14 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.ViewTimeline" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".RecoverPassword"
+            android:label="Recover Password">
+            <intent-filter>
+                <action android:name="com.keepingatimeline.kat.RecoverPasswordScreen" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

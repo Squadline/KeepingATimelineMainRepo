@@ -27,6 +27,9 @@
     <string name="quoteRadio">Quote</string>
     <string name="textRadio">Text</string>
     <string name="photoRadio">Photo</string>
+    <string name="enter_email">Enter Your Email</string>
+    <string name="email_message">e.g. johndoe@gmail.com</string>
+    <string name="recover_button">Send Link</string>
 
     <!--Login Page Strings-->
     <string name="email">Email</string>

@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         assert forgotPass != null;
         forgotPass.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                Intent newActivity = new Intent("com.keepingatimeline.kat.ChangePassword");
+                Intent newActivity = new Intent("com.keepingatimeline.kat.RecoverPasswordScreen");
                 startActivity(newActivity);
             }
         });
