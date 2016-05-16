@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Actual Project</string>
+    <string name="app_name">Squadline</string>
 
     <string name="forgot_password">Forgot Password?</string>
     <string name="create_an_account">Create An Account</string>
