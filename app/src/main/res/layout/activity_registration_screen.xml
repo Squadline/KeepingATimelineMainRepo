@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/registerLayout"
         android:layout_marginBottom="43dp"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/web_hi_res_512" />
 
     <LinearLayout
         android:id="@+id/registerLayout"

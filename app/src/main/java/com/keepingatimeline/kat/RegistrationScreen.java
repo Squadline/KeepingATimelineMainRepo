@@ -1,11 +1,13 @@
 package com.keepingatimeline.kat;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Credentials;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -24,11 +26,15 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class RegistrationScreen extends AppCompatActivity {
@@ -54,20 +60,48 @@ public class RegistrationScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com");
-                String user = emailAdd.getText().toString();
+                final String user = emailAdd.getText().toString();
                 String password = password1.getText().toString();
                 ref.createUser(user, password, new Firebase.ValueResultHandler<Map<String, Object>>()
                 {
                     @Override
                     public void onSuccess(Map<String, Object> result) {
-                        System.out.println("Successfully created user account with uid: " + result.get("uid"));
+                        Context context = getApplicationContext();
+                        CharSequence text = "Account created successfully, Log In NOW!!";
+                        int duration = Toast.LENGTH_LONG;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+
+                        String add = user.split("@")[0];
+
+                        Firebase userRef = new Firebase("https://fiery-fire-8218.firebaseio.com/Users");
+                        Firebase d = userRef.child(add);
+                        Map<String, String> post = new HashMap<String, String>();
+                        post.put("FirstName", name1st.getText().toString());
+                        post.put("LastName", name2nd.getText().toString());
+                        post.put("EmailAddress", user);
+                        d.setValue(post);
                     }
+
                     @Override
                     public void onError(FirebaseError firebaseError) {
-                        // there was an error
+                        Context context = getApplicationContext();
+                        CharSequence text = "Error! Try again later!";
+                        int duration = Toast.LENGTH_LONG;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
                     }
                 });
-                finish();
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run(){
+                        finish();
+                    }
+                };
+                Handler delayer = new Handler();
+                delayer.postDelayed(r, 2000);
             }
         });
 
