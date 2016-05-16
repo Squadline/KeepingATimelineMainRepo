@@ -3,7 +3,7 @@
     package="com.keepingatimeline.kat">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +14,9 @@
         <activity
             android:name=".LoginActivity"
             android:label=""
-            android:theme="@style/AppTheme.LoginPage">
+            android:theme="@style/AppTheme.LoginPage"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +26,9 @@
         <activity
             android:name=".MainScreen"
             android:label=""
-            android:theme="@style/AppTheme.MainScreen">
+            android:theme="@style/AppTheme.MainScreen"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.MainScreen" />
 
@@ -33,7 +37,9 @@
         </activity>
         <activity
             android:name=".AccountSettings"
-            android:label="Account Settings">
+            android:label="Account Settings"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.AccountSettings" />
 
@@ -43,7 +49,9 @@
         <activity
             android:name=".Timelineshower"
             android:label="Timeline Shower"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.Timelineshower" />
 
@@ -52,7 +60,9 @@
         </activity>
         <activity
             android:name=".ChangePassword"
-            android:label="Change Password">
+            android:label="Change Password"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.ChangePassword" />
 
@@ -61,7 +71,9 @@
         </activity>
         <activity
             android:name=".TimelineSettings"
-            android:label="Timeline Settings">
+            android:label="Timeline Settings"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.TimelineSettings" />
 
@@ -70,7 +82,9 @@
         </activity>
         <activity
             android:name=".AddEvent"
-            android:label="Add an Event">
+            android:label="Add an Event"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.AddEvent" />
 
@@ -80,7 +94,9 @@
         <activity
             android:name=".RegistrationScreen"
             android:label=""
-            android:theme="@style/AppTheme.RegistrationPage">
+            android:theme="@style/AppTheme.RegistrationPage"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.RegistrationScreen" />
 
@@ -90,9 +106,19 @@
         <activity
             android:name=".ViewTimeline"
             android:label=""
-            android:theme="@style/AppTheme.ViewTimeline">
+            android:theme="@style/AppTheme.ViewTimeline"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.ViewTimeline" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".RecoverPassword"
+            android:label="Recover Password">
+            <intent-filter>
+                <action android:name="com.keepingatimeline.kat.RecoverPasswordScreen" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
