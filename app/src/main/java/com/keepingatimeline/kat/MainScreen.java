@@ -25,9 +25,9 @@ import java.util.ArrayList;
 
 public class MainScreen extends AppCompatActivity {
 
-    private Firebase db;
-    private ArrayList<String> holder = new ArrayList<>();
-    private ArrayList<String> small = new ArrayList<>();
+    private Firebase database;
+    private ArrayList<String> tlTitles = new ArrayList<>();
+    private ArrayList<String> tlFriends = new ArrayList<>();
     private TimelineAdapter inflateTimeline;
     private ListView timelineList;
 
@@ -72,23 +72,23 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
-        inflateTimeline = new TimelineAdapter(holder,small,this);
+        inflateTimeline = new TimelineAdapter(this, tlTitles, tlFriends);
         timelineList = (ListView) findViewById(R.id.timelineList);
         timelineList.setAdapter(inflateTimeline);
 
         // moved this from onStart() --Dana
         Firebase.setAndroidContext(this);
-        db = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/trevor/Timelines");
+        database = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/trevor/Timelines");
 
-        db.addValueEventListener(new ValueEventListener() {
+        database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("DB_Load", "Asking Firebase for data.");
-                holder.clear();
-                small.clear();
-                for (DataSnapshot time: dataSnapshot.getChildren()){
-                    holder.add(time.getKey());
-                    small.add("Admin: " + time.getValue());
+                tlTitles.clear();
+                tlFriends.clear();
+                for (DataSnapshot tlSnapshot: dataSnapshot.getChildren()){
+                    tlTitles.add(tlSnapshot.getKey());
+                    tlFriends.add("" + tlSnapshot.getValue());
                 }
                 inflateTimeline.notifyDataSetChanged();
             }

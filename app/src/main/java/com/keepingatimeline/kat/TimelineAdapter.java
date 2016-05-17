@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,43 +25,35 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 /**
- * Created by boredguy88 on 5/11/2016.
+ * Created by Jimmy on 5/11/2016.
+ * Made it useful by Trevor on 5/17/2016.
  */
 public class TimelineAdapter extends BaseAdapter implements ListAdapter {
 
-    private ArrayList<String> holder;
-    private ArrayList<String> small;
-    private Context context;
-    private Firebase db;
-    private Button b;
+    private Context ctx;
+    private ArrayList<String> tlTitles;
+    private ArrayList<String> tlFriends;
 
-
-    public TimelineAdapter(ArrayList<String> h, Context c)
+    public TimelineAdapter(Context context, ArrayList<String> tlTitles, ArrayList<String> tlFriends)
     {
         super();
-        this.holder = h;
-        this.context = c;
-    }
 
-    public TimelineAdapter(ArrayList<String> h, ArrayList<String> s, Context c)
-    {
-        super();
-        this.holder = h;
-        this.small = s;
-        this.context = c;
+        this.ctx = context;
+        this.tlTitles = tlTitles;
+        this.tlFriends = tlFriends;
     }
 
     @Override
     public int getCount()
     {
-        Log.d("getView", "Count: " + holder.size());
-        return holder.size();
+        Log.d("getView", "Count: " + tlTitles.size());
+        return tlTitles.size();
     }
 
     @Override
     public String getItem(int position)
     {
-        return holder.get(position);
+        return tlTitles.get(position);
     }
 
     @Override
@@ -74,42 +67,32 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
     {
         Log.d("getView", "getView was called, " + position);
 
-        View v = convertView;
-        if (v == null) {
-            LayoutInflater inf = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = inf.inflate(R.layout.timelineshower, null);
+        if (convertView == null) {
+            LayoutInflater listInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = listInflater.inflate(R.layout.main_timelines, null);
         }
 
-        //b = (Button) v.findViewById(R.id.tButton);
-        //b.setOnClickListener(new View.OnClickListener() {
-          //  @Override
-          //  public void onClick(View v) {
-            //    Intent newActivity = new Intent("com.keepingatimeline.kat.MainScreen");
-             //   context.startActivity(newActivity);
-            //}
-        //});
+        TextView textL = (TextView)convertView.findViewById(R.id.timelineTitle);
+        textL.setText(tlTitles.get(position));
 
-        TextView textL = (TextView)v.findViewById(R.id.tName);
-        textL.setText(holder.get(position));
+        TextView textS = (TextView)convertView.findViewById(R.id.timelineFriends);
+        textS.setText(tlFriends.get(position));
 
-        TextView textS = (TextView)v.findViewById(R.id.tAuthor);
-        textS.setText(small.get(position));
-
-        v.setOnClickListener(new View.OnClickListener() {
+        convertView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                alert.setTitle("Timeline: " + holder.get(position));
+            public void onClick(View view) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(ctx);
+                alert.setTitle("Timeline: " + tlTitles.get(position));
                 alert.setMessage("Do you want to enter this timeline?");
                 alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
                         Intent newActivity = new Intent("com.keepingatimeline.kat.ViewTimeline");
-                        context.startActivity(newActivity);
+                        ctx.startActivity(newActivity);
                     }
                 })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                //just cancel
+                                // do nothing (cancel)
                             }
                         });
                 alert.create();
@@ -117,7 +100,7 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
             }
         });
 
-        return v;
+        return convertView;
 
     }
 
