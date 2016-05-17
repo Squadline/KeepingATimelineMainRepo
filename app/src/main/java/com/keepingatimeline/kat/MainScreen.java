@@ -127,8 +127,8 @@ public class MainScreen extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_timeline:
-                Intent newActivity = new Intent("com.keepingatimeline.kat.Timelineshower");
-                startActivity(newActivity);
+                Intent addTimelineActivity = new Intent("com.keepingatimeline.kat.Timelineshower");
+                startActivity(addTimelineActivity);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

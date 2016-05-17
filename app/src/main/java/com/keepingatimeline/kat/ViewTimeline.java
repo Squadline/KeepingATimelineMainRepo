@@ -30,8 +30,8 @@ public class ViewTimeline extends AppCompatActivity {
         addEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent newActivity = new Intent("com.keepingatimeline.kat.AddEvent");
-                startActivity(newActivity);
+                Intent addEventActivity = new Intent("com.keepingatimeline.kat.AddEvent");
+                startActivity(addEventActivity);
             }
         });
     }
@@ -47,6 +47,10 @@ public class ViewTimeline extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                return true;
+            case R.id.editTimelineBtn:
+                Intent timelineSettingsActivity = new Intent("com.keepingatimeline.kat.TimelineSettings");
+                startActivity(timelineSettingsActivity);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

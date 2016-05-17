@@ -80,9 +80,9 @@ public class LoginActivity extends AppCompatActivity {
         SpannableString signUpString = new SpannableString("Don't have an account? Sign Up.");
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
-            public void onClick(View signUpText) {
-                Intent newActivity = new Intent("com.keepingatimeline.kat.RegistrationScreen");
-                startActivity(newActivity);
+            public void onClick(View view) {
+                Intent registrationActivity = new Intent("com.keepingatimeline.kat.RegistrationScreen");
+                startActivity(registrationActivity);
             }
 
             @Override

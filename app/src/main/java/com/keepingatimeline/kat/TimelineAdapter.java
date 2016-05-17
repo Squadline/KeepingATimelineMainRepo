@@ -81,8 +81,8 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent newActivity = new Intent("com.keepingatimeline.kat.ViewTimeline");
-                ctx.startActivity(newActivity);
+                Intent viewTimelineActivity = new Intent("com.keepingatimeline.kat.ViewTimeline");
+                ctx.startActivity(viewTimelineActivity);
             }
 
                 /*
