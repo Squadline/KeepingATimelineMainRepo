@@ -52,7 +52,7 @@ public class MainScreen extends AppCompatActivity {
         drawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
 
         //The left scroll bar containing account settings, log out and such
-        String[] settings = {"Settings", "Add Event Test", "Log Out"};
+        String[] settings = {"Settings", "Add Event Test", "Timeline Settings Test", "Log Out"};
         ListView myList = (ListView) findViewById(R.id.left_drawer);
         myList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,settings));
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,6 +67,10 @@ public class MainScreen extends AppCompatActivity {
                     case 1:
                         Intent addEventActivity = new Intent("com.keepingatimeline.kat.AddEvent");
                         startActivity(addEventActivity);
+                        break;
+                    case 2:
+                        Intent timelineSettingsActivity = new Intent("com.keepingatimeline.kat.TimelineSettings");
+                        startActivity(timelineSettingsActivity);
                         break;
                 }
             }

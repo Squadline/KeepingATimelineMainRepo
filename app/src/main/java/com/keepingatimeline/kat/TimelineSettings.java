@@ -6,6 +6,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
 import java.util.ArrayList;
 
 /**
@@ -15,6 +20,10 @@ public class TimelineSettings extends AppCompatActivity {
 
     private TextView lineTitle;
     private ListView manageUsers;
+    private ArrayAdapter<String> adapter;
+    private ArrayList<String> users;
+
+    private Firebase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,24 +32,42 @@ public class TimelineSettings extends AppCompatActivity {
 
         // Title of the timeline
         lineTitle =  (TextView) findViewById(R.id.title);
+        manageUsers = (ListView) findViewById(R.id.user_list);
+
+        users = new ArrayList<String>();
+        adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, users);
 
         // We'll get the name of the timeline in a different manner later
-        lineTitle.setText("Eunji");
 
         // User list for timeline settings
         // This will probably be removed later when we get a
         // list of users from a different source
-        ArrayList<String> users = new ArrayList<String>();
-        users.add("Eunji");
+        db = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines/-KHqAusltT6snczElia5");
 
-        // Array of users to insert into ListView
-        String[] userList = new String[users.size()];
-        users.toArray(userList);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, userList);
+        db.addValueEventListener( new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DataSnapshot nameSnap = dataSnapshot.child("name");
+                lineTitle.setText( nameSnap.getValue().toString() );
+
+                users.clear();
+                users.add("Eunji");
+
+                for ( DataSnapshot member : dataSnapshot.child("users").getChildren() ) {
+                    users.add( member.getKey() );
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
         // Get the ListView and set its contents
-        manageUsers = (ListView) findViewById(R.id.user_list);
         manageUsers.setAdapter(adapter);
     }
 }
