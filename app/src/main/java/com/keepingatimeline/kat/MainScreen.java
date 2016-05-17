@@ -91,6 +91,9 @@ public class MainScreen extends AppCompatActivity {
                     tlFriends.add("" + tlSnapshot.getValue());
                 }
                 inflateTimeline.notifyDataSetChanged();
+
+                //testing if you can get active user
+                System.out.println(database.getAuth().getUid());
             }
 
             @Override

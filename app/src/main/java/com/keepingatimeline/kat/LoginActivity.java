@@ -14,11 +14,16 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.firebase.client.AuthData;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 
 /* Written by: Louis Leung
    Main login screen, this is what launches on start
@@ -26,24 +31,44 @@ import android.widget.Toast;
 public class LoginActivity extends AppCompatActivity {
 
     private AlertDialog.Builder dialogBuilder;
+    private TextView username;
+    private TextView password;
+    private Button login;
+    private Firebase fRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Firebase.setAndroidContext(this);
 
         Button btnLogin = (Button)findViewById(R.id.loginButton);
         TextView signUpText = (TextView)findViewById(R.id.signUpText);
         TextView forgotPass = (TextView) findViewById(R.id.forgotPassword);
-
+        username = (TextView) findViewById(R.id.loginEmail);
+        password = (TextView) findViewById(R.id.loginPassword);
+        login = (Button) findViewById(R.id.loginButton);
+        fRef = new Firebase("https://fiery-fire-8218.firebaseio.com/");
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newActivity = new Intent("com.keepingatimeline.kat.MainScreen");
-                startActivity(newActivity);
+                fRef.authWithPassword(username.getText().toString(), password.getText().toString(), new Firebase.AuthResultHandler() {
+                    @Override
+                    public void onAuthenticated(AuthData authData) {
+                        System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
+                        Intent newActivity = new Intent("com.keepingatimeline.kat.MainScreen");
+                        startActivity(newActivity);
+                    }
+                    @Override
+                    public void onAuthenticationError(FirebaseError firebaseError) {
+                        // there was an error
+                        Log.d("Invalid:", "username/password combination");
+                    }
+                });
             }
         });
+
 
         forgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
