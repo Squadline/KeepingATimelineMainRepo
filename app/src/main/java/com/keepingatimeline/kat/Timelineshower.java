@@ -29,7 +29,7 @@ import java.util.Map;
 
 /**
  * Created by Jimmy on 5/5/2016.
- */
+*/
 public class Timelineshower extends AppCompatActivity {
 
     private Firebase db;
@@ -50,7 +50,7 @@ public class Timelineshower extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timelineshower_front);
 
-        timelineAdapter = new TimelineAdapter(holder,small,this);
+        timelineAdapter = new TimelineAdapter(this, holder,small);
         ListView list = (ListView) findViewById(R.id.listView);
         list.setAdapter(timelineAdapter);
 
@@ -86,7 +86,6 @@ public class Timelineshower extends AppCompatActivity {
             }
         });
         */
-
     }
 
     @Override

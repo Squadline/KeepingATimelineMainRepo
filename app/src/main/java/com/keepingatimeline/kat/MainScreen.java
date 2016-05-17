@@ -25,9 +25,9 @@ import java.util.ArrayList;
 
 public class MainScreen extends AppCompatActivity {
 
-    private Firebase db;
-    private ArrayList<String> holder = new ArrayList<>();
-    private ArrayList<String> small = new ArrayList<>();
+    private Firebase database;
+    private ArrayList<String> tlTitles = new ArrayList<>();
+    private ArrayList<String> tlFriends = new ArrayList<>();
     private TimelineAdapter inflateTimeline;
     private ListView timelineList;
 
@@ -52,7 +52,7 @@ public class MainScreen extends AppCompatActivity {
         drawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
 
         //The left scroll bar containing account settings, log out and such
-        String[] settings = {"Settings", "Add Event Test", "Log Out"};
+        String[] settings = {"Settings", "Add Event Test", "Timeline Settings Test", "Log Out"};
         ListView myList = (ListView) findViewById(R.id.left_drawer);
         myList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,settings));
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -68,29 +68,36 @@ public class MainScreen extends AppCompatActivity {
                         Intent addEventActivity = new Intent("com.keepingatimeline.kat.AddEvent");
                         startActivity(addEventActivity);
                         break;
+                    case 2:
+                        Intent timelineSettingsActivity = new Intent("com.keepingatimeline.kat.TimelineSettings");
+                        startActivity(timelineSettingsActivity);
+                        break;
                 }
             }
         });
 
-        inflateTimeline = new TimelineAdapter(holder,small,this);
+        inflateTimeline = new TimelineAdapter(this, tlTitles, tlFriends);
         timelineList = (ListView) findViewById(R.id.timelineList);
         timelineList.setAdapter(inflateTimeline);
 
         // moved this from onStart() --Dana
         Firebase.setAndroidContext(this);
-        db = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/trevor/Timelines");
+        database = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/trevor/Timelines");
 
-        db.addValueEventListener(new ValueEventListener() {
+        database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("DB_Load", "Asking Firebase for data.");
-                holder.clear();
-                small.clear();
-                for (DataSnapshot time: dataSnapshot.getChildren()){
-                    holder.add(time.getKey());
-                    small.add("Admin: " + time.getValue());
+                tlTitles.clear();
+                tlFriends.clear();
+                for (DataSnapshot tlSnapshot: dataSnapshot.getChildren()){
+                    tlTitles.add(tlSnapshot.getKey());
+                    tlFriends.add("" + tlSnapshot.getValue());
                 }
                 inflateTimeline.notifyDataSetChanged();
+
+                //testing if you can get active user
+                System.out.println(database.getAuth().getUid());
             }
 
             @Override
@@ -120,8 +127,8 @@ public class MainScreen extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_timeline:
-                Intent newActivity = new Intent("com.keepingatimeline.kat.Timelineshower");
-                startActivity(newActivity);
+                Intent addTimelineActivity = new Intent("com.keepingatimeline.kat.Timelineshower");
+                startActivity(addTimelineActivity);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

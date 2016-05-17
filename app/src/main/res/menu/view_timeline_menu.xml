@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/add_timeline"
-        android:title="Add Timeline"
-        android:icon="@drawable/ic_add"
+        android:id="@+id/editTimelineBtn"
+        android:title="Timeline Settings"
+        android:icon="@drawable/ic_settings"
         app:showAsAction="always" />
 
 </menu>

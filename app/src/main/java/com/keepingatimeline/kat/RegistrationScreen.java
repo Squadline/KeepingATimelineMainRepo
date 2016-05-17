@@ -110,7 +110,7 @@ public class RegistrationScreen extends AppCompatActivity {
         SpannableString signInString = new SpannableString("Already have an account? Sign In.");
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
-            public void onClick(View signInText) {
+            public void onClick(View view) {
                 finish();
             }
 
