@@ -76,7 +76,7 @@ public class MainScreen extends AppCompatActivity {
                         break;
                     case 3:
                         Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
-                        CharSequence t = ref.getAuth().getUid() + " has logged out";
+                        CharSequence t = ref.getAuth().getProviderData().get("email") + " has logged out " + ref.getAuth().getUid();
                         int time = Toast.LENGTH_LONG;
                         Toast logout = Toast.makeText(getApplicationContext(), t, time);
                         logout.show();
