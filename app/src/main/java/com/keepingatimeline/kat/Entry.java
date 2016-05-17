@@ -8,6 +8,8 @@
  * HOW STORE PIC IN FIREBASE
  */
 
+/*
+
 public class Entry
 {
   int entryId;
@@ -60,3 +62,4 @@ public class Entry
 
 
 }
+*/

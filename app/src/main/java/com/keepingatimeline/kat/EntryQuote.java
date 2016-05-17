@@ -5,7 +5,7 @@
  *
  *
  */
-
+/*
 public class EntryQuote extends Entry
 {
   String s2; // speaker
@@ -22,3 +22,4 @@ public class EntryQuote extends Entry
 
   }
 }
+*/

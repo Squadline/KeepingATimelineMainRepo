@@ -4,18 +4,28 @@
  *
  * 
  */
+/*
+package com.keepingatimeline.kat;
 
+import android.util.Log;
 
 import java.util.LinkedList;
 import java.lang.String;
+import java.util.Map;
+
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+import com.firebase.client.core.view.Event;
 
 public class Timeline
 {
   private int tlId;
-  private LinkedList<Entry> entryList; // entry, event, whatever
+  private LinkedList<Map.Entry> entryList; // entry, event, whatever
   private String title;
   private String des;
-    private boolean admin; 
+  private boolean admin;
   // better be logged in at this point :0
   Timeline( int id )
   {
@@ -24,7 +34,7 @@ public class Timeline
     if( User.fbRef.authData() != null )
     {
       
-      User.fbRef.child(User.TIMELINE + tlId + User.NAME ).addListenerForSingleValueEvent( newValueEventListener() 
+      User.fbRef.child(User.TIMELINE + tlId + User.NAME ).addListenerForSingleValueEvent( newValueEventListener()
           {
             @Override
             public void onDataChange(DataSnapshot ss)
@@ -114,7 +124,7 @@ public class Timeline
   
   }
 
-  public int getId(); // do we need this?
+  //public int getId(); // do we need this?
   public String getTitle()
   {
     return title;
@@ -126,3 +136,4 @@ public class Timeline
   
 
 }
+*/

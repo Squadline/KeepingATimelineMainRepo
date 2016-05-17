@@ -5,7 +5,7 @@
  *
  *
  */
-
+/*
 public class EntryPic
 {
   String des;
@@ -19,3 +19,4 @@ public class EntryPic
 
 
 }
+*/

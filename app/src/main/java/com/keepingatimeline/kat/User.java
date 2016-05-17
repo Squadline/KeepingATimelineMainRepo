@@ -9,21 +9,26 @@
  */
 
 
-
+/*
 //swag
 //
+package com.keepingatimeline.kat;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.String;
 import android.util.Log;
+
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 
 public class User
 {
   //firebase reference for all others to use
   public static Firebase fbRef;
-   public static final String FBBASE = "https://fiery-fire-8218.firebaseio.com/";
+  public static final String FBBASE = "https://fiery-fire-8218.firebaseio.com/";
   public static final String USER   = "users/";
   public static final String TLID   = "tl/";
   public static final String NAME   = "name/";
@@ -40,26 +45,25 @@ public class User
     fbSetup();  
     tlList = new LinkedList<Timeline>();
   }
-  public static 
+  //public static
 
   public static void fbSetup()
   {
     fbRef = new Firebase(FBBASE);
   }
 
-
   // grab userID or ... ?
   public boolean enumTimeline(int userID )
   {
     //ensure logged in
-    if (fb.getAuth() == null) 
+    if (fbRef.getAuth() == null)
     {
       // not authenticated
       return false;
     }
     
-    //grab list of timeline 
-    Firebase fbTl = fb.child(USER + /*WHATEVER ID GOES IN HERE*/ + "/" + TL);
+    //grab list of timeline
+    Firebase fbTl = fbRef.child(USER + "/" + TL);
     //make new emptyish timelines and add to tlArray
      
     fbTl.addListenerForSingleValueEvent( new ValueEventListener()
@@ -85,13 +89,11 @@ public class User
         @Override
         public void onCancelled(FirebaseError err)
         {
-          Log.e("Read timeline failed: " + err.getMessage() );   
+          Log.e("Read timeline failed: " + err.getMessage() );
         }
       });
       
 
-
-   
     //return true if ok or false if not ok
     if(tlList.size() == 0) // for whatever reason
       return false;
@@ -99,3 +101,4 @@ public class User
   }
 
 }
+*/
