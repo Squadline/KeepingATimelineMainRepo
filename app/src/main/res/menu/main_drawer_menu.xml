@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/test1"
+            android:title="Test1"
+            android:icon="@android:drawable/ic_menu_camera" />
+        <item android:id="@+id/test2"
+            android:title="Test2"
+            android:icon="@android:drawable/ic_menu_compass" />
+        <item android:id="@+id/test3"
+            android:title="Test3"
+            android:icon="@android:drawable/ic_menu_help" />
+        <item android:id="@+id/test4"
+            android:title="Test4"
+            android:icon="@android:drawable/ic_menu_call" />
+    </group>
+
+    <item android:title="Settings">
+        <menu>
+            <item android:id="@+id/settings1"
+                android:title="Settings1"
+                android:icon="@android:drawable/ic_menu_save" />
+            <item android:id="@+id/share"
+                android:title="Share"
+                android:icon="@android:drawable/ic_menu_share" />
+        </menu>
+    </item>
+
+</menu>

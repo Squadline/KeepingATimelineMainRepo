@@ -49,8 +49,8 @@ public class MainScreen extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        drawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
-
+        //drawerLayout.setStatusBarBackground(R.color.yellow);
+/*
         //The left scroll bar containing account settings, log out and such
         String[] settings = {"Settings", "Add Event Test", "Timeline Settings Test", "Log Out"};
         ListView myList = (ListView) findViewById(R.id.left_drawer);
@@ -75,7 +75,7 @@ public class MainScreen extends AppCompatActivity {
                 }
             }
         });
-
+*/
         inflateTimeline = new TimelineAdapter(this, tlTitles, tlFriends);
         timelineList = (ListView) findViewById(R.id.timelineList);
         timelineList.setAdapter(inflateTimeline);
