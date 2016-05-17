@@ -21,8 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="ViewTimeline"
-            android:textSize="30sp"
+            android:text="My Timeline"
+            android:textSize="26sp"
             android:textColor="@color/white"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
 
@@ -32,14 +32,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/view2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:src="@android:drawable/stat_sys_headset" />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/addEventFAB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_add" />
 
     </RelativeLayout>
 

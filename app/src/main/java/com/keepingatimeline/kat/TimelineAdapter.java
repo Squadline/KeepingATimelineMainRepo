@@ -81,6 +81,11 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent newActivity = new Intent("com.keepingatimeline.kat.ViewTimeline");
+                ctx.startActivity(newActivity);
+            }
+
+                /*
                 AlertDialog.Builder alert = new AlertDialog.Builder(ctx);
                 alert.setTitle("Timeline: " + tlTitles.get(position));
                 alert.setMessage("Do you want to enter this timeline?");
@@ -97,7 +102,7 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
                         });
                 alert.create();
                 alert.show();
-            }
+            } */
         });
 
         return convertView;
