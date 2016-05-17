@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="70dp">
 
     <TextView
         android:id="@+id/timelineTitle"
@@ -9,24 +9,30 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="22dp"
-        android:text="Title" />
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:text="Title"
+        android:textSize="20sp"
+        android:textColor="@color/black" />
 
     <TextView
         android:id="@+id/timelineFriends"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:layout_below="@+id/timelineTitle"
         android:layout_alignStart="@+id/timelineTitle"
-        android:text="Friends" />
+        android:layout_below="@+id/timelineTitle"
+        android:text="Friends"
+        android:textColor="#666666" />
 
-    <!-- display date of most recent event
     <TextView
         android:id="@+id/recentEvent"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-        -->
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_alignTop="@+id/timelineTitle"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="15dp"
+        android:text="5/17/2016"
+        android:textColor="#666666" />
 
 </RelativeLayout>

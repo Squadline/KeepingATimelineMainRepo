@@ -69,7 +69,7 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
 
         if (convertView == null) {
             LayoutInflater listInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = listInflater.inflate(R.layout.main_timelines, null);
+            convertView = listInflater.inflate(R.layout.main_timelines, parent, false);
         }
 
         TextView textL = (TextView)convertView.findViewById(R.id.timelineTitle);
