@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:label=""
+            android:label="Squadline"
             android:theme="@style/AppTheme.LoginPage"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
@@ -21,6 +21,11 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.keepingatimeline.LoginActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity

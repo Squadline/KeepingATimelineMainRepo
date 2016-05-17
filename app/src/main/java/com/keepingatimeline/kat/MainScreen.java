@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -43,6 +44,7 @@ public class MainScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
+        Firebase.setAndroidContext(this);
 
         // Uses a Toolbar as an ActionBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -72,6 +74,17 @@ public class MainScreen extends AppCompatActivity {
                         Intent timelineSettingsActivity = new Intent("com.keepingatimeline.kat.TimelineSettings");
                         startActivity(timelineSettingsActivity);
                         break;
+                    case 3:
+                        Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
+                        CharSequence t = ref.getAuth().getProviderData().get("email") + " has logged out " + ref.getAuth().getUid();
+                        int time = Toast.LENGTH_LONG;
+                        Toast logout = Toast.makeText(getApplicationContext(), t, time);
+                        logout.show();
+                        ref.unauth();
+                        Intent loginActivity = new Intent("com.keepingatimeline.LoginActivity");
+                        startActivity(loginActivity);
+
+
                 }
             }
         });
@@ -81,7 +94,6 @@ public class MainScreen extends AppCompatActivity {
         timelineList.setAdapter(inflateTimeline);
 
         // moved this from onStart() --Dana
-        Firebase.setAndroidContext(this);
         database = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/trevor/Timelines");
 
         database.addValueEventListener(new ValueEventListener() {
