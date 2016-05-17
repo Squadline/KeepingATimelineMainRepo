@@ -1,9 +1,11 @@
 package com.keepingatimeline.kat;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -80,9 +82,9 @@ public class LoginActivity extends AppCompatActivity {
         SpannableString signUpString = new SpannableString("Don't have an account? Sign Up.");
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
-            public void onClick(View signUpText) {
-                Intent newActivity = new Intent("com.keepingatimeline.kat.RegistrationScreen");
-                startActivity(newActivity);
+            public void onClick(View view) {
+                Intent registrationActivity = new Intent("com.keepingatimeline.kat.RegistrationScreen");
+                startActivity(registrationActivity);
             }
 
             @Override
@@ -101,17 +103,34 @@ public class LoginActivity extends AppCompatActivity {
 
     private void forgotPasswordDialog() {
 
-        EditText emailInput = new EditText(this);
+        final EditText emailInput = new EditText(this);
         dialogBuilder = new AlertDialog.Builder(this);
+        Firebase.setAndroidContext(this);
 
         dialogBuilder.setTitle("Reset Password");
         dialogBuilder.setMessage("Enter your email address and we'll send you a link to reset your password.");
         dialogBuilder.setView(emailInput);
         dialogBuilder.setPositiveButton("Reset", new DialogInterface.OnClickListener() {
-           @Override
+            @Override
             public void onClick(DialogInterface dialog, int which) {
-               Toast.makeText(getApplicationContext(), "Email has been sent.", Toast.LENGTH_SHORT).show();
-           }
+                Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com");
+                String email_address = emailInput.getText().toString();
+                ref.resetPassword(email_address, new Firebase.ResultHandler() {
+                    @Override
+                    public void onSuccess() {
+
+                        Toast.makeText(getApplicationContext(), "Email has been sent.", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onError(FirebaseError firebaseError) {
+
+                        Toast.makeText(getApplicationContext(), "Oops! It seems like there are some error!"
+                                , Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         });
         dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
