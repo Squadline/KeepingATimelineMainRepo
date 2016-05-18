@@ -14,7 +14,7 @@
     <string name="author">Author: </string>
     <string name="save_button">Add to Timeline</string>
     <string name="date">Date: </string>
-    <string name="enter_date">DD-MM-YYYY</string>
+    <string name="enter_date">MM-DD-YYYY</string>
     <string name="add_new_quote_event">Add New Quote Event</string>
     <string name="quote_field">Quote: </string>
     <string name="speaker">Speaker: </string>
@@ -42,6 +42,18 @@
     <!--Registration Page Strings-->
     <string name="firstName">First Name</string>
     <string name="lastName">Last Name</string>
+
+    <!--Sidebar Strings-->
+    <string name="changeEmail">Change Email</string>
+    <string name="changePassword">Change Password</string>
+    <string name="share">Share</string>
+    <string name="help">Help</string>
+    <string name="logout">Log Out</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!--Sample Screen-->
+    <string name="russian">\"Я не знаю, что это значит\"</string>
 
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_main2">Main2Activity</string>

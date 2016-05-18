@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:label="Squadline"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.LoginPage"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
