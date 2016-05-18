@@ -11,22 +11,22 @@
     <style name="AppTheme.LoginPage" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/loginPrimary</item>
         <item name="colorPrimaryDark">@color/loginSecondary</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/loginAccent</item>
         <item name="android:statusBarColor">@color/loginSecondary</item>
     </style>
 
     <style name="AppTheme.RegistrationPage" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/registrationPrimary</item>
         <item name="colorPrimaryDark">@color/registrationSecondary</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/registrationAccent</item>
+        <item name="android:statusBarColor">@color/registrationSecondary</item>
     </style>
 
     <style name="AppTheme.MainScreen" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="colorPrimary">@color/mainPrimary</item>
+        <item name="colorPrimaryDark">@color/mainSecondary</item>
+        <item name="colorAccent">@color/mainAccent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="AppTheme.ViewTimeline" parent="Theme.AppCompat.Light.NoActionBar">

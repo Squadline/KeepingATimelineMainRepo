@@ -1,45 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="190dp"
-    android:background="@color/loginPrimary">
+    android:layout_height="191dp"
+    android:background="@drawable/side_nav_bar"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:src="@mipmap/ic_launcher_5" />
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:paddingTop="47dp"
+        android:src="@mipmap/web_hi_res_512" />
 
     <TextView
         android:id="@+id/user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/user_email"
-        android:layout_alignLeft="@+id/profile_image"
-        android:layout_alignStart="@+id/profile_image"
-        android:paddingBottom="4dp"
-        android:gravity="left"
-        android:text="Trevor Juanitas"
-        android:textSize="14sp"
-        android:textColor="#FFF"
-        android:textStyle="bold" />
+        android:paddingTop="16dp"
+        android:text="Burt Macklin"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <TextView
         android:id="@+id/user_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/user_name"
-        android:layout_alignLeft="@+id/user_name"
-        android:text="tjuanita@ucsd.edu"
-        android:gravity="left"
-        android:textSize="14sp"
-        android:textColor="#fff" />
+        android:text="bmacklin@ucsd.edu" />
 
-</RelativeLayout>
+</LinearLayout>
