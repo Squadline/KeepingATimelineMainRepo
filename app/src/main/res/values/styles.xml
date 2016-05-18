@@ -30,9 +30,10 @@
     </style>
 
     <style name="AppTheme.ViewTimeline" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/viewPrimary</item>
+        <item name="colorPrimaryDark">@color/viewSecondary</item>
         <item name="colorAccent">@color/viewAccent</item>
+        <item name="android:statusBarColor">@color/viewSecondary</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

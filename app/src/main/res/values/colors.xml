@@ -29,7 +29,7 @@
     
     <color name="sideBarMain">#455A64</color>
 
-    <color name="viewPrimary">#3F51B5</color>
-    <color name="viewSecondary">#303F9F</color>
-    <color name="viewAccent">#4B0082</color>
+    <color name="viewPrimary">#37474F</color>
+    <color name="viewSecondary">#263238</color>
+    <color name="viewAccent">#523C52</color>
 </resources>
