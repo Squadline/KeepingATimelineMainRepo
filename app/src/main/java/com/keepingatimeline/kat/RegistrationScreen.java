@@ -76,12 +76,17 @@ public class RegistrationScreen extends AppCompatActivity {
                         String add = user.split("@")[0];
 
                         Firebase userRef = new Firebase("https://fiery-fire-8218.firebaseio.com/Users");
-                        Firebase d = userRef.child(add);
+                        Firebase d = userRef.child(result.get("uid").toString());
                         Map<String, String> post = new HashMap<String, String>();
+                        Map<String, String> child = new HashMap<String, String>();
                         post.put("FirstName", name1st.getText().toString());
                         post.put("LastName", name2nd.getText().toString());
                         post.put("EmailAddress", user);
+                        post.put("Timelines", "0");
                         d.setValue(post);
+                        d = d.child("Timelines");
+                        child.put("My first squadline", "Me");
+                        d.setValue(child);
                     }
 
                     @Override
