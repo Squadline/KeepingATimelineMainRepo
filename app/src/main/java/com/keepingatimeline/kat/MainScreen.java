@@ -47,21 +47,15 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-<<<<<<< HEAD
         // get active user id
         Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
         holder = ref.getAuth().getUid();
 
-        DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        drawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
-=======
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
         /*
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
->>>>>>> 6003d3609b29264d2833a48c80e73a8b714c76ef
 
         //The left scroll bar containing account settings, log out and such
         String[] settings = {"Settings", "Add Event Test", "Timeline Settings Test", "Log Out"};
