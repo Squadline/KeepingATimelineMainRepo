@@ -31,6 +31,7 @@ public class MainScreen extends AppCompatActivity {
     private ArrayList<String> tlFriends = new ArrayList<>();
     private TimelineAdapter inflateTimeline;
     private ListView timelineList;
+    private String holder;
 
     /**
      * By: Dana, Byung, Jimmy, Trevor
@@ -49,6 +50,10 @@ public class MainScreen extends AppCompatActivity {
         // Uses a Toolbar as an ActionBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // get active user id
+        Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
+        holder = ref.getAuth().getUid();
 
         DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         drawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
@@ -75,12 +80,12 @@ public class MainScreen extends AppCompatActivity {
                         startActivity(timelineSettingsActivity);
                         break;
                     case 3:
-                        Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
-                        CharSequence t = ref.getAuth().getProviderData().get("email") + " has logged out " + ref.getAuth().getUid();
+                        Firebase dref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
+                        CharSequence t = dref.getAuth().getProviderData().get("email") + " has logged out ";
                         int time = Toast.LENGTH_LONG;
                         Toast logout = Toast.makeText(getApplicationContext(), t, time);
                         logout.show();
-                        ref.unauth();
+                        dref.unauth();
                         Intent loginActivity = new Intent("com.keepingatimeline.LoginActivity");
                         startActivity(loginActivity);
 
@@ -94,7 +99,8 @@ public class MainScreen extends AppCompatActivity {
         timelineList.setAdapter(inflateTimeline);
 
         // moved this from onStart() --Dana
-        database = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/trevor/Timelines");
+        //set url reference to active user
+        database = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder + "/Timelines");
 
         database.addValueEventListener(new ValueEventListener() {
             @Override
