@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 
+import com.firebase.client.Firebase;
+
 public class AddEvent extends AppCompatActivity implements View.OnClickListener{
     private static final int RESULT_LOAD_IMAGE = 1;
     View quoteView;
@@ -22,7 +24,8 @@ public class AddEvent extends AppCompatActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.keepingatimeline.kat.R.layout.activity_add_event);
-
+        Firebase.setAndroidContext(this);
+        
         quoteView = findViewById(com.keepingatimeline.kat.R.id.AddQuoteEvent);
         photoView = findViewById(com.keepingatimeline.kat.R.id.AddPhotoEvent);
         textView = findViewById(com.keepingatimeline.kat.R.id.AddTextEvent);

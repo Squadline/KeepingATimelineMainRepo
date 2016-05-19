@@ -25,6 +25,7 @@ public class ViewTimeline extends AppCompatActivity {
         // Adds back button to toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_navigation_arrow_back);
 
         addEvent = (ImageButton) findViewById(R.id.addEventFAB);
         addEvent.setOnClickListener(new View.OnClickListener() {
