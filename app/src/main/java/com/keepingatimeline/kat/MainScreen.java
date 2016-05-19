@@ -158,7 +158,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -192,7 +192,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             startActivity(loginActivity);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

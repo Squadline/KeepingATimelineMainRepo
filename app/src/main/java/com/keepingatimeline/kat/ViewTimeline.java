@@ -114,9 +114,19 @@ public class ViewTimeline extends AppCompatActivity implements NavigationView.On
             startActivity(loginActivity);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.timeline_drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.timeline_drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     //shows help dialogue --Dana
@@ -124,7 +134,7 @@ public class ViewTimeline extends AppCompatActivity implements NavigationView.On
         AlertDialog.Builder helpDialogBuilder = new AlertDialog.Builder(this);
 
         helpDialogBuilder.setTitle("Help");
-        helpDialogBuilder.setMessage("Sorry, no one can help you now...\n\nWas this helpful?");
+        helpDialogBuilder.setMessage("We're sorry, but NO ONE CAN HELP YOU NOW...\n\nWas this helpful?");
         helpDialogBuilder.setPositiveButton("Yes...?", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
