@@ -121,7 +121,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".RecoverPassword"
-            android:label="Recover Password">
+            android:label="Recover Password"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.RecoverPasswordScreen" />
 

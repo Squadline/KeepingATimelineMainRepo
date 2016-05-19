@@ -1,9 +1,11 @@
 package com.keepingatimeline.kat;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -176,7 +178,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         } else if (id == R.id.navShare) {
 
         } else if (id == R.id.navHelp) {
-
+            getMainScreenHelp(); // sets up the help dialogue --Dana
         } else if (id == R.id.navLogOut) {
 
             Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
@@ -193,5 +195,34 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    // displays a help dialogue --Dana
+    private void getMainScreenHelp(){
+        AlertDialog.Builder helpDialogBuilder = new AlertDialog.Builder(this);
+
+        helpDialogBuilder.setTitle("Help");
+        helpDialogBuilder.setMessage("Select a timeline to view it or press the '+' button to create a new timeline.\n\nWas this helpful?");
+        helpDialogBuilder.setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //do nothing
+            }
+        });
+        /* helpDialogBuilder.setNeutralButton("A Bit...", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //do nothing
+            }
+        }); */
+        helpDialogBuilder.setNegativeButton("Not Really", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //do nothing
+            }
+        });
+
+        AlertDialog dialogHelp = helpDialogBuilder.create();
+        dialogHelp.show();
     }
 }
