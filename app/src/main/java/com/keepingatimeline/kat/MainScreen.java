@@ -1,7 +1,8 @@
 package com.keepingatimeline.kat;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,11 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,7 +20,7 @@ import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MainScreen extends AppCompatActivity {
+public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private Firebase database;
     private ArrayList<String> tlTitles = new ArrayList<>();
@@ -51,12 +47,21 @@ public class MainScreen extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+<<<<<<< HEAD
         // get active user id
         Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
         holder = ref.getAuth().getUid();
 
         DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         drawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
+=======
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+
+        /*
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+>>>>>>> 6003d3609b29264d2833a48c80e73a8b714c76ef
 
         //The left scroll bar containing account settings, log out and such
         String[] settings = {"Settings", "Add Event Test", "Timeline Settings Test", "Log Out"};
@@ -93,6 +98,8 @@ public class MainScreen extends AppCompatActivity {
                 }
             }
         });
+        */
+
 
         inflateTimeline = new TimelineAdapter(this, tlTitles, tlFriends);
         timelineList = (ListView) findViewById(R.id.timelineList);
@@ -151,5 +158,46 @@ public class MainScreen extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.navChangeEmail) {
+
+        } else if (id == R.id.navChangePassword) {
+
+        } else if (id == R.id.navShare) {
+
+        } else if (id == R.id.navHelp) {
+
+        } else if (id == R.id.navLogOut) {
+
+            Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
+            CharSequence logoutToast = ref.getAuth().getProviderData().get("email") + " has logged out " + ref.getAuth().getUid();
+
+            Toast logout = Toast.makeText(getApplicationContext(), logoutToast, Toast.LENGTH_SHORT);
+            logout.show();
+            ref.unauth();
+
+            Intent loginActivity = new Intent("com.keepingatimeline.LoginActivity");
+            startActivity(loginActivity);
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

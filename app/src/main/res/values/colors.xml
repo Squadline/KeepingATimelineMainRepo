@@ -8,13 +8,28 @@
     <color name="black">#000000</color>
     <color name="yellow">#FFFF00</color>
 
-    <color name="loginPrimary">#3F51B5</color>
-    <color name="loginSecondary">#303F9F</color>
+    <color name="grey50">#FAFAFA</color>
+    <color name="grey100">#F5F5F5</color>
+    <color name="grey300">#E0E0E0</color>
+    <color name="grey800">#424242</color>
+    <color name="grey850">#303030</color>
+    <color name="grey900">#212121</color>
 
-    <color name="registrationPrimary">#4B0082</color>
-    <color name="registrationSecondary">#2E0854</color>
+    <color name="loginPrimary">#37474F</color>
+    <color name="loginSecondary">#263238</color>
+    <color name="loginAccent">#FF4081</color>
 
-    <color name="viewPrimary">#3F51B5</color>
-    <color name="viewSecondary">#303F9F</color>
-    <color name="viewAccent">#4B0082</color>
+    <color name="registrationPrimary">#523C52</color>
+    <color name="registrationSecondary">#3D2D3D</color>
+    <color name="registrationAccent">#FF4081</color>
+
+    <color name="mainPrimary">#37474F</color>
+    <color name="mainSecondary">#263238</color>
+    <color name="mainAccent">#FF4081</color>
+    
+    <color name="sideBarMain">#455A64</color>
+
+    <color name="viewPrimary">#37474F</color>
+    <color name="viewSecondary">#263238</color>
+    <color name="viewAccent">#523C52</color>
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -13,7 +13,8 @@
         android:minHeight="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary" >
+        android:background="@color/viewPrimary"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" >
 
         <!-- Toolbar Settings -->
         <TextView
@@ -21,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="My Timeline"
+            android:text="Allies"
             android:textSize="26sp"
             android:textColor="@color/white"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
@@ -32,6 +33,124 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <!-- Sample Screens -->
+        <TextView
+            android:id="@+id/title0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:text="Wise words from Stalin"
+            android:textSize="16sp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/title0date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/title0"
+            android:layout_below="@+id/title0"
+            android:text="1952"
+            android:textSize="14sp"
+            android:textColor="#666666" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_action_name"
+            android:layout_alignTop="@+id/title0"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"
+            android:background="@color/black"
+            android:layout_below="@+id/title0date"
+            android:layout_marginTop="6dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/russian"
+            android:layout_below="@+id/title0date"
+            android:layout_alignStart="@+id/title0date"
+            android:layout_marginTop="20dp"
+            android:id="@+id/textView"
+            android:textSize="30sp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/author1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/title0"
+            android:layout_below="@+id/textView"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="40dp"
+            android:text="--Joseph Stalin"
+            android:textSize="20sp"
+            android:textColor="@color/black" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"
+            android:background="@color/loginPrimary"
+            android:layout_below="@+id/author1"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Squad"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_below="@+id/view2"
+            android:layout_alignStart="@+id/title0" />
+
+        <TextView
+            android:id="@+id/title1date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/title1"
+            android:layout_below="@+id/title1"
+            android:text="1943"
+            android:textSize="14sp"
+            android:textColor="#666666" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_action_name"
+            android:layout_alignTop="@+id/title1"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp" />
+
+        <View
+            android:id="@+id/view2222"
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"
+            android:background="@color/black"
+            android:layout_below="@+id/title1date"
+            android:layout_marginTop="6dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView2"
+            android:layout_below="@+id/view2222"
+
+            android:src="@drawable/tehranconference" />
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/addEventFAB"
             android:layout_width="wrap_content"
@@ -39,7 +158,7 @@
             android:layout_margin="@dimen/fab_margin"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_add" />
+            android:src="@drawable/ic_action_add" />
 
     </RelativeLayout>
 
