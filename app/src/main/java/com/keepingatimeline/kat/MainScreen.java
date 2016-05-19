@@ -27,6 +27,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private ArrayList<String> tlFriends = new ArrayList<>();
     private TimelineAdapter inflateTimeline;
     private ListView timelineList;
+    private String holder;
 
     /**
      * By: Dana, Byung, Jimmy, Trevor
@@ -46,12 +47,21 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+<<<<<<< HEAD
+        // get active user id
+        Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
+        holder = ref.getAuth().getUid();
+
+        DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
+=======
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
         /*
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+>>>>>>> 6003d3609b29264d2833a48c80e73a8b714c76ef
 
         //The left scroll bar containing account settings, log out and such
         String[] settings = {"Settings", "Add Event Test", "Timeline Settings Test", "Log Out"};
@@ -75,12 +85,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                         startActivity(timelineSettingsActivity);
                         break;
                     case 3:
-                        Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
-                        CharSequence t = ref.getAuth().getProviderData().get("email") + " has logged out " + ref.getAuth().getUid();
+                        Firebase dref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
+                        CharSequence t = dref.getAuth().getProviderData().get("email") + " has logged out ";
                         int time = Toast.LENGTH_LONG;
                         Toast logout = Toast.makeText(getApplicationContext(), t, time);
                         logout.show();
-                        ref.unauth();
+                        dref.unauth();
                         Intent loginActivity = new Intent("com.keepingatimeline.LoginActivity");
                         startActivity(loginActivity);
 
@@ -96,7 +106,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         timelineList.setAdapter(inflateTimeline);
 
         // moved this from onStart() --Dana
-        database = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/trevor/Timelines");
+        //set url reference to active user
+        database = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder + "/Timelines");
 
         database.addValueEventListener(new ValueEventListener() {
             @Override
