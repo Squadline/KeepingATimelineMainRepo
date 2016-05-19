@@ -66,6 +66,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onAuthenticationError(FirebaseError firebaseError) {
                         // there was an error
                         Log.d("Invalid:", "username/password combination");
+                        Toast.makeText(getApplicationContext(), "ERROR: The email address or password you entered is not valid. Please try again."
+                                , Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -119,15 +121,15 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess() {
 
-                        Toast.makeText(getApplicationContext(), "Email has been sent.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Email has been sent.", Toast.LENGTH_LONG).show();
 
                     }
 
                     @Override
                     public void onError(FirebaseError firebaseError) {
 
-                        Toast.makeText(getApplicationContext(), "Oops! It seems like there are some error!"
-                                , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "ERROR: There is no user registered with that email address."
+                                , Toast.LENGTH_LONG).show();
                     }
                 });
             }

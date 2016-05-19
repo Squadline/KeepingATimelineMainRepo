@@ -11,18 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/addEvent"
-        android:id="@+id/addNewTitle"
-        android:textSize="32sp"
-        android:textColor="#ff0000"
-        android:singleLine="false"
-        android:gravity="center_horizontal"
-        android:textStyle="normal" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/selectType"
         android:id="@+id/selection"
         android:textSize="26sp"
