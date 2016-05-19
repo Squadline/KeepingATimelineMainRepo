@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/app_name"
-                android:textSize="26sp"
+                android:textSize="28sp"
                 android:textColor="@color/white"
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
                 <!--
@@ -50,9 +50,13 @@
             android:id="@+id/timelineList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:divider="@color/black"
             android:dividerHeight="0.2dp" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.2dp"
+            android:background="@color/black" />
 
     </LinearLayout>
 

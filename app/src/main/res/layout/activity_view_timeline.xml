@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Allies"
-            android:textSize="26sp"
+            android:textSize="28sp"
             android:textColor="@color/white"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
 
