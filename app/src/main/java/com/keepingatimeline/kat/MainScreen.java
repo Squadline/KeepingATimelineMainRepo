@@ -9,9 +9,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,6 +32,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private TimelineAdapter inflateTimeline;
     private ListView timelineList;
     private String holder;
+    private String newName;
 
     /**
      * By: Dana, Byung, Jimmy, Trevor
@@ -148,8 +151,33 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_timeline:
-                Intent addTimelineActivity = new Intent("com.keepingatimeline.kat.Timelineshower");
-                startActivity(addTimelineActivity);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Name your new Timeline");
+
+                // Set up the input
+                final EditText input = new EditText(this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        newName = input.getText().toString();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+
+
+                //Intent addTimelineActivity = new Intent("com.keepingatimeline.kat.Timelineshower");
+                //startActivity(addTimelineActivity);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
