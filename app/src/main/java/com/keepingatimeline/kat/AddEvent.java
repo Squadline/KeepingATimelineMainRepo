@@ -1,13 +1,17 @@
 package com.keepingatimeline.kat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -44,10 +48,31 @@ public class AddEvent extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        TextView postText = (TextView)findViewById(R.id.postText);
+        TextView cancelText = (TextView)findViewById(R.id.cancelText);
+
+        postText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        cancelText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+/*
         // Adds back button to toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_clear);
+
+        Drawable drawableClose = ContextCompat.getDrawable(this, R.drawable.ic_close);
+        drawableClose = DrawableCompat.wrap(drawableClose);
+        DrawableCompat.setTint(drawableClose, ContextCompat.getColor(this, R.color.white));
+        getSupportActionBar().setHomeAsUpIndicator(drawableClose);*/
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.eventTabs);
         tabLayout.addTab(tabLayout.newTab().setText("Photo"));
@@ -61,7 +86,7 @@ public class AddEvent extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        tabLayout.setTabTextColors(Color.WHITE, Color.BLACK);
+        tabLayout.setTabTextColors(Color.GRAY, Color.WHITE);
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -142,10 +167,16 @@ public class AddEvent extends AppCompatActivity {
             uploadedPhoto.setImageURI(selectedImage);
         }
     }*/
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.add_event_menu, menu);
+
+        Drawable drawableCheck = menu.findItem(R.id.postEvent).getIcon();
+        drawableCheck = DrawableCompat.wrap(drawableCheck);
+        DrawableCompat.setTint(drawableCheck, ContextCompat.getColor(this, R.color.white));
+        menu.findItem(R.id.postEvent).setIcon(drawableCheck);
+
         return true;
     }
 
@@ -158,5 +189,5 @@ public class AddEvent extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 }

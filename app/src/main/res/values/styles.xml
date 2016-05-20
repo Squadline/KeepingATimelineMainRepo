@@ -34,6 +34,7 @@
         <item name="colorPrimaryDark">@color/viewSecondary</item>
         <item name="colorAccent">@color/viewAccent</item>
         <item name="android:statusBarColor">@color/viewSecondary</item>
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
     <style name="AppTheme.AddEvent" parent="Theme.AppCompat.Light.NoActionBar">

@@ -2,10 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!--
     <item
         android:id="@+id/postEvent"
-        android:title="Add Event"
-        android:icon="@drawable/ic_action_check"
-        app:showAsAction="always" />
+        android:title="Post"
+        android:icon="@drawable/ic_close"
+        app:showAsAction="ifRoom" />-->
 
 </menu>

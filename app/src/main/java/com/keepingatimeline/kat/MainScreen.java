@@ -1,15 +1,22 @@
 package com.keepingatimeline.kat;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,6 +26,8 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -28,6 +37,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private TimelineAdapter inflateTimeline;
     private ListView timelineList;
     private String holder;
+    private AlertDialog.Builder dialogBuilder;
+    private String newName;
+
+    private String emailAdd;
 
     /**
      * By: Dana, Byung, Jimmy, Trevor
@@ -46,6 +59,14 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         // Uses a Toolbar as an ActionBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        Drawable drawableBack = ContextCompat.getDrawable(this, R.drawable.ic_menu);
+        drawableBack = DrawableCompat.wrap(drawableBack);
+        DrawableCompat.setTint(drawableBack, ContextCompat.getColor(this, R.color.white));
+        getSupportActionBar().setHomeAsUpIndicator(drawableBack);
 
         // get active user id
         Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
@@ -87,8 +108,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                         dref.unauth();
                         Intent loginActivity = new Intent("com.keepingatimeline.LoginActivity");
                         startActivity(loginActivity);
-
-
                 }
             }
         });
@@ -139,15 +158,85 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+
+        Drawable drawableAdd = menu.findItem(R.id.add_timeline).getIcon();
+        drawableAdd = DrawableCompat.wrap(drawableAdd);
+        DrawableCompat.setTint(drawableAdd, ContextCompat.getColor(this, R.color.white));
+        menu.findItem(R.id.add_timeline).setIcon(drawableAdd);
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);
+                drawer.openDrawer(GravityCompat.START);
+                return true;
             case R.id.add_timeline:
-                Intent addTimelineActivity = new Intent("com.keepingatimeline.kat.Timelineshower");
-                startActivity(addTimelineActivity);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Name your new Timeline");
+
+                // Set up the input
+                final EditText input = new EditText(this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
+                        holder = ref.getAuth().getUid().toString();
+                        ref = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder + "/EmailAddress");
+
+                        ref.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                emailAdd = dataSnapshot.getValue().toString();
+                                newName = input.getText().toString();
+                                database = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines");
+                                database = database.push();
+                                Map<String, String> post = new HashMap<String, String>();
+                                Map<String, String> post1 = new HashMap<String, String>();
+                                Map<String, String> event = new HashMap<String, String>();
+                                Map<String, Object> event1 = new HashMap<String, Object>();
+                                post.put("Admin", emailAdd);
+                                post.put("Title", newName);
+                                database.setValue(post);
+
+                                Firebase user =  database.child("Users");
+                                post1.put("Email" , emailAdd);
+                                user.setValue(post1);
+
+                                Firebase events = database.child("Events");
+                                event.put("NameE", newName + "created");
+                                events.setValue(event);
+
+                                database = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder + "/Timelines");
+                                event1.put(newName, emailAdd);
+                                database.updateChildren(event1);
+                            }
+
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
+
+                            }
+                        });
+
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+
+                //Intent addTimelineActivity = new Intent("com.keepingatimeline.kat.Timelineshower");
+                //startActivity(addTimelineActivity);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -156,7 +245,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -176,7 +265,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         } else if (id == R.id.navShare) {
 
         } else if (id == R.id.navHelp) {
-
+            getMainScreenHelp(); // sets up the help dialogue --Dana
         } else if (id == R.id.navLogOut) {
 
             Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
@@ -190,8 +279,63 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             startActivity(loginActivity);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    // displays a help dialogue --Dana
+    private void getMainScreenHelp(){
+        AlertDialog.Builder helpDialogBuilder = new AlertDialog.Builder(this);
+
+        helpDialogBuilder.setTitle("Help");
+        helpDialogBuilder.setMessage("Select a timeline to view it or press the '+' button to create a new timeline.\n\nWas this helpful?");
+        helpDialogBuilder.setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //do nothing
+            }
+        });
+        /* helpDialogBuilder.setNeutralButton("A Bit...", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //do nothing
+            }
+        }); */
+        helpDialogBuilder.setNegativeButton("Not Really", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //do nothing
+            }
+        });
+
+        AlertDialog dialogHelp = helpDialogBuilder.create();
+        dialogHelp.show();
+    }
+
+    private void addTimeLineDialog() {
+        final EditText Title = new EditText(this);
+        dialogBuilder = new AlertDialog.Builder(this);
+        Firebase.setAndroidContext(this);
+
+        dialogBuilder.setTitle("Add A Timeline: ");
+        dialogBuilder.setMessage("Alright! What name do you want your new Timeline to be!?");
+        dialogBuilder.setView(Title);
+        dialogBuilder.setPositiveButton("Reset", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //do nothing
+            }
+        });
+
+        AlertDialog dialogForgotPassword = dialogBuilder.create();
+        dialogForgotPassword.show();
+    }
+
 }
