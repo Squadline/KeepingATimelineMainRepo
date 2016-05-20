@@ -34,6 +34,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private TimelineAdapter inflateTimeline;
     private ListView timelineList;
     private String holder;
+    private AlertDialog.Builder dialogBuilder;
     private String newName;
 
     private String emailAdd;
@@ -96,8 +97,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                         dref.unauth();
                         Intent loginActivity = new Intent("com.keepingatimeline.LoginActivity");
                         startActivity(loginActivity);
-
-
                 }
             }
         });
@@ -215,7 +214,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
                 builder.show();
 
-
                 //Intent addTimelineActivity = new Intent("com.keepingatimeline.kat.Timelineshower");
                 //startActivity(addTimelineActivity);
                 return true;
@@ -226,7 +224,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -260,7 +258,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             startActivity(loginActivity);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -293,4 +291,30 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         AlertDialog dialogHelp = helpDialogBuilder.create();
         dialogHelp.show();
     }
+
+    private void addTimeLineDialog() {
+        final EditText Title = new EditText(this);
+        dialogBuilder = new AlertDialog.Builder(this);
+        Firebase.setAndroidContext(this);
+
+        dialogBuilder.setTitle("Add A Timeline: ");
+        dialogBuilder.setMessage("Alright! What name do you want your new Timeline to be!?");
+        dialogBuilder.setView(Title);
+        dialogBuilder.setPositiveButton("Reset", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //do nothing
+            }
+        });
+
+        AlertDialog dialogForgotPassword = dialogBuilder.create();
+        dialogForgotPassword.show();
+    }
+
 }
