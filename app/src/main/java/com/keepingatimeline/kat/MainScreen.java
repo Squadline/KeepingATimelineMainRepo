@@ -9,9 +9,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,6 +23,8 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -30,6 +34,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private TimelineAdapter inflateTimeline;
     private ListView timelineList;
     private String holder;
+    private AlertDialog.Builder dialogBuilder;
 
     /**
      * By: Dana, Byung, Jimmy, Trevor
@@ -147,7 +152,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.add_timeline:
+            case R.id.add_timeline:    // add time line button
+
                 Intent addTimelineActivity = new Intent("com.keepingatimeline.kat.Timelineshower");
                 startActivity(addTimelineActivity);
                 return true;
@@ -225,4 +231,53 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         AlertDialog dialogHelp = helpDialogBuilder.create();
         dialogHelp.show();
     }
+
+    private void addTimeLineDialog() {
+        final EditText Title = new EditText(this);
+        dialogBuilder = new AlertDialog.Builder(this);
+        Firebase.setAndroidContext(this);
+
+        dialogBuilder.setTitle("Add A Timeline: ");
+        dialogBuilder.setMessage("Alright! What name do you want your new Timeline to be!?");
+        dialogBuilder.setView(Title);
+        dialogBuilder.setPositiveButton("Reset", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+
+            }
+        });
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //do nothing
+            }
+        });
+
+        AlertDialog dialogForgotPassword = dialogBuilder.create();
+        dialogForgotPassword.show();
+    }
+
+
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setTitle("Name your new Timeline");
+
+    // Set up the input
+    final EditText input = new EditText(this);
+    input.setInputType(InputType.TYPE_CLASS_TEXT);
+    builder.setView(input);
+
+    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            newName = input.getText().toString();
+        }
+    });
+    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+    });
+
+    builder.show();
+
+
 }
