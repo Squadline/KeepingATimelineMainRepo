@@ -34,7 +34,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private TimelineAdapter inflateTimeline;
     private ListView timelineList;
     private String holder;
+<<<<<<< HEAD
     private AlertDialog.Builder dialogBuilder;
+=======
+    private String newName;
+>>>>>>> f9b5e3df4cd34c8451284c635dc918500cd223a3
 
     /**
      * By: Dana, Byung, Jimmy, Trevor
@@ -152,10 +156,41 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+<<<<<<< HEAD
             case R.id.add_timeline:    // add time line button
 
                 Intent addTimelineActivity = new Intent("com.keepingatimeline.kat.Timelineshower");
                 startActivity(addTimelineActivity);
+=======
+            case R.id.add_timeline:
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Name your new Timeline");
+
+                // Set up the input
+                final EditText input = new EditText(this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        newName = input.getText().toString();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+
+
+                //Intent addTimelineActivity = new Intent("com.keepingatimeline.kat.Timelineshower");
+                //startActivity(addTimelineActivity);
+>>>>>>> f9b5e3df4cd34c8451284c635dc918500cd223a3
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
