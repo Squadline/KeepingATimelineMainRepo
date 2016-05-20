@@ -95,8 +95,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                         dref.unauth();
                         Intent loginActivity = new Intent("com.keepingatimeline.LoginActivity");
                         startActivity(loginActivity);
-
-
                 }
             }
         });
