@@ -87,7 +87,8 @@
         </activity>
         <activity
             android:name=".AddEvent"
-            android:label="Add an Event"
+            android:label=""
+            android:theme="@style/AppTheme.AddEvent"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>

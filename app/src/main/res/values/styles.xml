@@ -36,6 +36,13 @@
         <item name="android:statusBarColor">@color/viewSecondary</item>
     </style>
 
+    <style name="AppTheme.AddEvent" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/addEventPrimary</item>
+        <item name="colorPrimaryDark">@color/addEventSecondary</item>
+        <item name="colorAccent">@color/addEventAccent</item>
+        <item name="android:statusBarColor">@color/addEventSecondary</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

@@ -35,7 +35,6 @@ public class LoginActivity extends AppCompatActivity {
     private AlertDialog.Builder dialogBuilder;
     private TextView username;
     private TextView password;
-    private Button login;
     private Firebase fRef;
 
     @Override
@@ -49,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         TextView forgotPass = (TextView) findViewById(R.id.forgotPassword);
         username = (TextView) findViewById(R.id.loginEmail);
         password = (TextView) findViewById(R.id.loginPassword);
-        login = (Button) findViewById(R.id.loginButton);
         fRef = new Firebase("https://fiery-fire-8218.firebaseio.com/");
 
         btnLogin.setOnClickListener(new View.OnClickListener() {

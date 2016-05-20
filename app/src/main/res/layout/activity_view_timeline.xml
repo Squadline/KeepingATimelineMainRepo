@@ -13,8 +13,7 @@
         android:minHeight="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/viewPrimary"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" >
+        android:background="@color/viewPrimary" >
 
         <!-- Toolbar Settings -->
         <TextView
@@ -23,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Allies"
-            android:textSize="28sp"
+            android:textSize="24sp"
             android:textColor="@color/white"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
 
