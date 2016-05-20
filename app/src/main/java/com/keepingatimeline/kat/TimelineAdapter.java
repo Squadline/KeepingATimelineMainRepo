@@ -23,6 +23,8 @@ import com.firebase.client.ValueEventListener;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Jimmy on 5/11/2016.
@@ -33,6 +35,10 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
     private Context ctx;
     private ArrayList<String> tlTitles;
     private ArrayList<String> tlFriends;
+    private Firebase current;
+    private String temp;
+    private String holder;
+    private int position2;
 
     public TimelineAdapter(Context context, ArrayList<String> tlTitles, ArrayList<String> tlFriends)
     {
@@ -65,7 +71,9 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
 
     public View getView(final int position, View convertView, ViewGroup parent)
     {
-        Log.d("getView", "getView was called, " + position);
+        //Log.d("getView", "getView was called, " + position);
+
+        this.position2 = position;
 
         if (convertView == null) {
             LayoutInflater listInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -77,33 +85,6 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
 
         TextView textS = (TextView)convertView.findViewById(R.id.timelineFriends);
         textS.setText(tlFriends.get(position));
-
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent viewTimelineActivity = new Intent("com.keepingatimeline.kat.ViewTimeline");
-                ctx.startActivity(viewTimelineActivity);
-            }
-
-                /*
-                AlertDialog.Builder alert = new AlertDialog.Builder(ctx);
-                alert.setTitle("Timeline: " + tlTitles.get(position));
-                alert.setMessage("Do you want to enter this timeline?");
-                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        Intent newActivity = new Intent("com.keepingatimeline.kat.ViewTimeline");
-                        ctx.startActivity(newActivity);
-                    }
-                })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing (cancel)
-                            }
-                        });
-                alert.create();
-                alert.show();
-            } */
-        });
 
         return convertView;
 
