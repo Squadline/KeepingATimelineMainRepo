@@ -13,6 +13,8 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -38,6 +40,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private String newName;
 
     private String emailAdd;
+
+    private String temp;
+    private Firebase current;
 
     /**
      * By: Dana, Byung, Jimmy, Trevor
@@ -107,6 +112,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         timelineList = (ListView) findViewById(R.id.timelineList);
         timelineList.setAdapter(inflateTimeline);
 
+
         // moved this from onStart() --Dana
         //set url reference to active user
         database = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder + "/Timelines");
@@ -123,8 +129,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 }
                 inflateTimeline.notifyDataSetChanged();
 
-                //testing if you can get active user
-                System.out.println(database.getAuth().getUid());
             }
 
             @Override
@@ -132,7 +136,39 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             }
         });
-    }
+
+        timelineList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                current = new Firebase("https://fiery-fire-8218.firebaseio.com/");
+                holder = current.getAuth().getUid().toString();
+                current = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder +"/Timelines");
+                final int clicker = position;
+
+                String clicked = tlTitles.get(clicker);
+                current = current.child(clicked);
+                current.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        System.out.println(dataSnapshot.getValue());
+                        Firebase tCurrent = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder);
+                        Map<String, Object> enter = new HashMap<String, Object>();
+                        enter.put("Current", "" + dataSnapshot.getValue());
+                        tCurrent.updateChildren(enter);
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
+
+                Intent viewTimelineActivity = new Intent("com.keepingatimeline.kat.ViewTimeline");
+                startActivity(viewTimelineActivity);
+            }
+
+        });
+        }
 
     @Override
     protected void onStart() {
@@ -176,6 +212,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                 newName = input.getText().toString();
                                 database = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines");
                                 database = database.push();
+                                String tKey = database.getKey();
                                 Map<String, String> post = new HashMap<String, String>();
                                 Map<String, String> post1 = new HashMap<String, String>();
                                 Map<String, String> event = new HashMap<String, String>();
@@ -193,7 +230,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                 events.setValue(event);
 
                                 database = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder + "/Timelines");
-                                event1.put(newName, emailAdd);
+                                event1.put(newName, tKey);
                                 database.updateChildren(event1);
                             }
 
