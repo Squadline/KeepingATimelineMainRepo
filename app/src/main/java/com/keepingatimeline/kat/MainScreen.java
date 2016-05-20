@@ -23,6 +23,8 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -33,6 +35,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private ListView timelineList;
     private String holder;
     private String newName;
+
+    private String emailAdd;
 
     /**
      * By: Dana, Byung, Jimmy, Trevor
@@ -159,11 +163,47 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 final EditText input = new EditText(this);
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
                 builder.setView(input);
-
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        newName = input.getText().toString();
+                        Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
+                        holder = ref.getAuth().getUid().toString();
+                        ref = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder + "/EmailAddress");
+
+                        ref.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                emailAdd = dataSnapshot.getValue().toString();
+                                newName = input.getText().toString();
+                                database = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines");
+                                database = database.push();
+                                Map<String, String> post = new HashMap<String, String>();
+                                Map<String, String> post1 = new HashMap<String, String>();
+                                Map<String, String> event = new HashMap<String, String>();
+                                Map<String, Object> event1 = new HashMap<String, Object>();
+                                post.put("Admin", emailAdd);
+                                post.put("Title", newName);
+                                database.setValue(post);
+
+                                Firebase user =  database.child("Users");
+                                post1.put("Email" , emailAdd);
+                                user.setValue(post1);
+
+                                Firebase events = database.child("Events");
+                                event.put("NameE", newName + "created");
+                                events.setValue(event);
+
+                                database = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder + "/Timelines");
+                                event1.put(newName, emailAdd);
+                                database.updateChildren(event1);
+                            }
+
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
+
+                            }
+                        });
+
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
