@@ -148,6 +148,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             }
         });
 
+        //creates a pointer to from the user table to the timeline table for future use
         timelineList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -161,7 +162,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 current.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        System.out.println(dataSnapshot.getValue());
                         Firebase tCurrent = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder);
                         Map<String, Object> enter = new HashMap<String, Object>();
                         enter.put("Current", "" + dataSnapshot.getValue());
@@ -247,7 +247,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                 user.setValue(post1);
 
                                 Firebase events = database.child("Events");
-                                event.put("NameE", newName + "created");
+                                event.put("NameE", "Timeline: " + newName + " was created");
                                 events.setValue(event);
 
                                 database = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder + "/Timelines");

@@ -13,6 +13,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 public class ViewTimeline extends AppCompatActivity {
 
@@ -21,10 +29,49 @@ public class ViewTimeline extends AppCompatActivity {
     RecyclerView.Adapter rvAdapter;
     RecyclerView.LayoutManager rvLayoutManager;
 
+    private Firebase ref;
+    private Firebase tLine;
+    private Firebase tLineTitle;
+    private String auth;
+
+    private String textTBar;
+    private TextView toolTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_timeline);
+        Firebase.setAndroidContext(this);
+
+        //sets title of the actionbar to the title of the timeline clicked
+        ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
+        auth = ref.getAuth().getUid();
+        ref = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + auth);
+        ref = ref.child("Current");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                auth = (String) dataSnapshot.getValue();
+                tLine = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines/" + auth);
+                tLineTitle = tLine.child("Title");
+                tLineTitle.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        textTBar = (String) dataSnapshot.getValue();
+                        TextView toolTitle = (TextView) findViewById(R.id.toolbar_title);
+                        toolTitle.setText(textTBar);
+                    }
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
         // Uses a Toolbar as an ActionBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

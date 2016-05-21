@@ -65,8 +65,8 @@ public class RegistrationScreen extends AppCompatActivity {
                         post.put("Timelines", "0");
                         d.setValue(post);
                         d = d.child("Timelines");
-                        child.put("My first squadline", "Me");
-                        d.setValue(child);
+                        //child.put("My first squadline", "Me");
+                        //d.setValue(child);
 
                         finish();
                     }
