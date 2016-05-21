@@ -91,7 +91,7 @@
             android:theme="@style/AppTheme.AddEvent"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysVisible|adjustPan">
+            android:windowSoftInputMode="stateAlwaysVisible|adjustNothing">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.AddEvent" />
 

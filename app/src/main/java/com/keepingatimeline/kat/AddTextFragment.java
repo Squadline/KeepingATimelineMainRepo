@@ -35,7 +35,7 @@ public class AddTextFragment extends Fragment {
         dateTextInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = new DatePickerFragment();
+                DialogFragment newFragment = new DatePickerText();
                 newFragment.show(getFragmentManager(),"Date Picker");
             }
         });

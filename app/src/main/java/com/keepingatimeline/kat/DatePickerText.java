@@ -13,7 +13,7 @@ import java.util.Calendar;
 /**
  * Created by Trevor on 5/20/2016.
  */
-public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+public class DatePickerText extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -29,10 +29,10 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
 
-        TextView dateQuoteInput = (TextView) getActivity().findViewById(R.id.dateQuoteInput);
+        TextView dateTextInput = (TextView) getActivity().findViewById(R.id.dateTextInput);
 
         //Months are indexed starting at 0, add 1 to month value
         String dateInput = (month + 1) + "/" + day + "/" + year;
-        dateQuoteInput.setText(dateInput);
+        dateTextInput.setText(dateInput);
     }
 }

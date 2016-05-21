@@ -35,7 +35,7 @@ public class AddQuoteFragment extends Fragment {
         dateQuoteInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = new DatePickerFragment();
+                DialogFragment newFragment = new DatePickerQuote();
                 newFragment.show(getFragmentManager(),"Date Picker");
             }
         });
