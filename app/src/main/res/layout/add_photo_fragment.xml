@@ -1,150 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/addPhotoEvent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/addEventPrimary">
 
-    <ScrollView
+    <EditText
+        android:id="@+id/titlePhotoInput"
+        android:inputType="textNoSuggestions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/AddPhotoEvent">
+        android:layout_marginTop="3dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp"
+        android:padding="6dp"
+        android:background="@color/white"
+        android:hint="Title" />
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:weightSum="1">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/datePhotoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/datePhotoInput"
+            android:layout_marginStart="3dp"
+            android:layout_marginBottom="3dp"
+            android:gravity="start"
+            android:padding="6dp"
+            android:background="@color/white"
+            android:text="Date"
+            android:linksClickable="true"
+            style="@style/Widget.AppCompat.EditText"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/title_field"
-                    android:id="@+id/photo_title"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp" />
+        <TextView
+            android:id="@+id/datePhotoInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="3dp"
+            android:layout_marginBottom="3dp"
+            android:gravity="end"
+            android:padding="6dp"
+            android:background="@color/white"
+            android:linksClickable="true"
+            style="@style/Widget.AppCompat.EditText"/>
 
-                <EditText android:id="@+id/photo_edit_message"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textNoSuggestions"
-                    android:hint="@string/edit_message" />
-            </LinearLayout>
+    </RelativeLayout>
 
+    <TextView
+        android:id="@+id/photoPhotoInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp"
+        android:gravity="start"
+        android:padding="6dp"
+        android:background="@color/white"
+        android:text="No file chosen"
+        android:linksClickable="true"
+        style="@style/Widget.AppCompat.EditText"/>
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:weightSum="1"
-                android:gravity="center_horizontal">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/addPhotoButton"
-                    android:id="@+id/importPhoto" />
-
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:id="@+id/uploadedImage"
-                android:layout_gravity="center_horizontal"
-                android:adjustViewBounds="true"/>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/description_field"
-                    android:id="@+id/photo_description"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp" />
-
-                <EditText
-                    android:layout_width="fill_parent"
-                    android:layout_height="100dp"
-                    android:id="@+id/photo_editText"
-                    android:hint="@string/edit_message"
-                    android:inputType="textMultiLine"
-                    android:gravity="top|left" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/author"
-                    android:id="@+id/photo_author"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="16dp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/photo_authorField"
-                    android:hint="@string/edit_message"
-                    android:paddingBottom="16dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.59">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/date"
-                    android:id="@+id/photo_date"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="16dp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="date"
-                    android:ems="10"
-                    android:id="@+id/photo_dateField"
-                    android:hint="@string/enter_date"
-                    android:paddingBottom="16dp" />
-
-            </LinearLayout>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="34dp"
-                android:text="@string/save_button"
-                android:id="@+id/savePhotoEvent"
-                android:layout_gravity="center_horizontal"
-                android:background="#1bd8db" />
-
-        </LinearLayout>
-    </ScrollView>
+    <EditText
+        android:id="@+id/descriptionPhotoInput"
+        android:inputType="textNoSuggestions"
+        android:layout_width="match_parent"
+        android:layout_height="112dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp"
+        android:gravity="top|start"
+        android:padding="6dp"
+        android:background="@color/white"
+        android:hint="Description" />
 
 </LinearLayout>

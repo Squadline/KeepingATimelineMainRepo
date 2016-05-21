@@ -1,29 +1,12 @@
 package com.keepingatimeline.kat;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.firebase.client.Firebase;
@@ -64,16 +47,6 @@ public class AddEvent extends AppCompatActivity {
                 finish();
             }
         });
-
-        /*
-        // Adds back button to toolbar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        Drawable drawableClose = ContextCompat.getDrawable(this, R.drawable.ic_close);
-        drawableClose = DrawableCompat.wrap(drawableClose);
-        DrawableCompat.setTint(drawableClose, ContextCompat.getColor(this, R.color.white));
-        getSupportActionBar().setHomeAsUpIndicator(drawableClose); */
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.eventTabs);
         tabLayout.addTab(tabLayout.newTab().setText("Photo"));

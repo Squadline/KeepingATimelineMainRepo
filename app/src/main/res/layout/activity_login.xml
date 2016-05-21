@@ -28,7 +28,7 @@
 
         <EditText
             android:id="@+id/loginEmail"
-            android:inputType="textEmailAddress"
+            android:inputType="textEmailAddress|textNoSuggestions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
@@ -39,7 +39,7 @@
 
         <EditText
             android:id="@+id/loginPassword"
-            android:inputType="textPassword"
+            android:inputType="textPassword|textNoSuggestions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"

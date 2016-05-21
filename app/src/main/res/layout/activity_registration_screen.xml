@@ -34,7 +34,7 @@
 
             <EditText
                 android:id="@+id/firstname_input"
-                android:inputType="textPersonName"
+                android:inputType="textPersonName|textNoSuggestions"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -47,7 +47,7 @@
 
             <EditText
                 android:id="@+id/lastname_input"
-                android:inputType="textPersonName"
+                android:inputType="textPersonName|textNoSuggestions"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -61,7 +61,7 @@
 
         <EditText
             android:id="@+id/email_input"
-            android:inputType="textEmailAddress"
+            android:inputType="textEmailAddress|textNoSuggestions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
@@ -71,7 +71,7 @@
 
         <EditText
             android:id="@+id/password_input"
-            android:inputType="textPassword"
+            android:inputType="textPassword|textNoSuggestions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
