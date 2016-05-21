@@ -43,8 +43,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         Firebase.setAndroidContext(this);
 
-        Button btnLogin = (Button)findViewById(R.id.loginButton);
-        TextView signUpText = (TextView)findViewById(R.id.signUpText);
+        Button btnLogin = (Button) findViewById(R.id.loginButton);
+        TextView signUpText = (TextView) findViewById(R.id.signUpText);
         TextView forgotPass = (TextView) findViewById(R.id.forgotPassword);
         username = (TextView) findViewById(R.id.loginEmail);
         password = (TextView) findViewById(R.id.loginPassword);
@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(View view) {
-                Intent registrationActivity = new Intent("com.keepingatimeline.kat.MainScreen");
+                Intent registrationActivity = new Intent("com.keepingatimeline.kat.RegistrationScreen");
                 startActivity(registrationActivity);
             }
 

@@ -1,116 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/addTextEvent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/addEventPrimary">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <EditText
+        android:id="@+id/titleTextInput"
+        android:inputType="textNoSuggestions"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="1"
-        android:id="@+id/AddTextEvent">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp"
+        android:padding="6dp"
+        android:background="@color/white"
+        android:hint="Title" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/title_field"
-                android:id="@+id/textTitle"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp" />
-
-            <EditText android:id="@+id/text_edit_message"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/edit_message" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/text_field"
-                android:id="@+id/text_field"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp" />
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="150dp"
-                android:id="@+id/text_edit_Text"
-                android:hint="@string/edit_message"
-                android:inputType="textMultiLine"
-                android:gravity="top|left" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/author"
-                android:id="@+id/text_author"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/text_authorField"
-                android:hint="@string/edit_message" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/date"
-                android:id="@id/date_field"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="date"
-                android:ems="10"
-                android:id="@id/Date"
-                android:hint="@string/enter_date" />
-
-        </LinearLayout>
-
-        <Button
+        <TextView
+            android:id="@+id/dateTextText"
             android:layout_width="wrap_content"
-            android:layout_height="33dp"
-            android:text="@string/save_button"
-            android:id="@+id/SaveTextEvent"
-            android:layout_gravity="center_horizontal"
-            android:background="#1bd8db"
-            android:layout_weight="0.02" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/dateTextInput"
+            android:layout_marginStart="3dp"
+            android:layout_marginBottom="3dp"
+            android:gravity="start"
+            android:padding="6dp"
+            android:background="@color/white"
+            android:text="Date"
+            android:linksClickable="true"
+            style="@style/Widget.AppCompat.EditText"/>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/dateTextInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="3dp"
+            android:layout_marginBottom="3dp"
+            android:gravity="end"
+            android:padding="6dp"
+            android:background="@color/white"
+            android:linksClickable="true"
+            style="@style/Widget.AppCompat.EditText"/>
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/textTextInput"
+        android:inputType="textMultiLine|textNoSuggestions"
+        android:layout_width="match_parent"
+        android:layout_height="151dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp"
+        android:gravity="top|start"
+        android:padding="6dp"
+        android:background="@color/white"
+        android:hint="Text" />
 
 </LinearLayout>

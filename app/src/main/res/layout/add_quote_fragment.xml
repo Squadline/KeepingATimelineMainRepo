@@ -1,117 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/addQuoteEvent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/addEventPrimary">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <EditText
+        android:id="@+id/titleQuoteInput"
+        android:inputType="textNoSuggestions"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="1"
-        android:id="@+id/AddQuoteEvent">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp"
+        android:padding="6dp"
+        android:background="@color/white"
+        android:hint="Title" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/title_field"
-                android:id="@+id/textView2"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp" />
-
-            <EditText android:id="@+id/edit_message"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/edit_message" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/quote_field"
-                android:id="@+id/text"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp" />
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="150dp"
-                android:id="@+id/editText"
-                android:hint="@string/edit_message"
-                android:inputType="textMultiLine"
-                android:gravity="top|left" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/speaker"
-                android:id="@+id/textView4"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/authorField"
-                android:hint="@string/edit_message" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/date"
-                android:id="@+id/date_field"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="date"
-                android:ems="10"
-                android:id="@+id/Date"
-                android:hint="@string/enter_date" />
-
-        </LinearLayout>
-
-        <Button
+        <TextView
+            android:id="@+id/dateQuoteText"
             android:layout_width="wrap_content"
-            android:layout_height="33dp"
-            android:text="@string/save_button"
-            android:id="@+id/SaveQuoteEvent"
-            android:layout_gravity="center_horizontal"
-            android:background="#1bd8db" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/dateQuoteInput"
+            android:layout_marginStart="3dp"
+            android:layout_marginBottom="3dp"
+            android:gravity="start"
+            android:padding="6dp"
+            android:background="@color/white"
+            android:text="Date"
+            android:linksClickable="true"
+            style="@style/Widget.AppCompat.EditText"/>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/dateQuoteInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="3dp"
+            android:layout_marginBottom="3dp"
+            android:gravity="end"
+            android:padding="6dp"
+            android:background="@color/white"
+            android:linksClickable="true"
+            style="@style/Widget.AppCompat.EditText"/>
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/quoteQuoteInput"
+        android:inputType="textMultiLine|textNoSuggestions"
+        android:layout_width="match_parent"
+        android:layout_height="112dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp"
+        android:gravity="top|start"
+        android:padding="6dp"
+        android:background="@color/white"
+        android:hint="Quote" />
+
+    <EditText
+        android:id="@+id/sourceQuoteInput"
+        android:inputType="textNoSuggestions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp"
+        android:padding="6dp"
+        android:background="@color/white"
+        android:hint="Source" />
 
 </LinearLayout>

@@ -48,8 +48,8 @@ public class AddEvent extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        TextView postText = (TextView)findViewById(R.id.postText);
-        TextView cancelText = (TextView)findViewById(R.id.cancelText);
+        TextView postText = (TextView) findViewById(R.id.postText);
+        TextView cancelText = (TextView) findViewById(R.id.cancelText);
 
         postText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +64,8 @@ public class AddEvent extends AppCompatActivity {
                 finish();
             }
         });
-/*
+
+        /*
         // Adds back button to toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -72,7 +73,7 @@ public class AddEvent extends AppCompatActivity {
         Drawable drawableClose = ContextCompat.getDrawable(this, R.drawable.ic_close);
         drawableClose = DrawableCompat.wrap(drawableClose);
         DrawableCompat.setTint(drawableClose, ContextCompat.getColor(this, R.color.white));
-        getSupportActionBar().setHomeAsUpIndicator(drawableClose);*/
+        getSupportActionBar().setHomeAsUpIndicator(drawableClose); */
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.eventTabs);
         tabLayout.addTab(tabLayout.newTab().setText("Photo"));
@@ -104,6 +105,8 @@ public class AddEvent extends AppCompatActivity {
 
             }
         });
+
+        viewPager.setCurrentItem(1);
     }/*
         quoteView = findViewById(com.keepingatimeline.kat.R.id.AddQuoteEvent);
         photoView = findViewById(com.keepingatimeline.kat.R.id.AddPhotoEvent);

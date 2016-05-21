@@ -17,13 +17,12 @@
         app:contentInsetEnd="0dp">
 
         <!-- Toolbar Settings -->
-
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Event"
+            android:text="Add Event"
             android:textColor="@color/white"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
 
@@ -31,22 +30,22 @@
             android:id="@+id/postText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="end"
             android:layout_marginEnd="16dp"
-            android:text="Post"
+            android:layout_gravity="end"
+            android:text="Done"
             android:textSize="18dp"
-            android:textColor="@color/white"
+            android:textColor="@color/grey300"
             android:linksClickable="true" />
 
         <TextView
             android:id="@+id/cancelText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="start"
             android:layout_marginStart="16dp"
+            android:layout_gravity="start"
             android:text="Cancel"
             android:textSize="18dp"
-            android:textColor="@color/white"
+            android:textColor="@color/grey300"
             android:linksClickable="true" />
 
     </android.support.v7.widget.Toolbar>
