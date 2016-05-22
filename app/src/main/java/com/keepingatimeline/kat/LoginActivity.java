@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(View view) {
-                Intent registrationActivity = new Intent("com.keepingatimeline.kat.RegistrationScreen");
+                Intent registrationActivity = new Intent("com.keepingatimeline.kat.MainScreen");
                 startActivity(registrationActivity);
             }
 
