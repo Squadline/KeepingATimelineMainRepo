@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/settingsPrimary"
     tools:context="com.keepingatimeline.kat.TimelineSettings">
 
     <android.support.v7.widget.Toolbar
@@ -29,65 +28,171 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <Switch
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
-        android:padding="6dp"
-        android:background="@color/white"
-        android:text="Notifications"
-        style="@style/Widget.AppCompat.EditText" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
-        android:padding="6dp"
-        android:background="@color/white"
-        android:text="Change Squad Name"
-        style="@style/Widget.AppCompat.EditText" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="6dp"
-        android:background="@color/white"
-        android:text="Change Squad Photo"
-        style="@style/Widget.AppCompat.EditText" />
+        android:layout_height="0.2dp"
+        android:background="@color/black" />
 
     <View
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:background="@color/settingsPrimary" />
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/squad_image"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@mipmap/web_hi_res_512" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp" />
+
+    <TextView
+        android:id="@+id/squad_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/black" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/black" />
+
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:background="@color/white"
+        android:drawableStart="@drawable/ic_notifications"
+        android:drawablePadding="16dp"
+        android:text="Notifications"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/black" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/black" />
+<!--
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:background="@color/white"
+        android:text="Change Squad Name"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/black" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/black" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
-        android:padding="6dp"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:background="@color/white"
+        android:text="Change Squad Photo"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/black" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/black" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/black" />
+-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:background="@color/white"
+        android:drawableStart="@drawable/ic_add"
+        android:drawablePadding="16dp"
         android:text="Add People"
-        style="@style/Widget.AppCompat.EditText" />
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/black" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/black" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/black" />
 
     <ListView
         android:id="@+id/user_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white" />
+        android:divider="@color/black"
+        android:dividerHeight="0.2dp" />
 
     <View
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:background="@color/settingsPrimary" />
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/black" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/black" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="6dp"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:background="@color/white"
         android:text="Leave Squad"
-        android:textColor="@android:color/holo_red_dark"
-        style="@style/Widget.AppCompat.EditText" />
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"
+        android:textColor="@android:color/holo_red_dark" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/black" />
 
 </LinearLayout>
 

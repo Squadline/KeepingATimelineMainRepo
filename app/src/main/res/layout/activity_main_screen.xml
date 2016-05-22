@@ -44,7 +44,7 @@
         </android.support.v7.widget.Toolbar>
 
         <View
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0.2dp"
             android:background="@color/black" />
 
@@ -56,7 +56,7 @@
             android:dividerHeight="0.2dp" />
 
         <View
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0.2dp"
             android:background="@color/black" />
 

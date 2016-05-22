@@ -27,7 +27,7 @@ import java.util.ArrayList;
  */
 public class TimelineSettings extends AppCompatActivity {
 
-    private TextView lineTitle;                 // Name of timeline
+    private TextView squadTitle;                // Name of timeline
     private ListView manageUsers;               // ListView of users
     private ArrayAdapter<String> adapter;       // Adapter for list of users
     private ArrayList<String> users;            // List of user names
@@ -55,13 +55,13 @@ public class TimelineSettings extends AppCompatActivity {
 
 
         // Get view objects of the activity
-        //lineTitle =  (TextView) findViewById(R.id.title);
+        squadTitle =  (TextView) findViewById(R.id.squad_title);
         manageUsers = (ListView) findViewById(R.id.user_list);
 
         // Instantiate list of users and the adapter to the ListView
         users = new ArrayList<String>();
         adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, users);
+                R.layout.settings_user_list, users);
 
         // Set the ListView's adapter
         manageUsers.setAdapter(adapter);
@@ -76,7 +76,7 @@ public class TimelineSettings extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // get name child of timeline and set title
                 DataSnapshot nameSnap = dataSnapshot.child("Title");
-                //lineTitle.setText(nameSnap.getValue().toString());
+                squadTitle.setText(nameSnap.getValue().toString());
 
                 // reset the list of users and add current user to top
                 users.clear();
