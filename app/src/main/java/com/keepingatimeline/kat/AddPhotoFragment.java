@@ -26,6 +26,7 @@ import java.util.Calendar;
 public class AddPhotoFragment extends Fragment {
 
     private static final int RESULT_LOAD_IMAGE = 1;
+    private EditText title, description;
     TextView datePhotoInput;
     TextView uploadPhotoInput;
     EditText titlePhotoInput;
@@ -43,11 +44,14 @@ public class AddPhotoFragment extends Fragment {
         View AddPhotoFragmentView = inflater.inflate(R.layout.add_photo_fragment, container, false);
 
         datePhotoInput = (TextView) AddPhotoFragmentView.findViewById(R.id.datePhotoInput);
-        uploadPhotoInput = (TextView) AddPhotoFragmentView.findViewById(R.id.photoPhotoInput);
-        titlePhotoInput = (EditText) AddPhotoFragmentView.findViewById(R.id.titlePhotoInput);
+        uploadPhotoInput = (TextView) AddPhotoFragmentView.findViewById(R.id.photoName);
+        //titlePhotoInput = (EditText) AddPhotoFragmentView.findViewById(R.id.photoTitle);
 
-        hintColors = titlePhotoInput.getHintTextColors();
-        uploadPhotoInput.setTextColor(hintColors);
+        title = (EditText) AddPhotoFragmentView.findViewById(R.id.photoTitle);
+        description = (EditText) AddPhotoFragmentView.findViewById(R.id.photoDescription);
+
+        //hintColors = titlePhotoInput.getHintTextColors();
+        //uploadPhotoInput.setTextColor(hintColors);
 
         // Months are indexed starting at 0, add 1 to month value
         String currentDate = (month + 1) + "/" + day + "/" + year;
@@ -91,5 +95,10 @@ public class AddPhotoFragment extends Fragment {
             uploadPhotoInput.setText(imageName);
             uploadPhotoInput.setTextColor(ContextCompat.getColor(getContext(), R.color.trevorBlue));
         }
+    }
+
+    public void emptyTexts() {
+        title.setText("");
+        description.setText("");
     }
 }

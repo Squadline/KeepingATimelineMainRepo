@@ -2,6 +2,7 @@ package com.keepingatimeline.kat;
 
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -42,15 +43,16 @@ public class AddEvent extends AppCompatActivity {
         });
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.eventTabs);
-        tabLayout.addTab(tabLayout.newTab().setText("Photo"));
-        tabLayout.addTab(tabLayout.newTab().setText("Quote"));
-        tabLayout.addTab(tabLayout.newTab().setText("Text"));
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.eventPager);
         final EventPagerAdapter eventAdapter = new EventPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
 
         viewPager.setAdapter(eventAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        tabLayout.setupWithViewPager(viewPager);
+
+        viewPager.setCurrentItem(1);
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.grey500), Color.WHITE);
@@ -63,6 +65,8 @@ public class AddEvent extends AppCompatActivity {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
+                EventPagerAdapter access = (EventPagerAdapter) viewPager.getAdapter();
+                access.emptyTexts(tab.getPosition());
             }
 
             @Override
@@ -70,7 +74,5 @@ public class AddEvent extends AppCompatActivity {
 
             }
         });
-
-        viewPager.setCurrentItem(1);
     }
 }

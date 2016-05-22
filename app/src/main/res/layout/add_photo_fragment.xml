@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/addEventPrimary"
-    android:fillViewport="true">
+    android:layout_height="wrap_content"
+    android:background="@color/addEventPrimary">
 
     <LinearLayout
         android:id="@+id/addPhotoEvent"
@@ -13,7 +12,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/titlePhotoInput"
+            android:id="@+id/photoTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="3dp"
@@ -33,7 +32,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/datePhotoText"
+                android:id="@+id/photoDate"
                 style="@style/Widget.AppCompat.EditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -75,7 +74,7 @@
             android:background="@color/black" />
 
         <TextView
-            android:id="@+id/photoPhotoInput"
+            android:id="@+id/photoName"
             style="@style/Widget.AppCompat.EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,7 +92,7 @@
             android:background="@color/black" />
 
         <EditText
-            android:id="@+id/descriptionPhotoInput"
+            android:id="@+id/photoDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="3dp"
