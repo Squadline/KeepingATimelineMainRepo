@@ -1,82 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/addPhotoEvent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/addEventPrimary">
+    android:background="@color/addEventPrimary"
+    android:fillViewport="true">
 
-    <EditText
-        android:id="@+id/titlePhotoInput"
-        android:inputType="textNoSuggestions"
+    <LinearLayout
+        android:id="@+id/addPhotoEvent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginBottom="3dp"
-        android:padding="6dp"
-        android:background="@color/white"
-        android:hint="Title" />
+        android:background="@color/addEventPrimary"
+        android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/datePhotoText"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/titlePhotoInput"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_toLeftOf="@+id/datePhotoInput"
-            android:layout_marginStart="3dp"
-            android:layout_marginBottom="3dp"
-            android:gravity="start"
-            android:padding="6dp"
-            android:background="@color/white"
-            android:text="Date"
-            android:linksClickable="true"
-            style="@style/Widget.AppCompat.EditText" />
-
-        <TextView
-            android:id="@+id/datePhotoInput"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_marginEnd="3dp"
-            android:layout_marginBottom="3dp"
-            android:gravity="end"
-            android:padding="6dp"
+            android:layout_marginStart="3dp"
             android:background="@color/white"
+            android:hint="Title"
+            android:inputType="textNoSuggestions"
+            android:padding="10dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/black" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/datePhotoText"
+                style="@style/Widget.AppCompat.EditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="3dp"
+                android:layout_toStartOf="@+id/datePhotoInput"
+                android:background="@color/white"
+                android:gravity="start"
+                android:linksClickable="true"
+                android:padding="10dp"
+                android:text="Date" />
+
+            <TextView
+                android:id="@+id/datePhotoInput"
+                style="@style/Widget.AppCompat.EditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="3dp"
+                android:background="@color/white"
+                android:gravity="end"
+                android:linksClickable="true"
+                android:padding="10dp" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/black" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/black" />
+
+        <TextView
+            android:id="@+id/photoPhotoInput"
+            style="@style/Widget.AppCompat.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="3dp"
+            android:background="@color/white"
+            android:gravity="start"
             android:linksClickable="true"
-            style="@style/Widget.AppCompat.EditText" />
+            android:padding="10dp"
+            android:text="No file chosen" />
 
-    </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/black" />
 
-    <TextView
-        android:id="@+id/photoPhotoInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginBottom="3dp"
-        android:gravity="start"
-        android:padding="6dp"
-        android:background="@color/white"
-        android:text="No file chosen"
-        android:linksClickable="true"
-        style="@style/Widget.AppCompat.EditText" />
+        <EditText
+            android:id="@+id/descriptionPhotoInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="3dp"
+            android:background="@color/white"
+            android:gravity="top|start"
+            android:hint="Description"
+            android:inputType="textMultiLine|textNoSuggestions"
+            android:lines="4"
+            android:padding="10dp" />
 
-    <EditText
-        android:id="@+id/descriptionPhotoInput"
-        android:inputType="textMultiLine|textNoSuggestions"
-        android:lines="4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginEnd="3dp"
-        android:gravity="top|start"
-        android:padding="6dp"
-        android:background="@color/white"
-        android:hint="Description" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/black" />
 
-</LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

@@ -67,13 +67,14 @@
         android:background="@color/black" />
 
     <Switch
+        android:id="@+id/notifications"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="center_vertical"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:background="@color/white"
-        android:drawableStart="@drawable/ic_notifications"
+        android:drawableStart="@drawable/ic_notifications_blue"
         android:drawablePadding="16dp"
         android:text="Notifications"
         android:textSize="16sp"
@@ -129,13 +130,14 @@
         android:background="@color/black" />
 -->
     <TextView
+        android:id="@+id/addPeople"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="center_vertical"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:background="@color/white"
-        android:drawableStart="@drawable/ic_add"
+        android:drawableStart="@drawable/ic_person_add_blue"
         android:drawablePadding="16dp"
         android:text="Add People"
         android:textSize="16sp"

@@ -5,7 +5,7 @@
     <item
         android:id="@+id/editTimelineBtn"
         android:title="Timeline Settings"
-        android:icon="@drawable/ic_settings"
+        android:icon="@drawable/ic_settings_white"
         app:showAsAction="always" />
 
 </menu>

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,7 +89,7 @@ public class AddPhotoFragment extends Fragment {
             String imageName = imageFile.getName();
 
             uploadPhotoInput.setText(imageName);
-            uploadPhotoInput.setTextColor(Color.BLUE);
+            uploadPhotoInput.setTextColor(ContextCompat.getColor(getContext(), R.color.trevorBlue));
         }
     }
 }

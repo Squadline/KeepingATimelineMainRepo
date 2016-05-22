@@ -1,71 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/addTextEvent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/addEventPrimary">
+    android:background="@color/addEventPrimary"
+    android:fillViewport="true">
 
-    <EditText
-        android:id="@+id/titleTextInput"
-        android:inputType="textNoSuggestions"
+    <LinearLayout
+        android:id="@+id/addTextEvent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginBottom="3dp"
-        android:padding="6dp"
-        android:background="@color/white"
-        android:hint="Title" />
+        android:background="@color/addEventPrimary"
+        android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/dateTextText"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/titleTextInput"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_toLeftOf="@+id/dateTextInput"
-            android:layout_marginStart="3dp"
-            android:layout_marginBottom="3dp"
-            android:gravity="start"
-            android:padding="6dp"
-            android:background="@color/white"
-            android:text="Date"
-            android:linksClickable="true"
-            style="@style/Widget.AppCompat.EditText" />
-
-        <TextView
-            android:id="@+id/dateTextInput"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_marginEnd="3dp"
-            android:layout_marginBottom="3dp"
-            android:gravity="end"
-            android:padding="6dp"
+            android:layout_marginStart="3dp"
             android:background="@color/white"
-            android:linksClickable="true"
-            style="@style/Widget.AppCompat.EditText" />
+            android:hint="Title"
+            android:inputType="textNoSuggestions"
+            android:padding="10dp" />
 
-    </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/black" />
 
-    <EditText
-        android:id="@+id/textTextInput"
-        android:inputType="textMultiLine|textNoSuggestions"
-        android:lines="5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginEnd="3dp"
-        android:gravity="top|start"
-        android:paddingTop="6dp"
-        android:paddingStart="6dp"
-        android:paddingEnd="6dp"
-        android:paddingBottom="24dp"
-        android:background="@color/white"
-        android:hint="Text" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/dateTextText"
+                style="@style/Widget.AppCompat.EditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="3dp"
+                android:layout_toStartOf="@+id/dateTextInput"
+                android:background="@color/white"
+                android:gravity="start"
+                android:linksClickable="true"
+                android:padding="10dp"
+                android:text="Date" />
+
+            <TextView
+                android:id="@+id/dateTextInput"
+                style="@style/Widget.AppCompat.EditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="3dp"
+                android:background="@color/white"
+                android:gravity="end"
+                android:linksClickable="true"
+                android:padding="10dp" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/black" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/black" />
+
+        <EditText
+            android:id="@+id/textTextInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="3dp"
+            android:background="@color/white"
+            android:gravity="top|start"
+            android:hint="Text"
+            android:inputType="textMultiLine|textNoSuggestions"
+            android:lines="6"
+            android:padding="10dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/black" />
+
+    </LinearLayout>
+
+</ScrollView>

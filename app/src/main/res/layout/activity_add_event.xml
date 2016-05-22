@@ -34,7 +34,7 @@
             android:layout_gravity="end"
             android:text="Next"
             android:textSize="18dp"
-            android:textColor="@color/grey300"
+            android:textColor="@color/grey200"
             android:linksClickable="true" />
 
         <TextView
@@ -45,7 +45,7 @@
             android:layout_gravity="start"
             android:text="Cancel"
             android:textSize="18dp"
-            android:textColor="@color/grey300"
+            android:textColor="@color/grey200"
             android:linksClickable="true" />
 
     </android.support.v7.widget.Toolbar>
@@ -55,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/addEventPrimary"
-        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorColor="@color/trevorBlue"
         app:tabIndicatorHeight="4dp" />
 
     <View

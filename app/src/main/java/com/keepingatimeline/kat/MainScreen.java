@@ -68,11 +68,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         // Opens sidebar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        Drawable drawableBack = ContextCompat.getDrawable(this, R.drawable.ic_menu);
-        drawableBack = DrawableCompat.wrap(drawableBack);
-        DrawableCompat.setTint(drawableBack, ContextCompat.getColor(this, R.color.white));
-        getSupportActionBar().setHomeAsUpIndicator(drawableBack);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white);
 
         // get active user id
         Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
@@ -195,12 +191,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-
-        Drawable drawableAdd = menu.findItem(R.id.add_timeline).getIcon();
-        drawableAdd = DrawableCompat.wrap(drawableAdd);
-        DrawableCompat.setTint(drawableAdd, ContextCompat.getColor(this, R.color.white));
-        menu.findItem(R.id.add_timeline).setIcon(drawableAdd);
-
         return true;
     }
 

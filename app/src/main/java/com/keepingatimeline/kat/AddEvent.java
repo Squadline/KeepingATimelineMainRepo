@@ -2,6 +2,7 @@ package com.keepingatimeline.kat;
 
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -52,7 +53,7 @@ public class AddEvent extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        tabLayout.setTabTextColors(Color.GRAY, Color.WHITE);
+        tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.grey500), Color.WHITE);
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

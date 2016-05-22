@@ -80,20 +80,11 @@ public class ViewTimeline extends AppCompatActivity {
         // Adds back button to toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        Drawable drawableBack = ContextCompat.getDrawable(this, R.drawable.ic_chevron_left);
-        drawableBack = DrawableCompat.wrap(drawableBack);
-        DrawableCompat.setTint(drawableBack, ContextCompat.getColor(this, R.color.white));
-        getSupportActionBar().setHomeAsUpIndicator(drawableBack);
-
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_white);
 
 
         addEvent = (ImageButton) findViewById(R.id.addEventFAB);
-
-        Drawable drawableFAB = ContextCompat.getDrawable(this, R.drawable.ic_add);
-        drawableFAB = DrawableCompat.wrap(drawableFAB);
-        DrawableCompat.setTint(drawableFAB, ContextCompat.getColor(this, R.color.white));
-        addEvent.setImageDrawable(drawableFAB);
+        addEvent.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_add_white));
 
         addEvent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,12 +112,6 @@ public class ViewTimeline extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.view_timeline_menu, menu);
-
-        Drawable drawableSettings = menu.findItem(R.id.editTimelineBtn).getIcon();
-        drawableSettings = DrawableCompat.wrap(drawableSettings);
-        DrawableCompat.setTint(drawableSettings, ContextCompat.getColor(this, R.color.white));
-        menu.findItem(R.id.editTimelineBtn).setIcon(drawableSettings);
-
         return true;
     }
 

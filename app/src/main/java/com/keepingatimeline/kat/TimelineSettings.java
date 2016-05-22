@@ -1,6 +1,7 @@
 package com.keepingatimeline.kat;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
@@ -47,11 +49,7 @@ public class TimelineSettings extends AppCompatActivity {
         // Adds back button to toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        Drawable drawableBack = ContextCompat.getDrawable(this, R.drawable.ic_chevron_left);
-        drawableBack = DrawableCompat.wrap(drawableBack);
-        DrawableCompat.setTint(drawableBack, ContextCompat.getColor(this, R.color.white));
-        getSupportActionBar().setHomeAsUpIndicator(drawableBack);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_white);
 
 
         // Get view objects of the activity
