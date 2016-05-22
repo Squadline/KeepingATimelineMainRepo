@@ -47,7 +47,7 @@ public class TimelineSettings extends AppCompatActivity {
         manageUsers.setAdapter(adapter);
 
         // Get the timeline's database object
-        db = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines/-KHqAusltT6snczElia5");
+        db = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines/-KIGjLbzEKr6iNkfSgIL");
 
         // Add listener to get data of the timeline
         db.addValueEventListener(new ValueEventListener() {
@@ -55,7 +55,7 @@ public class TimelineSettings extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // get name child of timeline and set title
-                DataSnapshot nameSnap = dataSnapshot.child("name");
+                DataSnapshot nameSnap = dataSnapshot.child("Title");
                 lineTitle.setText(nameSnap.getValue().toString());
 
                 // reset the list of users and add current user to top
@@ -64,8 +64,8 @@ public class TimelineSettings extends AppCompatActivity {
 
                 // iterate through the users in the database (alphabetically)
                 // and add their names to the list of timeline users
-                for (DataSnapshot member : dataSnapshot.child("users").getChildren()) {
-                    users.add(member.getKey());
+                for (DataSnapshot member : dataSnapshot.child("Users").getChildren()) {
+                    users.add(member.getValue().toString());
                 }
                 // notify adapter of update and reset view
                 adapter.notifyDataSetChanged();
