@@ -37,6 +37,13 @@
         <item name="colorControlNormal">@color/white</item>
     </style>
 
+    <style name="AppTheme.TimelineSettings" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/settingsPrimary</item>
+        <item name="colorPrimaryDark">@color/settingsSecondary</item>
+        <item name="colorAccent">@color/settingsAccent</item>
+        <item name="android:statusBarColor">@color/settingsSecondary</item>
+    </style>
+
     <style name="AppTheme.AddEvent" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/addEventPrimary</item>
         <item name="colorPrimaryDark">@color/addEventSecondary</item>

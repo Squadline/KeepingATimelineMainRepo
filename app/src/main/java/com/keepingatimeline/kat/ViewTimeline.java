@@ -58,7 +58,7 @@ public class ViewTimeline extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         textTBar = (String) dataSnapshot.getValue();
-                        TextView toolTitle = (TextView) findViewById(R.id.toolbar_title);
+                        TextView toolTitle = (TextView) findViewById(R.id.timeline_title);
                         toolTitle.setText(textTBar);
                     }
                     @Override

@@ -76,7 +76,8 @@
         </activity>
         <activity
             android:name=".TimelineSettings"
-            android:label="Timeline Settings"
+            android:label=""
+            android:theme="@style/AppTheme.TimelineSettings"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>

@@ -36,7 +36,7 @@
             android:background="@color/white"
             android:text="Date"
             android:linksClickable="true"
-            style="@style/Widget.AppCompat.EditText"/>
+            style="@style/Widget.AppCompat.EditText" />
 
         <TextView
             android:id="@+id/dateTextInput"
@@ -49,20 +49,23 @@
             android:padding="6dp"
             android:background="@color/white"
             android:linksClickable="true"
-            style="@style/Widget.AppCompat.EditText"/>
+            style="@style/Widget.AppCompat.EditText" />
 
     </RelativeLayout>
 
     <EditText
         android:id="@+id/textTextInput"
         android:inputType="textMultiLine|textNoSuggestions"
+        android:lines="5"
         android:layout_width="match_parent"
-        android:layout_height="151dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:layout_marginEnd="3dp"
-        android:layout_marginBottom="3dp"
         android:gravity="top|start"
-        android:padding="6dp"
+        android:paddingTop="6dp"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:paddingBottom="24dp"
         android:background="@color/white"
         android:hint="Text" />
 

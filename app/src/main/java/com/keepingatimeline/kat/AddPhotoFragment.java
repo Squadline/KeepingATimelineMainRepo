@@ -32,7 +32,7 @@ public class AddPhotoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        //Get the current date
+        // Get the current date
         final Calendar calendar = Calendar.getInstance();
         final ColorStateList hintColors;
         int year = calendar.get(Calendar.YEAR);
@@ -48,7 +48,7 @@ public class AddPhotoFragment extends Fragment {
         hintColors = titlePhotoInput.getHintTextColors();
         uploadPhotoInput.setTextColor(hintColors);
 
-        //Months are indexed starting at 0, add 1 to month value
+        // Months are indexed starting at 0, add 1 to month value
         String currentDate = (month + 1) + "/" + day + "/" + year;
         datePhotoInput.setText(currentDate);
 

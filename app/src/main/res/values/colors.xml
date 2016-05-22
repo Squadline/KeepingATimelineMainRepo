@@ -31,7 +31,11 @@
 
     <color name="viewPrimary">#37474F</color>
     <color name="viewSecondary">#263238</color>
-    <color name="viewAccent">#523C52</color>
+    <color name="viewAccent">#FF4081</color>
+
+    <color name="settingsPrimary">#37474F</color>
+    <color name="settingsSecondary">#263238</color>
+    <color name="settingsAccent">#523C52</color>
 
     <color name="addEventPrimary">#37474F</color>
     <color name="addEventSecondary">#263238</color>

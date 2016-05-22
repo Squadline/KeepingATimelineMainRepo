@@ -13,14 +13,6 @@ import com.firebase.client.Firebase;
 
 public class AddEvent extends AppCompatActivity {
 
-    /*
-    private static final int RESULT_LOAD_IMAGE = 1;
-    View quoteView;
-    View photoView;
-    View textView;
-    ImageView uploadedPhoto;
-    Button bImportPhoto; */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +62,6 @@ public class AddEvent extends AppCompatActivity {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
 
             @Override
@@ -80,90 +71,5 @@ public class AddEvent extends AppCompatActivity {
         });
 
         viewPager.setCurrentItem(1);
-    }/*
-        quoteView = findViewById(com.keepingatimeline.kat.R.id.AddQuoteEvent);
-        photoView = findViewById(com.keepingatimeline.kat.R.id.AddPhotoEvent);
-        textView = findViewById(com.keepingatimeline.kat.R.id.AddTextEvent);
-        bImportPhoto = (Button)findViewById(R.id.importPhoto);
-        uploadedPhoto = (ImageView)findViewById(R.id.uploadedImage);
-
-        //Hide the Photo and Text Views
-        photoView.setVisibility(View.GONE);
-        textView.setVisibility(View.GONE);
-
-        //Create onClickListeners for Buttons
-        bImportPhoto.setOnClickListener(this);
     }
-
-    public void onRadioButtonClicked(View view) {
-        boolean checked = ((RadioButton)view).isChecked();
-
-        switch(view.getId()) {
-            case com.keepingatimeline.kat.R.id.radioQuote:
-                if(checked) {
-                    quoteView.setVisibility(View.VISIBLE);
-                    photoView.setVisibility(View.GONE);
-                    textView.setVisibility(View.GONE);
-                }
-                break;
-            case com.keepingatimeline.kat.R.id.radioText:
-                if(checked) {
-                    textView.setVisibility(View.VISIBLE);
-                    photoView.setVisibility(View.GONE);
-                    quoteView.setVisibility(View.GONE);
-                }
-                break;
-            case com.keepingatimeline.kat.R.id.radioPhoto:
-                if(checked) {
-                    photoView.setVisibility(View.VISIBLE);
-                    textView.setVisibility(View.GONE);
-                    quoteView.setVisibility(View.GONE);
-                }
-                break;
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-
-        switch(v.getId()) {
-            case R.id.importPhoto:
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
-                break;
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
-            Uri selectedImage = data.getData();
-            uploadedPhoto.setImageURI(selectedImage);
-        }
-    }*/
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.add_event_menu, menu);
-
-        Drawable drawableCheck = menu.findItem(R.id.postEvent).getIcon();
-        drawableCheck = DrawableCompat.wrap(drawableCheck);
-        DrawableCompat.setTint(drawableCheck, ContextCompat.getColor(this, R.color.white));
-        menu.findItem(R.id.postEvent).setIcon(drawableCheck);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }*/
 }

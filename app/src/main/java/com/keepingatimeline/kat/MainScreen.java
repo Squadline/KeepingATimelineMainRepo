@@ -65,6 +65,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Opens sidebar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 

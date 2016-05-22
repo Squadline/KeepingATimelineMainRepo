@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:background="@color/mainPrimary"
             app:contentInsetStart="0dp"
-            app:contentInsetEnd="0dp" >
+            app:contentInsetEnd="0dp">
 
             <!-- Toolbar Settings -->
             <TextView

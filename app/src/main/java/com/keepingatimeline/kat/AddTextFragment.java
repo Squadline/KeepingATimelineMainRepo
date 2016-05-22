@@ -18,7 +18,7 @@ public class AddTextFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        //Get the current date
+        // Get the current date
         final Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -28,7 +28,7 @@ public class AddTextFragment extends Fragment {
 
         TextView dateTextInput = (TextView) AddTextFragmentView.findViewById(R.id.dateTextInput);
 
-        //Months are indexed starting at 0, add 1 to month value
+        // Months are indexed starting at 0, add 1 to month value
         String currentDate = (month + 1) + "/" + day + "/" + year;
         dateTextInput.setText(currentDate);
 
