@@ -21,18 +21,22 @@ import java.util.ArrayList;
 
 /**
  * Initial version written by: Darren
+ *
+ * Class: TimelineSettings
+ * Purpose: Display the settings of the timeline and list of users
  */
 public class TimelineSettings extends AppCompatActivity {
 
-    private TextView lineTitle;
-    private ListView manageUsers;
-    private ArrayAdapter<String> adapter;
-    private ArrayList<String> users;
+    private TextView lineTitle;                 // Name of timeline
+    private ListView manageUsers;               // ListView of users
+    private ArrayAdapter<String> adapter;       // Adapter for list of users
+    private ArrayList<String> users;            // List of user names
 
-    private Firebase db;
+    private Firebase db;                        // Database object
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Call super method and set content view
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline_settings);
 
@@ -48,35 +52,42 @@ public class TimelineSettings extends AppCompatActivity {
         drawableBack = DrawableCompat.wrap(drawableBack);
         DrawableCompat.setTint(drawableBack, ContextCompat.getColor(this, R.color.white));
         getSupportActionBar().setHomeAsUpIndicator(drawableBack);
-/*
-        // Title of the timeline
-        lineTitle =  (TextView) findViewById(R.id.title);
+
+
+        // Get view objects of the activity
+        //lineTitle =  (TextView) findViewById(R.id.title);
         manageUsers = (ListView) findViewById(R.id.user_list);
 
+        // Instantiate list of users and the adapter to the ListView
         users = new ArrayList<String>();
         adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, users);
 
-        // We'll get the name of the timeline in a different manner later
+        // Set the ListView's adapter
+        manageUsers.setAdapter(adapter);
 
-        // User list for timeline settings
-        // This will probably be removed later when we get a
-        // list of users from a different source
-        db = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines/-KIL5xP01qXU_6aDtzly");
+        // Get the timeline's database object
+        db = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines/-KIGjLbzEKr6iNkfSgIL");
 
-        db.addValueEventListener( new ValueEventListener() {
+        // Add listener to get data of the timeline
+        db.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                // get name child of timeline and set title
                 DataSnapshot nameSnap = dataSnapshot.child("Title");
-                lineTitle.setText( nameSnap.getValue().toString() );
+                //lineTitle.setText(nameSnap.getValue().toString());
 
+                // reset the list of users and add current user to top
                 users.clear();
                 users.add("Eunji");
 
-                for ( DataSnapshot member : dataSnapshot.child("Users").getChildren() ) {
-                    users.add( member.getKey() );
+                // iterate through the users in the database (alphabetically)
+                // and add their names to the list of timeline users
+                for (DataSnapshot member : dataSnapshot.child("Users").getChildren()) {
+                    users.add(member.getValue().toString());
                 }
+                // notify adapter of update and reset view
                 adapter.notifyDataSetChanged();
             }
 
@@ -85,9 +96,6 @@ public class TimelineSettings extends AppCompatActivity {
 
             }
         });
-
-        // Get the ListView and set its contents
-        manageUsers.setAdapter(adapter);*/
     }
 
     @Override
