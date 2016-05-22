@@ -2,17 +2,11 @@ package com.keepingatimeline.kat;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.net.Credentials;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.ContactsContract;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -21,18 +15,13 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
-
 
 import java.util.HashMap;
 import java.util.Map;
@@ -66,34 +55,38 @@ public class RegistrationScreen extends AppCompatActivity {
                 {
                     @Override
                     public void onSuccess(Map<String, Object> result) {
-                        Context context = getApplicationContext();
-                        CharSequence text = "Account created successfully, Log In NOW!!";
-                        int duration = Toast.LENGTH_LONG;
-
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
-
-                        String add = user.split("@")[0];
-
                         Firebase userRef = new Firebase("https://fiery-fire-8218.firebaseio.com/Users");
-                        Firebase d = userRef.child(add);
+                        Firebase d = userRef.child(result.get("uid").toString());
                         Map<String, String> post = new HashMap<String, String>();
+                        Map<String, String> child = new HashMap<String, String>();
                         post.put("FirstName", name1st.getText().toString());
                         post.put("LastName", name2nd.getText().toString());
                         post.put("EmailAddress", user);
+                        post.put("Timelines", "0");
                         d.setValue(post);
+                        d = d.child("Timelines");
+                        //child.put("My first squadline", "Me");
+                        //d.setValue(child);
+
+                        finish();
                     }
 
                     @Override
                     public void onError(FirebaseError firebaseError) {
                         Context context = getApplicationContext();
-                        CharSequence text = "Error! Try again later!";
+                        CharSequence text = "ERROR: The information you entered is not valid. Please try again.";
                         int duration = Toast.LENGTH_LONG;
 
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
+
+                        password1.setText("");
+                        emailAdd.setText("");
+                        name1st.setText("");
+                        name2nd.setText("");
                     }
                 });
+                /*
                 Runnable r = new Runnable() {
                     @Override
                     public void run(){
@@ -102,6 +95,7 @@ public class RegistrationScreen extends AppCompatActivity {
                 };
                 Handler delayer = new Handler();
                 delayer.postDelayed(r, 2000);
+                */
             }
         });
 

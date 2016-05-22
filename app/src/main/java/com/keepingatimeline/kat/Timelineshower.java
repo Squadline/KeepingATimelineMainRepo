@@ -59,6 +59,7 @@ public class Timelineshower extends AppCompatActivity {
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("DB_Load", "Asking Firebase for data.");
                 holder.clear();
                 small.clear();
                 for (DataSnapshot time: dataSnapshot.getChildren()){
@@ -144,7 +145,7 @@ public class Timelineshower extends AppCompatActivity {
             }
         });
 
-
+        timelineAdapter.notifyDataSetChanged();
 
         //ArrayAdapter<String> timelineAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, holder);
         //ListView list = (ListView) findViewById(R.id.listView);

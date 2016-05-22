@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="70dp">
+    android:layout_height="72dp">
 
     <TextView
         android:id="@+id/timelineTitle"
@@ -9,10 +9,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="Title"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textColor="@color/black" />
 
     <TextView
@@ -21,7 +21,9 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/timelineTitle"
         android:layout_below="@+id/timelineTitle"
+        android:layout_marginBottom="16dp"
         android:text="Friends"
+        android:textSize="14sp"
         android:textColor="#666666" />
 
     <TextView
@@ -31,8 +33,9 @@
         android:layout_gravity="right"
         android:layout_alignTop="@+id/timelineTitle"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="16dp"
         android:text="5/17/2016"
+        android:textSize="14sp"
         android:textColor="#666666" />
 
 </RelativeLayout>

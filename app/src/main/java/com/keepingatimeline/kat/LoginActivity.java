@@ -35,7 +35,6 @@ public class LoginActivity extends AppCompatActivity {
     private AlertDialog.Builder dialogBuilder;
     private TextView username;
     private TextView password;
-    private Button login;
     private Firebase fRef;
 
     @Override
@@ -44,12 +43,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         Firebase.setAndroidContext(this);
 
-        Button btnLogin = (Button)findViewById(R.id.loginButton);
-        TextView signUpText = (TextView)findViewById(R.id.signUpText);
+        Button btnLogin = (Button) findViewById(R.id.loginButton);
+        TextView signUpText = (TextView) findViewById(R.id.signUpText);
         TextView forgotPass = (TextView) findViewById(R.id.forgotPassword);
         username = (TextView) findViewById(R.id.loginEmail);
         password = (TextView) findViewById(R.id.loginPassword);
-        login = (Button) findViewById(R.id.loginButton);
         fRef = new Firebase("https://fiery-fire-8218.firebaseio.com/");
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +64,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onAuthenticationError(FirebaseError firebaseError) {
                         // there was an error
                         Log.d("Invalid:", "username/password combination");
+                        Toast.makeText(getApplicationContext(), "ERROR: The email address or password you entered is not valid. Please try again."
+                                , Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(View view) {
-                Intent registrationActivity = new Intent("com.keepingatimeline.kat.RegistrationScreen");
+                Intent registrationActivity = new Intent("com.keepingatimeline.kat.AddEvent");
                 startActivity(registrationActivity);
             }
 
@@ -119,15 +119,15 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess() {
 
-                        Toast.makeText(getApplicationContext(), "Email has been sent.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Email has been sent.", Toast.LENGTH_LONG).show();
 
                     }
 
                     @Override
                     public void onError(FirebaseError firebaseError) {
 
-                        Toast.makeText(getApplicationContext(), "Oops! It seems like there are some error!"
-                                , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "ERROR: There is no user registered with that email address."
+                                , Toast.LENGTH_LONG).show();
                     }
                 });
             }

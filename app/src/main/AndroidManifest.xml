@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:label=""
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.LoginPage"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
@@ -87,9 +87,11 @@
         </activity>
         <activity
             android:name=".AddEvent"
-            android:label="Add an Event"
+            android:label=""
+            android:theme="@style/AppTheme.AddEvent"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysVisible|adjustNothing">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.AddEvent" />
 
@@ -121,7 +123,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".RecoverPassword"
-            android:label="Recover Password">
+            android:label="Recover Password"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.RecoverPasswordScreen" />
 

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/addPhotoEvent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/addEventPrimary">
+
+    <EditText
+        android:id="@+id/titlePhotoInput"
+        android:inputType="textNoSuggestions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp"
+        android:padding="6dp"
+        android:background="@color/white"
+        android:hint="Title" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/datePhotoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/datePhotoInput"
+            android:layout_marginStart="3dp"
+            android:layout_marginBottom="3dp"
+            android:gravity="start"
+            android:padding="6dp"
+            android:background="@color/white"
+            android:text="Date"
+            android:linksClickable="true"
+            style="@style/Widget.AppCompat.EditText"/>
+
+        <TextView
+            android:id="@+id/datePhotoInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="3dp"
+            android:layout_marginBottom="3dp"
+            android:gravity="end"
+            android:padding="6dp"
+            android:background="@color/white"
+            android:linksClickable="true"
+            style="@style/Widget.AppCompat.EditText"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/photoPhotoInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp"
+        android:gravity="start"
+        android:padding="6dp"
+        android:background="@color/white"
+        android:text="No file chosen"
+        android:linksClickable="true"
+        style="@style/Widget.AppCompat.EditText"/>
+
+    <EditText
+        android:id="@+id/descriptionPhotoInput"
+        android:inputType="textNoSuggestions"
+        android:layout_width="match_parent"
+        android:layout_height="112dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp"
+        android:gravity="top|start"
+        android:padding="6dp"
+        android:background="@color/white"
+        android:hint="Description" />
+
+</LinearLayout>

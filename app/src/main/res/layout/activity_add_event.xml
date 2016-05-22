@@ -1,23 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.keepingatimeline.kat.AddEvent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/addEventPrimary"
+        app:contentInsetStart="0dp"
+        app:contentInsetEnd="0dp">
+
+        <!-- Toolbar Settings -->
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Add Event"
+            android:textColor="@color/white"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
+
+        <TextView
+            android:id="@+id/postText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="end"
+            android:text="Done"
+            android:textSize="18dp"
+            android:textColor="@color/grey300"
+            android:linksClickable="true" />
+
+        <TextView
+            android:id="@+id/cancelText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_gravity="start"
+            android:text="Cancel"
+            android:textSize="18dp"
+            android:textColor="@color/grey300"
+            android:linksClickable="true" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/eventTabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/addEventPrimary"
+        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorHeight="4dp" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/eventPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
+
+
+
+<!--
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.keepingatimeline.kat.AddEvent"
     android:weightSum="1">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/addEvent"
-        android:id="@+id/addNewTitle"
-        android:textSize="32sp"
-        android:textColor="#ff0000"
-        android:singleLine="false"
-        android:gravity="center_horizontal"
-        android:textStyle="normal" />
 
     <TextView
         android:layout_width="match_parent"
@@ -70,7 +127,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- This is the Photo Layout If User wants to input a Photo Event -->
+        <!- This is the Photo Layout If User wants to input a Photo Event --><!--
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -213,7 +270,7 @@
             </LinearLayout>
         </ScrollView>
 
-        <!-- This is the Quote Event Layout -->
+        <!- This is the Quote Event Layout --><!--
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -324,7 +381,7 @@
 
         </LinearLayout>
 
-        <!-- This is the Text Event Layout -->
+        <!- This is the Text Event Layout --><!--
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -435,4 +492,4 @@
         </LinearLayout>
     </FrameLayout>
 
-</LinearLayout>
+</LinearLayout>-->

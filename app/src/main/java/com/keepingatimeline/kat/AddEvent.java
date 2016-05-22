@@ -1,28 +1,86 @@
 package com.keepingatimeline.kat;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.provider.MediaStore;
+import android.graphics.Color;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RadioButton;
+import android.widget.TextView;
 
-public class AddEvent extends AppCompatActivity implements View.OnClickListener{
+import com.firebase.client.Firebase;
+
+public class AddEvent extends AppCompatActivity {
+
+    /*
     private static final int RESULT_LOAD_IMAGE = 1;
     View quoteView;
     View photoView;
     View textView;
     ImageView uploadedPhoto;
-    Button bImportPhoto;
+    Button bImportPhoto; */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.keepingatimeline.kat.R.layout.activity_add_event);
+        Firebase.setAndroidContext(this);
 
+        // Uses a Toolbar as an ActionBar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        TextView postText = (TextView) findViewById(R.id.postText);
+        TextView cancelText = (TextView) findViewById(R.id.cancelText);
+
+        postText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        cancelText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.eventTabs);
+        tabLayout.addTab(tabLayout.newTab().setText("Photo"));
+        tabLayout.addTab(tabLayout.newTab().setText("Quote"));
+        tabLayout.addTab(tabLayout.newTab().setText("Text"));
+
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.eventPager);
+        final EventPagerAdapter eventAdapter = new EventPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+
+        viewPager.setAdapter(eventAdapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.setTabTextColors(Color.GRAY, Color.WHITE);
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        viewPager.setCurrentItem(1);
+    }/*
         quoteView = findViewById(com.keepingatimeline.kat.R.id.AddQuoteEvent);
         photoView = findViewById(com.keepingatimeline.kat.R.id.AddPhotoEvent);
         textView = findViewById(com.keepingatimeline.kat.R.id.AddTextEvent);
@@ -67,6 +125,7 @@ public class AddEvent extends AppCompatActivity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+
         switch(v.getId()) {
             case R.id.importPhoto:
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -83,5 +142,28 @@ public class AddEvent extends AppCompatActivity implements View.OnClickListener{
             Uri selectedImage = data.getData();
             uploadedPhoto.setImageURI(selectedImage);
         }
+    }*/
+/*
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.add_event_menu, menu);
+
+        Drawable drawableCheck = menu.findItem(R.id.postEvent).getIcon();
+        drawableCheck = DrawableCompat.wrap(drawableCheck);
+        DrawableCompat.setTint(drawableCheck, ContextCompat.getColor(this, R.color.white));
+        menu.findItem(R.id.postEvent).setIcon(drawableCheck);
+
+        return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }*/
 }

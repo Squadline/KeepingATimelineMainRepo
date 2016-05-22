@@ -34,51 +34,49 @@
 
             <EditText
                 android:id="@+id/firstname_input"
-                android:inputType="textPersonName"
-                android:layout_width="wrap_content"
+                android:inputType="textPersonName|textNoSuggestions"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:layout_marginEnd="3dp"
                 android:layout_marginBottom="3dp"
                 android:padding="6dp"
                 android:background="@color/white"
-                android:ems="10"
+                android:ems="1"
                 android:hint="@string/firstName" />
 
             <EditText
                 android:id="@+id/lastname_input"
-                android:inputType="textPersonName"
-                android:layout_width="wrap_content"
+                android:inputType="textPersonName|textNoSuggestions"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:layout_marginBottom="3dp"
                 android:padding="6dp"
                 android:background="@color/white"
-                android:ems="10"
+                android:ems="1"
                 android:hint="@string/lastName" />
 
         </LinearLayout>
 
         <EditText
             android:id="@+id/email_input"
-            android:inputType="textEmailAddress"
+            android:inputType="textEmailAddress|textNoSuggestions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:padding="6dp"
             android:background="@color/white"
-            android:ems="10"
             android:hint="@string/email" />
 
         <EditText
             android:id="@+id/password_input"
-            android:inputType="textPassword"
+            android:inputType="textPassword|textNoSuggestions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:padding="6dp"
             android:background="@color/white"
-            android:ems="10"
             android:hint="@string/password" />
 
         <Button
@@ -88,7 +86,6 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="-4.5dp"
             android:layout_marginRight="-4.5dp"
-            android:padding="10dp"
             android:text="@string/signUp"
             android:textAllCaps="false" />
 
@@ -110,9 +107,9 @@
         <TextView
             android:id="@+id/signInText"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
             android:layout_gravity="center_horizontal"
-            android:padding="20dp"
             android:textColor="@color/white" />
 
     </LinearLayout>
