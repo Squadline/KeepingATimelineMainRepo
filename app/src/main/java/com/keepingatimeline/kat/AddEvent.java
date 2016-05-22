@@ -31,8 +31,8 @@ public class AddEvent extends AppCompatActivity {
         nextText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent previewActivity = new Intent("com.keepingatimeline.kat.PreviewEvent");
-                startActivity(previewActivity);
+                //Intent previewActivity = new Intent("com.keepingatimeline.kat.PreviewEvent");
+                //startActivity(previewActivity);
             }
         });
 

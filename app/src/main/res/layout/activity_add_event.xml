@@ -32,7 +32,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="16dp"
             android:layout_gravity="end"
-            android:text="Next"
+            android:text="Done"
             android:textSize="18dp"
             android:textColor="@color/grey200"
             android:linksClickable="true" />
