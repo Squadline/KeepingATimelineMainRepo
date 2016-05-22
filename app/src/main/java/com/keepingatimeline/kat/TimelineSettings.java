@@ -29,12 +29,20 @@ import java.util.ArrayList;
  */
 public class TimelineSettings extends AppCompatActivity {
 
+    private String current;                     // ID of the current timeline
     private TextView squadTitle;                // Name of timeline
     private ListView manageUsers;               // ListView of users
     private ArrayAdapter<String> adapter;       // Adapter for list of users
     private ArrayList<String> users;            // List of user names
 
     private Firebase db;                        // Database object
+
+    // String constants for Firebase children
+    private final String TITLE_STR = "Title";
+    private final String USERS_STR = "Users";
+    private final String CURR_STR = "Current";
+    private final String TIMELINE_STR = "Timelines";
+    private final String DB_STR = "https://fiery-fire-8218.firebaseio.com/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +59,6 @@ public class TimelineSettings extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_white);
 
-
         // Get view objects of the activity
         squadTitle =  (TextView) findViewById(R.id.squad_title);
         manageUsers = (ListView) findViewById(R.id.user_list);
@@ -64,29 +71,50 @@ public class TimelineSettings extends AppCompatActivity {
         // Set the ListView's adapter
         manageUsers.setAdapter(adapter);
 
-        // Get the timeline's database object
-        db = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines/-KIGjLbzEKr6iNkfSgIL");
+        // Instantiate Firebase object to main database
+        db = new Firebase(DB_STR);
 
-        // Add listener to get data of the timeline
-        db.addValueEventListener(new ValueEventListener() {
+        // Get the UID of the currently authenticated user
+        // Get the Firebase object of the timeline that the user is viewing
+        String currentUser = db.getAuth().getUid();
+        Firebase currentLine = db.child(USERS_STR).child(currentUser).child(CURR_STR);
 
+        // Retrieve timeline title ONCE from Firebase
+        currentLine.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // get name child of timeline and set title
-                DataSnapshot nameSnap = dataSnapshot.child("Title");
-                squadTitle.setText(nameSnap.getValue().toString());
+                // Get the ID of the current timeline
+                current = dataSnapshot.getValue().toString();
 
-                // reset the list of users and add current user to top
-                users.clear();
-                users.add("Eunji");
+                // Move db down to current timeline once we've gotten
+                // the ID of the current timeline
+                db = db.child(TIMELINE_STR).child(current);
 
-                // iterate through the users in the database (alphabetically)
-                // and add their names to the list of timeline users
-                for (DataSnapshot member : dataSnapshot.child("Users").getChildren()) {
-                    users.add(member.getValue().toString());
-                }
-                // notify adapter of update and reset view
-                adapter.notifyDataSetChanged();
+                // Add event listener to get settings updates
+                db.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // get value of the title child of timeline and set title
+                        squadTitle.setText(dataSnapshot.child(TITLE_STR).getValue().toString());
+
+                        // reset the list of users and add current user to top
+                        users.clear();
+                        users.add("Eunji");
+
+                        // iterate through the users in the database (alphabetically)
+                        // and add their names to the list of timeline users
+                        for (DataSnapshot member : dataSnapshot.child(USERS_STR).getChildren()) {
+                            users.add(member.getValue().toString());
+                        }
+                        // notify adapter of update and reset view
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
             }
 
             @Override
@@ -96,6 +124,8 @@ public class TimelineSettings extends AppCompatActivity {
         });
     }
 
+
+    // Trevor's Stuff - Back button listener
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
