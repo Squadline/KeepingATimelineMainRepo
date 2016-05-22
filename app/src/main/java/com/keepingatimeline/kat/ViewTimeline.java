@@ -85,7 +85,6 @@ public class ViewTimeline extends AppCompatActivity {
         Firebase.setAndroidContext(this);
 
 
-
         //sets title of the actionbar to the title of the timeline clicked
         ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
         auth = ref.getAuth().getUid();
@@ -101,7 +100,7 @@ public class ViewTimeline extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         textTBar = (String) dataSnapshot.getValue();
-                        TextView toolTitle = (TextView) findViewById(R.id.timeline_title);
+                        toolTitle = (TextView) findViewById(R.id.timeline_title);
                         toolTitle.setText(textTBar);
                     }
                     @Override

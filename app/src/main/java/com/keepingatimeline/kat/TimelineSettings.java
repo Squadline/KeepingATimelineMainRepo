@@ -1,17 +1,11 @@
 package com.keepingatimeline.kat;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
@@ -54,7 +48,9 @@ public class TimelineSettings extends AppCompatActivity {
 
         // Get view objects of the activity
         squadTitle =  (TextView) findViewById(R.id.squad_title);
-        manageUsers = (ListView) findViewById(R.id.user_list);
+        //manageUsers = (ListView) findViewById(R.id.user_list);
+
+        NonScrollListView non_scroll_list = (NonScrollListView) findViewById(R.id.lv_nonscroll_list);
 
         // Instantiate list of users and the adapter to the ListView
         users = new ArrayList<String>();
@@ -62,7 +58,7 @@ public class TimelineSettings extends AppCompatActivity {
                 R.layout.settings_user_list, users);
 
         // Set the ListView's adapter
-        manageUsers.setAdapter(adapter);
+        non_scroll_list.setAdapter(adapter);
 
         // Get the timeline's database object
         db = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines/-KIGjLbzEKr6iNkfSgIL");
