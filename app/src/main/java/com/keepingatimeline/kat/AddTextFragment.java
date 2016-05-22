@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -14,6 +15,7 @@ import java.util.Calendar;
  * Created by Trevor on 5/19/2016.
  */
 public class AddTextFragment extends Fragment {
+    public static EditText text, title;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -27,6 +29,8 @@ public class AddTextFragment extends Fragment {
         View AddTextFragmentView = inflater.inflate(R.layout.add_text_fragment, container, false);
 
         TextView dateTextInput = (TextView) AddTextFragmentView.findViewById(R.id.dateTextInput);
+        text = (EditText) AddTextFragmentView.findViewById(R.id.textTitle);
+        title = (EditText) AddTextFragmentView.findViewById(R.id.textBody);
 
         // Months are indexed starting at 0, add 1 to month value
         String currentDate = (month + 1) + "/" + day + "/" + year;
@@ -41,5 +45,10 @@ public class AddTextFragment extends Fragment {
         });
 
         return AddTextFragmentView;
+    }
+
+    public void emptyTexts() {
+        text.setText("");
+        title.setText("");
     }
 }

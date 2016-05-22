@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/titleTextInput"
+            android:id="@+id/textTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="3dp"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/dateTextText"
+                android:id="@+id/textDate"
                 style="@style/Widget.AppCompat.EditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
             android:background="@color/black" />
 
         <EditText
-            android:id="@+id/textTextInput"
+            android:id="@+id/textBody"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="3dp"
