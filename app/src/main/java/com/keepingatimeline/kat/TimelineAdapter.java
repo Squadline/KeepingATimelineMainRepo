@@ -1,30 +1,17 @@
 package com.keepingatimeline.kat;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Color;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Jimmy on 5/11/2016.
@@ -71,7 +58,7 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
 
     public View getView(final int position, View convertView, ViewGroup parent)
     {
-        //Log.d("getView", "getView was called, " + position);
+        // Log.d("getView", "getView was called, " + position);
 
         this.position2 = position;
 
@@ -87,8 +74,5 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
         textS.setText(tlFriends.get(position));
 
         return convertView;
-
     }
-
-
 }

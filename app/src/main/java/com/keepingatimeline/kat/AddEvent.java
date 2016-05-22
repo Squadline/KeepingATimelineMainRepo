@@ -1,8 +1,8 @@
 package com.keepingatimeline.kat;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -25,13 +25,14 @@ public class AddEvent extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        TextView postText = (TextView) findViewById(R.id.postText);
+        TextView nextText = (TextView) findViewById(R.id.nextText);
         TextView cancelText = (TextView) findViewById(R.id.cancelText);
 
-        postText.setOnClickListener(new View.OnClickListener() {
+        nextText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //Intent previewActivity = new Intent("com.keepingatimeline.kat.PreviewEvent");
+                //startActivity(previewActivity);
             }
         });
 
@@ -51,7 +52,6 @@ public class AddEvent extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         tabLayout.setupWithViewPager(viewPager);
-
         viewPager.setCurrentItem(1);
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
