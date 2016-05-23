@@ -65,7 +65,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         setContentView(R.layout.activity_main_screen);
 
         titleBar = (TextView) findViewById(R.id.toolbar_title);
-        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), "fonts/BebasNeue Bold.ttf");
+        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), getString(R.string.squadLineFont));
         titleBar.setTypeface(myCustomFont);
 
         Firebase.setAndroidContext(this);

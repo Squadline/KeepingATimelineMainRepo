@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/timelineTitle"
-        android:layout_below="@+id/timelineTitle"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="16dp"
         android:text="Friends"
         android:textColor="#666666"
