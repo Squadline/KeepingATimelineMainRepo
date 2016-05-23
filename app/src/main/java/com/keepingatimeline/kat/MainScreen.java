@@ -299,7 +299,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         LayoutInflater inflater = this.getLayoutInflater();
         builder.setView(inflater.inflate(R.layout.dialog_change_password, null));
         builder.setTitle("Change Password");
-        //TODO: Add TextField instances from layout to send data to firebase
+        //TODO: Add TextField instances from layout to send data to firebase and stuff
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
