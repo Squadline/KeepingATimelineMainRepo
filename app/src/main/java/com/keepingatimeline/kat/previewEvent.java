@@ -3,7 +3,7 @@ package com.keepingatimeline.kat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class previewEvent extends AppCompatActivity {
+public class PreviewEvent extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
