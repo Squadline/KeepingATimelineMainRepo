@@ -29,6 +29,7 @@ import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -152,6 +153,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 String timelineName = tlTitles.get(position);
 
                 Intent viewTimelineActivity = new Intent("com.keepingatimeline.kat.ViewTimeline");
+                viewTimelineActivity.putExtra("Timeline Name", timelineName);
                 viewTimelineActivity.putExtra("Timeline ID", tlFriends.get(position));
                 startActivity(viewTimelineActivity);
             }
@@ -203,13 +205,14 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 emailAdd = dataSnapshot.getValue().toString();
                                 newName = input.getText().toString();
-                                database = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines");
+                                database = Vars.getFirebase().child("Timelines");
                                 database = database.push();
                                 String tKey = database.getKey();
                                 Map<String, String> post = new HashMap<String, String>();
                                 Map<String, String> post1 = new HashMap<String, String>();
                                 Map<String, String> event = new HashMap<String, String>();
                                 Map<String, Object> event1 = new HashMap<String, Object>();
+                                //ArrayList<Event> events = new ArrayList<Event>();
                                 post.put("Admin", emailAdd);
                                 post.put("Title", newName);
                                 database.setValue(post);
