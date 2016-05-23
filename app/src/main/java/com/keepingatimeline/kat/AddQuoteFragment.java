@@ -45,7 +45,6 @@ public class AddQuoteFragment extends Fragment {
             }
         });
 
-
         return AddQuoteFragmentView;
     }
 

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -26,10 +25,10 @@ import java.util.Calendar;
 public class AddPhotoFragment extends Fragment {
 
     private static final int RESULT_LOAD_IMAGE = 1;
-    private EditText title, description;
     TextView datePhotoInput;
     TextView uploadPhotoInput;
     EditText titlePhotoInput;
+    EditText photoDescription;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,13 +44,11 @@ public class AddPhotoFragment extends Fragment {
 
         datePhotoInput = (TextView) AddPhotoFragmentView.findViewById(R.id.datePhotoInput);
         uploadPhotoInput = (TextView) AddPhotoFragmentView.findViewById(R.id.photoName);
-        //titlePhotoInput = (EditText) AddPhotoFragmentView.findViewById(R.id.photoTitle);
+        titlePhotoInput = (EditText) AddPhotoFragmentView.findViewById(R.id.photoTitle);
+        photoDescription = (EditText) AddPhotoFragmentView.findViewById(R.id.photoDescription);
 
-        title = (EditText) AddPhotoFragmentView.findViewById(R.id.photoTitle);
-        description = (EditText) AddPhotoFragmentView.findViewById(R.id.photoDescription);
-
-        //hintColors = titlePhotoInput.getHintTextColors();
-        //uploadPhotoInput.setTextColor(hintColors);
+        hintColors = titlePhotoInput.getHintTextColors();
+        uploadPhotoInput.setTextColor(hintColors);
 
         // Months are indexed starting at 0, add 1 to month value
         String currentDate = (month + 1) + "/" + day + "/" + year;
@@ -98,7 +95,7 @@ public class AddPhotoFragment extends Fragment {
     }
 
     public void emptyTexts() {
-        title.setText("");
-        description.setText("");
+        titlePhotoInput.setText("");
+        photoDescription.setText("");
     }
 }

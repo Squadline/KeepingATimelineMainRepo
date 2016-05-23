@@ -149,29 +149,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         timelineList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                current = new Firebase("https://fiery-fire-8218.firebaseio.com/");
-                holder = current.getAuth().getUid().toString();
-                current = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder +"/Timelines");
-                final int clicker = position;
-
-                String clicked = tlTitles.get(clicker);
-                current = current.child(clicked);
-                current.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Firebase tCurrent = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder);
-                        Map<String, Object> enter = new HashMap<String, Object>();
-                        enter.put("Current", "" + dataSnapshot.getValue());
-                        tCurrent.updateChildren(enter);
-                    }
-
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-
-                    }
-                });
+                String timelineName = tlTitles.get(position);
 
                 Intent viewTimelineActivity = new Intent("com.keepingatimeline.kat.ViewTimeline");
+                viewTimelineActivity.putExtra("Timeline ID", tlFriends.get(position));
                 startActivity(viewTimelineActivity);
             }
 

@@ -27,12 +27,12 @@
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
 
         <TextView
-            android:id="@+id/postText"
+            android:id="@+id/nextText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginEnd="16dp"
             android:layout_gravity="end"
-            android:text="Next"
+            android:text="Done"
             android:textSize="18dp"
             android:textColor="@color/grey200"
             android:linksClickable="true" />
