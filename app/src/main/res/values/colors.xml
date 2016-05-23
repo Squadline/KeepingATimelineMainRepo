@@ -9,6 +9,8 @@
     <color name="yellow">#FFFF00</color>
 
     <color name="trevorBlue">#007AFF</color>
+    <color name="appPrimaryColor">#455A64</color>
+    <color name="appSecondaryColor">#37474F</color>
 
     <color name="grey100">#F5F5F5</color>
     <color name="grey200">#EEEEEE</color>

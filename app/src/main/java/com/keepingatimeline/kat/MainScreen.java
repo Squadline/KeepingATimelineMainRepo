@@ -44,7 +44,18 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private TextView titleBar;
     private String emailAdd;
     private String temp;
-    private Firebase current;
+
+    private String currentFirst;                // First name of the current user
+    private String currentLast;                 // Last name of the current user
+    private String currentEmail;                // Email of the current user
+
+    // String constants for Firebase children
+    private final String USERS_STR = "Users";
+    private final String CURR_STR = "Current";
+    private final String NAME_STR = "FirstName";
+    private final String LAST_STR = "LastName";
+    private final String EMAIL_STR = "EmailAddress";
+    private final String DB_STR = "https://fiery-fire-8218.firebaseio.com/";
 
     /**
      * By: Dana, Byung, Jimmy, Trevor
@@ -83,49 +94,66 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         // sets name of current user in sidebar
         View navHeader = navigationView.getHeaderView(0);
-        TextView userName = (TextView) navHeader.findViewById(R.id.user_name);
-        userName.setText("namemam");
+        final TextView userName = (TextView) navHeader.findViewById(R.id.user_name);
+        userName.setText(currentFirst + " " + currentLast);
 
         // sets email of current user in sidebar
-        TextView userEmail = (TextView) navHeader.findViewById(R.id.user_email);
-        userEmail.setText("lkjsdf");
+        final TextView userEmail = (TextView) navHeader.findViewById(R.id.user_email);
+        userEmail.setText(currentEmail);
 
-        /*
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // Instantiate Firebase object to main database
+        Firebase db = new Firebase(DB_STR);
+        Firebase current = ref.child(USERS_STR).child(holder);
 
-        //The left scroll bar containing account settings, log out and such
-        String[] settings = {"Settings", "Add Event Test", "Timeline Settings Test", "Log Out"};
-        ListView myList = (ListView) findViewById(R.id.left_drawer);
-        myList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,settings));
-        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        current.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch( position ) {
-                    case 0:
-                        // should have started account settings activity
-                        break;
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get the name of the current user
+                currentFirst = dataSnapshot.child(NAME_STR).getValue().toString();
+                currentLast = dataSnapshot.child(LAST_STR).getValue().toString();
 
-                    case 1:
-                        Intent addEventActivity = new Intent("com.keepingatimeline.kat.AddEvent");
-                        startActivity(addEventActivity);
-                        break;
-                    case 2:
-                        Intent timelineSettingsActivity = new Intent("com.keepingatimeline.kat.TimelineSettings");
-                        startActivity(timelineSettingsActivity);
-                        break;
-                    case 3:
-                        Firebase dref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
-                        CharSequence t = dref.getAuth().getProviderData().get("email") + " has logged out ";
-                        int time = Toast.LENGTH_LONG;
-                        Toast logout = Toast.makeText(getApplicationContext(), t, time);
-                        logout.show();
-                        dref.unauth();
-                        Intent loginActivity = new Intent("com.keepingatimeline.LoginActivity");
-                        startActivity(loginActivity);
-                }
+                userName.setText(currentFirst + " " + currentLast);
+
+                // Get the email of the current user
+                currentEmail = dataSnapshot.child(EMAIL_STR).getValue().toString();
+
+                userEmail.setText(currentEmail);
+
+/*
+                // Add event listener to get settings updates
+                db.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // get value of the title child of timeline and set title
+                        squadTitle.setText(dataSnapshot.child(TITLE_STR).getValue().toString());
+
+                        // reset the list of users and add current user to top
+                        users.clear();
+                        users.add(currentName);
+
+                        // iterate through the users in the database (alphabetically)
+                        // and add their names to the list of timeline users
+                        for (DataSnapshot member : dataSnapshot.child(USERS_STR).getChildren()) {
+                            users.add(member.getValue().toString());
+                        }
+                        // notify adapter of update and reset view
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });*/
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Toast.makeText(getApplicationContext(), "Error loading data.",
+                        Toast.LENGTH_SHORT).show();
             }
         });
-        */
+
 
         inflateTimeline = new TimelineAdapter(this, tlTitles, tlFriends);
         timelineList = (ListView) findViewById(R.id.timelineList);
