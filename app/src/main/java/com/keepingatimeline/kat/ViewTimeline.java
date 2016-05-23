@@ -105,6 +105,10 @@ public class ViewTimeline extends AppCompatActivity {
         //sets title of the actionbar to the title of the timeline clicked
         firebaseRef = Vars.getTimeline(timelineID);
         auth = Vars.getUID();
+
+        toolTitle = (TextView) findViewById(R.id.timeline_title);
+        toolTitle.setText(timelineName);
+
         firebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -166,6 +170,8 @@ public class ViewTimeline extends AppCompatActivity {
                 return true;
             case R.id.editTimelineBtn:
                 Intent timelineSettingsActivity = new Intent("com.keepingatimeline.kat.TimelineSettings");
+                timelineSettingsActivity.putExtra("Timeline Name", timelineName);
+                timelineSettingsActivity.putExtra("Timeline ID", timelineID);
                 startActivity(timelineSettingsActivity);
                 return true;
             default:

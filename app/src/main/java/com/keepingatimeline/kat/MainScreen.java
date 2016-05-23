@@ -220,18 +220,17 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                 Map<String, String> post1 = new HashMap<String, String>();
                                 Map<String, String> event = new HashMap<String, String>();
                                 Map<String, Object> event1 = new HashMap<String, Object>();
-                                //ArrayList<Event> events = new ArrayList<Event>();
                                 post.put("Admin", emailAdd);
                                 post.put("Title", newName);
                                 database.setValue(post);
 
                                 Firebase user =  database.child("Users");
-                                post1.put("Email" , emailAdd);
+                                post1.put(Vars.getUID(), emailAdd);
                                 user.setValue(post1);
 
                                 Firebase events = database.child("Events");
-                                event.put("NameE", "Timeline: " + newName + " was created");
-                                events.setValue(event);
+                                events = events.push();
+                                events.setValue(Event.getNullEvent());
 
                                 database = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder + "/Timelines");
                                 event1.put(newName, tKey);

@@ -1,5 +1,7 @@
 package com.keepingatimeline.kat;
 
+import java.util.ArrayList;
+
 /**
  * Created by Dana on 5/22/2016.
  */
@@ -60,5 +62,9 @@ public class Event {
 
     public void setString2(String str2) {
         this.str2 = str2;
+    }
+
+    public static Event getNullEvent() {
+        return new Event("null", "", "", "", "");
     }
 }
