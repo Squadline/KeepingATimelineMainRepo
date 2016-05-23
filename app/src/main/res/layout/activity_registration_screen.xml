@@ -6,25 +6,32 @@
     android:background="@color/registrationPrimary"
     tools:context="com.keepingatimeline.kat.RegistrationScreen">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/registerLayout"
-        android:layout_marginBottom="43dp"
-        android:src="@mipmap/web_hi_res_512" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/loginLayout"
+        android:layout_alignParentTop="true">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/web_hi_res_512" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/registerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_above="@+id/signInLayout"
+        android:layout_alignParentStart="true"
         android:orientation="vertical"
+        android:paddingBottom="100dp"
         android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:paddingBottom="100dp">
+        android:paddingRight="30dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,58 +41,58 @@
 
             <EditText
                 android:id="@+id/firstname_input"
-                android:inputType="textPersonName|textNoSuggestions"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:layout_marginEnd="3dp"
                 android:layout_marginBottom="3dp"
-                android:padding="6dp"
+                android:layout_marginEnd="3dp"
+                android:layout_weight="0.5"
                 android:background="@color/white"
                 android:ems="1"
-                android:hint="@string/firstName" />
+                android:hint="@string/firstName"
+                android:inputType="textPersonName|textNoSuggestions"
+                android:padding="6dp" />
 
             <EditText
                 android:id="@+id/lastname_input"
-                android:inputType="textPersonName|textNoSuggestions"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
                 android:layout_marginBottom="3dp"
-                android:padding="6dp"
+                android:layout_weight="0.5"
                 android:background="@color/white"
                 android:ems="1"
-                android:hint="@string/lastName" />
+                android:hint="@string/lastName"
+                android:inputType="textPersonName|textNoSuggestions"
+                android:padding="6dp" />
 
         </LinearLayout>
 
         <EditText
             android:id="@+id/email_input"
-            android:inputType="textEmailAddress|textNoSuggestions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
-            android:padding="6dp"
             android:background="@color/white"
-            android:hint="@string/email" />
+            android:hint="@string/email"
+            android:inputType="textEmailAddress|textNoSuggestions"
+            android:padding="6dp" />
 
         <EditText
             android:id="@+id/password_input"
-            android:inputType="textPassword|textNoSuggestions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:padding="6dp"
             android:background="@color/white"
-            android:hint="@string/password" />
+            android:hint="@string/password"
+            android:inputType="textPassword|textNoSuggestions"
+            android:padding="6dp" />
 
         <Button
             android:id="@+id/submit_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="-4.5dp"
             android:layout_marginRight="-4.5dp"
+            android:layout_marginTop="10dp"
             android:text="@string/signUp"
             android:textAllCaps="false" />
 
@@ -96,8 +103,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        android:background="@color/registrationSecondary">
+        android:background="@color/registrationSecondary"
+        android:orientation="vertical">
 
         <View
             android:layout_width="match_parent"
@@ -108,8 +115,8 @@
             android:id="@+id/signInText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
             android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
             android:textColor="@color/white" />
 
     </LinearLayout>
