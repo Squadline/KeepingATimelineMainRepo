@@ -15,7 +15,8 @@ import java.util.Calendar;
  * Created by Trevor on 5/19/2016.
  */
 public class AddQuoteFragment extends Fragment {
-    public static EditText title, quote, source;
+    EditText title, quote, source;
+    TextView dateQuoteInput;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class AddQuoteFragment extends Fragment {
 
         View AddQuoteFragmentView = inflater.inflate(R.layout.add_quote_fragment, container, false);
 
-        TextView dateQuoteInput = (TextView) AddQuoteFragmentView.findViewById(R.id.dateQuoteInput);
+        dateQuoteInput = (TextView) AddQuoteFragmentView.findViewById(R.id.dateQuoteInput);
         title = (EditText) AddQuoteFragmentView.findViewById(R.id.quoteTitle);
         quote = (EditText) AddQuoteFragmentView.findViewById(R.id.quoteData);
         source = (EditText) AddQuoteFragmentView.findViewById(R.id.quoteSource);
@@ -52,5 +53,22 @@ public class AddQuoteFragment extends Fragment {
         title.setText("");
         quote.setText("");
         source.setText("");
+    }
+
+    public String getTitle() {
+        return title.getText().toString();
+    }
+
+
+    public String getDate() {
+        return dateQuoteInput.getText().toString();
+    }
+
+    public String getQuote() {
+        return quote.getText().toString();
+    }
+
+    public String getSource() {
+        return source.getText().toString();
     }
 }

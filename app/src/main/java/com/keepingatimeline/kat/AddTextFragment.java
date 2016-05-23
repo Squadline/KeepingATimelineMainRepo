@@ -15,7 +15,8 @@ import java.util.Calendar;
  * Created by Trevor on 5/19/2016.
  */
 public class AddTextFragment extends Fragment {
-    public static EditText text, title;
+    EditText text, title;
+    TextView dateTextInput;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class AddTextFragment extends Fragment {
 
         View AddTextFragmentView = inflater.inflate(R.layout.add_text_fragment, container, false);
 
-        TextView dateTextInput = (TextView) AddTextFragmentView.findViewById(R.id.dateTextInput);
+        dateTextInput = (TextView) AddTextFragmentView.findViewById(R.id.dateTextInput);
         text = (EditText) AddTextFragmentView.findViewById(R.id.textTitle);
         title = (EditText) AddTextFragmentView.findViewById(R.id.textBody);
 
@@ -51,4 +52,18 @@ public class AddTextFragment extends Fragment {
         text.setText("");
         title.setText("");
     }
+
+    public String getTitle() {
+        return text.getText().toString();
+    }
+
+
+    public String getDate() {
+        return dateTextInput.getText().toString();
+    }
+
+    public String getText() {
+        return text.getText().toString();
+    }
+
 }

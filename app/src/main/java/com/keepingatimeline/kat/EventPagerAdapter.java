@@ -12,7 +12,7 @@ public class EventPagerAdapter extends FragmentStatePagerAdapter {
     AddPhotoFragment tab1;
     AddQuoteFragment tab2;
     AddTextFragment tab3;
-    private String tabTitles[] = new String[] {"Photo", "Quote", "Text"};
+    private String tabTitles[] = new String[]{"Photo", "Quote", "Text"};
 
     public EventPagerAdapter(FragmentManager fm, int NumOfTabs) {
         super(fm);
@@ -42,6 +42,7 @@ public class EventPagerAdapter extends FragmentStatePagerAdapter {
         return numOfTabs;
     }
 
+    //Change Fields to Blank EditTexts
     public void emptyTexts(int position) {
         switch (position) {
             case 0:
@@ -63,4 +64,33 @@ public class EventPagerAdapter extends FragmentStatePagerAdapter {
         //Generate title based on item position
         return tabTitles[position];
     }
+
+    public String[] getData(int position) {
+        String[] dataArray = new String[4];
+        switch (position) {
+            case 0:
+                //Get Photo Fragment Data Fields
+                dataArray[0] = tab1.getTitle();
+                dataArray[1] = tab1.getDate();
+                dataArray[2] = tab1.getDescription();
+                dataArray[3] = tab1.getPhoto();
+                break;
+            case 1:
+                dataArray[0] = tab2.getTitle();
+                dataArray[1] = tab2.getDate();
+                dataArray[2] = tab2.getSource();
+                dataArray[3] = tab2.getQuote();
+                break;
+            case 2:
+                dataArray[0] = tab3.getTitle();
+                dataArray[1] = tab3.getDate();
+                dataArray[2] = tab3.getText();
+                break;
+            default:
+                break;
+        }
+
+        return dataArray;
+    }
 }
+
