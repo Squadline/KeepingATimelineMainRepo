@@ -86,8 +86,8 @@ public class ViewTimeline extends AppCompatActivity {
 
 
         //sets title of the actionbar to the title of the timeline clicked
-        auth = ref.getAuth().getUid();
         ref = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + auth);
+        auth = ref.getAuth().getUid();
         ref = ref.child("Current");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
