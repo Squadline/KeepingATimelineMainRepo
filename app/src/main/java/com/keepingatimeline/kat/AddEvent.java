@@ -1,6 +1,5 @@
 package com.keepingatimeline.kat;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -31,8 +30,6 @@ public class AddEvent extends AppCompatActivity {
         nextText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent previewActivity = new Intent("com.keepingatimeline.kat.PreviewEvent");
-                //startActivity(previewActivity);
             }
         });
 
