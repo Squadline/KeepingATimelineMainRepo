@@ -121,7 +121,7 @@ public class ViewTimeline extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         squadTitle = (TextView) findViewById(R.id.timeline_title);
-        Typeface myCustomFont = Typeface.createFromAsset(getAssets(),"fonts/Montserrat-Regular.ttf");
+        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), getString(R.string.primaryFont));
         squadTitle.setTypeface(myCustomFont);
         squadTitle.setText(timelineName);
 

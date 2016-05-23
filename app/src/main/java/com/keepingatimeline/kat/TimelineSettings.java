@@ -57,7 +57,7 @@ public class TimelineSettings extends AppCompatActivity {
 
         // Sets font for the title
         squadTitle =  (TextView) findViewById(R.id.squad_title);
-        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat-Regular.ttf");
+        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), getString(R.string.primaryFont));
         squadTitle.setTypeface(myCustomFont);
 
         NonScrollListView user_list = (NonScrollListView) findViewById(R.id.user_list);
