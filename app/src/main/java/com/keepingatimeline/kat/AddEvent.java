@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -47,7 +48,7 @@ public class AddEvent extends AppCompatActivity {
             timelineName = (String) savedInstanceState.getSerializable("Timeline Name");
         }
 
-        nextText.setOnClickListener(new View.OnClickListener() {
+        /*nextText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Firebase ref = Vars.getTimeline(timelineID);
@@ -69,7 +70,7 @@ public class AddEvent extends AppCompatActivity {
                 }
                 ref.setValue(event);
             }
-        });
+        });*/
 
         cancelText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +99,8 @@ public class AddEvent extends AppCompatActivity {
                 EventPagerAdapter fragViewer = (EventPagerAdapter) viewPager.getAdapter();
                 int position = viewPager.getCurrentItem();
                 String[] data = fragViewer.getData(position);
+                Log.d("TITLE", data[0]);
+                Log.d("DATE", data[1]);
 
                 switch(position) {
                     case 0:
@@ -109,6 +112,9 @@ public class AddEvent extends AppCompatActivity {
                     default:
                         break;
                 }
+
+                Intent viewTimeline = new Intent("com.keepingatimeline.kat.ViewTimeline");
+                startActivity(viewTimeline);
             }
         });
 
