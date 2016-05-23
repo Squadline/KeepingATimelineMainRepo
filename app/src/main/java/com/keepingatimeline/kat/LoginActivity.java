@@ -47,7 +47,6 @@ public class LoginActivity extends AppCompatActivity {
             Intent newActivity = new Intent("com.keepingatimeline.kat.MainScreen");
             startActivity(newActivity);
             // END THIS ACTIVITY?
-
         }
 
 

@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -92,8 +93,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch( position ) {
                     case 0:
-                        Intent newActivity = new Intent("com.keepingatimeline.kat.AccountSettings");
-                        startActivity(newActivity);
+                        // should have started account settings activity
                         break;
 
                     case 1:
@@ -272,7 +272,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         if (id == R.id.navChangeEmail) {
 
         } else if (id == R.id.navChangePassword) {
-
+            showChangePassword(); // done by me!!!
         } else if (id == R.id.navShare) {
 
         } else if (id == R.id.navHelp) {
@@ -294,7 +294,35 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    private void showChangePassword(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        builder.setView(inflater.inflate(R.layout.dialog_change_password, null));
+        builder.setTitle("Change Password");
+        //TODO: Add TextField instances from layout to send data to firebase
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //close this dialog
+            }
+        });
 
+        builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                /*firebaseRef.changePassword( oldPassword, nP, nPConfirm );
+                {
+                    if ok, close dialog and toast success
+                    if bad, stay in dialog and toast oldP incorrecto o whatever
+                }
+                */
+            }
+        });
+
+        AlertDialog changePDialog = builder.create();
+        changePDialog.show();
+
+    }
     // displays a help dialogue --Dana
     private void getMainScreenHelp(){
         AlertDialog.Builder helpDialogBuilder = new AlertDialog.Builder(this);
