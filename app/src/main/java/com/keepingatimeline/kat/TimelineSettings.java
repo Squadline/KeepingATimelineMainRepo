@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -110,7 +111,8 @@ public class TimelineSettings extends AppCompatActivity {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
+                Toast.makeText(getApplicationContext(), "Error loading data.",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
