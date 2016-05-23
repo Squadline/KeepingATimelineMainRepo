@@ -47,30 +47,6 @@ public class AddEvent extends AppCompatActivity {
             timelineName = (String) savedInstanceState.getSerializable("Timeline Name");
         }
 
-        nextText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Firebase ref = Vars.getTimeline(timelineID);
-                ref = ref.child("Event");
-                ref = ref.push();
-                Event event = new Event();
-                switch(viewPager.getCurrentItem()) {
-                    case 0:
-                        event.setType("photo");
-                        break;
-                    case 1:
-                        event.setType("quote");
-                        break;
-                    case 2:
-                        event.setType("text");
-                        break;
-                    default:
-                        event.setType("null");
-                }
-                ref.setValue(event);
-            }
-        });
-
         cancelText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,17 +76,38 @@ public class AddEvent extends AppCompatActivity {
                 EventPagerAdapter fragViewer = (EventPagerAdapter) viewPager.getAdapter();
                 int position = viewPager.getCurrentItem();
                 String[] data = fragViewer.getData(position);
+                Firebase ref = Vars.getTimeline(timelineID);
+                ref.child("Events");
+                ref = ref.push();
+                Event event = new Event();
 
                 switch(position) {
                     case 0:
+                        event.setType("photo");
+                        event.setTitle(data[0]);
+                        event.setDate(data[1]);
+                        event.setString1(data[2]);
                         break;
                     case 1:
+                        event.setType("quote");
+                        event.setTitle(data[0]);
+                        event.setDate(data[1]);
+                        event.setString1(data[2]);
+                        event.setString2(data[3]);
                         break;
                     case 2:
+                        event.setType("text");
+                        event.setTitle(data[0]);
+                        event.setDate(data[1]);
+                        event.setString1(data[2]);
                         break;
                     default:
+                        event.setType("null");
                         break;
                 }
+
+                ref.setValue(event);
+                finish();
             }
         });
 
