@@ -69,7 +69,7 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
         }
 
         TextView textL = (TextView)convertView.findViewById(R.id.timelineTitle);
-        textL.setText(tlTitles.get(position));
+        textL.setText(tlFriends.get(position));
 
         Context context = parent.getContext();
         Typeface myCustomFont = Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Regular.ttf");
@@ -78,7 +78,7 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
 
 
         TextView textS = (TextView)convertView.findViewById(R.id.timelineFriends);
-        textS.setText(tlFriends.get(position));
+        textS.setText(tlTitles.get(position));
 
         return convertView;
     }

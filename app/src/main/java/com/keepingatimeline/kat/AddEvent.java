@@ -75,7 +75,7 @@ public class AddEvent extends AppCompatActivity {
                 int position = viewPager.getCurrentItem();
                 String[] data = fragViewer.getData(position);
                 Firebase ref = Vars.getTimeline(timelineID);
-                ref.child("Events");
+                ref = ref.child("Events");
                 ref = ref.push();
                 Event event = new Event();
 
