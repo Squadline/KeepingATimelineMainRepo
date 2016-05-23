@@ -147,7 +147,6 @@
                 android:clickable="true"
                 android:drawablePadding="16dp"
                 android:drawableStart="@drawable/ic_person_add_blue"
-                android:fontFamily="sans-serif"
                 android:gravity="center_vertical"
                 android:paddingEnd="16dp"
                 android:paddingStart="16dp"
@@ -198,8 +197,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="@color/white"
-                android:fontFamily="sans-serif"
+                android:background="@drawable/text_ripple"
+                android:clickable="true"
                 android:gravity="center_vertical"
                 android:paddingEnd="16dp"
                 android:paddingStart="16dp"

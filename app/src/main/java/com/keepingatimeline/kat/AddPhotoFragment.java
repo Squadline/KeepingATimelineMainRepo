@@ -43,7 +43,7 @@ public class AddPhotoFragment extends Fragment {
         View AddPhotoFragmentView = inflater.inflate(R.layout.add_photo_fragment, container, false);
 
         datePhotoInput = (TextView) AddPhotoFragmentView.findViewById(R.id.datePhotoInput);
-        uploadPhotoInput = (TextView) AddPhotoFragmentView.findViewById(R.id.photoName);
+        uploadPhotoInput = (TextView) AddPhotoFragmentView.findViewById(R.id.photoFile);
         titlePhotoInput = (EditText) AddPhotoFragmentView.findViewById(R.id.photoTitle);
         photoDescription = (EditText) AddPhotoFragmentView.findViewById(R.id.photoDescription);
 

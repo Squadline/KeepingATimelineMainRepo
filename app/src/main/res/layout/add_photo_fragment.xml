@@ -55,6 +55,8 @@
                 android:background="@color/white"
                 android:gravity="end"
                 android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="false"
                 android:padding="10dp" />
 
         </RelativeLayout>
@@ -74,15 +76,17 @@
             android:background="@color/black" />
 
         <TextView
-            android:id="@+id/photoName"
+            android:id="@+id/photoFile"
             style="?android:attr/editTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="3dp"
             android:layout_marginStart="3dp"
-            android:background="@color/white"
+            android:background="@drawable/text_ripple"
             android:gravity="start"
             android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="false"
             android:padding="10dp"
             android:text="Upload image" />
 
