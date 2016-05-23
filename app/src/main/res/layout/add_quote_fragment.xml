@@ -33,7 +33,7 @@
 
             <TextView
                 android:id="@+id/quoteDate"
-                style="@style/Widget.AppCompat.EditText"
+                style="?android:attr/editTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -41,20 +41,20 @@
                 android:layout_toStartOf="@+id/dateQuoteInput"
                 android:background="@color/white"
                 android:gravity="start"
-                android:linksClickable="true"
+                android:clickable="true"
                 android:padding="10dp"
                 android:text="Date" />
 
             <TextView
                 android:id="@+id/dateQuoteInput"
-                style="@style/Widget.AppCompat.EditText"
+                style="?android:attr/editTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="3dp"
                 android:background="@color/white"
                 android:gravity="end"
-                android:linksClickable="true"
+                android:clickable="true"
                 android:padding="10dp" />
 
         </RelativeLayout>
