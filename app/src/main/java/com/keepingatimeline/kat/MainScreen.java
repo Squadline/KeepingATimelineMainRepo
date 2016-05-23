@@ -3,10 +3,7 @@ package com.keepingatimeline.kat;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -31,7 +28,6 @@ import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -45,9 +41,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private AlertDialog.Builder dialogBuilder;
     private String newName;
     private TextView titleBar;
-
     private String emailAdd;
-
     private String temp;
     private Firebase current;
 
@@ -64,15 +58,15 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
-        titleBar = (TextView) findViewById(R.id.toolbar_title);
-        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), getString(R.string.squadLineFont));
-        titleBar.setTypeface(myCustomFont);
-
         Firebase.setAndroidContext(this);
 
         // Uses a Toolbar as an ActionBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        titleBar = (TextView) findViewById(R.id.toolbar_title);
+        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), getString(R.string.squadLineFont));
+        titleBar.setTypeface(myCustomFont);
 
         // Opens sidebar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -124,11 +118,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         });
         */
 
-
         inflateTimeline = new TimelineAdapter(this, tlTitles, tlFriends);
         timelineList = (ListView) findViewById(R.id.timelineList);
         timelineList.setAdapter(inflateTimeline);
-
 
         // moved this from onStart() --Dana
         //set url reference to active user

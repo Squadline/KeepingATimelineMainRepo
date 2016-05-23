@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Jimmy on 5/11/2016.
- * Made it useful by Trevor on 5/17/2016.
+ * Made useful by Trevor on 5/17/2016.
  */
 public class TimelineAdapter extends BaseAdapter implements ListAdapter {
 
@@ -72,10 +72,8 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
         textL.setText(tlFriends.get(position));
 
         Context context = parent.getContext();
-        Typeface myCustomFont = Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Regular.ttf");
+        Typeface myCustomFont = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Medium.ttf");
         textL.setTypeface(myCustomFont);
-
-
 
         TextView textS = (TextView)convertView.findViewById(R.id.timelineFriends);
         textS.setText(tlTitles.get(position));

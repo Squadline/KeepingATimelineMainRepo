@@ -60,6 +60,7 @@
 
     <!--Firebase Constants-->
     <string name="firebase_address">https://fiery-fire-8218.firebaseio.com/</string>
-    <string name="timelineTitleFont">fonts/Montserrat-Regular.ttf</string>
+
     <string name="squadLineFont">fonts/BebasNeue Bold.ttf</string>
+    <string name="primaryFont">fonts/Roboto-Medium.ttf</string>
 </resources>
