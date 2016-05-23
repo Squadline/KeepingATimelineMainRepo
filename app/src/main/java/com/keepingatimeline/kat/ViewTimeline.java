@@ -68,6 +68,15 @@ public class ViewTimeline extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_timeline);
 
+        // Uses a Toolbar as an ActionBar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Adds back button to toolbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_white);
+
         //find the specified drawer layout
         mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         mActivityTitle = getTitle().toString();
@@ -116,19 +125,10 @@ public class ViewTimeline extends AppCompatActivity {
             }
         });
 
-        // Uses a Toolbar as an ActionBar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         squadTitle = (TextView) findViewById(R.id.timeline_title);
         Typeface myCustomFont = Typeface.createFromAsset(getAssets(), getString(R.string.primaryFont));
         squadTitle.setTypeface(myCustomFont);
         squadTitle.setText(timelineName);
-
-        // Adds back button to toolbar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_white);
 
 
         addEvent = (ImageButton) findViewById(R.id.addEventFAB);

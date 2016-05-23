@@ -81,6 +81,15 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        // sets name of current user in sidebar
+        View navHeader = navigationView.getHeaderView(0);
+        TextView userName = (TextView) navHeader.findViewById(R.id.user_name);
+        userName.setText("namemam");
+
+        // sets email of current user in sidebar
+        TextView userEmail = (TextView) navHeader.findViewById(R.id.user_email);
+        userEmail.setText("lkjsdf");
+
         /*
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
