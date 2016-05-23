@@ -95,8 +95,6 @@ public class AddEvent extends AppCompatActivity {
         nextText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent previewActivity = new Intent("com.keepingatimeline.kat.PreviewEvent");
-                //startActivity(previewActivity);
                 EventPagerAdapter fragViewer = (EventPagerAdapter) viewPager.getAdapter();
                 int position = viewPager.getCurrentItem();
                 String[] data = fragViewer.getData(position);
