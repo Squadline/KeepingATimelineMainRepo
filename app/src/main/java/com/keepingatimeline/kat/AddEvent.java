@@ -1,5 +1,6 @@
 package com.keepingatimeline.kat;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -14,6 +15,11 @@ import com.firebase.client.Firebase;
 
 public class AddEvent extends AppCompatActivity {
 
+    private String timelineID;
+    private String timelineName;
+    private ViewPager viewPager;
+    private EventPagerAdapter eventAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,9 +33,41 @@ public class AddEvent extends AppCompatActivity {
         TextView nextText = (TextView) findViewById(R.id.nextText);
         TextView cancelText = (TextView) findViewById(R.id.cancelText);
 
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                timelineID = null;
+                timelineName = "";
+            } else {
+                timelineID = extras.getString("Timeline ID");
+                timelineName = extras.getString("Timeline Name");
+            }
+        } else {
+            timelineID = (String) savedInstanceState.getSerializable("Timeline ID");
+            timelineName = (String) savedInstanceState.getSerializable("Timeline Name");
+        }
+
         nextText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Firebase ref = Vars.getTimeline(timelineID);
+                ref = ref.child("Event");
+                ref = ref.push();
+                Event event = new Event();
+                switch(viewPager.getCurrentItem()) {
+                    case 0:
+                        event.setType("photo");
+                        break;
+                    case 1:
+                        event.setType("quote");
+                        break;
+                    case 2:
+                        event.setType("text");
+                        break;
+                    default:
+                        event.setType("null");
+                }
+                ref.setValue(event);
             }
         });
 
@@ -42,8 +80,8 @@ public class AddEvent extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.eventTabs);
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.eventPager);
-        final EventPagerAdapter eventAdapter = new EventPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager = (ViewPager) findViewById(R.id.eventPager);
+        eventAdapter = new EventPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
 
         viewPager.setAdapter(eventAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -53,6 +91,26 @@ public class AddEvent extends AppCompatActivity {
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.grey500), Color.WHITE);
+
+        nextText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventPagerAdapter fragViewer = (EventPagerAdapter) viewPager.getAdapter();
+                int position = viewPager.getCurrentItem();
+                String[] data = fragViewer.getData(position);
+
+                switch(position) {
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
