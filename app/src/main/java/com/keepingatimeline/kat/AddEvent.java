@@ -1,5 +1,6 @@
 package com.keepingatimeline.kat;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -90,6 +91,28 @@ public class AddEvent extends AppCompatActivity {
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.grey500), Color.WHITE);
+
+        nextText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent previewActivity = new Intent("com.keepingatimeline.kat.PreviewEvent");
+                //startActivity(previewActivity);
+                EventPagerAdapter fragViewer = (EventPagerAdapter) viewPager.getAdapter();
+                int position = viewPager.getCurrentItem();
+                String[] data = fragViewer.getData(position);
+
+                switch(position) {
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

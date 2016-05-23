@@ -98,4 +98,21 @@ public class AddPhotoFragment extends Fragment {
         titlePhotoInput.setText("");
         photoDescription.setText("");
     }
+
+    public String getTitle() {
+        return titlePhotoInput.getText().toString();
+    }
+
+    public String getPhoto() {
+        String hello = "Hello World";
+        return hello;
+    }
+
+    public String getDate() {
+        return datePhotoInput.getText().toString();
+    }
+
+    public String getDescription() {
+        return photoDescription.getText().toString();
+    }
 }
