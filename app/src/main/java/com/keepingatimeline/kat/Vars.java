@@ -28,7 +28,7 @@ public final class Vars {
 
     public static Firebase getTimeline(String timelineID) {
         if(timelineID == null) return getFirebase();
-        else return getFirebase().child("Timeline/" + timelineID);
+        else return getFirebase().child("Timelines/" + timelineID);
     }
 
 }
