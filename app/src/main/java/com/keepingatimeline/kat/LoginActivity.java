@@ -1,11 +1,9 @@
 package com.keepingatimeline.kat;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         TextView forgotPass = (TextView) findViewById(R.id.forgotPassword);
         username = (TextView) findViewById(R.id.loginEmail);
         password = (TextView) findViewById(R.id.loginPassword);
-        fRef = new Firebase("https://fiery-fire-8218.firebaseio.com/");
+        fRef = Vars.getFirebase();
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
