@@ -98,7 +98,7 @@ public class ViewTimeline extends AppCompatActivity {
                 timelineName = extras.getString("Timeline Name");
             }
         } else {
-            timelineID = (String) savedInstanceState.getSerializable("TimelineID");
+            timelineID = (String) savedInstanceState.getSerializable("Timeline ID");
             timelineName = (String) savedInstanceState.getSerializable("Timeline Name");
         }
 
@@ -137,6 +137,8 @@ public class ViewTimeline extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent addEventActivity = new Intent("com.keepingatimeline.kat.AddEvent");
+                addEventActivity.putExtra("Timeline Name", timelineName);
+                addEventActivity.putExtra("Timeline ID", timelineID);
                 startActivity(addEventActivity);
             }
         });
