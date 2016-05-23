@@ -134,13 +134,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".PreviewEvent">
-            <intent-filter>
-                <action android:name="com.keepingatimeline.kat.PreviewEvent" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
