@@ -2,6 +2,7 @@ package com.keepingatimeline.kat;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -107,6 +108,8 @@ public class ViewTimeline extends AppCompatActivity {
         auth = Vars.getUID();
 
         toolTitle = (TextView) findViewById(R.id.timeline_title);
+        Typeface myCustomFont = Typeface.createFromAsset(getAssets(),"fonts/Montserrat-Regular.ttf");
+        toolTitle.setTypeface(myCustomFont);
         toolTitle.setText(timelineName);
 
         firebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
