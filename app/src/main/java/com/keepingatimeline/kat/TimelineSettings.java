@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -22,7 +23,8 @@ import java.util.ArrayList;
  */
 public class TimelineSettings extends AppCompatActivity {
 
-    private String current;                     // ID of the current timeline
+    private String currentLine;                 // ID of the currentLine timeline
+    private String currentName;                 // Name of the current user
     private TextView squadTitle;                // Name of timeline
     private ArrayAdapter<String> adapter;       // Adapter for list of users
     private ArrayList<String> users;            // List of user names
@@ -33,6 +35,7 @@ public class TimelineSettings extends AppCompatActivity {
     private final String TITLE_STR = "Title";
     private final String USERS_STR = "Users";
     private final String CURR_STR = "Current";
+    private final String NAME_STR = "FirstName";
     private final String TIMELINE_STR = "Timelines";
     private final String DB_STR = "https://fiery-fire-8218.firebaseio.com/";
 
@@ -68,18 +71,21 @@ public class TimelineSettings extends AppCompatActivity {
         // Get the UID of the currently authenticated user
         // Get the Firebase object of the timeline that the user is viewing
         String currentUser = db.getAuth().getUid();
-        Firebase currentLine = db.child(USERS_STR).child(currentUser).child(CURR_STR);
+        Firebase current = db.child(USERS_STR).child(currentUser);
 
         // Retrieve timeline title ONCE from Firebase
-        currentLine.addListenerForSingleValueEvent(new ValueEventListener() {
+        current.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get the ID of the current timeline
-                current = dataSnapshot.getValue().toString();
+                currentLine = dataSnapshot.child(CURR_STR).getValue().toString();
+
+                // Get the name of the current user
+                currentName = dataSnapshot.child(NAME_STR).getValue().toString();
 
                 // Move db down to current timeline once we've gotten
                 // the ID of the current timeline
-                db = db.child(TIMELINE_STR).child(current);
+                db = db.child(TIMELINE_STR).child(TimelineSettings.this.currentLine);
 
                 // Add event listener to get settings updates
                 db.addValueEventListener(new ValueEventListener() {
@@ -90,7 +96,7 @@ public class TimelineSettings extends AppCompatActivity {
 
                         // reset the list of users and add current user to top
                         users.clear();
-                        users.add("Eunji");
+                        users.add(currentName);
 
                         // iterate through the users in the database (alphabetically)
                         // and add their names to the list of timeline users
@@ -110,7 +116,8 @@ public class TimelineSettings extends AppCompatActivity {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
+                Toast.makeText(getApplicationContext(), "Error loading data.",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

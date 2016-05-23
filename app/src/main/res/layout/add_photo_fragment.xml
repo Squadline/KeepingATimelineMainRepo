@@ -33,7 +33,7 @@
 
             <TextView
                 android:id="@+id/photoDate"
-                style="@style/Widget.AppCompat.EditText"
+                style="?android:attr/editTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -41,20 +41,20 @@
                 android:layout_toStartOf="@+id/datePhotoInput"
                 android:background="@color/white"
                 android:gravity="start"
-                android:linksClickable="true"
+                android:clickable="true"
                 android:padding="10dp"
                 android:text="Date" />
 
             <TextView
                 android:id="@+id/datePhotoInput"
-                style="@style/Widget.AppCompat.EditText"
+                style="?android:attr/editTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="3dp"
                 android:background="@color/white"
                 android:gravity="end"
-                android:linksClickable="true"
+                android:clickable="true"
                 android:padding="10dp" />
 
         </RelativeLayout>
@@ -75,16 +75,16 @@
 
         <TextView
             android:id="@+id/photoName"
-            style="@style/Widget.AppCompat.EditText"
+            style="?android:attr/editTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="3dp"
             android:layout_marginStart="3dp"
             android:background="@color/white"
             android:gravity="start"
-            android:linksClickable="true"
+            android:clickable="true"
             android:padding="10dp"
-            android:text="No file chosen" />
+            android:text="Upload image" />
 
         <View
             android:layout_width="match_parent"

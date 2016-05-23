@@ -39,10 +39,14 @@ public class ViewTimeline extends AppCompatActivity {
     RecyclerView.Adapter rvAdapter;
     RecyclerView.LayoutManager rvLayoutManager;
 
-    private Firebase ref;
+    private Firebase firebaseRef;
     private Firebase tLine;
     private Firebase tLineTitle;
     private String auth;
+    private String timelineID;
+    private String timelineName;
+
+    private List<Event> events;
 
     private String textTBar;
     private TextView toolTitle;
@@ -84,29 +88,27 @@ public class ViewTimeline extends AppCompatActivity {
 
         Firebase.setAndroidContext(this);
 
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                timelineID = null;
+                timelineName = "";
+            } else {
+                timelineID = extras.getString("Timeline ID");
+                timelineName = extras.getString("Timeline Name");
+            }
+        } else {
+            timelineID = (String) savedInstanceState.getSerializable("TimelineID");
+            timelineName = (String) savedInstanceState.getSerializable("Timeline Name");
+        }
 
         //sets title of the actionbar to the title of the timeline clicked
-        auth = ref.getAuth().getUid();
-        ref = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + auth);
-        ref = ref.child("Current");
-        ref.addValueEventListener(new ValueEventListener() {
+        firebaseRef = Vars.getTimeline(timelineID);
+        auth = Vars.getUID();
+        firebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                auth = (String) dataSnapshot.getValue();
-                tLine = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines/" + auth);
-                tLineTitle = tLine.child("Title");
-                tLineTitle.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        textTBar = (String) dataSnapshot.getValue();
-                        toolTitle = (TextView) findViewById(R.id.timeline_title);
-                        toolTitle.setText(textTBar);
-                    }
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
 
-                    }
-                });
             }
             @Override
             public void onCancelled(FirebaseError firebaseError) {
