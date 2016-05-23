@@ -2,6 +2,7 @@ package com.keepingatimeline.kat;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
@@ -41,6 +43,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private String holder;
     private AlertDialog.Builder dialogBuilder;
     private String newName;
+    private TextView titleBar;
 
     private String emailAdd;
 
@@ -59,6 +62,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
+
+        titleBar = (TextView) findViewById(R.id.toolbar_title);
+        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), "fonts/BebasNeue Bold.ttf");
+        titleBar.setTypeface(myCustomFont);
+
         Firebase.setAndroidContext(this);
 
         // Uses a Toolbar as an ActionBar
