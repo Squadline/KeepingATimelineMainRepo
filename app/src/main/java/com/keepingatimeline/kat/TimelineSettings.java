@@ -55,11 +55,10 @@ public class TimelineSettings extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_white);
 
-        // Get view objects of the activity
+        // Sets font for the title
         squadTitle =  (TextView) findViewById(R.id.squad_title);
-
-
-
+        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat-Regular.ttf");
+        squadTitle.setTypeface(myCustomFont);
 
         NonScrollListView user_list = (NonScrollListView) findViewById(R.id.user_list);
 
@@ -98,10 +97,6 @@ public class TimelineSettings extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // get value of the title child of timeline and set title
                         squadTitle.setText(dataSnapshot.child(TITLE_STR).getValue().toString());
-
-                        // Sets font for the title
-                        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat-Regular.ttf");
-                        squadTitle.setTypeface(myCustomFont);
 
                         // reset the list of users and add current user to top
                         users.clear();

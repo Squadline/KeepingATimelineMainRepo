@@ -3,9 +3,7 @@ package com.keepingatimeline.kat;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -50,7 +48,7 @@ public class ViewTimeline extends AppCompatActivity {
     private List<Event> events;
 
     private String textTBar;
-    private TextView toolTitle;
+    private TextView squadTitle;
 
     //allows for drawer views to be pulled out from one or both vertical edges of the window
     private DrawerLayout mDrawerLayout;
@@ -107,11 +105,6 @@ public class ViewTimeline extends AppCompatActivity {
         firebaseRef = Vars.getTimeline(timelineID);
         auth = Vars.getUID();
 
-        toolTitle = (TextView) findViewById(R.id.timeline_title);
-        Typeface myCustomFont = Typeface.createFromAsset(getAssets(),"fonts/Montserrat-Regular.ttf");
-        toolTitle.setTypeface(myCustomFont);
-        toolTitle.setText(timelineName);
-
         firebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -126,6 +119,11 @@ public class ViewTimeline extends AppCompatActivity {
         // Uses a Toolbar as an ActionBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        squadTitle = (TextView) findViewById(R.id.timeline_title);
+        Typeface myCustomFont = Typeface.createFromAsset(getAssets(),"fonts/Montserrat-Regular.ttf");
+        squadTitle.setTypeface(myCustomFont);
+        squadTitle.setText(timelineName);
 
         // Adds back button to toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
