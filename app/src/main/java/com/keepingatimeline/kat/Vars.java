@@ -26,4 +26,9 @@ public final class Vars {
         else return auth.getUid();
     }
 
+    public static Firebase getTimeline(String timelineID) {
+        if(timelineID == null) return getFirebase();
+        else return getFirebase().child("Timeline/" + timelineID);
+    }
+
 }
