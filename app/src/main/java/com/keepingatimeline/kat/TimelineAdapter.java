@@ -1,6 +1,7 @@
 package com.keepingatimeline.kat;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,6 +70,12 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
 
         TextView textL = (TextView)convertView.findViewById(R.id.timelineTitle);
         textL.setText(tlTitles.get(position));
+
+        Context context = parent.getContext();
+        Typeface myCustomFont = Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Regular.ttf");
+        textL.setTypeface(myCustomFont);
+
+
 
         TextView textS = (TextView)convertView.findViewById(R.id.timelineFriends);
         textS.setText(tlFriends.get(position));

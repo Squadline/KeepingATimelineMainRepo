@@ -1,5 +1,6 @@
 package com.keepingatimeline.kat;
 
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -56,6 +57,10 @@ public class TimelineSettings extends AppCompatActivity {
 
         // Get view objects of the activity
         squadTitle =  (TextView) findViewById(R.id.squad_title);
+
+
+
+
         NonScrollListView user_list = (NonScrollListView) findViewById(R.id.user_list);
 
         // Instantiate list of users and the adapter to the ListView
@@ -93,6 +98,10 @@ public class TimelineSettings extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // get value of the title child of timeline and set title
                         squadTitle.setText(dataSnapshot.child(TITLE_STR).getValue().toString());
+
+                        // Sets font for the title
+                        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat-Regular.ttf");
+                        squadTitle.setTypeface(myCustomFont);
 
                         // reset the list of users and add current user to top
                         users.clear();
