@@ -26,12 +26,23 @@ import com.firebase.client.FirebaseError;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
 public class RegistrationScreen extends AppCompatActivity {
     private EditText password1;
     private EditText emailAdd;
     private EditText name1st;
     private EditText name2nd;
     private Button submitUp;
+
+    private Pattern pattern;
+    private Matcher matcher;
+
+    private static final String EMAIL_PATTERN =
+            "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +61,25 @@ public class RegistrationScreen extends AppCompatActivity {
             public void onClick(View v) {
                 Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com");
                 final String user = emailAdd.getText().toString();
+
+                //email pattern validator
+                pattern = Pattern.compile(EMAIL_PATTERN);
+                matcher = pattern.matcher(user);
+
+                //checks if email address is valid
+                if(matcher.matches() == false){
+
+                    Context context = getApplicationContext();
+                    CharSequence text = "ERROR: The e-mail address you entered is not valid. Please try again.";
+                    int duration = Toast.LENGTH_LONG;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+
+                    emailAdd.setText("");
+                    return;
+                }
+
                 String password = password1.getText().toString();
                 ref.createUser(user, password, new Firebase.ValueResultHandler<Map<String, Object>>()
                 {
