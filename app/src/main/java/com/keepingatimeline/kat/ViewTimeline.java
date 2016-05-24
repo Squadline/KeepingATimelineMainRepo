@@ -155,8 +155,30 @@ public class ViewTimeline extends AppCompatActivity {
         rv.setLayoutManager(rvLayoutManager);
 
         // specify an adapter (see also next example)
-        rvAdapter = new EventAdapter(new String[0]);
+        final ArrayList<Event> eventList = new ArrayList<Event>();
+        rvAdapter = new EventAdapter(eventList);
         rv.setAdapter(rvAdapter);
+
+        firebaseRef = Vars.getTimeline(timelineID).child("Events");
+
+        firebaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                eventList.clear();
+                for (DataSnapshot eventSnapshot: dataSnapshot.getChildren()){
+                    Event event = eventSnapshot.getValue(Event.class);
+                    if(!event.getType().equals("null")) {
+                        eventList.add(event);
+                    }
+                }
+                rvAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
     @Override
