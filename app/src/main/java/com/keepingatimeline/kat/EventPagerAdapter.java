@@ -16,6 +16,9 @@ public class EventPagerAdapter extends FragmentStatePagerAdapter {
 
     public EventPagerAdapter(FragmentManager fm, int NumOfTabs) {
         super(fm);
+        tab1 = new AddPhotoFragment();
+        tab2 = new AddQuoteFragment();
+        tab3 = new AddTextFragment();
         //this.numOfTabs = NumOfTabs;
     }
 
@@ -24,13 +27,10 @@ public class EventPagerAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                tab1 = new AddPhotoFragment();
                 return tab1;
             case 1:
-                tab2 = new AddQuoteFragment();
                 return tab2;
             case 2:
-                tab3 = new AddTextFragment();
                 return tab3;
             default:
                 return null;

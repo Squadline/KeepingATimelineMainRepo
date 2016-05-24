@@ -55,6 +55,8 @@
                 android:background="@color/white"
                 android:gravity="end"
                 android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="false"
                 android:padding="10dp" />
 
         </RelativeLayout>

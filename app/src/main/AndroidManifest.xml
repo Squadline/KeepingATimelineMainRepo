@@ -41,17 +41,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AccountSettings"
-            android:configChanges="orientation"
-            android:label="Account Settings"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="com.keepingatimeline.kat.AccountSettings" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".Timelineshower"
             android:configChanges="orientation"
             android:label="Timeline Shower"
@@ -59,17 +48,6 @@
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.Timelineshower" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ChangePassword"
-            android:configChanges="orientation"
-            android:label="Change Password"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="com.keepingatimeline.kat.ChangePassword" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

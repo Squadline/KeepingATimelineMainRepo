@@ -27,17 +27,11 @@
             <TextView
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/app_name"
-                android:width="160dp"
                 android:textSize="30sp"
-
-
-                android:textColor="@color/white"
-                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                android:fontFeatureSettings="@string/abc_activitychooserview_choose_application"
-                android:gravity="center" />
+                android:textColor="@color/white" />
                 <!--
                 android:text="HOME"
                 android:textSize="36dp"
@@ -47,12 +41,6 @@
                 -->
 
         </android.support.v7.widget.Toolbar>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView2"
-            android:layout_gravity="right" />
 
         <View
             android:layout_width="match_parent"
@@ -81,17 +69,5 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/main_drawer_menu" />
-
-    <!--
-    <ListView
-        android:id="@+id/left_drawer"
-        android:layout_width="240dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="left"
-        android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:background="#FFFFFF"
-        android:fitsSystemWindows="true" /> -->
 
 </android.support.v4.widget.DrawerLayout>

@@ -3,14 +3,16 @@
 
     <item android:title="Account">
         <menu>
-            <item
-                android:id="@+id/navChangeEmail"
-                android:title="@string/changeEmail"
-                android:icon="@drawable/ic_action_email" />
-            <item
-                android:id="@+id/navChangePassword"
-                android:title="@string/changePassword"
-                android:icon="@drawable/ic_action_lock" />
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/navChangeEmail"
+                    android:title="@string/changeName"
+                    android:icon="@drawable/ic_action_email" />
+                <item
+                    android:id="@+id/navChangePassword"
+                    android:title="@string/changePassword"
+                    android:icon="@drawable/ic_action_lock" />
+            </group>
         </menu>
     </item>
 

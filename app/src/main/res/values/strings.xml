@@ -1,11 +1,6 @@
 <resources>
     <string name="app_name">Squadline</string>
 
-    <string name="forgot_password">Forgot Password?</string>
-    <string name="create_an_account">Create An Account</string>
-    <string name="i_e_ggillespie_ucsd_edu">i.e. ggillespie@ucsd.edu</string>
-    <string name="login">Login</string>
-
     <!-- Strings for the AddEvent screen -->
     <string name="add_new_text_event">Add New Text Event</string>
     <string name="title_field">Title: </string>
@@ -33,7 +28,7 @@
 
     <!--Login Page Strings-->
     <string name="email">Email</string>
-    <string name="emailHint">i.e. ggillespie@ucsd.edu</string>
+    <string name="emailHint">ggillespie@ucsd.edu</string>
     <string name="password">Password</string>
     <string name="loginBtn">Log In</string>
     <string name="forgotPassword">Forgot Password?</string>
@@ -44,7 +39,7 @@
     <string name="lastName">Last Name</string>
 
     <!--Sidebar Strings-->
-    <string name="changeEmail">Change Email</string>
+    <string name="changeName">Change Name</string>
     <string name="changePassword">Change Password</string>
     <string name="share">Share</string>
     <string name="help">Help</string>
@@ -60,5 +55,7 @@
 
     <!--Firebase Constants-->
     <string name="firebase_address">https://fiery-fire-8218.firebaseio.com/</string>
+
     <string name="squadLineFont">fonts/BebasNeue Bold.ttf</string>
+    <string name="primaryFont">fonts/Roboto-Medium.ttf</string>
 </resources>

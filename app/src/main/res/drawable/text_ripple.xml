@@ -1,5 +1,6 @@
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-  android:color="@android:color/darker_gray">
+    android:color="@android:color/darker_gray"> <!-- Ripple color -->
 
-  <item android:drawable="@android:color/white"/>
+    <!-- Background color -->
+    <item android:drawable="@android:color/white"/>
 </ripple>

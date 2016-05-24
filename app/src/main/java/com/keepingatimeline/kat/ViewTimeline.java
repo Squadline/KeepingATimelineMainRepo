@@ -23,6 +23,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +48,7 @@ public class ViewTimeline extends AppCompatActivity {
     private List<Event> events;
 
     private String textTBar;
-    private TextView toolTitle;
+    private TextView squadTitle;
 
     //allows for drawer views to be pulled out from one or both vertical edges of the window
     private DrawerLayout mDrawerLayout;
@@ -65,6 +67,15 @@ public class ViewTimeline extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_timeline);
+
+        // Uses a Toolbar as an ActionBar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Adds back button to toolbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_white);
 
         //find the specified drawer layout
         mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
@@ -103,11 +114,6 @@ public class ViewTimeline extends AppCompatActivity {
         firebaseRef = Vars.getTimeline(timelineID);
         auth = Vars.getUID();
 
-        toolTitle = (TextView) findViewById(R.id.timeline_title);
-        Typeface myCustomFont = Typeface.createFromAsset(getAssets(),"fonts/Oswald-Heavy.ttf");
-        toolTitle.setTypeface(myCustomFont);
-        toolTitle.setText(timelineName);
-
         firebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -119,14 +125,10 @@ public class ViewTimeline extends AppCompatActivity {
             }
         });
 
-        // Uses a Toolbar as an ActionBar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        // Adds back button to toolbar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_white);
+        squadTitle = (TextView) findViewById(R.id.timeline_title);
+        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), getString(R.string.primaryFont));
+        squadTitle.setTypeface(myCustomFont);
+        squadTitle.setText(timelineName);
 
 
         addEvent = (ImageButton) findViewById(R.id.addEventFAB);
@@ -153,8 +155,30 @@ public class ViewTimeline extends AppCompatActivity {
         rv.setLayoutManager(rvLayoutManager);
 
         // specify an adapter (see also next example)
-        rvAdapter = new EventAdapter(new String[0]);
+        final ArrayList<Event> eventList = new ArrayList<Event>();
+        rvAdapter = new EventAdapter(eventList);
         rv.setAdapter(rvAdapter);
+
+        firebaseRef = Vars.getTimeline(timelineID).child("Events");
+
+        firebaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                eventList.clear();
+                for (DataSnapshot eventSnapshot: dataSnapshot.getChildren()){
+                    Event event = eventSnapshot.getValue(Event.class);
+                    if(!event.getType().equals("null")) {
+                        eventList.add(event);
+                    }
+                }
+                rvAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
     @Override
