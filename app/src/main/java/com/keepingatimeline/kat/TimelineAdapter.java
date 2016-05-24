@@ -1,6 +1,7 @@
 package com.keepingatimeline.kat;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Jimmy on 5/11/2016.
- * Made it useful by Trevor on 5/17/2016.
+ * Made useful by Trevor on 5/17/2016.
  */
 public class TimelineAdapter extends BaseAdapter implements ListAdapter {
 
@@ -68,10 +69,14 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
         }
 
         TextView textL = (TextView)convertView.findViewById(R.id.timelineTitle);
-        textL.setText(tlTitles.get(position));
+        textL.setText(tlFriends.get(position));
+
+        Context context = parent.getContext();
+        Typeface myCustomFont = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Medium.ttf");
+        textL.setTypeface(myCustomFont);
 
         TextView textS = (TextView)convertView.findViewById(R.id.timelineFriends);
-        textS.setText(tlFriends.get(position));
+        textS.setText(tlTitles.get(position));
 
         return convertView;
     }

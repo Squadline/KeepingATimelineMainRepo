@@ -1,7 +1,6 @@
 package com.keepingatimeline.kat;
 
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -26,7 +25,8 @@ import java.util.ArrayList;
  */
 public class TimelineSettings extends AppCompatActivity {
 
-    private String currentLine;                 // ID of the currentLine timeline
+    private String currTimelineID;              // ID of the current timeline
+    private String currTimelineTitle;           // Title of the current timeline
     private String currentName;                 // Name of the current user
     private TextView squadTitle;                // Name of timeline
     private TextView addFriend;                 // Add Friend button
@@ -36,11 +36,12 @@ public class TimelineSettings extends AppCompatActivity {
     private Firebase db;                        // Database object
 
     // String constants for Firebase children
-    private final String TITLE_STR = "Title";
-    private final String USERS_STR = "Users";
-    private final String NAME_STR = "FirstName";
-    private final String ID_STR = "Timeline ID";
-    private final String DB_STR = "https://fiery-fire-8218.firebaseio.com/";
+    private static final String EMAIL_STR = "EmailAddress";
+    private static final String TITLE_STR = "Title";
+    private static final String USERS_STR = "Users";
+    private static final String NAME_STR = "FirstName";
+    private static final String TIMELINE_STR = "Timelines";
+    private static final String DB_STR = "https://fiery-fire-8218.firebaseio.com/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +58,11 @@ public class TimelineSettings extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_white);
 
-        // Get view objects of the activity
+        // Sets font for the title
         squadTitle =  (TextView) findViewById(R.id.squad_title);
-        addFriend = (TextView) findViewById(R.id.addPeople);
+        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), getString(R.string.primaryFont));
+        squadTitle.setTypeface(myCustomFont);
+
         NonScrollListView user_list = (NonScrollListView) findViewById(R.id.user_list);
 
         // Instantiate list of users and the adapter to the ListView
@@ -90,49 +93,40 @@ public class TimelineSettings extends AppCompatActivity {
         }
 
         // Instantiate Firebase object to main database
-        db = new Firebase(DB_STR);
+        db = Vars.getFirebase();
 
         // Get the UID of the currently authenticated user
-        // Get the Firebase object of the current user
-        String currentUser = db.getAuth().getUid();
+        // Get the Firebase object of the timeline that the user is viewing
+        final String currentUser = db.getAuth().getUid();
         Firebase current = db.child(USERS_STR).child(currentUser);
 
-        // Retrieve current user name ONCE from Firebase
-        current.addListenerForSingleValueEvent(new ValueEventListener() {
+        // Retrieve timeline title from extras or saved instance
+
+
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                currTimelineID = null;
+                currTimelineTitle = "";
+            } else {
+                currTimelineID = extras.getString("Timeline ID");
+                currTimelineTitle = extras.getString("Timeline Name");
+            }
+        } else {
+            currTimelineID = (String) savedInstanceState.getSerializable("Timeline ID");
+            currTimelineTitle = (String) savedInstanceState.getSerializable("Timeline Name");
+        }
+
+        // Move db down to current timeline once we've gotten
+        // the ID of the current timeline
+        db = Vars.getUser();
+
+
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get the name of the current user
-                currentName = dataSnapshot.child(NAME_STR).getValue().toString();
-
-                // Move db down to current timeline once we've gotten
-                // the current user's name
-                db = Vars.getTimeline(currentLine);
-
-                // Add event listener to get settings updates
-                db.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // get value of the title child of timeline and set title
-                        squadTitle.setText(dataSnapshot.child(TITLE_STR).getValue().toString());
-
-                        // reset the list of users and add current user to top
-                        users.clear();
-                        users.add(currentName);
-
-                        // iterate through the users in the database (alphabetically)
-                        // and add their names to the list of timeline users
-                        for (DataSnapshot member : dataSnapshot.child(USERS_STR).getChildren()) {
-                            users.add(member.getValue().toString());
-                        }
-                        // notify adapter of update and reset view
-                        adapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-
-                    }
-                });
+                // Get the email of the current user
+                currentName = dataSnapshot.child(EMAIL_STR).getValue().toString();
             }
 
             @Override
@@ -142,15 +136,36 @@ public class TimelineSettings extends AppCompatActivity {
             }
         });
 
-        addFriend.setOnClickListener(new View.OnClickListener() {
+        db = Vars.getTimeline(currTimelineID);
+
+        // Add event listener to get settings updates
+        db.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                /*
-                DialogFragment dialog = new AddFriendFragment();
-                dialog.show(getSupportFragmentManager(), "addFriend");
-                */
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // get value of the title child of timeline and set title
+                squadTitle.setText(dataSnapshot.child(TITLE_STR).getValue().toString());
+
+                // reset the list of users and add current user to top
+                users.clear();
+                users.add(currentName);
+
+                // iterate through the users in the database (alphabetically)
+                // and add their names to the list of timeline users
+                for (DataSnapshot member : dataSnapshot.child(USERS_STR).getChildren()) {
+                    String memberName = member.getValue().toString();
+                    if(!(memberName.equals(currentName))) users.add(memberName);
+                }
+                // notify adapter of update and reset view
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Toast.makeText(getApplicationContext(), "Error loading data.",
+                        Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
 

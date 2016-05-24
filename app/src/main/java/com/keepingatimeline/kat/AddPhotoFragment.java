@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -29,6 +30,7 @@ public class AddPhotoFragment extends Fragment {
     TextView uploadPhotoInput;
     EditText titlePhotoInput;
     EditText photoDescription;
+    private String imagePath;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,7 +45,7 @@ public class AddPhotoFragment extends Fragment {
         View AddPhotoFragmentView = inflater.inflate(R.layout.add_photo_fragment, container, false);
 
         datePhotoInput = (TextView) AddPhotoFragmentView.findViewById(R.id.datePhotoInput);
-        uploadPhotoInput = (TextView) AddPhotoFragmentView.findViewById(R.id.photoName);
+        uploadPhotoInput = (TextView) AddPhotoFragmentView.findViewById(R.id.photoFile);
         titlePhotoInput = (EditText) AddPhotoFragmentView.findViewById(R.id.photoTitle);
         photoDescription = (EditText) AddPhotoFragmentView.findViewById(R.id.photoDescription);
 
@@ -84,7 +86,7 @@ public class AddPhotoFragment extends Fragment {
             cursor.moveToFirst();
 
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String imagePath = cursor.getString(columnIndex);
+            imagePath = cursor.getString(columnIndex);
 
             File imageFile = new File(imagePath);
             String imageName = imageFile.getName();
@@ -97,5 +99,21 @@ public class AddPhotoFragment extends Fragment {
     public void emptyTexts() {
         titlePhotoInput.setText("");
         photoDescription.setText("");
+    }
+
+    public String getTitle() {
+        return titlePhotoInput.getText().toString();
+    }
+
+    public String getPhoto() {
+        return PictureCompactor.BitmapToStringB64(BitmapFactory.decodeFile(imagePath));
+    }
+
+    public String getDate() {
+        return datePhotoInput.getText().toString();
+    }
+
+    public String getDescription() {
+        return photoDescription.getText().toString();
     }
 }

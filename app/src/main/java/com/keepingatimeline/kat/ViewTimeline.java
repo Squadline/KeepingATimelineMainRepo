@@ -2,9 +2,8 @@ package com.keepingatimeline.kat;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
+import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -49,7 +48,7 @@ public class ViewTimeline extends AppCompatActivity {
     private List<Event> events;
 
     private String textTBar;
-    private TextView toolTitle;
+    private TextView squadTitle;
 
     //allows for drawer views to be pulled out from one or both vertical edges of the window
     private DrawerLayout mDrawerLayout;
@@ -68,6 +67,15 @@ public class ViewTimeline extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_timeline);
+
+        // Uses a Toolbar as an ActionBar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Adds back button to toolbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_white);
 
         //find the specified drawer layout
         mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
@@ -98,16 +106,13 @@ public class ViewTimeline extends AppCompatActivity {
                 timelineName = extras.getString("Timeline Name");
             }
         } else {
-            timelineID = (String) savedInstanceState.getSerializable("TimelineID");
+            timelineID = (String) savedInstanceState.getSerializable("Timeline ID");
             timelineName = (String) savedInstanceState.getSerializable("Timeline Name");
         }
 
         //sets title of the actionbar to the title of the timeline clicked
         firebaseRef = Vars.getTimeline(timelineID);
         auth = Vars.getUID();
-
-        toolTitle = (TextView) findViewById(R.id.timeline_title);
-        toolTitle.setText(timelineName);
 
         firebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -120,14 +125,10 @@ public class ViewTimeline extends AppCompatActivity {
             }
         });
 
-        // Uses a Toolbar as an ActionBar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        // Adds back button to toolbar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_white);
+        squadTitle = (TextView) findViewById(R.id.timeline_title);
+        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), getString(R.string.primaryFont));
+        squadTitle.setTypeface(myCustomFont);
+        squadTitle.setText(timelineName);
 
 
         addEvent = (ImageButton) findViewById(R.id.addEventFAB);
@@ -137,6 +138,8 @@ public class ViewTimeline extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent addEventActivity = new Intent("com.keepingatimeline.kat.AddEvent");
+                addEventActivity.putExtra("Timeline Name", timelineName);
+                addEventActivity.putExtra("Timeline ID", timelineID);
                 startActivity(addEventActivity);
             }
         });

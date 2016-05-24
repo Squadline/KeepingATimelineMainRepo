@@ -7,7 +7,7 @@
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
     android:background="@color/white"
-    android:drawableStart="@drawable/ic_person_blue"
+    android:drawableStart="@drawable/ic_person"
     android:drawablePadding="16dp"
     android:textSize="16sp"
     android:fontFamily="sans-serif"

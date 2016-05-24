@@ -9,6 +9,7 @@ import com.firebase.client.Firebase;
 public final class Vars {
 
     private static Firebase FB_REF = null;
+    private static String currUserEmail;
 
     private Vars(){}
 
@@ -28,7 +29,14 @@ public final class Vars {
 
     public static Firebase getTimeline(String timelineID) {
         if(timelineID == null) return getFirebase();
-        else return getFirebase().child("Timeline/" + timelineID);
+        else return getFirebase().child("Timelines/" + timelineID);
     }
 
+    public static String getUserEmail(){
+        return currUserEmail;
+    }
+
+    public static Firebase getUser() {
+        return getFirebase().child("Users").child(getUID());
+    }
 }

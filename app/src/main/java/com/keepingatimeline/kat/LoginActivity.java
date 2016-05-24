@@ -40,13 +40,22 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Firebase.setAndroidContext(this);
+        fRef = Vars.getFirebase();
+
+        if (fRef.getAuth() != null)
+        {
+            Intent newActivity = new Intent("com.keepingatimeline.kat.MainScreen");
+            startActivity(newActivity);
+            // END THIS ACTIVITY?
+        }
+
 
         Button btnLogin = (Button) findViewById(R.id.loginButton);
         TextView signUpText = (TextView) findViewById(R.id.signUpText);
         TextView forgotPass = (TextView) findViewById(R.id.forgotPassword);
         username = (TextView) findViewById(R.id.loginEmail);
         password = (TextView) findViewById(R.id.loginPassword);
-        fRef = Vars.getFirebase();
+
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

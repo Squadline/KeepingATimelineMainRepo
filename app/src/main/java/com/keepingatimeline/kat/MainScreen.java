@@ -3,10 +3,7 @@ package com.keepingatimeline.kat;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -15,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +29,6 @@ import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -45,11 +42,20 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private AlertDialog.Builder dialogBuilder;
     private String newName;
     private TextView titleBar;
-
     private String emailAdd;
-
     private String temp;
-    private Firebase current;
+
+    private String currentFirst;                // First name of the current user
+    private String currentLast;                 // Last name of the current user
+    private String currentEmail;                // Email of the current user
+
+    // String constants for Firebase children
+    private final String USERS_STR = "Users";
+    private final String CURR_STR = "Current";
+    private final String NAME_STR = "FirstName";
+    private final String LAST_STR = "LastName";
+    private final String EMAIL_STR = "EmailAddress";
+    private final String DB_STR = "https://fiery-fire-8218.firebaseio.com/";
 
     /**
      * By: Dana, Byung, Jimmy, Trevor
@@ -64,15 +70,15 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
-        titleBar = (TextView) findViewById(R.id.toolbar_title);
-        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), "fonts/BebasNeue Bold.ttf");
-        titleBar.setTypeface(myCustomFont);
-
         Firebase.setAndroidContext(this);
 
         // Uses a Toolbar as an ActionBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        titleBar = (TextView) findViewById(R.id.toolbar_title);
+        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), getString(R.string.squadLineFont));
+        titleBar.setTypeface(myCustomFont);
 
         // Opens sidebar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -86,49 +92,72 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        /*
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // sets name of current user in sidebar
+        View navHeader = navigationView.getHeaderView(0);
+        final TextView userName = (TextView) navHeader.findViewById(R.id.user_name);
+        userName.setText(currentFirst + " " + currentLast);
 
-        //The left scroll bar containing account settings, log out and such
-        String[] settings = {"Settings", "Add Event Test", "Timeline Settings Test", "Log Out"};
-        ListView myList = (ListView) findViewById(R.id.left_drawer);
-        myList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,settings));
-        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        // sets email of current user in sidebar
+        final TextView userEmail = (TextView) navHeader.findViewById(R.id.user_email);
+        userEmail.setText(currentEmail);
+
+        // Instantiate Firebase object to main database
+        Firebase db = new Firebase(DB_STR);
+        Firebase current = ref.child(USERS_STR).child(holder);
+
+        current.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch( position ) {
-                    case 0:
-                        Intent newActivity = new Intent("com.keepingatimeline.kat.AccountSettings");
-                        startActivity(newActivity);
-                        break;
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get the name of the current user
+                currentFirst = dataSnapshot.child(NAME_STR).getValue().toString();
+                currentLast = dataSnapshot.child(LAST_STR).getValue().toString();
 
-                    case 1:
-                        Intent addEventActivity = new Intent("com.keepingatimeline.kat.AddEvent");
-                        startActivity(addEventActivity);
-                        break;
-                    case 2:
-                        Intent timelineSettingsActivity = new Intent("com.keepingatimeline.kat.TimelineSettings");
-                        startActivity(timelineSettingsActivity);
-                        break;
-                    case 3:
-                        Firebase dref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
-                        CharSequence t = dref.getAuth().getProviderData().get("email") + " has logged out ";
-                        int time = Toast.LENGTH_LONG;
-                        Toast logout = Toast.makeText(getApplicationContext(), t, time);
-                        logout.show();
-                        dref.unauth();
-                        Intent loginActivity = new Intent("com.keepingatimeline.LoginActivity");
-                        startActivity(loginActivity);
-                }
+                userName.setText(currentFirst + " " + currentLast);
+
+                // Get the email of the current user
+                currentEmail = dataSnapshot.child(EMAIL_STR).getValue().toString();
+
+                userEmail.setText(currentEmail);
+
+/*
+                // Add event listener to get settings updates
+                db.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // get value of the title child of timeline and set title
+                        squadTitle.setText(dataSnapshot.child(TITLE_STR).getValue().toString());
+
+                        // reset the list of users and add current user to top
+                        users.clear();
+                        users.add(currentName);
+
+                        // iterate through the users in the database (alphabetically)
+                        // and add their names to the list of timeline users
+                        for (DataSnapshot member : dataSnapshot.child(USERS_STR).getChildren()) {
+                            users.add(member.getValue().toString());
+                        }
+                        // notify adapter of update and reset view
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });*/
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Toast.makeText(getApplicationContext(), "Error loading data.",
+                        Toast.LENGTH_SHORT).show();
             }
         });
-        */
 
 
         inflateTimeline = new TimelineAdapter(this, tlTitles, tlFriends);
         timelineList = (ListView) findViewById(R.id.timelineList);
         timelineList.setAdapter(inflateTimeline);
-
 
         // moved this from onStart() --Dana
         //set url reference to active user
@@ -158,11 +187,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         timelineList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String timelineName = tlTitles.get(position);
+                String timelineName = tlFriends.get(position);
 
                 Intent viewTimelineActivity = new Intent("com.keepingatimeline.kat.ViewTimeline");
                 viewTimelineActivity.putExtra("Timeline Name", timelineName);
-                viewTimelineActivity.putExtra("Timeline ID", tlFriends.get(position));
+                viewTimelineActivity.putExtra("Timeline ID", tlTitles.get(position));
                 startActivity(viewTimelineActivity);
             }
 
@@ -233,7 +262,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                 events.setValue(Event.getNullEvent());
 
                                 database = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder + "/Timelines");
-                                event1.put(newName, tKey);
+                                event1.put(tKey, newName);
                                 database.updateChildren(event1);
                             }
 
@@ -280,7 +309,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         if (id == R.id.navChangeEmail) {
 
         } else if (id == R.id.navChangePassword) {
-
+            showChangePassword(); // done by me!!!
         } else if (id == R.id.navShare) {
 
         } else if (id == R.id.navHelp) {
@@ -302,7 +331,35 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    private void showChangePassword(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        builder.setView(inflater.inflate(R.layout.dialog_change_password, null));
+        builder.setTitle("Change Password");
+        //TODO: Add TextField instances from layout to send data to firebase and stuff
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //close this dialog
+            }
+        });
 
+        builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                /*firebaseRef.changePassword( oldPassword, nP, nPConfirm );
+                {
+                    if ok, close dialog and toast success
+                    if bad, stay in dialog and toast oldP incorrecto o whatever
+                }
+                */
+            }
+        });
+
+        AlertDialog changePDialog = builder.create();
+        changePDialog.show();
+
+    }
     // displays a help dialogue --Dana
     private void getMainScreenHelp(){
         AlertDialog.Builder helpDialogBuilder = new AlertDialog.Builder(this);
