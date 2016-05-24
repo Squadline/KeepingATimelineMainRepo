@@ -15,6 +15,7 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -110,13 +111,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private void forgotPasswordDialog() {
 
-        final EditText emailInput = new EditText(this);
+        final EditText emailInput = (EditText) findViewById(R.id.resetPasswordInput);
         dialogBuilder = new AlertDialog.Builder(this);
         Firebase.setAndroidContext(this);
 
+        LayoutInflater inflater = this.getLayoutInflater();
+
         dialogBuilder.setTitle("Reset Password");
         dialogBuilder.setMessage("Enter your email address and we'll send you a link to reset your password.");
-        dialogBuilder.setView(emailInput);
+        dialogBuilder.setView(inflater.inflate(R.layout.dialog_reset_password, null));
         dialogBuilder.setPositiveButton("Reset", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

@@ -1,11 +1,13 @@
 package com.keepingatimeline.kat;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -33,6 +35,12 @@ public class AddQuoteFragment extends Fragment {
         title = (EditText) AddQuoteFragmentView.findViewById(R.id.quoteTitle);
         quote = (EditText) AddQuoteFragmentView.findViewById(R.id.quoteData);
         source = (EditText) AddQuoteFragmentView.findViewById(R.id.quoteSource);
+
+        // EditText fields lose focus when switching tabs
+        View.OnFocusChangeListener focusListener = new ChangeFocusListener();
+        title.setOnFocusChangeListener(focusListener);
+        quote.setOnFocusChangeListener(focusListener);
+        source.setOnFocusChangeListener(focusListener);
 
         // Months are indexed starting at 0, add 1 to month value
         String currentDate = (month + 1) + "/" + day + "/" + year;
@@ -70,5 +78,32 @@ public class AddQuoteFragment extends Fragment {
 
     public String getSource() {
         return source.getText().toString();
+    }
+
+
+    // EditText fields lose focus when switching tabs
+    private class ChangeFocusListener implements View.OnFocusChangeListener {
+
+        public void onFocusChange(View view, boolean hasFocus){
+
+            if((view.getId() == R.id.quoteTitle) && (hasFocus == false)) {
+
+                InputMethodManager imm =  (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+            }
+            else if ((view.getId() == R.id.quoteData) && (hasFocus == false)) {
+
+                InputMethodManager imm =  (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+            }
+            else if ((view.getId() == R.id.quoteSource) && (hasFocus == false)) {
+
+                InputMethodManager imm =  (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+            }
+        }
     }
 }

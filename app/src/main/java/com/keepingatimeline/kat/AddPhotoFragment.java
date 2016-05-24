@@ -1,6 +1,7 @@
 package com.keepingatimeline.kat;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
@@ -14,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -49,6 +51,12 @@ public class AddPhotoFragment extends Fragment {
         titlePhotoInput = (EditText) AddPhotoFragmentView.findViewById(R.id.photoTitle);
         photoDescription = (EditText) AddPhotoFragmentView.findViewById(R.id.photoDescription);
 
+        // EditText fields lose focus when switching tabs
+        View.OnFocusChangeListener focusListener = new ChangeFocusListener();
+        titlePhotoInput.setOnFocusChangeListener(focusListener);
+        photoDescription.setOnFocusChangeListener(focusListener);
+
+        // Change color of TextView to hint color
         hintColors = titlePhotoInput.getHintTextColors();
         uploadPhotoInput.setTextColor(hintColors);
 
@@ -115,5 +123,24 @@ public class AddPhotoFragment extends Fragment {
 
     public String getDescription() {
         return photoDescription.getText().toString();
+    }
+
+    private class ChangeFocusListener implements View.OnFocusChangeListener {
+
+        public void onFocusChange(View view, boolean hasFocus){
+
+            if((view.getId() == R.id.photoTitle) && (hasFocus == false)) {
+
+                InputMethodManager imm =  (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+            }
+            else if ((view.getId() == R.id.photoDescription) && (hasFocus == false)) {
+
+                InputMethodManager imm =  (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+            }
+        }
     }
 }
