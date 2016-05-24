@@ -187,11 +187,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         timelineList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String timelineName = tlTitles.get(position);
+                String timelineName = tlFriends.get(position);
 
                 Intent viewTimelineActivity = new Intent("com.keepingatimeline.kat.ViewTimeline");
                 viewTimelineActivity.putExtra("Timeline Name", timelineName);
-                viewTimelineActivity.putExtra("Timeline ID", tlFriends.get(position));
+                viewTimelineActivity.putExtra("Timeline ID", tlTitles.get(position));
                 startActivity(viewTimelineActivity);
             }
 
