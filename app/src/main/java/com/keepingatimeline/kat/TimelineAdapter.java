@@ -72,7 +72,7 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
         textL.setText(tlTitles.get(position));
 
         Context context = parent.getContext();
-        Typeface myCustomFont = Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Regular.ttf");
+        Typeface myCustomFont = Typeface.createFromAsset(context.getAssets(), "fonts/Oswald-Heavy.ttf");
         textL.setTypeface(myCustomFont);
 
 

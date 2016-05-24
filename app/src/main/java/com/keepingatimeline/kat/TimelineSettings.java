@@ -100,7 +100,7 @@ public class TimelineSettings extends AppCompatActivity {
                         squadTitle.setText(dataSnapshot.child(TITLE_STR).getValue().toString());
 
                         // Sets font for the title
-                        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), "fonts/Montserrat-Regular.ttf");
+                        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), "fonts/Oswald-Heavy.ttf");
                         squadTitle.setTypeface(myCustomFont);
 
                         // reset the list of users and add current user to top

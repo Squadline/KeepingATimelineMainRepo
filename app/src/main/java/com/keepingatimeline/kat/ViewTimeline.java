@@ -3,9 +3,7 @@ package com.keepingatimeline.kat;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,8 +22,6 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,7 +104,7 @@ public class ViewTimeline extends AppCompatActivity {
         auth = Vars.getUID();
 
         toolTitle = (TextView) findViewById(R.id.timeline_title);
-        Typeface myCustomFont = Typeface.createFromAsset(getAssets(),"fonts/Montserrat-Regular.ttf");
+        Typeface myCustomFont = Typeface.createFromAsset(getAssets(),"fonts/Oswald-Heavy.ttf");
         toolTitle.setTypeface(myCustomFont);
         toolTitle.setText(timelineName);
 
