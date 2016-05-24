@@ -43,7 +43,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private String newName;
     private TextView titleBar;
     private String emailAdd;
-    private String temp;
 
     private String currentFirst;                // First name of the current user
     private String currentLast;                 // Last name of the current user
@@ -51,7 +50,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
     // String constants for Firebase children
     private final String USERS_STR = "Users";
-    private final String CURR_STR = "Current";
     private final String NAME_STR = "FirstName";
     private final String LAST_STR = "LastName";
     private final String EMAIL_STR = "EmailAddress";
@@ -72,6 +70,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         Firebase.setAndroidContext(this);
 
+        // get active user id
+        Firebase ref = new Firebase(DB_STR);
+        holder = ref.getAuth().getUid();
+
         // Uses a Toolbar as an ActionBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -85,24 +87,16 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white);
 
-        // get active user id
-        Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
-        holder = ref.getAuth().getUid();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // sets name of current user in sidebar
+        // sets name and email of current user in sidebar
         View navHeader = navigationView.getHeaderView(0);
         final TextView userName = (TextView) navHeader.findViewById(R.id.user_name);
-        userName.setText(currentFirst + " " + currentLast);
-
-        // sets email of current user in sidebar
         final TextView userEmail = (TextView) navHeader.findViewById(R.id.user_email);
-        userEmail.setText(currentEmail);
 
-        // Instantiate Firebase object to main database
-        Firebase db = new Firebase(DB_STR);
+
         Firebase current = ref.child(USERS_STR).child(holder);
 
         current.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -112,39 +106,16 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 currentFirst = dataSnapshot.child(NAME_STR).getValue().toString();
                 currentLast = dataSnapshot.child(LAST_STR).getValue().toString();
 
+                // Prevents null object reference
+                currentFirst = currentFirst + "";
+                currentLast = currentLast + "";
+
                 userName.setText(currentFirst + " " + currentLast);
 
                 // Get the email of the current user
                 currentEmail = dataSnapshot.child(EMAIL_STR).getValue().toString();
 
                 userEmail.setText(currentEmail);
-
-/*
-                // Add event listener to get settings updates
-                db.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // get value of the title child of timeline and set title
-                        squadTitle.setText(dataSnapshot.child(TITLE_STR).getValue().toString());
-
-                        // reset the list of users and add current user to top
-                        users.clear();
-                        users.add(currentName);
-
-                        // iterate through the users in the database (alphabetically)
-                        // and add their names to the list of timeline users
-                        for (DataSnapshot member : dataSnapshot.child(USERS_STR).getChildren()) {
-                            users.add(member.getValue().toString());
-                        }
-                        // notify adapter of update and reset view
-                        adapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-
-                    }
-                });*/
             }
 
             @Override
@@ -283,8 +254,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
                 builder.show();
 
-                //Intent addTimelineActivity = new Intent("com.keepingatimeline.kat.Timelineshower");
-                //startActivity(addTimelineActivity);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -334,8 +303,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private void showChangePassword(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
-        builder.setView(inflater.inflate(R.layout.dialog_change_password, null));
+
         builder.setTitle("Change Password");
+        builder.setMessage("Enter your current password, then enter a new password and confirm it.");
+        builder.setView(inflater.inflate(R.layout.dialog_change_password, null));
         //TODO: Add TextField instances from layout to send data to firebase and stuff
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -344,7 +315,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             }
         });
 
-        builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 /*firebaseRef.changePassword( oldPassword, nP, nPConfirm );
@@ -388,30 +359,4 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         AlertDialog dialogHelp = helpDialogBuilder.create();
         dialogHelp.show();
     }
-
-    private void addTimeLineDialog() {
-        final EditText Title = new EditText(this);
-        dialogBuilder = new AlertDialog.Builder(this);
-        Firebase.setAndroidContext(this);
-
-        dialogBuilder.setTitle("Add A Timeline: ");
-        dialogBuilder.setMessage("Alright! What name do you want your new Timeline to be!?");
-        dialogBuilder.setView(Title);
-        dialogBuilder.setPositiveButton("Reset", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //do nothing
-            }
-        });
-
-        AlertDialog dialogForgotPassword = dialogBuilder.create();
-        dialogForgotPassword.show();
-    }
-
 }

@@ -6,7 +6,7 @@
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/navChangeEmail"
-                    android:title="@string/changeEmail"
+                    android:title="@string/changeName"
                     android:icon="@drawable/ic_action_email" />
                 <item
                     android:id="@+id/navChangePassword"
