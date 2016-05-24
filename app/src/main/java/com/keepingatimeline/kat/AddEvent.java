@@ -85,6 +85,7 @@ public class AddEvent extends AppCompatActivity {
                         event.setTitle(data[0]);
                         event.setDate(data[1]);
                         event.setString1(data[2]);
+                        event.setString2(data[3]);
                         break;
                     case 1:
                         event.setType("quote");
