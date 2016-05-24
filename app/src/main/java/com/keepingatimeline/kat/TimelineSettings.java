@@ -24,6 +24,13 @@ import java.util.ArrayList;
  *
  * Class: TimelineSettings
  * Purpose: Display the settings of the timeline and list of users
+ *
+ * TODO:
+ *  Add People        Toast, Dialog
+ *  Remove People     Toast, Dialog
+ *  Leave Squad       Toast, Dialog
+ *  Notifications
+ *  Rename Timeline   Toast, Dialog
  */
 public class TimelineSettings extends AppCompatActivity {
 
@@ -93,16 +100,13 @@ public class TimelineSettings extends AppCompatActivity {
             currentTimelineID = (String) savedInstanceState.getSerializable(ID_STR);
         }
 
-        // Instantiate Firebase object to main database
-        db = Vars.getFirebase();
-
-        // Get the Firebase object of the current user
-        Firebase currentUser = Vars.getUser();
-
         /*
          * Once getUserEmail is correctly implemented in Vars, we can remove
          * this outer listener assignment.
          */
+
+        // Get the Firebase object of the current user
+        Firebase currentUser = Vars.getUser();
 
         // Retrieve current user name ONCE from Firebase
         currentUser.addListenerForSingleValueEvent(new ValueEventListener() {
