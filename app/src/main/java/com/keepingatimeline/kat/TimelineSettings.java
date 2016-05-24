@@ -160,10 +160,8 @@ public class TimelineSettings extends AppCompatActivity {
         addFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
                 DialogFragment dialog = new AddFriendFragment();
                 dialog.show(getSupportFragmentManager(), "addFriend");
-                */
             }
         });
     }
