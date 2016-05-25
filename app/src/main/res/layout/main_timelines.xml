@@ -7,6 +7,8 @@
         android:id="@+id/squad_image"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:src="@mipmap/people_icon" />

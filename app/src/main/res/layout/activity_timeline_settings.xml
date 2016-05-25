@@ -211,15 +211,6 @@
                 android:layout_height="0.2dp"
                 android:background="@color/black" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="20dp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.2dp"
-                android:background="@color/black" />
-
         </LinearLayout>
 
     </ScrollView>

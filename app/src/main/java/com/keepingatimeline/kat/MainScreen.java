@@ -194,14 +194,15 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 return true;
             case R.id.add_timeline:
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Name your new Timeline");
+                final EditText nameTLInput = (EditText) findViewById(R.id.addTimelineInput);
+                LayoutInflater addInflater = this.getLayoutInflater();
 
-                // Set up the input
-                final EditText input = new EditText(this);
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                builder.setView(input);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("New Timeline");
+                builder.setMessage("Enter the name for your new timeline.");
+                builder.setView(addInflater.inflate(R.layout.dialog_add_timeline, null));
+
+                builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
@@ -212,7 +213,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 emailAdd = dataSnapshot.getValue().toString();
-                                newName = input.getText().toString();
+                                newName = nameTLInput.getText().toString();
                                 database = Vars.getFirebase().child("Timelines");
                                 database = database.push();
                                 String tKey = database.getKey();
