@@ -78,8 +78,8 @@ public class EventPagerAdapter extends FragmentStatePagerAdapter {
             case 1:
                 dataArray[0] = tab2.getTitle();
                 dataArray[1] = tab2.getDate();
-                dataArray[2] = tab2.getSource();
-                dataArray[3] = tab2.getQuote();
+                dataArray[2] = tab2.getQuote();
+                dataArray[3] = tab2.getSource();
                 break;
             case 2:
                 dataArray[0] = tab3.getTitle();
