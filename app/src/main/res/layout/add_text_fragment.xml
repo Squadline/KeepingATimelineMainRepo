@@ -25,6 +25,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.2dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="3dp"
             android:background="@color/black" />
 
         <RelativeLayout
@@ -64,6 +66,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.2dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="3dp"
             android:background="@color/black" />
 
         <View
@@ -73,6 +77,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.2dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="3dp"
             android:background="@color/black" />
 
         <EditText
@@ -85,12 +91,21 @@
             android:gravity="top|start"
             android:hint="Text"
             android:inputType="textMultiLine|textNoSuggestions"
-            android:lines="6"
+            android:lines="9"
             android:padding="10dp" />
 
         <View
             android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="3dp"
+            android:background="@color/white" />
+
+        <View
+            android:layout_width="match_parent"
             android:layout_height="0.2dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="3dp"
             android:background="@color/black" />
 
     </LinearLayout>
