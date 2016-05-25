@@ -40,18 +40,12 @@
 
     <!--Sidebar Strings-->
     <string name="changeName">Change Name</string>
+    <string name="changePhoto">Change Photo</string>
     <string name="changePassword">Change Password</string>
-    <string name="share">Share</string>
     <string name="help">Help</string>
     <string name="logout">Log Out</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <!--Sample Screen-->
-    <string name="russian">\"Я не знаю, что это значит\"</string>
-
-    <string name="title_activity_main">MainActivity</string>
-    <string name="title_activity_main2">Main2Activity</string>
 
     <!--Firebase Constants-->
     <string name="firebase_address">https://fiery-fire-8218.firebaseio.com/</string>

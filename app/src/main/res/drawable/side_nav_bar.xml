@@ -1,9 +1,4 @@
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <gradient
-        android:angle="135"
-        android:centerColor="#607D8B"
-        android:endColor="#37474F"
-        android:startColor="#90A4AE"
-        android:type="linear" />
-</shape>
+<?xml version="1.0" encoding="utf-8"?>
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="start|top"
+    android:src="@drawable/nav_header_background" />

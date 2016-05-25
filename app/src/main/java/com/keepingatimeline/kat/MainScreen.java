@@ -281,11 +281,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.navChangeEmail) {
+        if (id == R.id.navChangeName) {
 
         } else if (id == R.id.navChangePassword) {
             showChangePassword(); // shows change password dialog - by me!!!
-        } else if (id == R.id.navShare) {
+        } else if (id == R.id.navChangePhoto) {
 
         } else if (id == R.id.navHelp) {
             getMainScreenHelp(); // sets up the help dialogue --Dana
