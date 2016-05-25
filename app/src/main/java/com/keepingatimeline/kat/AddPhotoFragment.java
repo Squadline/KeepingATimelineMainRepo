@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -20,6 +23,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 
 /**
@@ -114,7 +118,41 @@ public class AddPhotoFragment extends Fragment {
     }
 
     public String getPhoto() {
-        return PictureCompactor.BitmapToStringB64(BitmapFactory.decodeFile(imagePath));
+        Bitmap bm_original = BitmapFactory.decodeFile(imagePath);
+        try {
+            ExifInterface exif = new ExifInterface(imagePath);
+            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+            Bitmap bm_corrected;
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                    bm_corrected = flipHorizontal(bm_original);
+                    break;
+                case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                    bm_corrected = flipVertical(bm_original);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    bm_corrected = rotateClockwise(bm_original, 90);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    bm_corrected = rotateClockwise(bm_original, 180);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    bm_corrected = rotateClockwise(bm_original, 270);
+                    break;
+                case ExifInterface.ORIENTATION_TRANSPOSE:
+                    bm_corrected = transpose(bm_original);
+                    break;
+                case ExifInterface.ORIENTATION_TRANSVERSE:
+                    bm_corrected = transverse(bm_original);
+                case ExifInterface.ORIENTATION_NORMAL:
+                default:
+                    bm_corrected = bm_original;
+            }
+            return PictureCompactor.BitmapToStringB64(bm_corrected);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return PictureCompactor.BitmapToStringB64(bm_original);
+        }
     }
 
     public String getDate() {
@@ -143,4 +181,37 @@ public class AddPhotoFragment extends Fragment {
             }
         }
     }
+
+    private Bitmap flipHorizontal(Bitmap original) {
+        Matrix matrix = new Matrix();
+        matrix.postScale(-1, 1);
+        return Bitmap.createBitmap(original, 0, 0, original.getWidth(), original.getHeight(), matrix, true);
+    }
+
+    private Bitmap flipVertical(Bitmap original) {
+        Matrix matrix = new Matrix();
+        matrix.postScale(1, -1);
+        return Bitmap.createBitmap(original, 0, 0, original.getWidth(), original.getHeight(), matrix, true);
+    }
+
+    private Bitmap rotateClockwise(Bitmap original, int rotation) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(rotation);
+        return Bitmap.createBitmap(original, 0, 0, original.getWidth(), original.getHeight(), matrix, true);
+    }
+
+    private Bitmap transpose(Bitmap original) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+        matrix.postScale(-1, 1);
+        return Bitmap.createBitmap(original, 0, 0, original.getWidth(), original.getHeight(), matrix, true);
+    }
+
+    private Bitmap transverse(Bitmap original) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+        matrix.postScale(1, -1);
+        return Bitmap.createBitmap(original, 0, 0, original.getWidth(), original.getHeight(), matrix, true);
+    }
+
 }

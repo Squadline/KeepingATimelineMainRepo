@@ -2,7 +2,9 @@ package com.keepingatimeline.kat;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +28,9 @@ import com.firebase.client.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -168,6 +174,36 @@ public class ViewTimeline extends AppCompatActivity {
                 for (DataSnapshot eventSnapshot: dataSnapshot.getChildren()){
                     Event event = eventSnapshot.getValue(Event.class);
                     if(!event.getType().equals("null")) {
+                        if(event.getType().equals("photo")) {
+                            String strDirectory = Environment.getExternalStorageDirectory().toString();
+                            File folder = new File(strDirectory + "/Squadline");
+                            if(!folder.exists()) folder.mkdir();
+
+                            Bitmap temp = PictureCompactor.StringB64ToBitmap(event.getString2());
+                            String imgName = eventSnapshot.getKey() + ".jpg";
+                            Log.d("Saving Images", "Image Name: " + imgName);
+                            OutputStream fOut = null;
+
+                            File f = new File(folder.getAbsolutePath(), imgName);
+                            Log.d("Saving Images", "Path: " + f.getAbsolutePath());
+
+                            event.setString2(f.getAbsolutePath());
+                            Log.d("Saving Image", "String2: " + event.getString2());
+
+                            if(!f.exists()) {
+                                try {
+                                    fOut = new FileOutputStream(f);
+
+                                    // Compress image
+                                    temp.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+                                    fOut.flush();
+                                    fOut.close();
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
                         eventList.add(event);
                     }
                 }
