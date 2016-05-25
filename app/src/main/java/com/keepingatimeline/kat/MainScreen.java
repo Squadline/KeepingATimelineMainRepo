@@ -300,8 +300,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             Intent loginActivity = new Intent("com.keepingatimeline.LoginActivity");
             startActivity(loginActivity);
+            this.finish();
+
+
         }
 
+        //closes drawer after button has been selected
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -328,7 +332,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         builder.setPositiveButton("Save", null);
 
-
+        //change password dialog
         final AlertDialog changePDialog = builder.create();
         changePDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
@@ -337,14 +341,15 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 confirm.setOnClickListener( new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        // FORM CHECKING
 
+                        // check if anything is empty
+                        if (newPass.getText().toString().length() == 0 ||
+                                curPass .getText().toString().length() == 0 ||
+                                conPass.getText().toString().length() == 0) {
+
+                        }
                         // check if new pass == confirm pass
-
-                        // check check if currpass == new pass
-
-                        // see wat happens
-
-
                         if( !newPass.getText().toString().equals(conPass.getText().toString())) {
 
                             Toast.makeText(getApplicationContext(), "New passwords do not match! :0",
@@ -352,6 +357,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                             return;
                         }
 
+                        // check check if currpass == new pass, aka no point
 
                         if( newPass.getText().toString().equals(curPass.getText().toString())) {
                             Toast.makeText(getApplicationContext(), "Current password same as new password!"
@@ -360,6 +366,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                             return;
                         }
 
+                        // SERVER CHECKING
                         Vars.getFirebase().changePassword(emailStr, curPass.getText().toString(),
                                 newPass.getText().toString(), new Firebase.ResultHandler() {
                                     @Override
@@ -384,6 +391,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                         Toast.makeText(getApplicationContext(),  "Password successfully changed",
                                                 Toast.LENGTH_LONG).show();
                                         changePDialog.cancel();
+                                        return;
                                     }
 
                                 });
@@ -404,6 +412,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     public void onClick(View v) {
                         //close this dialog
                         changePDialog.cancel();
+                        return;
                     }
                 });
             }
