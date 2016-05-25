@@ -111,15 +111,17 @@ public class LoginActivity extends AppCompatActivity {
 
     private void forgotPasswordDialog() {
 
-        final EditText emailInput = (EditText) findViewById(R.id.resetPasswordInput);
         dialogBuilder = new AlertDialog.Builder(this);
         Firebase.setAndroidContext(this);
 
         LayoutInflater inflater = this.getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialog_reset_password, null);
+
+        final EditText emailInput = (EditText) view.findViewById(R.id.resetPasswordInput);
 
         dialogBuilder.setTitle("Reset Password");
         dialogBuilder.setMessage("Enter your email address and we'll send you a link to reset your password.");
-        dialogBuilder.setView(inflater.inflate(R.layout.dialog_reset_password, null));
+        dialogBuilder.setView(view);
         dialogBuilder.setPositiveButton("Reset", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

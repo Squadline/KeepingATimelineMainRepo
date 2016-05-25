@@ -194,13 +194,15 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 return true;
             case R.id.add_timeline:
 
-                final EditText nameTLInput = (EditText) findViewById(R.id.addTimelineInput);
                 LayoutInflater addInflater = this.getLayoutInflater();
+                View view = addInflater.inflate(R.layout.dialog_add_timeline, null);
+
+                final EditText nameTLInput = (EditText) view.findViewById(R.id.addTimelineInput);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("New Timeline");
                 builder.setMessage("Enter the name for your new timeline.");
-                builder.setView(addInflater.inflate(R.layout.dialog_add_timeline, null));
+                builder.setView(view);
 
                 builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
                     @Override
