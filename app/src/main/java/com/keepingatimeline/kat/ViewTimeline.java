@@ -177,35 +177,9 @@ public class ViewTimeline extends AppCompatActivity {
                     Event event = eventSnapshot.getValue(Event.class);
                     if(!event.getType().equals("null")) {
                         if(event.getType().equals("photo")) {
-                            String strDirectory = getExternalCacheDir().getAbsolutePath();
-                            File folder = new File(strDirectory + "/Squadline");
-                            if(!folder.exists()) folder.mkdir();
-                            Log.d("Saving Images", "Squadline Folder Exists: " + folder.exists());
-
                             Bitmap temp = PictureCompactor.StringB64ToBitmap(event.getString2());
-                            String imgName = eventSnapshot.getKey() + ".jpg";
-                            Log.d("Saving Images", "Image Name: " + imgName);
-                            OutputStream fOut = null;
-
-                            File f = new File(folder.getAbsolutePath(), imgName);
-                            Log.d("Saving Images", "Path: " + f.getAbsolutePath());
-
-                            event.setString2(f.getAbsolutePath());
-                            Log.d("Saving Image", "String2: " + event.getString2());
-
-                            if(!f.exists()) {
-                                try {
-                                    fOut = new FileOutputStream(f);
-
-                                    // Compress image
-                                    temp.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
-                                    fOut.flush();
-                                    fOut.close();
-
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                            event.setString2(eventSnapshot.getKey());
+                            BitmapCache.addBitmapToMemoryCache(event.getString2(), temp);
                         }
                         eventList.add(event);
                     }

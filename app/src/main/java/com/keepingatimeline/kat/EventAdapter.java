@@ -116,8 +116,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 ((ViewHolderPhoto)holder).photoTitle.setText(event.getTitle());
                 ((ViewHolderPhoto)holder).photoDate.setText(event.getDate());
                 ((ViewHolderPhoto)holder).photoText.setText(event.getString1());
-                Log.d("Reading Image", "Path: " + event.getString2());
-                ((ViewHolderPhoto)holder).photoPhoto.setImageURI(Uri.fromFile(new File(event.getString2())));
+                ((ViewHolderPhoto)holder).photoPhoto.setImageBitmap(BitmapCache.getBitmapFromMemCache(event.getString2()));
                 break;
             case "quote":
                 ((ViewHolderQuote)holder).quoteTitle.setText(event.getTitle());
