@@ -33,12 +33,12 @@
     <color name="mainPrimary">#455A64</color>
     <color name="mainSecondary">#37474F</color>
     <color name="mainAccent">#3284FF</color>
-    
     <color name="sideBarMain">#546E7A</color>
 
     <color name="viewPrimary">#455A64</color>
     <color name="viewSecondary">#37474F</color>
     <color name="viewAccent">#3284FF</color>
+    <color name="fabColor">#00695C</color>
 
     <color name="settingsPrimary">#455A64</color>
     <color name="settingsSecondary">#37474F</color>
