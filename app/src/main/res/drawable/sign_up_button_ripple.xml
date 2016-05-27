@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="@android:color/darker_gray"> <!-- Ripple color -->
+    android:color="#BC0F31"> <!-- Ripple color -->
 
     <!-- Background color -->
-    <item android:drawable="@android:color/white" />
+    <item android:drawable="@drawable/sign_up_button_background" />
 </ripple>

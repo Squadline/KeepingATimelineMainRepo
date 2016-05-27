@@ -57,4 +57,10 @@
         android:layout_marginTop="-2.5dp"
         android:src="@drawable/ic_chevron_right_grey" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/black" />
+
 </RelativeLayout>
