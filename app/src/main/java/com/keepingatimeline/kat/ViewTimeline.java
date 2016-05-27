@@ -177,9 +177,10 @@ public class ViewTimeline extends AppCompatActivity {
                     Event event = eventSnapshot.getValue(Event.class);
                     if(!event.getType().equals("null")) {
                         if(event.getType().equals("photo")) {
-                            String strDirectory = Environment.getExternalStorageDirectory().toString();
+                            String strDirectory = getExternalCacheDir().getAbsolutePath();
                             File folder = new File(strDirectory + "/Squadline");
                             if(!folder.exists()) folder.mkdir();
+                            Log.d("Saving Images", "Squadline Folder Exists: " + folder.exists());
 
                             Bitmap temp = PictureCompactor.StringB64ToBitmap(event.getString2());
                             String imgName = eventSnapshot.getKey() + ".jpg";
@@ -209,6 +210,8 @@ public class ViewTimeline extends AppCompatActivity {
                         eventList.add(event);
                     }
                 }
+                //this is where eventList needs to undergo sorting
+                mergeSort(eventList);
                 rvAdapter.notifyDataSetChanged();
             }
 
@@ -352,5 +355,123 @@ public class ViewTimeline extends AppCompatActivity {
         */
 
         return expandableListData;
+    }
+
+    //Returns if date1 is before date2
+    protected boolean compareDates(String date1, String date2) {
+        //Holds Data of first date
+        int month1 = 0;
+        int day1 = 0;
+        int year1 = 0;
+
+        //Holds Data of second date
+        int month2 = 0;
+        int day2 = 0;
+        int year2 = 0;
+
+        Scanner s1 = new Scanner(date1).useDelimiter("[^0-9]+");
+        Scanner s2 = new Scanner(date2).useDelimiter("[^0-9]+");
+
+        //Store dates into their separate categories
+        month1 = s1.nextInt();
+        day1 = s1.nextInt();
+        year1 = s1.nextInt();
+
+        month2 = s2.nextInt();
+        day2 = s2.nextInt();
+        year2 = s2.nextInt();
+
+        //Compare Years
+        if(year2 != year1) {
+            if(year2 > year1)
+                return true;
+            else
+                return false;
+        }
+        //Compare Months
+        else if(month2 != month1) {
+            if(month2 > month1)
+                return true;
+            else
+                return false;
+        }
+        //Compare Days
+        else if(day2 != day1) {
+            if(day2 > day1)
+                return true;
+            else
+                return false;
+        }
+        else
+            return true;
+
+    }
+
+    public ArrayList<Event> mergeSort(ArrayList<Event> whole) {
+        ArrayList<Event> left = new ArrayList<Event>();
+        ArrayList<Event> right = new ArrayList<Event>();
+        int center;
+
+        if (whole.size() == 1) {
+            return whole;
+        } else {
+            center = whole.size()/2;
+            // copy the left half of whole into the left.
+            for (int i=0; i<center; i++) {
+                left.add(whole.get(i));
+            }
+
+            //copy the right half of whole into the new arraylist.
+            for (int i=center; i<whole.size(); i++) {
+                right.add(whole.get(i));
+            }
+
+            // Sort the left and right halves of the arraylist.
+            left  = mergeSort(left);
+            right = mergeSort(right);
+
+            // Merge the results back together.
+            merge(left, right, whole);
+        }
+        return whole;
+    }
+
+    private void merge(ArrayList<Event> left, ArrayList<Event> right, ArrayList<Event> whole) {
+        int leftIndex = 0;
+        int rightIndex = 0;
+        int wholeIndex = 0;
+
+        // As long as neither the left nor the right ArrayList has
+        // been used up, keep taking the smaller of left.get(leftIndex)
+        // or right.get(rightIndex) and adding it at both.get(bothIndex).
+        while (leftIndex < left.size() && rightIndex < right.size()) {
+            if ( !compareDates(left.get(leftIndex).getDate(),
+                    right.get(rightIndex).getDate())) {
+                whole.set(wholeIndex, left.get(leftIndex));
+                leftIndex++;
+            } else {
+                whole.set(wholeIndex, right.get(rightIndex));
+                rightIndex++;
+            }
+            wholeIndex++;
+        }
+
+        ArrayList<Event> rest;
+        int restIndex;
+        if (leftIndex >= left.size()) {
+            // The left ArrayList has been used up...
+            rest = right;
+            restIndex = rightIndex;
+        } else {
+            // The right ArrayList has been used up...
+            rest = left;
+            restIndex = leftIndex;
+        }
+
+        // Copy the rest of whichever ArrayList (left or right) was not used up.
+        for (int i=restIndex; i<rest.size(); i++) {
+            whole.set(wholeIndex, rest.get(i));
+            wholeIndex++;
+        }
     }
 }
