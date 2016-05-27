@@ -233,10 +233,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                 post1.put(Vars.getUID(), emailAdd);
                                 user.setValue(post1);
 
-                                Firebase events = database.child("Events");
-                                events = events.push();
-                                events.setValue(Event.getNullEvent());
-
                                 database = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder + "/Timelines");
                                 event1.put(tKey, newName);
                                 database.updateChildren(event1);

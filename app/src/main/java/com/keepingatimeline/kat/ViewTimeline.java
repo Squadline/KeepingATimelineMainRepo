@@ -175,14 +175,12 @@ public class ViewTimeline extends AppCompatActivity {
                 eventList.clear();
                 for (DataSnapshot eventSnapshot: dataSnapshot.getChildren()){
                     Event event = eventSnapshot.getValue(Event.class);
-                    if(!event.getType().equals("null")) {
-                        if(event.getType().equals("photo")) {
-                            Bitmap temp = PictureCompactor.StringB64ToBitmap(event.getString2());
-                            event.setString2(eventSnapshot.getKey());
-                            BitmapCache.addBitmapToMemoryCache(event.getString2(), temp);
-                        }
-                        eventList.add(event);
+                    if(event.getType().equals("photo")) {
+                        Bitmap temp = PictureCompactor.StringB64ToBitmap(event.getString2());
+                        event.setString2(eventSnapshot.getKey());
+                        BitmapCache.addBitmapToMemoryCache(event.getString2(), temp);
                     }
+                    eventList.add(event);
                 }
                 //this is where eventList needs to undergo sorting
                 mergeSort(eventList);
@@ -386,7 +384,7 @@ public class ViewTimeline extends AppCompatActivity {
         ArrayList<Event> right = new ArrayList<Event>();
         int center;
 
-        if (whole.size() == 1) {
+        if (whole.size() <= 1) {
             return whole;
         } else {
             center = whole.size()/2;
