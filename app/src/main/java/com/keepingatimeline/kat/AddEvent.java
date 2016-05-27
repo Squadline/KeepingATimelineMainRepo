@@ -92,8 +92,8 @@ public class AddEvent extends AppCompatActivity {
                         event.setType("quote");
                         event.setTitle(data[0]);
                         event.setDate(data[1]);
-                        event.setString1(data[2]);
-                        event.setString2(data[3]);
+                        event.setString1(parseQuote(data[2]));
+                        event.setString2(parseSpeaker(data[3]));
                         break;
                     case 2:
                         event.setType("text");
@@ -128,5 +128,16 @@ public class AddEvent extends AppCompatActivity {
 
             }
         });
+    }
+
+    private String parseQuote(String quote) {
+        if(quote.charAt(0) == '\"') quote = quote.substring(1);
+        if(quote.charAt(quote.length()-1) == '\"') quote = quote.substring(0, quote.length()-1);
+        return quote;
+    }
+
+    private String parseSpeaker(String speaker) {
+        if(speaker.charAt(0) == '-') speaker = speaker.substring(1);
+        return speaker;
     }
 }
