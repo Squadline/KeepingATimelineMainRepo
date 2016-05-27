@@ -78,6 +78,7 @@ public class AddEvent extends AppCompatActivity {
                 ref = ref.child("Events");
                 ref = ref.push();
                 Event event = new Event();
+                event.setKey(ref.getKey());
 
                 switch(position) {
                     case 0:

@@ -21,7 +21,7 @@ public final class PictureCompactor {
     public static String BitmapToStringB64(Bitmap in)
     {
         ByteArrayOutputStream bAOS = new ByteArrayOutputStream();
-        in.compress(Bitmap.CompressFormat.JPEG, 85, bAOS);
+        in.compress(Bitmap.CompressFormat.JPEG, 25, bAOS);
         byte[] bArray = bAOS.toByteArray();
         String s = Base64.encodeToString(bArray, Base64.DEFAULT);
         Log.d("BitmapToStringB64", "Orig String " + bAOS.toByteArray().length);
