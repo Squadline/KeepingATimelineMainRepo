@@ -102,7 +102,7 @@ public class AddEvent extends AppCompatActivity {
                         event.setString1(data[2]);
                         break;
                     default:
-                        event.setType("null");
+                        event.setType("text");
                         break;
                 }
 
