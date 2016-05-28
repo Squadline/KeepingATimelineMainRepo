@@ -144,8 +144,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 tlTitles.clear();
                 tlFriends.clear();
                 for (DataSnapshot tlSnapshot: dataSnapshot.getChildren()){
-                    tlTitles.add("" + tlSnapshot.getKey());
                     tlFriends.add("" + tlSnapshot.getValue()); //actual title
+                    tlTitles.add("" + tlSnapshot.getKey());
                     //System.out.println(tlSnapshot.getValue());
                     uidTimeline = tlSnapshot.getKey();
 
