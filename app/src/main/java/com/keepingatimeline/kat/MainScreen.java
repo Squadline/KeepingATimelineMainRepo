@@ -141,11 +141,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("DB_Load", "Asking Firebase for data.");
-                //tlTitles.clear();
+                tlTitles.clear();
                 tlFriends.clear();
                 for (DataSnapshot tlSnapshot: dataSnapshot.getChildren()){
-                    tlFriends.add("" + tlSnapshot.getValue()); //actually title
                     tlTitles.add("" + tlSnapshot.getKey());
+                    tlFriends.add("" + tlSnapshot.getValue()); //actual title
                     //System.out.println(tlSnapshot.getValue());
                     uidTimeline = tlSnapshot.getKey();
 
@@ -167,6 +167,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                         }
                     });*/
                 }
+                inflateTimeline.notifyDataSetChanged();
+
             }
 
             @Override
