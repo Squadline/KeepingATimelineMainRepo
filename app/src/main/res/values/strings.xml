@@ -1,31 +1,6 @@
 <resources>
     <string name="app_name">Squadline</string>
 
-    <!-- Strings for the AddEvent screen -->
-    <string name="add_new_text_event">Add New Text Event</string>
-    <string name="title_field">Title: </string>
-    <string name="edit_message">Enter Here</string>
-    <string name="text_field">Text: </string>
-    <string name="author">Author: </string>
-    <string name="save_button">Add to Timeline</string>
-    <string name="date">Date: </string>
-    <string name="enter_date">MM-DD-YYYY</string>
-    <string name="add_new_quote_event">Add New Quote Event</string>
-    <string name="quote_field">Quote: </string>
-    <string name="speaker">Speaker: </string>
-    <string name="description_field">Description: </string>
-    <string name="add_new_photo_event">Add New Photo Event</string>
-    <string name="addPhotoButton">Choose File to Upload</string>
-    <string name="displayFile">JPEG, GIF, PNG</string>
-    <string name="addEvent">Add New Event</string>
-    <string name="selectType">Select a Type</string>
-    <string name="quoteRadio">Quote</string>
-    <string name="textRadio">Text</string>
-    <string name="photoRadio">Photo</string>
-    <string name="enter_email">Enter Your Email</string>
-    <string name="email_message">e.g. johndoe@gmail.com</string>
-    <string name="recover_button">Send Link</string>
-
     <!--Login Page Strings-->
     <string name="email">Email</string>
     <string name="emailHint">ggillespie@ucsd.edu</string>

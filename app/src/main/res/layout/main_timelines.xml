@@ -13,38 +13,42 @@
         android:layout_marginTop="16dp"
         android:src="@drawable/default_squad" />
 
-    <TextView
-        android:id="@+id/timelineTitle"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/titleLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_toRightOf="@+id/squad_image"
-        android:text="Title"
-        android:textColor="@color/black"
-        android:textSize="16sp" />
+        android:layout_toEndOf="@+id/squad_image"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/timelineFriends"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/timelineTitle"
-        android:layout_marginBottom="16dp"
-        android:text="Friends"
-        android:textColor="#666666"
-        android:textSize="14sp" />
+        <TextView
+            android:id="@+id/timelineTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/timelineFriends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Members"
+            android:textColor="@color/grey600"
+            android:textSize="14sp" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/recentEvent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/timelineTitle"
-        android:layout_gravity="right"
+        android:layout_alignTop="@id/titleLayout"
+        android:layout_gravity="end"
         android:layout_toStartOf="@+id/chevron_right"
         android:text="5/17/2016"
-        android:textColor="#666666"
+        android:textColor="@color/grey600"
         android:textSize="14sp" />
 
     <ImageView
@@ -52,15 +56,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/recentEvent"
+        android:layout_alignTop="@id/recentEvent"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="-2.5dp"
+        android:layout_marginTop="-2.4dp"
         android:src="@drawable/ic_chevron_right_grey" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.2dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/black" />
+        android:background="@color/grey500" />
 
 </RelativeLayout>

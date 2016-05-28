@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="191dp"
+    android:layout_height="182dp"
     android:background="@drawable/side_nav_bar"
     android:gravity="bottom"
     android:orientation="vertical"
@@ -13,16 +13,15 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:paddingTop="47dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:src="@drawable/default_profile" />
 
     <TextView
         android:id="@+id/user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
+        android:layout_marginTop="16dp"
         android:text="Burt Macklin"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 

@@ -1,4 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
-    android:gravity="start|bottom"
-    android:src="@drawable/nav_header_background" />
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:angle="135"
+        android:endColor="#19212B"
+        android:startColor="#545F6D"
+        android:type="linear" />
+</shape>
