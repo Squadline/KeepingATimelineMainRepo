@@ -9,35 +9,42 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 
 /**
  * Created by Darren on 5/22/2016.
+ *
+ * Class: AddFriendFragment
+ * Purpose: Fragment for Add Friend dialog in Timeline Settings
  */
 public class AddFriendFragment extends DialogFragment {
 
-    private AlertDialog dialog;
-    private AddFriendListener mListener;
-    private String email;
+    private AlertDialog dialog;                 // Dialog to display
+    private AddFriendListener mListener;        // Listener for positive button clicks
+    private String email;                       // Email entered
 
+    // Define an interface that positive button listeners must implement
     public interface AddFriendListener {
-        public void onDialogPositiveClick(DialogFragment dialog);
+        // Positive button listener onClick
+        void onDialogPositiveClick(AddFriendFragment dialog);
     }
 
+    // Get the EditText and return entered text
     public String getEmail() {
-        email = ((TextView) dialog.findViewById(R.id.addFriendInput)).getText().toString();
+        email = ((EditText) dialog.findViewById(R.id.addFriendInput)).getText().toString();
         return email;
     }
 
     @Override
     public void onAttach(Activity activity) {
+        // Call super method
         super.onAttach(activity);
 
-        System.err.println("Reached attach");
-
+        // Try to set activity as positive button listener
         try {
             mListener = (AddFriendListener)activity;
         }
+        // If this fails, it means that activity must implement the listener interface
         catch (ClassCastException cce) {
             throw new ClassCastException(activity.toString() + "must implement AddFriendListener");
         }
@@ -45,42 +52,59 @@ public class AddFriendFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        // Create a dialog builder and layout inflater
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
+        // Set the dialog view to the add friend xml
+        // Parent view is null because it will go in the dialog
         builder.setView(inflater.inflate(R.layout.dialog_addfriend, null))
+                // Set positive button's text to Add
+                // Don't do anything because this will be overridden
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // Add friend
-                        mListener.onDialogPositiveClick(AddFriendFragment.this);
+                        // Do nothing (overridden method)
                     }
                 })
+                // Set negative button's text to Cancel
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // Cancel the dialog
+                        // Cancel the dialog when button is pressed
                         AddFriendFragment.this.getDialog().cancel();
                     }
                 });
+
+        // Create the dialog
         dialog = builder.create();
 
+        // Set a new onShowListener to override positive button's listener
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
 
             @Override
             public void onShow(DialogInterface dialog) {
-                Button pb = AddFriendFragment.this.dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                pb.setOnClickListener(new View.OnClickListener() {
+                // Get the positive button of the dialog
+                Button add = AddFriendFragment.this.dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+
+                // We override the original listener method because we do not want to exit the dialog
+                // until we verify that the entered email is valid
+                add.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
+                        // Call positive button listener's on click method
+                        // and pass in current dialog fragment
+                        mListener.onDialogPositiveClick(AddFriendFragment.this);
 
+                        // Don't dismiss
+                        // Listener will dismiss when data is validated
                     }
                 });
             }
         });
 
-        System.err.println("Reached create");
+        // Return the created dialog
         return dialog;
     }
 }
