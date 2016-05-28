@@ -31,14 +31,15 @@ import java.util.ArrayList;
  *  Notifications
  *  Rename Timeline   Toast, Dialog
  *  Change Picture    Toast, Dialog
+ *  Display Picture
  *
  *  Add null checks to prevent crashing
+ *  Change member display to names
  */
 public class TimelineSettings extends AppCompatActivity
         implements AddFriendFragment.AddFriendListener {
 
     private String currentTimelineID;           // ID of the current timeline
-    private String currentName;                 // Name of the current user
     private TextView squadTitle;                // Name of timeline
     private TextView addFriend;                 // Add Friend button
     private ArrayAdapter<String> adapter;       // Adapter for list of users
@@ -49,7 +50,6 @@ public class TimelineSettings extends AppCompatActivity
     // String constants for Firebase children
     private final String TITLE_STR = "Title";
     private final String USERS_STR = "Users";
-    private final String NAME_STR = "EmailAddress";
     private final String ID_STR = "Timeline ID";
 
     @Override
@@ -88,9 +88,11 @@ public class TimelineSettings extends AppCompatActivity
         if (savedInstanceState == null) {
             // Get the extras bundle
             Bundle extras = getIntent().getExtras();
+
             // If bundle is null, then set current line as empty string
             if(extras == null) {
-                // WARNING: If case is reached, app will crash when loading data
+                // If this case is reached, nothing will be loaded in the settings
+                // To fix, go back to ViewTimeline and reenter settings
                 currentTimelineID = "";
             }
             else {
@@ -103,60 +105,36 @@ public class TimelineSettings extends AppCompatActivity
             currentTimelineID = (String) savedInstanceState.getSerializable(ID_STR);
         }
 
-        /*
-         * Once getUserEmail is correctly implemented in Vars, we can remove
-         * this outer listener assignment.
-         */
+        // Instantiate db to current timeline
+        db = Vars.getTimeline(currentTimelineID);
 
-        // Get the Firebase object of the current user
-        Firebase currentUser = Vars.getUser();
-
-        // Retrieve current user name ONCE from Firebase
-        currentUser.addListenerForSingleValueEvent(new ValueEventListener() {
+        // Add event listener to get settings updates
+        db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get the name of the current user
-                currentName = dataSnapshot.child(NAME_STR).getValue().toString();
+                if (dataSnapshot.child(TITLE_STR).getValue() == null ) {
+                    System.err.println("Caught null in timeline");
+                    return;
+                }
+                System.err.println("Timeline ID: " + currentTimelineID);
+                // get value of the title child of timeline and update title
+                squadTitle.setText(dataSnapshot.child(TITLE_STR).getValue().toString());
 
-                // Instantiate db to current timeline once we've gotten
-                // the current user's name
-                db = Vars.getTimeline(currentTimelineID);
+                // reset the list of users
+                users.clear();
 
-                // Add event listener to get settings updates
-                db.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // get value of the title child of timeline and set title
-                        squadTitle.setText(dataSnapshot.child(TITLE_STR).getValue().toString());
-
-                        // reset the list of users and add current user to top
-                        users.clear();
-                        users.add(currentName);
-
-                        // iterate through the users in the database (alphabetically)
-                        // and add their names to the list of timeline users
-                        // excluding the current user, whose name was added at the top
-                        for (DataSnapshot member : dataSnapshot.child(USERS_STR).getChildren()) {
-                            String memberName = member.getValue().toString();
-                            if (!memberName.equals(currentName)) {
-                                users.add(memberName);
-                            }
-                        }
-                        // notify adapter of update and reset view
-                        adapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-
-                    }
-                });
+                // iterate through the users in the database
+                // and add their names to the list of timeline users
+                for (DataSnapshot member : dataSnapshot.child(USERS_STR).getChildren()) {
+                    users.add(member.getValue().toString());
+                }
+                // notify adapter of update and reset view
+                adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                Toast.makeText(getApplicationContext(), "Error loading data.",
-                        Toast.LENGTH_SHORT).show();
+
             }
         });
 
