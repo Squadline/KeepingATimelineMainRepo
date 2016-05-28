@@ -23,7 +23,7 @@ public class AddFriendFragment extends DialogFragment {
     }
 
     public String getEmail() {
-        email = ((TextView) dialog.findViewById(R.id.friend_email)).getText().toString();
+        email = ((TextView) dialog.findViewById(R.id.addFriendInput)).getText().toString();
         return email;
     }
 
