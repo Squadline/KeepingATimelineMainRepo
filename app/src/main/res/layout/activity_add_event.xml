@@ -12,7 +12,7 @@
         android:minHeight="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/addEventPrimary"
+        android:background="@color/appPrimary"
         app:contentInsetStart="0dp"
         app:contentInsetEnd="0dp">
 
@@ -54,7 +54,7 @@
         android:id="@+id/eventTabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/addEventPrimary"
+        android:background="@color/appPrimary"
         app:tabIndicatorColor="@color/trevorBlue"
         app:tabIndicatorHeight="4dp" />
 

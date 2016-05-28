@@ -2,21 +2,21 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/addEventPrimary">
+    android:background="@color/appPrimary">
 
     <LinearLayout
         android:id="@+id/addQuoteEvent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/addEventPrimary"
+        android:background="@color/appPrimary"
         android:orientation="vertical">
 
         <EditText
             android:id="@+id/quoteTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="3dp"
-            android:layout_marginStart="3dp"
+            android:layout_marginEnd="0.5dp"
+            android:layout_marginStart="0.5dp"
             android:background="@color/white"
             android:hint="Title"
             android:inputType="textNoSuggestions"
@@ -25,6 +25,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.2dp"
+            android:layout_marginEnd="0.5dp"
+            android:layout_marginStart="0.5dp"
             android:background="@color/black" />
 
         <RelativeLayout
@@ -37,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="3dp"
+                android:layout_marginStart="0.5dp"
                 android:layout_toStartOf="@+id/dateQuoteInput"
                 android:background="@color/white"
                 android:gravity="start"
@@ -51,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="3dp"
+                android:layout_marginEnd="0.5dp"
                 android:background="@color/white"
                 android:gravity="end"
                 android:clickable="true"
@@ -64,6 +66,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.2dp"
+            android:layout_marginEnd="0.5dp"
+            android:layout_marginStart="0.5dp"
             android:background="@color/black" />
 
         <View
@@ -73,32 +77,36 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.2dp"
+            android:layout_marginEnd="0.5dp"
+            android:layout_marginStart="0.5dp"
             android:background="@color/black" />
 
         <EditText
             android:id="@+id/quoteData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="3dp"
-            android:layout_marginStart="3dp"
+            android:layout_marginEnd="0.5dp"
+            android:layout_marginStart="0.5dp"
             android:background="@color/white"
             android:gravity="top|start"
             android:hint="Quote"
             android:inputType="textMultiLine|textNoSuggestions"
-            android:lines="5"
+            android:lines="7"
             android:padding="10dp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.2dp"
+            android:layout_marginEnd="0.5dp"
+            android:layout_marginStart="0.5dp"
             android:background="@color/black" />
 
         <EditText
             android:id="@+id/quoteSource"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="3dp"
-            android:layout_marginStart="3dp"
+            android:layout_marginEnd="0.5dp"
+            android:layout_marginStart="0.5dp"
             android:background="@color/white"
             android:hint="Source"
             android:inputType="textNoSuggestions"
@@ -107,6 +115,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.2dp"
+            android:layout_marginEnd="0.5dp"
+            android:layout_marginStart="0.5dp"
             android:background="@color/black" />
 
     </LinearLayout>

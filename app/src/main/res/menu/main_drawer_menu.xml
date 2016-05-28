@@ -5,30 +5,30 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/navChangeEmail"
-                    android:title="@string/changeName"
-                    android:icon="@drawable/ic_action_email" />
+                    android:id="@+id/navChangeName"
+                    android:icon="@drawable/ic_account_circle_drawer"
+                    android:title="@string/changeName" />
+                <item
+                    android:id="@+id/navChangePhoto"
+                    android:icon="@drawable/ic_photo_camera_drawer"
+                    android:title="@string/changePhoto" />
                 <item
                     android:id="@+id/navChangePassword"
-                    android:title="@string/changePassword"
-                    android:icon="@drawable/ic_action_lock" />
+                    android:icon="@drawable/ic_lock_drawer"
+                    android:title="@string/changePassword" />
             </group>
         </menu>
     </item>
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/navShare"
-            android:title="@string/share"
-            android:icon="@drawable/ic_action_share" />
-        <item
             android:id="@+id/navHelp"
-            android:title="@string/help"
-            android:icon="@drawable/ic_action_help" />
+            android:icon="@drawable/ic_help_drawer"
+            android:title="@string/help" />
         <item
             android:id="@+id/navLogOut"
-            android:title="@string/logout"
-            android:icon="@drawable/ic_action_shutdown" />
+            android:icon="@drawable/ic_power_drawer"
+            android:title="@string/logout" />
     </group>
 
 </menu>

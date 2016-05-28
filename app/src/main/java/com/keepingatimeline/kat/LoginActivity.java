@@ -47,7 +47,9 @@ public class LoginActivity extends AppCompatActivity {
         {
             Intent newActivity = new Intent("com.keepingatimeline.kat.MainScreen");
             startActivity(newActivity);
-            // END THIS ACTIVITY?
+            // END THIS ACTIVITY
+            this.finish();
+            return;
         }
 
 
@@ -57,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         username = (TextView) findViewById(R.id.loginEmail);
         password = (TextView) findViewById(R.id.loginPassword);
 
-
+        final AppCompatActivity me = this;
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,11 +69,14 @@ public class LoginActivity extends AppCompatActivity {
                         System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
                         Intent newActivity = new Intent("com.keepingatimeline.kat.MainScreen");
                         startActivity(newActivity);
+                        me.finish();
                     }
                     @Override
                     public void onAuthenticationError(FirebaseError firebaseError) {
                         // there was an error
                         Log.d("Invalid:", "username/password combination");
+
+                        //consider just doing "Error: "firebaseError.getMessage()?
                         Toast.makeText(getApplicationContext(), "ERROR: The email address or password you entered is not valid. Please try again."
                                 , Toast.LENGTH_LONG).show();
                     }
@@ -111,15 +116,17 @@ public class LoginActivity extends AppCompatActivity {
 
     private void forgotPasswordDialog() {
 
-        final EditText emailInput = (EditText) findViewById(R.id.resetPasswordInput);
         dialogBuilder = new AlertDialog.Builder(this);
         Firebase.setAndroidContext(this);
 
         LayoutInflater inflater = this.getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialog_reset_password, null);
+
+        final EditText emailInput = (EditText) view.findViewById(R.id.resetPasswordInput);
 
         dialogBuilder.setTitle("Reset Password");
         dialogBuilder.setMessage("Enter your email address and we'll send you a link to reset your password.");
-        dialogBuilder.setView(inflater.inflate(R.layout.dialog_reset_password, null));
+        dialogBuilder.setView(view);
         dialogBuilder.setPositiveButton("Reset", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

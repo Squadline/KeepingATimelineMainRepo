@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -20,6 +22,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 
 /**
@@ -114,7 +117,42 @@ public class AddPhotoFragment extends Fragment {
     }
 
     public String getPhoto() {
-        return PictureCompactor.BitmapToStringB64(BitmapFactory.decodeFile(imagePath));
+        Bitmap bm_original = BitmapFactory.decodeFile(imagePath);
+        bm_original = BitmapManip.shrink(bm_original);
+        try {
+            ExifInterface exif = new ExifInterface(imagePath);
+            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+            Bitmap bm_corrected;
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                    bm_corrected = BitmapManip.flipHorizontal(bm_original);
+                    break;
+                case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                    bm_corrected = BitmapManip.flipVertical(bm_original);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    bm_corrected = BitmapManip.rotateClockwise(bm_original, 90);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    bm_corrected = BitmapManip.rotateClockwise(bm_original, 180);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    bm_corrected = BitmapManip.rotateClockwise(bm_original, 270);
+                    break;
+                case ExifInterface.ORIENTATION_TRANSPOSE:
+                    bm_corrected = BitmapManip.transpose(bm_original);
+                    break;
+                case ExifInterface.ORIENTATION_TRANSVERSE:
+                    bm_corrected = BitmapManip.transverse(bm_original);
+                case ExifInterface.ORIENTATION_NORMAL:
+                default:
+                    bm_corrected = bm_original;
+            }
+            return PictureCompactor.BitmapToStringB64(bm_corrected);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return PictureCompactor.BitmapToStringB64(bm_original);
+        }
     }
 
     public String getDate() {
@@ -143,4 +181,5 @@ public class AddPhotoFragment extends Fragment {
             }
         }
     }
+
 }

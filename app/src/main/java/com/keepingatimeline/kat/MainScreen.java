@@ -10,13 +10,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -43,6 +43,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private String newName;
     private TextView titleBar;
     private String emailAdd;
+    private String uidTimeline;                 //UID of timeline
 
     private String currentFirst;                // First name of the current user
     private String currentLast;                 // Last name of the current user
@@ -96,13 +97,15 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         final TextView userName = (TextView) navHeader.findViewById(R.id.user_name);
         final TextView userEmail = (TextView) navHeader.findViewById(R.id.user_email);
 
+        //.com/Users/uid
+        //.com/Users/
 
         Firebase current = ref.child(USERS_STR).child(holder);
 
         current.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get the name of the current user
+                // Get the name of  the current user
                 currentFirst = dataSnapshot.child(NAME_STR).getValue().toString();
                 currentLast = dataSnapshot.child(LAST_STR).getValue().toString();
 
@@ -138,14 +141,32 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("DB_Load", "Asking Firebase for data.");
-                tlTitles.clear();
+                //tlTitles.clear();
                 tlFriends.clear();
                 for (DataSnapshot tlSnapshot: dataSnapshot.getChildren()){
-                    tlTitles.add(tlSnapshot.getKey());
-                    tlFriends.add("" + tlSnapshot.getValue());
-                }
-                inflateTimeline.notifyDataSetChanged();
+                    tlFriends.add("" + tlSnapshot.getValue()); //actually title
+                    tlTitles.add("" + tlSnapshot.getKey());
+                    //System.out.println(tlSnapshot.getValue());
+                    uidTimeline = tlSnapshot.getKey();
 
+
+                    /*Firebase database2 = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines/" + uidTimeline + "/Users");
+                    database2.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        tlTitles.clear();
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot userShot: dataSnapshot.getChildren())
+                            {
+                                tlTitles.add((String)userShot.getValue());
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });*/
+                }
             }
 
             @Override
@@ -153,6 +174,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             }
         });
+
 
         //creates a pointer to from the user table to the timeline table for future use
         timelineList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -194,14 +216,17 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 return true;
             case R.id.add_timeline:
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Name your new Timeline");
+                LayoutInflater addInflater = this.getLayoutInflater();
+                View view = addInflater.inflate(R.layout.dialog_add_timeline, null);
 
-                // Set up the input
-                final EditText input = new EditText(this);
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                builder.setView(input);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                final EditText nameTLInput = (EditText) view.findViewById(R.id.addTimelineInput);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("New Timeline");
+                builder.setMessage("Enter the name for your new timeline.");
+                builder.setView(view);
+
+                builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
@@ -212,7 +237,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 emailAdd = dataSnapshot.getValue().toString();
-                                newName = input.getText().toString();
+                                newName = nameTLInput.getText().toString();
                                 database = Vars.getFirebase().child("Timelines");
                                 database = database.push();
                                 String tKey = database.getKey();
@@ -227,10 +252,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                 Firebase user =  database.child("Users");
                                 post1.put(Vars.getUID(), emailAdd);
                                 user.setValue(post1);
-
-                                Firebase events = database.child("Events");
-                                events = events.push();
-                                events.setValue(Event.getNullEvent());
 
                                 database = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder + "/Timelines");
                                 event1.put(tKey, newName);
@@ -275,11 +296,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.navChangeEmail) {
+        if (id == R.id.navChangeName) {
 
         } else if (id == R.id.navChangePassword) {
-            showChangePassword(); // done by me!!!
-        } else if (id == R.id.navShare) {
+            showChangePassword(); // shows change password dialog - by me!!!
+        } else if (id == R.id.navChangePhoto) {
 
         } else if (id == R.id.navHelp) {
             getMainScreenHelp(); // sets up the help dialogue --Dana
@@ -294,40 +315,127 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             Intent loginActivity = new Intent("com.keepingatimeline.LoginActivity");
             startActivity(loginActivity);
+            this.finish();
+
+
         }
 
+        //closes drawer after button has been selected
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     private void showChangePassword(){
+
+        final String emailStr = Vars.getFirebase().getAuth().getProviderData().get("email").toString();
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
-
+        View v = inflater.inflate(R.layout.dialog_change_password, null);
         builder.setTitle("Change Password");
         builder.setMessage("Enter your current password, then enter a new password and confirm it.");
-        builder.setView(inflater.inflate(R.layout.dialog_change_password, null));
-        //TODO: Add TextField instances from layout to send data to firebase and stuff
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //close this dialog
-            }
-        });
 
-        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+        builder.setView(v);
+
+        final EditText curPass = (EditText) v.findViewById(R.id.currentPasswordInput);
+        final EditText newPass = (EditText) v.findViewById(R.id.newPasswordInput);
+        final EditText conPass = (EditText) v.findViewById(R.id.confirmPasswordInput);
+
+
+        builder.setNegativeButton("Cancel", null);
+
+
+        builder.setPositiveButton("Save", null);
+
+        //change password dialog
+        final AlertDialog changePDialog = builder.create();
+        changePDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onShow(DialogInterface d) {
+                Button confirm = changePDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                confirm.setOnClickListener( new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // FORM CHECKING
+
+                        // check if anything is empty
+                        if (newPass.getText().toString().length() == 0 ||
+                                curPass .getText().toString().length() == 0 ||
+                                conPass.getText().toString().length() == 0) {
+
+                        }
+                        // check if new pass == confirm pass
+                        if( !newPass.getText().toString().equals(conPass.getText().toString())) {
+
+                            Toast.makeText(getApplicationContext(), "New passwords do not match! :0",
+                                    Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        // check check if currpass == new pass, aka no point
+
+                        if( newPass.getText().toString().equals(curPass.getText().toString())) {
+                            Toast.makeText(getApplicationContext(), "Current password same as new password!"
+                                    + "Please change the password to something different!",
+                                    Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        // SERVER CHECKING
+                        Vars.getFirebase().changePassword(emailStr, curPass.getText().toString(),
+                                newPass.getText().toString(), new Firebase.ResultHandler() {
+                                    @Override
+                                    public void onError(FirebaseError err)
+                                    {
+                                        if( err.getCode() == FirebaseError.INVALID_PASSWORD)
+                                        {
+                                            Toast.makeText(getApplicationContext(),
+                                                    "Error: Current password is incorrect",
+                                                    Toast.LENGTH_LONG).show();
+
+                                        } else {
+                                            Toast.makeText(getApplicationContext(),
+                                                    "Error: " + err.getMessage(),
+                                                    Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onSuccess()
+                                    {
+                                        Toast.makeText(getApplicationContext(),  "Password successfully changed",
+                                                Toast.LENGTH_LONG).show();
+                                        changePDialog.cancel();
+                                        return;
+                                    }
+
+                                });
+
                 /*firebaseRef.changePassword( oldPassword, nP, nPConfirm );
                 {
                     if ok, close dialog and toast success
                     if bad, stay in dialog and toast oldP incorrecto o whatever
                 }
                 */
-            }
-        });
 
-        AlertDialog changePDialog = builder.create();
+                        // dialog.dismiss();
+                    }
+                });
+                Button cancel = changePDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+                cancel.setOnClickListener( new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //close this dialog
+                        changePDialog.cancel();
+                        return;
+                    }
+                });
+            }
+
+
+
+        });
         changePDialog.show();
 
     }

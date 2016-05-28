@@ -2,7 +2,9 @@ package com.keepingatimeline.kat;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +28,12 @@ import com.firebase.client.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -77,6 +85,22 @@ public class ViewTimeline extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_white);
 
+        Firebase.setAndroidContext(this);
+
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                timelineID = null;
+                timelineName = "";
+            } else {
+                timelineID = extras.getString("Timeline ID");
+                timelineName = extras.getString("Timeline Name");
+            }
+        } else {
+            timelineID = (String) savedInstanceState.getSerializable("Timeline ID");
+            timelineName = (String) savedInstanceState.getSerializable("Timeline Name");
+        }
+
         //find the specified drawer layout
         mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         mActivityTitle = getTitle().toString();
@@ -93,22 +117,6 @@ public class ViewTimeline extends AppCompatActivity {
 
         //sets up the items inside the drawer
         addDrawerItems();
-
-        Firebase.setAndroidContext(this);
-
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if(extras == null) {
-                timelineID = null;
-                timelineName = "";
-            } else {
-                timelineID = extras.getString("Timeline ID");
-                timelineName = extras.getString("Timeline Name");
-            }
-        } else {
-            timelineID = (String) savedInstanceState.getSerializable("Timeline ID");
-            timelineName = (String) savedInstanceState.getSerializable("Timeline Name");
-        }
 
         //sets title of the actionbar to the title of the timeline clicked
         firebaseRef = Vars.getTimeline(timelineID);
@@ -132,7 +140,6 @@ public class ViewTimeline extends AppCompatActivity {
 
 
         addEvent = (ImageButton) findViewById(R.id.addEventFAB);
-        addEvent.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_add_white));
 
         addEvent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,10 +174,16 @@ public class ViewTimeline extends AppCompatActivity {
                 eventList.clear();
                 for (DataSnapshot eventSnapshot: dataSnapshot.getChildren()){
                     Event event = eventSnapshot.getValue(Event.class);
-                    if(!event.getType().equals("null")) {
-                        eventList.add(event);
+                    Log.d("Event Key", event.getKey());
+                    if(event.getType().equals("photo")) {
+                        Bitmap temp = PictureCompactor.StringB64ToBitmap(event.getString2());
+                        event.setString2(eventSnapshot.getKey());
+                        BitmapCache.addBitmapToMemoryCache(event.getString2(), temp);
                     }
+                    eventList.add(event);
                 }
+                //this is where eventList needs to undergo sorting
+                mergeSort(eventList);
                 rvAdapter.notifyDataSetChanged();
             }
 
@@ -223,30 +236,50 @@ public class ViewTimeline extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
     }
 
-    public static Map<String, List<String>> getData() {
+    public Map<String, List<String>> getData() {
         //Todo: Conversion from raw date date to the separate strings and such
         //Given that the data will be formatted in such a way like 5/19/2015 as a string
         //Somehow, I need to fetch all the raw date date from the database
         //Then i would need to iterate through them and separate everything.
 
-        Map<String, List<String>> expandableListData = new TreeMap<>();
+        final List<String> dates = new ArrayList<>();
+
+        Firebase fb = Vars.getTimeline(timelineID);
+
+        fb.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot date: dataSnapshot.child("Events").getChildren())
+                {
+                    String curr_date = date.child("date").getValue().toString();
+                    dates.add(curr_date);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+        });
+
+        LinkedHashMap<String, List<String>> expandableListData = new LinkedHashMap<>();
 
         String[] GivenDates = {"5/7/14", "5/9/14", "5/11/14", "5/15/14", "6/12/14", "6/14/14", "7/14/14", "8/15/15", "1/24/16"};
         String[] Months = {"", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
         int month_data = 0;
-        int date_data = 0;
+        int day_data = 0;
         int year_data = 0;
         List<String> months_date = new ArrayList<String>();
-        String checker = "";
+        String curr_m_y = "";
 
         //Goes through all the given dates
-        for(int i = 0; i < GivenDates.length; i++)
+        for(int i = 0; i < dates.size(); i++)
         {
             //Separates given string into pieces using scanner
-            Scanner scanner = new Scanner(GivenDates[i]).useDelimiter("[^0-9]+");
+            Scanner scanner = new Scanner(dates.get(i)).useDelimiter("[^0-9]+");
             month_data = scanner.nextInt();
-            date_data = scanner.nextInt();
+            day_data = scanner.nextInt();
             year_data = scanner.nextInt();
 
             //Gets the month you are in right now
@@ -255,39 +288,162 @@ public class ViewTimeline extends AppCompatActivity {
             //Strings together the month and the year together
             String month_year = curr_month + " " + Integer.toString(year_data);
 
-            //initial case when the list is empty
+            //System.err.println(month_year);
             if(months_date.isEmpty())
             {
-                months_date.add(Integer.toString(date_data));
-                checker = month_year;
-                continue;
+                curr_m_y = month_year;
+                months_date.add(Integer.toString(day_data));
             }
-
-            if(checker.equals(month_year))
+            else if(month_year.equals(curr_m_y))
             {
-                months_date.add(Integer.toString(date_data));
-                continue;
+                months_date.add(Integer.toString(day_data));
+                if(GivenDates.length-1 == i)
+                {
+                    expandableListData.put(month_year, new ArrayList<String>(months_date));
+                }
             }
-
-            //case where you are at the last position in the list
-            if(i == GivenDates.length-1 && !checker.equals(month_year))
+            else
             {
-                expandableListData.put(checker, months_date);
+                expandableListData.put(curr_m_y, new ArrayList<String>(months_date));
+                curr_m_y = month_year;
                 months_date.clear();
-                months_date.add(Integer.toString(date_data));
-                expandableListData.put(month_year, months_date);
-                continue;
-            }
+                months_date.add(Integer.toString(day_data));
 
-            if(!checker.equals(month_year))
-            {
-                expandableListData.put(checker, months_date);
-                months_date.clear();
-                months_date.add(Integer.toString(date_data));
-                checker = month_year;
-                continue;
+                if(GivenDates.length-1 == i)
+                {
+                    expandableListData.put(month_year, new ArrayList<String>(months_date));
+                }
             }
         }
+        Iterator<Map.Entry<String, List<String>>> s = expandableListData.entrySet().iterator();
+
+        /*
+        while ( s.hasNext() ) {
+            Map.Entry pair = (Map.Entry)s.next();
+            for( String date : (List<String>)pair.getValue() ) {
+                System.out.println(date);
+            }
+        }
+        */
+
         return expandableListData;
+    }
+
+    //Returns if date1 is before date2
+    protected boolean compareDates(String date1, String date2) {
+        //Holds Data of first date
+        int month1 = 0;
+        int day1 = 0;
+        int year1 = 0;
+
+        //Holds Data of second date
+        int month2 = 0;
+        int day2 = 0;
+        int year2 = 0;
+
+        Scanner s1 = new Scanner(date1).useDelimiter("[^0-9]+");
+        Scanner s2 = new Scanner(date2).useDelimiter("[^0-9]+");
+
+        //Store dates into their separate categories
+        month1 = s1.nextInt();
+        day1 = s1.nextInt();
+        year1 = s1.nextInt();
+
+        month2 = s2.nextInt();
+        day2 = s2.nextInt();
+        year2 = s2.nextInt();
+
+        //Compare Years
+        if(year2 != year1) {
+            if(year2 > year1)
+                return true;
+            else
+                return false;
+        }
+        //Compare Months
+        else if(month2 != month1) {
+            if(month2 > month1)
+                return true;
+            else
+                return false;
+        }
+        //Compare Days
+        else if(day2 != day1) {
+            if(day2 > day1)
+                return true;
+            else
+                return false;
+        }
+        else
+            return true;
+
+    }
+
+    public ArrayList<Event> mergeSort(ArrayList<Event> whole) {
+        ArrayList<Event> left = new ArrayList<Event>();
+        ArrayList<Event> right = new ArrayList<Event>();
+        int center;
+
+        if (whole.size() <= 1) {
+            return whole;
+        } else {
+            center = whole.size()/2;
+            // copy the left half of whole into the left.
+            for (int i=0; i<center; i++) {
+                left.add(whole.get(i));
+            }
+
+            //copy the right half of whole into the new arraylist.
+            for (int i=center; i<whole.size(); i++) {
+                right.add(whole.get(i));
+            }
+
+            // Sort the left and right halves of the arraylist.
+            left  = mergeSort(left);
+            right = mergeSort(right);
+
+            // Merge the results back together.
+            merge(left, right, whole);
+        }
+        return whole;
+    }
+
+    private void merge(ArrayList<Event> left, ArrayList<Event> right, ArrayList<Event> whole) {
+        int leftIndex = 0;
+        int rightIndex = 0;
+        int wholeIndex = 0;
+
+        // As long as neither the left nor the right ArrayList has
+        // been used up, keep taking the smaller of left.get(leftIndex)
+        // or right.get(rightIndex) and adding it at both.get(bothIndex).
+        while (leftIndex < left.size() && rightIndex < right.size()) {
+            if ( !compareDates(left.get(leftIndex).getDate(),
+                    right.get(rightIndex).getDate())) {
+                whole.set(wholeIndex, left.get(leftIndex));
+                leftIndex++;
+            } else {
+                whole.set(wholeIndex, right.get(rightIndex));
+                rightIndex++;
+            }
+            wholeIndex++;
+        }
+
+        ArrayList<Event> rest;
+        int restIndex;
+        if (leftIndex >= left.size()) {
+            // The left ArrayList has been used up...
+            rest = right;
+            restIndex = rightIndex;
+        } else {
+            // The right ArrayList has been used up...
+            rest = left;
+            restIndex = leftIndex;
+        }
+
+        // Copy the rest of whichever ArrayList (left or right) was not used up.
+        for (int i=restIndex; i<rest.size(); i++) {
+            whole.set(wholeIndex, rest.get(i));
+            wholeIndex++;
+        }
     }
 }

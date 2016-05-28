@@ -1,11 +1,15 @@
 package com.keepingatimeline.kat;
 
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -30,11 +34,13 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         public TextView photoTitle;
         public TextView photoDate;
         public TextView photoText;
+        public ImageView photoPhoto;
         public ViewHolderPhoto(View v) {
             super(v);
             photoTitle = (TextView) v.findViewById(R.id.photo_title);
             photoDate = (TextView) v.findViewById(R.id.photo_date);
             photoText = (TextView) v.findViewById(R.id.photo_text);
+            photoPhoto = (ImageView) v.findViewById(R.id.photo_photo);
         }
     }
 
@@ -110,12 +116,13 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 ((ViewHolderPhoto)holder).photoTitle.setText(event.getTitle());
                 ((ViewHolderPhoto)holder).photoDate.setText(event.getDate());
                 ((ViewHolderPhoto)holder).photoText.setText(event.getString1());
+                ((ViewHolderPhoto)holder).photoPhoto.setImageBitmap(BitmapCache.getBitmapFromMemCache(event.getString2()));
                 break;
             case "quote":
                 ((ViewHolderQuote)holder).quoteTitle.setText(event.getTitle());
                 ((ViewHolderQuote)holder).quoteDate.setText(event.getDate());
-                ((ViewHolderQuote)holder).quoteText.setText(event.getString1());
-                ((ViewHolderQuote)holder).quoteSpeaker.setText(event.getString2());
+                ((ViewHolderQuote)holder).quoteText.setText("\"" + event.getString1() + "\"");
+                ((ViewHolderQuote)holder).quoteSpeaker.setText("-" + event.getString2());
                 break;
             case "text":
             default:

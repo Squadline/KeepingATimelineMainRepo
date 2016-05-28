@@ -3,52 +3,52 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/appPrimary</item>
+        <item name="colorPrimaryDark">@color/appSecondary</item>
+        <item name="colorAccent">@color/appAccent</item>
     </style>
 
     <style name="AppTheme.LoginPage" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/loginPrimary</item>
-        <item name="colorPrimaryDark">@color/loginSecondary</item>
-        <item name="colorAccent">@color/loginAccent</item>
-        <item name="android:statusBarColor">@color/loginSecondary</item>
+        <item name="colorPrimary">@color/appPrimary</item>
+        <item name="colorPrimaryDark">@color/appSecondary</item>
+        <item name="colorAccent">@color/appAccent</item>
+        <item name="android:statusBarColor">@color/appSecondary</item>
     </style>
 
     <style name="AppTheme.RegistrationPage" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/registrationPrimary</item>
-        <item name="colorPrimaryDark">@color/registrationSecondary</item>
-        <item name="colorAccent">@color/registrationAccent</item>
-        <item name="android:statusBarColor">@color/registrationSecondary</item>
+        <item name="colorPrimary">@color/appPrimary</item>
+        <item name="colorPrimaryDark">@color/appSecondary</item>
+        <item name="colorAccent">@color/appAccent</item>
+        <item name="android:statusBarColor">@color/appSecondary</item>
     </style>
 
     <style name="AppTheme.MainScreen" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/mainPrimary</item>
-        <item name="colorPrimaryDark">@color/mainSecondary</item>
-        <item name="colorAccent">@color/mainAccent</item>
+        <item name="colorPrimary">@color/appPrimary</item>
+        <item name="colorPrimaryDark">@color/appSecondary</item>
+        <item name="colorAccent">@color/appAccent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="AppTheme.ViewTimeline" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/viewPrimary</item>
-        <item name="colorPrimaryDark">@color/viewSecondary</item>
-        <item name="colorAccent">@color/viewAccent</item>
-        <item name="android:statusBarColor">@color/viewSecondary</item>
+        <item name="colorPrimary">@color/appPrimary</item>
+        <item name="colorPrimaryDark">@color/appSecondary</item>
+        <item name="colorAccent">@color/appAccent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="colorControlNormal">@color/white</item>
     </style>
 
     <style name="AppTheme.TimelineSettings" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/settingsPrimary</item>
-        <item name="colorPrimaryDark">@color/settingsSecondary</item>
-        <item name="colorAccent">@color/settingsAccent</item>
-        <item name="android:statusBarColor">@color/settingsSecondary</item>
+        <item name="colorPrimary">@color/appPrimary</item>
+        <item name="colorPrimaryDark">@color/appSecondary</item>
+        <item name="colorAccent">@color/appAccent</item>
+        <item name="android:statusBarColor">@color/appSecondary</item>
     </style>
 
     <style name="AppTheme.AddEvent" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/addEventPrimary</item>
-        <item name="colorPrimaryDark">@color/addEventSecondary</item>
-        <item name="colorAccent">@color/addEventAccent</item>
-        <item name="android:statusBarColor">@color/addEventSecondary</item>
+        <item name="colorPrimary">@color/appPrimary</item>
+        <item name="colorPrimaryDark">@color/appSecondary</item>
+        <item name="colorAccent">@color/appAccent</item>
+        <item name="android:statusBarColor">@color/appSecondary</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

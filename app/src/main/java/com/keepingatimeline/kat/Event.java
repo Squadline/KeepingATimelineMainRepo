@@ -6,14 +6,15 @@ import java.util.ArrayList;
  * Created by Dana on 5/22/2016.
  */
 public class Event {
-    private String type, title, date, str1, str2;
+    private String type, title, date, str1, str2, key;
 
-    public Event(String type, String title, String date, String string1, String string2) {
+    public Event(String type, String title, String date, String string1, String string2, String key) {
         this.type = type;
         this.title = title;
         this.date = date;
         this.str1 = string1;
         this.str2 = string2;
+        this.key = key;
     }
 
     public Event() {
@@ -22,6 +23,7 @@ public class Event {
         this.date = "";
         this.str1 = "";
         this.str2 = "";
+        this.key = "";
     }
 
     public String getType() {
@@ -64,7 +66,7 @@ public class Event {
         this.str2 = str2;
     }
 
-    public static Event getNullEvent() {
-        return new Event("null", "", "", "", "");
-    }
+    public String getKey() { return key; }
+
+    public void setKey(String key) { this.key = key; }
 }
