@@ -101,17 +101,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".RecoverPassword"
-            android:configChanges="orientation"
-            android:label="Recover Password"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="com.keepingatimeline.kat.RecoverPasswordScreen" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
