@@ -27,12 +27,15 @@ import java.util.ArrayList;
  *
  * TODO:
  *  Add People        Toast, Dialog
- *  Remove People     Toast, Dialog
  *  Leave Squad       Toast, Dialog
  *  Notifications
  *  Rename Timeline   Toast, Dialog
+ *  Change Picture    Toast, Dialog
+ *
+ *  Add null checks to prevent crashing
  */
-public class TimelineSettings extends AppCompatActivity {
+public class TimelineSettings extends AppCompatActivity
+        implements AddFriendFragment.AddFriendListener {
 
     private String currentTimelineID;           // ID of the current timeline
     private String currentName;                 // Name of the current user
@@ -162,6 +165,26 @@ public class TimelineSettings extends AppCompatActivity {
             public void onClick(View v) {
                 DialogFragment dialog = new AddFriendFragment();
                 dialog.show(getSupportFragmentManager(), "addFriend");
+            }
+        });
+    }
+
+    // Listener for Add Friend dialog
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        String em = ((AddFriendFragment)dialog).getEmail();
+        System.err.println("Email: " + em);
+        Vars.getFirebase().child("Users").child(em).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() == null) {
+                    System.err.println("Caught null");
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
             }
         });
     }
