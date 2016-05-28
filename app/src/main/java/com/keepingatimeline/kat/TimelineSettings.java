@@ -51,6 +51,7 @@ public class TimelineSettings extends AppCompatActivity
     private final String TITLE_STR = "Title";
     private final String USERS_STR = "Users";
     private final String ID_STR = "Timeline ID";
+    private final String ERR_MSG = "Error loading data.";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +106,17 @@ public class TimelineSettings extends AppCompatActivity
             currentTimelineID = (String) savedInstanceState.getSerializable(ID_STR);
         }
 
+        // If the passed in timeline ID we get is null
+        // (i.e. if app somehow starts on timeline settings page)
+        // then notify user that data cannot be loaded
+        if (currentTimelineID == null) {
+            // Print out data loading error message on Toast
+            showDataErrorMsg();
+
+            // Stop creating the activity (user will exit anyway)
+            return;
+        }
+
         // Instantiate db to current timeline
         db = Vars.getTimeline(currentTimelineID);
 
@@ -112,23 +124,31 @@ public class TimelineSettings extends AppCompatActivity
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                // If we get an invalid timeline ID
+                // attempting to get the title will return a null value
+                // Print out data loading error message on Toast and stop data retrieval
                 if (dataSnapshot.child(TITLE_STR).getValue() == null ) {
-                    System.err.println("Caught null in timeline");
+                    // Print out Toast error
+                    showDataErrorMsg();
+
+                    // Perform no further actions with data
                     return;
                 }
-                System.err.println("Timeline ID: " + currentTimelineID);
-                // get value of the title child of timeline and update title
+
+                // Get value of the title child of timeline and update title
                 squadTitle.setText(dataSnapshot.child(TITLE_STR).getValue().toString());
 
-                // reset the list of users
+                // Reset the list of users
                 users.clear();
 
-                // iterate through the users in the database
+                // Iterate through the users in the database
                 // and add their names to the list of timeline users
                 for (DataSnapshot member : dataSnapshot.child(USERS_STR).getChildren()) {
                     users.add(member.getValue().toString());
                 }
-                // notify adapter of update and reset view
+
+                // Notify adapter of data update and reset view
                 adapter.notifyDataSetChanged();
             }
 
@@ -165,6 +185,12 @@ public class TimelineSettings extends AppCompatActivity
 
             }
         });
+    }
+
+    // Helper method to create and show a Toast with Data Loading Error Message
+    private void showDataErrorMsg() {
+        Toast toast = Toast.makeText(getApplicationContext(), ERR_MSG, Toast.LENGTH_LONG);
+        toast.show();
     }
 
 
