@@ -140,7 +140,6 @@ public class ViewTimeline extends AppCompatActivity {
 
 
         addEvent = (ImageButton) findViewById(R.id.addEventFAB);
-        addEvent.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_add_white));
 
         addEvent.setOnClickListener(new View.OnClickListener() {
             @Override
