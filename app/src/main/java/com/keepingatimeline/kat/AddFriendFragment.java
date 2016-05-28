@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -14,7 +16,7 @@ import android.widget.TextView;
  */
 public class AddFriendFragment extends DialogFragment {
 
-    private Dialog dialog;
+    private AlertDialog dialog;
     private AddFriendListener mListener;
     private String email;
 
@@ -62,7 +64,22 @@ public class AddFriendFragment extends DialogFragment {
                     }
                 });
         dialog = builder.create();
-        dialog.setContentView(R.layout.dialog_addfriend);
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+            @Override
+            public void onShow(DialogInterface dialog) {
+                Button pb = AddFriendFragment.this.dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                pb.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+            }
+        });
+
         System.err.println("Reached create");
         return dialog;
     }
