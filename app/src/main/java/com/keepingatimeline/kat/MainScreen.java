@@ -43,6 +43,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private String newName;
     private TextView titleBar;
     private String emailAdd;
+    private String uidTimeline;                 //UID of timeline
 
     private String currentFirst;                // First name of the current user
     private String currentLast;                 // Last name of the current user
@@ -140,14 +141,32 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("DB_Load", "Asking Firebase for data.");
-                tlTitles.clear();
+                //tlTitles.clear();
                 tlFriends.clear();
                 for (DataSnapshot tlSnapshot: dataSnapshot.getChildren()){
-                    tlTitles.add(tlSnapshot.getKey());
-                    tlFriends.add("" + tlSnapshot.getValue());
-                }
-                inflateTimeline.notifyDataSetChanged();
+                    tlFriends.add("" + tlSnapshot.getValue()); //actually title
+                    tlTitles.add("" + tlSnapshot.getKey());
+                    //System.out.println(tlSnapshot.getValue());
+                    uidTimeline = tlSnapshot.getKey();
 
+
+                    /*Firebase database2 = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines/" + uidTimeline + "/Users");
+                    database2.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        tlTitles.clear();
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot userShot: dataSnapshot.getChildren())
+                            {
+                                tlTitles.add((String)userShot.getValue());
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });*/
+                }
             }
 
             @Override
@@ -155,6 +174,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             }
         });
+
 
         //creates a pointer to from the user table to the timeline table for future use
         timelineList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
