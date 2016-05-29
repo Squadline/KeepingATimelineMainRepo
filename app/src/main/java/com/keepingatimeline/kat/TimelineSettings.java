@@ -2,7 +2,6 @@ package com.keepingatimeline.kat;
 
 import android.graphics.Typeface;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +17,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Initial version written by: Darren
@@ -29,16 +29,18 @@ import java.util.ArrayList;
  *  Add People        Toast, Dialog
  *  Leave Squad       Toast, Dialog
  *  Notifications
- *  Rename Timeline   Toast, Dialog
+ *  Rename Timeline   Dialog
  *  Change Picture    Toast, Dialog
+ *  Display Picture
  *
  *  Add null checks to prevent crashing
+ *  Change member display to names
  */
 public class TimelineSettings extends AppCompatActivity
         implements AddFriendFragment.AddFriendListener {
 
     private String currentTimelineID;           // ID of the current timeline
-    private String currentName;                 // Name of the current user
+    private String currentTimelineName;         // Name of the current timeline
     private TextView squadTitle;                // Name of timeline
     private TextView addFriend;                 // Add Friend button
     private ArrayAdapter<String> adapter;       // Adapter for list of users
@@ -48,9 +50,19 @@ public class TimelineSettings extends AppCompatActivity
 
     // String constants for Firebase children
     private final String TITLE_STR = "Title";
-    private final String USERS_STR = "Users";
-    private final String NAME_STR = "EmailAddress";
-    private final String ID_STR = "Timeline ID";
+    private final String DB_USERS = "Users";                // Users table in main DB
+    private final String USERS_STR = "Users";               // Users table in Timelines
+    private final String TIMELINE_STR = "Timelines";
+    private final String EMAIL_STR = "EmailAddress";
+    private final String TIME_ID_STR = "Timeline ID";
+    private final String TIME_NAME_STR = "Timeline Name";
+
+    // Error Messages
+    private final String DATA_ERR = "Error loading data.";
+    private final String EMAIL_ERR = "Please enter a valid email address.";
+    private final String ADD_NOT_FOUND = "Error: Email address not found.";
+    private final String ADD_ALREADY_EXISTS = " is already in this Squadline";
+    private final String ADD_MSG = " has been successfully added.";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,98 +100,167 @@ public class TimelineSettings extends AppCompatActivity
         if (savedInstanceState == null) {
             // Get the extras bundle
             Bundle extras = getIntent().getExtras();
+
             // If bundle is null, then set current line as empty string
             if(extras == null) {
-                // WARNING: If case is reached, app will crash when loading data
+                // If this case is reached, nothing will be loaded in the settings
+                // To fix, go back to ViewTimeline and reenter settings
                 currentTimelineID = "";
+                currentTimelineName = "";
             }
             else {
-                // otherwise, get timeline ID from extras
-                currentTimelineID = extras.getString(ID_STR);
+                // otherwise, get timeline ID and name from extras
+                currentTimelineID = extras.getString(TIME_ID_STR);
+                currentTimelineName = extras.getString(TIME_NAME_STR);
             }
         }
         else {
-            // If we have a saved instance state, then get the ID from there
-            currentTimelineID = (String) savedInstanceState.getSerializable(ID_STR);
+            // If we have a saved instance state, then get the ID and name from there
+            currentTimelineID = (String) savedInstanceState.getSerializable(TIME_ID_STR);
+            currentTimelineName = (String) savedInstanceState.getSerializable(TIME_NAME_STR);
         }
 
-        /*
-         * Once getUserEmail is correctly implemented in Vars, we can remove
-         * this outer listener assignment.
-         */
+        // If the passed in timeline ID we get is null
+        // (i.e. if app somehow starts on timeline settings page)
+        // then notify user that data cannot be loaded
+        if (currentTimelineID == null) {
+            // Print out data loading error message on Toast
+            showDataErrorMsg();
 
-        // Get the Firebase object of the current user
-        Firebase currentUser = Vars.getUser();
+            // Stop creating the activity (user will exit anyway)
+            return;
+        }
 
-        // Retrieve current user name ONCE from Firebase
-        currentUser.addListenerForSingleValueEvent(new ValueEventListener() {
+        // Instantiate db to current timeline
+        db = Vars.getTimeline(currentTimelineID);
+
+        // Add event listener to get settings updates
+        db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get the name of the current user
-                currentName = dataSnapshot.child(NAME_STR).getValue().toString();
 
-                // Instantiate db to current timeline once we've gotten
-                // the current user's name
-                db = Vars.getTimeline(currentTimelineID);
+                // If we get an invalid timeline ID
+                // attempting to get the title will return a null value
+                // Print out data loading error message on Toast and stop data retrieval
+                if (dataSnapshot.child(TITLE_STR).getValue() == null ) {
+                    // Print out Toast error
+                    showDataErrorMsg();
 
-                // Add event listener to get settings updates
-                db.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // get value of the title child of timeline and set title
-                        squadTitle.setText(dataSnapshot.child(TITLE_STR).getValue().toString());
+                    // Perform no further actions with data
+                    return;
+                }
 
-                        // reset the list of users and add current user to top
-                        users.clear();
-                        users.add(currentName);
+                // Get value of the title child of timeline and update title
+                squadTitle.setText(dataSnapshot.child(TITLE_STR).getValue().toString());
 
-                        // iterate through the users in the database (alphabetically)
-                        // and add their names to the list of timeline users
-                        // excluding the current user, whose name was added at the top
-                        for (DataSnapshot member : dataSnapshot.child(USERS_STR).getChildren()) {
-                            String memberName = member.getValue().toString();
-                            if (!memberName.equals(currentName)) {
-                                users.add(memberName);
-                            }
-                        }
-                        // notify adapter of update and reset view
-                        adapter.notifyDataSetChanged();
-                    }
+                // Reset the list of users
+                users.clear();
 
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
+                // Iterate through the users in the table
+                // and add their emails to the list of timeline users
+                for (DataSnapshot member : dataSnapshot.child(USERS_STR).getChildren()) {
+                    users.add(member.getValue().toString());
+                }
 
-                    }
-                });
+                // Notify adapter of data update and reset view
+                adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                Toast.makeText(getApplicationContext(), "Error loading data.",
-                        Toast.LENGTH_SHORT).show();
+
             }
         });
 
+        // If the Add People button is clicked, create a dialog
         addFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Create the Add Friend dialog and show it
                 DialogFragment dialog = new AddFriendFragment();
-                dialog.show(getSupportFragmentManager(), "addFriend");
+                dialog.show(getSupportFragmentManager(), "AddFriendFragment");
             }
         });
     }
 
     // Listener for Add Friend dialog
+    // Check for invalid email format
+    // nonexistent email
+    // already in timeline
+    // if not, add and display success
+
+    // Positive Button Listener interface method
     @Override
-    public void onDialogPositiveClick(DialogFragment dialog) {
-        String em = ((AddFriendFragment)dialog).getEmail();
-        System.err.println("Email: " + em);
-        Vars.getFirebase().child("Users").child(em).addValueEventListener(new ValueEventListener() {
+    public void onDialogPositiveClick(final AddFriendFragment dialog) {
+        // Get the email entered in the dialog
+        final String email = dialog.getEmail();
+
+        // Verify that it is actually an email address format
+        // Evaluates to true if there is no @, or if there is no period after the @
+        if (email.indexOf('@') < 0 || email.lastIndexOf('.') < email.indexOf('@')) {
+            // Print out the Toast email error message
+            showEmailErrorMsg();
+
+            // No further actions will be taken
+            return;
+        }
+
+        System.err.println("Email: " + email);
+
+        // Verify that entered user is not already in the timeline
+        // If the user is, print out already exists error message
+        if (users.contains(email)) {
+            // Print out Toast error message
+            showAddAlreadyExistsMsg(email);
+
+            // No further actions will be taken
+            return;
+        }
+
+        // Get the table of users to search for the entered email
+        // We only need to get this table once, so add a single value event listener
+        Vars.getFirebase().child(DB_USERS).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() == null) {
-                    System.err.println("Caught null");
+
+                // We are using linear search because users are not sorted in the table by email
+                // Iterate through all users
+                for (DataSnapshot user : dataSnapshot.getChildren()) {
+                    // If the emails match (emails are case insensitive)
+                    if (user.child(EMAIL_STR).getValue().toString().equalsIgnoreCase(email)) {
+                        // Get the stored email of the user to retain consistency in style
+                        // Entered email may have style inconsistencies with stored email
+                        // that may cause problems later on
+                        String userEmail = user.child(EMAIL_STR).getValue().toString();
+                        // Get the user ID
+                        String userID = user.getKey();
+
+                        // New HashMap containing user information to store in the Timeline
+                        HashMap<String, Object> added = new HashMap<String, Object>();
+
+                        // Add the user's ID and email and put it in the Timeline's Users table
+                        added.put(userID, userEmail);
+                        Vars.getTimeline(currentTimelineID).child(USERS_STR).updateChildren(added);
+
+
+                        // New HashMap containing timeline information to store in the User
+                        HashMap<String, Object> newTime = new HashMap<String, Object>();
+
+                        // Add the Timeline's ID and name and put it in the User's Timeline table
+                        newTime.put(currentTimelineID, currentTimelineName);
+                        Vars.getFirebase().child(DB_USERS).child(userID).child(TIMELINE_STR).updateChildren(newTime);
+
+                        // Show Toast message for successful add and dismiss the dialog
+                        showSuccessfulAddMsg(email);
+                        dialog.getDialog().dismiss();
+
+                        // Exit from method
+                        return;
+                    }
                 }
+                // If email does not correspond to an existing user, show error
+                // Do not dismiss the dialog
+                showAddErrorMsg();
             }
 
             @Override
@@ -187,6 +268,32 @@ public class TimelineSettings extends AppCompatActivity
 
             }
         });
+    }
+
+    // Helper methods to create and show Toasts with Error Messages
+    private void showDataErrorMsg() {
+        Toast toast = Toast.makeText(getApplicationContext(), DATA_ERR, Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+    private void showAddErrorMsg() {
+        Toast toast = Toast.makeText(getApplicationContext(), ADD_NOT_FOUND, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    private void showEmailErrorMsg() {
+        Toast toast = Toast.makeText(getApplicationContext(), EMAIL_ERR, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    private void showAddAlreadyExistsMsg(String user) {
+        Toast toast = Toast.makeText(getApplicationContext(), user + ADD_ALREADY_EXISTS, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    private void showSuccessfulAddMsg(String user) {
+        Toast toast = Toast.makeText(getApplicationContext(), user + ADD_MSG, Toast.LENGTH_LONG);
+        toast.show();
     }
 
 
