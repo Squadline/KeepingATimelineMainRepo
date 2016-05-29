@@ -41,8 +41,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private ArrayList<String> tlIDs = new ArrayList<>();
 
     // Used for displaying members of each timeline
-    private ArrayList<String> memberArray = new ArrayList<>();
     private ArrayList<Integer> tlMemberCount = new ArrayList<>();
+    private ArrayList<String> memberArray = new ArrayList<>();
+    private ArrayList<String> tempMembers = new ArrayList<>();
     private String displayMembers;
     private int curMemCount;
     private int tlMemPos;
@@ -164,6 +165,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 tlMembers.clear();
                 tlMemberCount.clear();
                 memberArray.clear();
+                tempMembers.clear();
 
                 displayMembers = "";
                 tlMemPos = 0;
@@ -198,31 +200,39 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                         // Checks member count of current timeline
                                         if (curMemCount < tlMemberCount.get(tlMemPos)) {
 
-                                            // Adds name to display list of members
-                                            if (displayMembers.equals("")) {
-                                                displayMembers = displayMembers + dataSnapshot.getValue().toString();
-                                                curMemCount++;
-                                            }
-                                            else {
-                                                displayMembers = displayMembers + ", " + dataSnapshot.getValue().toString();
-                                                curMemCount++;
-                                            }
+                                            // Add members to temporary array
+                                            tempMembers.add("" + dataSnapshot.getValue().toString());
+                                            curMemCount++;
                                         }
                                         else {
 
-                                            if (displayMembers.equals("")) {
-                                                displayMembers = displayMembers + dataSnapshot.getValue().toString();
-                                            }
-                                            else {
-                                                displayMembers = displayMembers + " & " + dataSnapshot.getValue().toString();
-                                            }
+                                            // Sorts array alphabetically
+                                            tempMembers.add("" + dataSnapshot.getValue().toString());
+                                            Collections.sort(tempMembers, String.CASE_INSENSITIVE_ORDER);
 
+                                            // Builds string of members from array
+                                            for (int i = 0; i < tempMembers.size(); i++) {
+
+                                                if (displayMembers.equals("")) {
+                                                    displayMembers = displayMembers + tempMembers.get(i);
+                                                }
+                                                else if (i == (tempMembers.size() - 1)) {
+                                                    displayMembers = displayMembers + " & " + tempMembers.get(i);
+                                                }
+                                                else {
+                                                    displayMembers = displayMembers + ", " + tempMembers.get(i);
+                                                }
+
+                                            }
+                                            
                                             memberArray.add(displayMembers);
 
                                             // Reset variables to track members of next timeline
                                             displayMembers = "";
                                             curMemCount = 1;
                                             tlMemPos++;
+
+                                            tempMembers.clear();
                                         }
 
                                         Collections.copy(tlMembers, memberArray);
