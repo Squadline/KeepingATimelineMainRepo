@@ -1,5 +1,8 @@
 package com.keepingatimeline.kat;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.graphics.Typeface;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -26,15 +29,17 @@ import java.util.HashMap;
  * Purpose: Display the settings of the timeline and list of users
  *
  * TODO:
- *  Add People        Toast, Dialog
- *  Leave Squad       Toast, Dialog
- *  Notifications
- *  Rename Timeline   Dialog
- *  Change Picture    Toast, Dialog
+ *  Add People        Toast, Dialog             DONE
+ *  Leave Squad       Dialog
  *  Display Picture
+ *  Change Picture    Toast, Dialog
+ *  Rename Timeline   Dialog
+ *  Notifications
  *
- *  Add null checks to prevent crashing
+ *  Add null checks to prevent crashing         DONE
  *  Change member display to names
+ *
+ *  Toast messages or Notifications to show member changes?
  */
 public class TimelineSettings extends AppCompatActivity
         implements AddFriendFragment.AddFriendListener {
@@ -43,6 +48,7 @@ public class TimelineSettings extends AppCompatActivity
     private String currentTimelineName;         // Name of the current timeline
     private TextView squadTitle;                // Name of timeline
     private TextView addFriend;                 // Add Friend button
+    private TextView leaveSquad;                // Leave Squad button
     private ArrayAdapter<String> adapter;       // Adapter for list of users
     private ArrayList<String> users;            // List of user names
 
@@ -56,12 +62,13 @@ public class TimelineSettings extends AppCompatActivity
     private final String EMAIL_STR = "EmailAddress";
     private final String TIME_ID_STR = "Timeline ID";
     private final String TIME_NAME_STR = "Timeline Name";
+    private final String MAIN_SCREEN = "com.keepingatimeline.kat.MainScreen";
 
     // Error Messages
     private final String DATA_ERR = "Error loading data.";
     private final String EMAIL_ERR = "Please enter a valid email address.";
     private final String ADD_NOT_FOUND = "Error: Email address not found.";
-    private final String ADD_ALREADY_EXISTS = " is already in this Squadline";
+    private final String ADD_ALREADY_EXISTS = " is already in this Squad.";
     private final String ADD_MSG = " has been successfully added.";
 
     @Override
@@ -82,6 +89,7 @@ public class TimelineSettings extends AppCompatActivity
         // Get view objects of the activity
         squadTitle =  (TextView) findViewById(R.id.squad_title);
         addFriend = (TextView) findViewById(R.id.addPeople);
+        leaveSquad = (TextView) findViewById(R.id.leaveSquad);
         NonScrollListView user_list = (NonScrollListView) findViewById(R.id.user_list);
 
         // Set font for the title
@@ -174,11 +182,22 @@ public class TimelineSettings extends AppCompatActivity
 
         // If the Add People button is clicked, create a dialog
         addFriend.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 // Create the Add Friend dialog and show it
                 DialogFragment dialog = new AddFriendFragment();
                 dialog.show(getSupportFragmentManager(), "AddFriendFragment");
+            }
+        });
+
+        // If the Leave Squad button is clicked, ask user for confirmation
+        leaveSquad.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // Show confirmation dialog
+                showLeaveSquadConfirm();
             }
         });
     }
@@ -294,6 +313,60 @@ public class TimelineSettings extends AppCompatActivity
     private void showSuccessfulAddMsg(String user) {
         Toast toast = Toast.makeText(getApplicationContext(), user + ADD_MSG, Toast.LENGTH_LONG);
         toast.show();
+    }
+
+    // Helper method to display Leave Squad confirmation
+    private void showLeaveSquadConfirm() {
+        // Create the dialog builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // Set the title, message, and buttons
+        builder.setTitle("Leave Squad")
+                .setMessage("Do you really want to leave this Squad?")
+                // If user does want to leave
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Create a map to remove user from Timeline's Users table
+                        HashMap<String, Object> removedUser = new HashMap<String, Object>();
+
+                        // Put a null object and update Timeline's Users table
+                        // effectively removing the user from the table
+                        removedUser.put(Vars.getUID(), null);
+                        Vars.getTimeline(currentTimelineID).child(USERS_STR).updateChildren(removedUser);
+
+                        // Create a map to remove timeline from User's Timelines table
+                        HashMap<String, Object> removedSquad = new HashMap<String, Object>();
+
+                        // Put a null object and update User's Timelines table
+                        // effectively removing the timeline from the table
+                        removedSquad.put(currentTimelineID, null);
+                        Vars.getFirebase().child(DB_USERS).child(Vars.getUID()).child(TIMELINE_STR).updateChildren(removedSquad);
+
+                        // Dismiss the dialog
+                        dialog.dismiss();
+
+                        // Create an intent to return to the Main Screen
+                        // Set the flag to FLAG_ACTIVITY_CLEAR_TOP
+                        // which stops every activity above it in the stack and brings it to the top
+                        Intent goBackToMain = new Intent(MAIN_SCREEN);
+                        goBackToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                        // Return to the Main Screen
+                        startActivity(goBackToMain);
+                    }
+                })
+                // If user clicks cancel
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Cancel the dialog
+                        dialog.cancel();
+                    }
+                });
+
+        // Create and show the dialog
+        builder.create().show();
     }
 
 
