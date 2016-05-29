@@ -36,9 +36,10 @@ import java.util.HashMap;
  * TODO:
  *  Add People        Toast, Dialog             DONE
  *  Leave Squad       Dialog                    DONE
+ *  Auto-delete       Warning                   DONE
  *  Display Picture
  *  Change Picture    Toast, Dialog
- *  Rename Timeline   Dialog
+ *  Rename Timeline   Dialog                    DONE
  *  Notifications
  *
  *  Add null checks to prevent crashing         DONE
@@ -62,6 +63,7 @@ public class TimelineSettings extends AppCompatActivity
     private Firebase db;                        // Database object
 
     private boolean returnName;                 // Whether or not to pass back timeline name
+    private boolean deleted;                    // Whether or not this timeline has been deleted
 
     // String constants for Firebase children
     private final String TITLE_STR = "Title";
@@ -109,6 +111,9 @@ public class TimelineSettings extends AppCompatActivity
 
         // By default, there is no reason to return the name
         returnName = false;
+
+        // By default, the timeline exists
+        deleted = false;
 
         // Instantiate list of users and the adapter to the ListView
         users = new ArrayList<String>();
@@ -160,6 +165,12 @@ public class TimelineSettings extends AppCompatActivity
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                // If the timeline has been deleted, return
+                // This prevents error messages from appearing
+                // after a timeline has been automatically deleted
+                if (deleted) {
+                    return;
+                }
 
                 // If we get an invalid timeline ID
                 // attempting to get the title will return a null value
@@ -246,8 +257,6 @@ public class TimelineSettings extends AppCompatActivity
             // No further actions will be taken
             return;
         }
-
-        System.err.println("Email: " + email);
 
         // Verify that entered user is not already in the timeline
         // If the user is, print out already exists error message
@@ -343,9 +352,18 @@ public class TimelineSettings extends AppCompatActivity
         // Create the dialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        // Create a string for deletion warning
+        String warning = "";
+
+        // If current user is the last one in the Squad, inform them of auto-deletion
+        if (users.size() == 1) {
+            warning += "\n\nWARNING: You are the only user in this Squad. If you leave, this Squad"
+                                + " will be permanently deleted.";
+        }
+
         // Set the title, message, and buttons
         builder.setTitle("Leave Squad")
-                .setMessage("Do you really want to leave this Squad?")
+                .setMessage("Do you really want to leave this Squad?" + warning)
                 // If user does want to leave
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
@@ -365,6 +383,17 @@ public class TimelineSettings extends AppCompatActivity
                         // effectively removing the timeline from the table
                         removedSquad.put(currentTimelineID, null);
                         Vars.getFirebase().child(DB_USERS).child(Vars.getUID()).child(TIMELINE_STR).updateChildren(removedSquad);
+
+                        // If the current user was the only member
+                        // the timeline will be automatically deleted
+                        if (users.size() == 1) {
+                            // Set the value of the timeline in the database to null
+                            // effectively deleting the timeline
+                            Vars.getTimeline(currentTimelineID).setValue(null);
+                            // Set the deleted flag to true to prevent
+                            // Toast data error messages from appearing
+                            deleted = true;
+                        }
 
                         // Dismiss the dialog
                         dialog.dismiss();
