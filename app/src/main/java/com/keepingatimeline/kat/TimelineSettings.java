@@ -212,6 +212,7 @@ public class TimelineSettings extends AppCompatActivity
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
+                // If load was canceled, informed user of error
                 showDataErrorMsg();
             }
         });
@@ -279,6 +280,7 @@ public class TimelineSettings extends AppCompatActivity
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
+                // If load was canceled, inform user of error
                 showDataErrorMsg();
             }
         });
@@ -364,6 +366,7 @@ public class TimelineSettings extends AppCompatActivity
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
+                // If we can't get the users table, then inform user of error
                 showRetErrorMsg();
             }
         });
@@ -528,6 +531,7 @@ public class TimelineSettings extends AppCompatActivity
 
                             @Override
                             public void onCancelled(FirebaseError firebaseError) {
+                                // If we can't get Timeline users table, then inform user of error
                                 showRetErrorMsg();
                             }
                         });
