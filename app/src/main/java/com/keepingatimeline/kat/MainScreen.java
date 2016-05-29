@@ -224,7 +224,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                                 }
 
                                             }
-                                            
+
                                             memberArray.add(displayMembers);
 
                                             // Reset variables to track members of next timeline
@@ -236,6 +236,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                         }
 
                                         Collections.copy(tlMembers, memberArray);
+                                        tlMembers.addAll(memberArray);
                                         inflateTimeline.notifyDataSetChanged();
                                     }
 

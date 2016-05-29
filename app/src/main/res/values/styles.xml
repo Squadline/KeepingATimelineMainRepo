@@ -32,7 +32,7 @@
     <style name="AppTheme.ViewTimeline" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/appPrimary</item>
         <item name="colorPrimaryDark">@color/appSecondary</item>
-        <item name="colorAccent">@color/appAccent</item>
+        <item name="colorAccent">@color/fabColor</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="colorControlNormal">@color/white</item>
     </style>

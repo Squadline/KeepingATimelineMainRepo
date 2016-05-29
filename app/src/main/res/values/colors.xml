@@ -12,6 +12,7 @@
     <color name="appPrimary">#2A3849</color>
     <color name="appSecondary">#212C3A</color>
     <color name="appAccent">#007AFF</color>
+    <color name="fabColor">#F44336</color>
 
     <color name="grey100">#F5F5F5</color>
     <color name="grey200">#EEEEEE</color>
