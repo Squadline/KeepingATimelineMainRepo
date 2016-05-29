@@ -21,7 +21,7 @@ public class AddFriendFragment extends DialogFragment {
 
     private AlertDialog dialog;                 // Dialog to display
     private AddFriendListener mListener;        // Listener for positive button clicks
-    private EditText emailInput;               // Text field for email input
+    private EditText addFriendInput;               // Text field for email input
     private String email;                       // Email entered
 
     // Define an interface that positive button listeners must implement
@@ -32,7 +32,7 @@ public class AddFriendFragment extends DialogFragment {
 
     // Get the EditText and return entered text
     public String getEmail() {
-        email = emailInput.getText().toString();
+        email = addFriendInput.getText().toString();
         return email;
     }
 
@@ -58,7 +58,7 @@ public class AddFriendFragment extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_add_friend, null);
 
-        emailInput = (EditText) view.findViewById(R.id.addFriendInput);
+        addFriendInput = (EditText) view.findViewById(R.id.addFriendInput);
 
         builder.setTitle("Add Friend");
         builder.setMessage("Enter the email address of the user that you want to add to the timeline.");
