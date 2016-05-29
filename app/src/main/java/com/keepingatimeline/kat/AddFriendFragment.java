@@ -56,7 +56,7 @@ public class AddFriendFragment extends DialogFragment {
         // Create a dialog builder and layout inflater, and inflate the view
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_addfriend, null);
+        View view = inflater.inflate(R.layout.dialog_add_friend, null);
 
         emailInput = (EditText) view.findViewById(R.id.addFriendInput);
 
