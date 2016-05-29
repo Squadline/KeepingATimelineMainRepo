@@ -70,6 +70,8 @@ public class ViewTimeline extends AppCompatActivity {
     private Map<String, List<String>> mExpandableListData;
     private TextView mSelectedItemView;
 
+    // Timeline Settings request code - Darren
+    private final int T_SETTINGS = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,12 +212,54 @@ public class ViewTimeline extends AppCompatActivity {
                 Intent timelineSettingsActivity = new Intent("com.keepingatimeline.kat.TimelineSettings");
                 timelineSettingsActivity.putExtra("Timeline Name", timelineName);
                 timelineSettingsActivity.putExtra("Timeline ID", timelineID);
-                startActivity(timelineSettingsActivity);
+                // Changed this in order to get changed name back from settings - Darren
+                startActivityForResult(timelineSettingsActivity, T_SETTINGS);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
+    // Start of Darren's modifications
+
+    /*
+    * This is only needed because the timeline name for this activity is
+    * passed in from the Main Screen, so it never contacts the server for the name.
+    * When the name is changed in the Timeline Settings, we will need to
+    * update the displayed name here as well.
+    * Thus, we will need to listen for the result of the Timeline Settings activity
+    * If it returns the signal result, then it signifies that we have to update the name.
+    */
+
+    // Overridden method for activity result listener
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Call super method first and foremost
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // If the finished activity was Timeline Settings
+        if (requestCode == T_SETTINGS) {
+            // And it returned the signal result code
+            if (resultCode == RESULT_OK) {
+                // Change the locally stored timeline name
+                timelineName = data.getStringExtra("Timeline Name");
+            }
+        }
+    }
+
+    // Overridden resume method
+    @Override
+    public void onResume() {
+        // Call the super method
+        super.onResume();
+        // Update the displayed timeline name
+        squadTitle.setText(timelineName);
+    }
+
+    // End of Darren's modifications
+
+
     //add the items inside the drawer
     private void addDrawerItems() {
 
