@@ -44,7 +44,7 @@ import java.util.HashMap;
  *
  *  Add null checks to prevent crashing         DONE
  *  Change member display to names              DONE
- *  Add cancelled error messages
+ *  Add cancelled error messages                DONE
  *
  *  Toast messages or Notifications to show member changes?
  */
@@ -82,6 +82,7 @@ public class TimelineSettings extends AppCompatActivity
 
     // Error Messages
     private final String DATA_ERR = "Error loading data.";
+    private final String RET_ERR = "Error retrieving table.";
     private final String EMAIL_ERR = "Please enter a valid email address.";
     private final String ADD_NOT_FOUND = "ERROR: User not found.";
     private final String ADD_ALREADY_EXISTS = " is already in this Squad.";
@@ -211,7 +212,7 @@ public class TimelineSettings extends AppCompatActivity
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
+                showDataErrorMsg();
             }
         });
 
@@ -278,7 +279,7 @@ public class TimelineSettings extends AppCompatActivity
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
+                showDataErrorMsg();
             }
         });
     }
@@ -363,7 +364,7 @@ public class TimelineSettings extends AppCompatActivity
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
+                showRetErrorMsg();
             }
         });
     }
@@ -371,6 +372,11 @@ public class TimelineSettings extends AppCompatActivity
     // Helper methods to create and show Toasts with Error Messages
     private void showDataErrorMsg() {
         Toast toast = Toast.makeText(getApplicationContext(), DATA_ERR, Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+    private void showRetErrorMsg() {
+        Toast toast = Toast.makeText(getApplicationContext(), RET_ERR, Toast.LENGTH_LONG);
         toast.show();
     }
 
@@ -522,7 +528,7 @@ public class TimelineSettings extends AppCompatActivity
 
                             @Override
                             public void onCancelled(FirebaseError firebaseError) {
-
+                                showRetErrorMsg();
                             }
                         });
                         // Timeline name has been changed
