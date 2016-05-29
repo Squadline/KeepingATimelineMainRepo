@@ -43,7 +43,7 @@ import java.util.HashMap;
  *  Notifications
  *
  *  Add null checks to prevent crashing         DONE
- *  Change member display to names
+ *  Change member display to names              DONE
  *  Add cancelled error messages
  *
  *  Toast messages or Notifications to show member changes?
@@ -83,7 +83,7 @@ public class TimelineSettings extends AppCompatActivity
     // Error Messages
     private final String DATA_ERR = "Error loading data.";
     private final String EMAIL_ERR = "Please enter a valid email address.";
-    private final String ADD_NOT_FOUND = "Error: Email address not found.";
+    private final String ADD_NOT_FOUND = "Error: User not found.";
     private final String ADD_ALREADY_EXISTS = " is already in this Squad.";
     private final String ADD_MSG = " has been successfully added.";
 
