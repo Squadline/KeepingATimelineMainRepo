@@ -30,7 +30,7 @@ import java.util.HashMap;
  *
  * TODO:
  *  Add People        Toast, Dialog             DONE
- *  Leave Squad       Dialog
+ *  Leave Squad       Dialog                    DONE
  *  Display Picture
  *  Change Picture    Toast, Dialog
  *  Rename Timeline   Dialog
