@@ -27,7 +27,9 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,19 +39,27 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private ArrayList<String> tlTitles = new ArrayList<>();
     private ArrayList<String> tlMembers = new ArrayList<>();
     private ArrayList<String> tlIDs = new ArrayList<>();
+
+    // Used for displaying members of each timeline
+    private ArrayList<Integer> tlMemberCount = new ArrayList<>();
+    private ArrayList<String> memberArray = new ArrayList<>();
+    private ArrayList<String> tempMembers = new ArrayList<>();
+    private String displayMembers;
+    private int curMemCount;
+    private int tlMemPos;
+
     private TimelineAdapter inflateTimeline;
     private ListView timelineList;
     private String holder;
-    private AlertDialog.Builder dialogBuilder;
     private String newName;
     private TextView titleBar;
     private String emailAdd;
     private String uidTimeline;                 //UID of timeline
+    private String uidMember;
 
     private String currentFirst;                // First name of the current user
     private String currentLast;                 // Last name of the current user
     private String currentEmail;                // Email of the current user
-    private String memberList;
 
     // String constants for Firebase children
     private final String USERS_STR = "Users";
@@ -147,30 +157,99 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("DB_Load", "Asking Firebase for data.");
 
+                // All of the stuff that doesn't make sense was written by Trevor
+
                 tlTitles.clear();
-                tlMembers.clear();
                 tlIDs.clear();
 
-                for (DataSnapshot tlSnapshot: dataSnapshot.getChildren()){
+                tlMembers.clear();
+                tlMemberCount.clear();
+                memberArray.clear();
+                tempMembers.clear();
+
+                displayMembers = "";
+                tlMemPos = 0;
+                curMemCount = 1;
+
+                for (DataSnapshot tlSnapshot: dataSnapshot.getChildren()) {
 
                     tlTitles.add("" + tlSnapshot.getValue());
                     tlIDs.add("" + tlSnapshot.getKey());
                     uidTimeline = tlSnapshot.getKey();
 
-                    Firebase database2 = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines/" + uidTimeline + "/Users");
-                    database2.addValueEventListener(new ValueEventListener() {
+                    // Gets the users of each timeline
+                    Firebase tlUsers = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines/" + uidTimeline + "/Users");
+                    tlUsers.addValueEventListener(new ValueEventListener() {
+
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            memberList = "";
 
-                            for (DataSnapshot usersShot: dataSnapshot.getChildren())
-                            {
-                                memberList = memberList + " " + usersShot.getValue().toString();
+                            // Keeps count of number of members in each timeline
+                            int memCount = 0;
+
+                            for (DataSnapshot usersSnapShot: dataSnapshot.getChildren()) {
+                                uidMember = usersSnapShot.getKey();
+
+                                // Gets the names of each user
+                                Firebase dbUsers = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + uidMember + "/FirstName");
+                                dbUsers.addValueEventListener(new ValueEventListener() {
+
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                        // Checks member count of current timeline
+                                        if (curMemCount < tlMemberCount.get(tlMemPos)) {
+
+                                            // Add members to temporary array
+                                            tempMembers.add("" + dataSnapshot.getValue().toString());
+                                            curMemCount++;
+                                        }
+                                        else {
+
+                                            // Sorts array alphabetically
+                                            tempMembers.add("" + dataSnapshot.getValue().toString());
+                                            Collections.sort(tempMembers, String.CASE_INSENSITIVE_ORDER);
+
+                                            // Builds string of members from array
+                                            for (int i = 0; i < tempMembers.size(); i++) {
+
+                                                if (displayMembers.equals("")) {
+                                                    displayMembers = displayMembers + tempMembers.get(i);
+                                                }
+                                                else if (i == (tempMembers.size() - 1)) {
+                                                    displayMembers = displayMembers + " & " + tempMembers.get(i);
+                                                }
+                                                else {
+                                                    displayMembers = displayMembers + ", " + tempMembers.get(i);
+                                                }
+
+                                            }
+                                            
+                                            memberArray.add(displayMembers);
+
+                                            // Reset variables to track members of next timeline
+                                            displayMembers = "";
+                                            curMemCount = 1;
+                                            tlMemPos++;
+
+                                            tempMembers.clear();
+                                        }
+
+                                        Collections.copy(tlMembers, memberArray);
+                                        inflateTimeline.notifyDataSetChanged();
+                                    }
+
+                                    @Override
+                                    public void onCancelled(FirebaseError firebaseError) {
+
+                                    }
+                                });
+
+                                memCount++;
                             }
 
-                            tlMembers.add("" + memberList);
-
-                            inflateTimeline.notifyDataSetChanged();
+                            // Array to keep count of number of members in the timeline
+                            tlMemberCount.add(memCount);
                         }
 
                         @Override
@@ -182,7 +261,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     tlMembers.add("");
                 }
 
-                inflateTimeline.notifyDataSetChanged();
+                //inflateTimeline.notifyDataSetChanged();
             }
 
             @Override
