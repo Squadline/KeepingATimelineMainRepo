@@ -72,6 +72,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="20dp" />
 
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Change Title"
+                android:id="@+id/changeTitle"
+                android:layout_gravity="center_horizontal"
+                android:clickable="true" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.2dp"
@@ -90,7 +99,8 @@
                 android:paddingStart="16dp"
                 android:text="Notifications"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:checked="true" />
 
             <View
                 android:layout_width="match_parent"

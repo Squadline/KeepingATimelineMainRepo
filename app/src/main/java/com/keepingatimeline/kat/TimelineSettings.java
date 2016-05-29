@@ -8,9 +8,14 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,10 +35,11 @@ import java.util.HashMap;
  *
  * TODO:
  *  Add People        Toast, Dialog             DONE
- *  Leave Squad       Dialog
+ *  Leave Squad       Dialog                    DONE
+ *  Auto-delete       Warning                   DONE
  *  Display Picture
  *  Change Picture    Toast, Dialog
- *  Rename Timeline   Dialog
+ *  Rename Timeline   Dialog                    DONE
  *  Notifications
  *
  *  Add null checks to prevent crashing         DONE
@@ -49,10 +55,15 @@ public class TimelineSettings extends AppCompatActivity
     private TextView squadTitle;                // Name of timeline
     private TextView addFriend;                 // Add Friend button
     private TextView leaveSquad;                // Leave Squad button
+    private Button changeTitle;                 // Change Squad title button
+    private Switch notifications;               // Notifications switch
     private ArrayAdapter<String> adapter;       // Adapter for list of users
     private ArrayList<String> users;            // List of user names
 
     private Firebase db;                        // Database object
+
+    private boolean returnName;                 // Whether or not to pass back timeline name
+    private boolean deleted;                    // Whether or not this timeline has been deleted
 
     // String constants for Firebase children
     private final String TITLE_STR = "Title";
@@ -90,11 +101,19 @@ public class TimelineSettings extends AppCompatActivity
         squadTitle =  (TextView) findViewById(R.id.squad_title);
         addFriend = (TextView) findViewById(R.id.addPeople);
         leaveSquad = (TextView) findViewById(R.id.leaveSquad);
+        changeTitle = (Button) findViewById(R.id.changeTitle);
+        notifications = (Switch) findViewById(R.id.notifications);
         NonScrollListView user_list = (NonScrollListView) findViewById(R.id.user_list);
 
         // Set font for the title
         Typeface myCustomFont = Typeface.createFromAsset(getAssets(), getString(R.string.primaryFont));
         squadTitle.setTypeface(myCustomFont);
+
+        // By default, there is no reason to return the name
+        returnName = false;
+
+        // By default, the timeline exists
+        deleted = false;
 
         // Instantiate list of users and the adapter to the ListView
         users = new ArrayList<String>();
@@ -146,6 +165,12 @@ public class TimelineSettings extends AppCompatActivity
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                // If the timeline has been deleted, return
+                // This prevents error messages from appearing
+                // after a timeline has been automatically deleted
+                if (deleted) {
+                    return;
+                }
 
                 // If we get an invalid timeline ID
                 // attempting to get the title will return a null value
@@ -200,6 +225,15 @@ public class TimelineSettings extends AppCompatActivity
                 showLeaveSquadConfirm();
             }
         });
+
+        // If the Change Title button is clicked, show the Change Title dialog
+        changeTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Show Change Title dialog
+                showRenameDialog();
+            }
+        });
     }
 
     // Listener for Add Friend dialog
@@ -223,8 +257,6 @@ public class TimelineSettings extends AppCompatActivity
             // No further actions will be taken
             return;
         }
-
-        System.err.println("Email: " + email);
 
         // Verify that entered user is not already in the timeline
         // If the user is, print out already exists error message
@@ -320,9 +352,18 @@ public class TimelineSettings extends AppCompatActivity
         // Create the dialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        // Create a string for deletion warning
+        String warning = "";
+
+        // If current user is the last one in the Squad, inform them of auto-deletion
+        if (users.size() == 1) {
+            warning += "\n\nWARNING: You are the only user in this Squad. If you leave, this Squad"
+                                + " will be permanently deleted.";
+        }
+
         // Set the title, message, and buttons
         builder.setTitle("Leave Squad")
-                .setMessage("Do you really want to leave this Squad?")
+                .setMessage("Do you really want to leave this Squad?" + warning)
                 // If user does want to leave
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
@@ -342,6 +383,17 @@ public class TimelineSettings extends AppCompatActivity
                         // effectively removing the timeline from the table
                         removedSquad.put(currentTimelineID, null);
                         Vars.getFirebase().child(DB_USERS).child(Vars.getUID()).child(TIMELINE_STR).updateChildren(removedSquad);
+
+                        // If the current user was the only member
+                        // the timeline will be automatically deleted
+                        if (users.size() == 1) {
+                            // Set the value of the timeline in the database to null
+                            // effectively deleting the timeline
+                            Vars.getTimeline(currentTimelineID).setValue(null);
+                            // Set the deleted flag to true to prevent
+                            // Toast data error messages from appearing
+                            deleted = true;
+                        }
 
                         // Dismiss the dialog
                         dialog.dismiss();
@@ -369,16 +421,107 @@ public class TimelineSettings extends AppCompatActivity
         builder.create().show();
     }
 
+    // Helper method to show a Change Title dialog
+    private void showRenameDialog() {
+        // Create the dialog builder and layout inflater
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        // Inflate the dialog xml
+        // Parent is null because it is a dialog layout
+        View view = inflater.inflate(R.layout.dialog_rename_timeline, null);
+
+        // Get the EditText field in the dialog and preset it to current Timeline name
+        final EditText squadNameInput = (EditText) view.findViewById(R.id.squadNameInput);
+        squadNameInput.setText(currentTimelineName);
+
+        // Disable autocomplete and autocorrect for the title field
+        squadNameInput.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+
+        // Set the view, title, message, and buttons for the dialog
+        builder.setView(view)
+                .setTitle("Rename Squad")
+                .setMessage("Please enter a new title.")
+                // If the user confirms the title change
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // If the same name was entered, then take no action
+                        if (squadNameInput.getText().toString().equals(currentTimelineName)) {
+                            return;
+                        }
+
+                        // Set the current timeline name to the entered one
+                        // Both locally and in the database
+                        currentTimelineName = squadNameInput.getText().toString();
+                        Vars.getTimeline(currentTimelineID).child(TITLE_STR).setValue(currentTimelineName);
+
+                        // Get the list of the current timeline users
+                        // We have to correct the timeline names on the user side as well
+                        Firebase currentUsers = Vars.getTimeline(currentTimelineID).child(USERS_STR);
+
+                        // Get a snapshot of the list of users ONCE
+                        currentUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                // Iterate through all the users
+                                for (DataSnapshot timelineUsers : dataSnapshot.getChildren()) {
+                                    // Get the user's UID
+                                    String userID = timelineUsers.getKey();
+                                    // Change the name of the timeline inside their Timelines table
+                                    Vars.getFirebase().child(DB_USERS).child(userID).child(TIMELINE_STR)
+                                            .child(currentTimelineID).setValue(currentTimelineName);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
+
+                            }
+                        });
+                        // Timeline name has been changed
+                        // There is a reason to return the name now
+                        returnName = true;
+                    }
+                })
+                // If the user presses cancel
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Cancel the dialog
+                        dialog.cancel();
+                    }
+                });
+
+        // Create and show the dialog
+        builder.create().show();
+    }
 
     // Trevor's Stuff - Back button listener
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                // Rerouted to back button listener method - Darren
+                onBackPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    // Darren's stuff - Overridden back button listener
+
+    @Override
+    public void onBackPressed() {
+        // If we want to return the name
+        if (returnName) {
+            // Create a new Intent and store the name as an extra
+            Intent intent = new Intent();
+            intent.putExtra(TIME_NAME_STR, currentTimelineName);
+            // Set the signal result code to notify parent Activity to use data
+            setResult(RESULT_OK, intent);
+        }
+        // Finish the activity
+        finish();
     }
 }
