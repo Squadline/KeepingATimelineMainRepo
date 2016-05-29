@@ -26,5 +26,6 @@
     <string name="firebase_address">https://fiery-fire-8218.firebaseio.com/</string>
 
     <string name="squadLineFont">fonts/BebasNeue Bold.ttf</string>
-    <string name="primaryFont">fonts/Roboto-Medium.ttf</string>
+    <string name="RobotoMedium">fonts/Roboto-Medium.ttf</string>
+    <string name="RobotoItalic">fonts/Roboto-Italic.ttf</string>
 </resources>

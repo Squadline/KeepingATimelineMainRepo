@@ -106,8 +106,8 @@ public class TimelineSettings extends AppCompatActivity
         NonScrollListView user_list = (NonScrollListView) findViewById(R.id.user_list);
 
         // Set font for the title
-        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), getString(R.string.primaryFont));
-        squadTitle.setTypeface(myCustomFont);
+        Typeface squadTitleFont = Typeface.createFromAsset(getAssets(), getString(R.string.RobotoMedium));
+        squadTitle.setTypeface(squadTitleFont);
 
         // By default, there is no reason to return the name
         returnName = false;

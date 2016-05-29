@@ -1,15 +1,14 @@
 package com.keepingatimeline.kat;
 
-import android.net.Uri;
+import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -56,6 +55,13 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             quoteDate = (TextView) v.findViewById(R.id.quote_date);
             quoteText = (TextView) v.findViewById(R.id.quote_text);
             quoteSpeaker = (TextView) v.findViewById(R.id.quote_speaker);
+
+            Context context = v.getContext();
+            Typeface quoteTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoMedium));
+            quoteTitle.setTypeface(quoteTitleFont);
+
+            Typeface quoteTextFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoItalic));
+            quoteText.setTypeface(quoteTextFont);
         }
     }
 

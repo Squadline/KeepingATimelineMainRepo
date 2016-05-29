@@ -8,9 +8,10 @@
         android:id="@+id/quote_event_cardview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="4dp"
-        card_view:cardCornerRadius="26dp"
-        card_view:cardElevation="1dp">
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        card_view:cardCornerRadius="0dp"
+        card_view:cardElevation="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,8 +43,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignStart="@id/quote_title"
                         android:layout_below="@id/quote_title"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        android:textColor="@color/grey600"
+                        android:textSize="13sp" />
 
                 </RelativeLayout>
 
@@ -83,7 +84,6 @@
                     android:id="@+id/quote_speaker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
                     android:layout_below="@id/quote_text"
                     android:layout_marginBottom="16dp"
                     android:layout_marginEnd="16dp"

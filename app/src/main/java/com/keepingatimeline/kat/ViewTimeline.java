@@ -136,7 +136,7 @@ public class ViewTimeline extends AppCompatActivity {
         });
 
         squadTitle = (TextView) findViewById(R.id.timeline_title);
-        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), getString(R.string.primaryFont));
+        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), getString(R.string.RobotoMedium));
         squadTitle.setTypeface(myCustomFont);
         squadTitle.setText(timelineName);
 
