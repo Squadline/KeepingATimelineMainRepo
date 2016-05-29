@@ -21,7 +21,7 @@ public class AddFriendFragment extends DialogFragment {
 
     private AlertDialog dialog;                 // Dialog to display
     private AddFriendListener mListener;        // Listener for positive button clicks
-    private EditText addFriendInput;               // Text field for email input
+    private EditText addFriendInput;            // Text field for email input
     private String email;                       // Email entered
 
     // Define an interface that positive button listeners must implement

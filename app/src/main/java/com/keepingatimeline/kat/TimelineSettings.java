@@ -43,7 +43,8 @@ import java.util.HashMap;
  *  Notifications
  *
  *  Add null checks to prevent crashing         DONE
- *  Change member display to names
+ *  Change member display to names              DONE
+ *  Add cancelled error messages                DONE
  *
  *  Toast messages or Notifications to show member changes?
  */
@@ -58,7 +59,9 @@ public class TimelineSettings extends AppCompatActivity
     private Button changeTitle;                 // Change Squad title button
     private Switch notifications;               // Notifications switch
     private ArrayAdapter<String> adapter;       // Adapter for list of users
-    private ArrayList<String> users;            // List of user names
+    private ArrayList<String> users;            // List of user emails (for existing user comparison)
+    private ArrayList<String> userNames;        // List of user names  (for user display)
+    private ArrayList<String> userIDs;          // List of user IDs    (for easy iteration when searching)
 
     private Firebase db;                        // Database object
 
@@ -70,6 +73,8 @@ public class TimelineSettings extends AppCompatActivity
     private final String DB_USERS = "Users";                // Users table in main DB
     private final String USERS_STR = "Users";               // Users table in Timelines
     private final String TIMELINE_STR = "Timelines";
+    private final String FIRST_NAME = "FirstName";
+    private final String LAST_NAME = "LastName";
     private final String EMAIL_STR = "EmailAddress";
     private final String TIME_ID_STR = "Timeline ID";
     private final String TIME_NAME_STR = "Timeline Name";
@@ -77,8 +82,9 @@ public class TimelineSettings extends AppCompatActivity
 
     // Error Messages
     private final String DATA_ERR = "Error loading data.";
+    private final String RET_ERR = "Error retrieving table.";
     private final String EMAIL_ERR = "Please enter a valid email address.";
-    private final String ADD_NOT_FOUND = "Error: Email address not found.";
+    private final String ADD_NOT_FOUND = "ERROR: User not found.";
     private final String ADD_ALREADY_EXISTS = " is already in this Squad.";
     private final String ADD_MSG = " has been successfully added.";
 
@@ -115,9 +121,12 @@ public class TimelineSettings extends AppCompatActivity
         // By default, the timeline exists
         deleted = false;
 
-        // Instantiate list of users and the adapter to the ListView
+        // Instantiate list of user emails, names, IDs, and the adapter to the ListView
+        // Assign the name list to the adapter, since that's what we will display
         users = new ArrayList<String>();
-        adapter = new ArrayAdapter<String>(this, R.layout.settings_user_list, users);
+        userNames = new ArrayList<String>();
+        userIDs = new ArrayList<String>();
+        adapter = new ArrayAdapter<String>(this, R.layout.settings_user_list, userNames);
 
         // Set the ListView's adapter
         user_list.setAdapter(adapter);
@@ -186,22 +195,25 @@ public class TimelineSettings extends AppCompatActivity
                 // Get value of the title child of timeline and update title
                 squadTitle.setText(dataSnapshot.child(TITLE_STR).getValue().toString());
 
-                // Reset the list of users
+                // Reset the list of user emails and IDs
                 users.clear();
+                userIDs.clear();
 
                 // Iterate through the users in the table
-                // and add their emails to the list of timeline users
+                // and add their emails and IDs to the lists of timeline users
                 for (DataSnapshot member : dataSnapshot.child(USERS_STR).getChildren()) {
                     users.add(member.getValue().toString());
+                    userIDs.add(member.getKey());
                 }
 
-                // Notify adapter of data update and reset view
-                adapter.notifyDataSetChanged();
+                // Update the list of user names and the display
+                updateUserNames();
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
+                // If load was canceled, informed user of error
+                showDataErrorMsg();
             }
         });
 
@@ -232,6 +244,44 @@ public class TimelineSettings extends AppCompatActivity
             public void onClick(View v) {
                 // Show Change Title dialog
                 showRenameDialog();
+            }
+        });
+    }
+
+    // Helper method to update list of timeline users' names
+
+    // Using this method will slow down timeline users retrieval
+    // since we are relying on two listeners for the database
+    // as well as downloading a snapshot of the Users table
+    // This method is for displaying user names instead of emails
+    private void updateUserNames() {
+        // Clear the list of user names
+        userNames.clear();
+
+        // Get the users table in the database
+        Firebase allUsers = Vars.getFirebase().child(DB_USERS);
+
+        // Retrieve a snapshot of the users ONCE
+        allUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Visit all users in the timeline and add their names to the list
+                for (String UID : userIDs) {
+                    // Get the name values of the user
+                    String firstName = dataSnapshot.child(UID).child(FIRST_NAME).getValue().toString();
+                    String lastName = dataSnapshot.child(UID).child(LAST_NAME).getValue().toString();
+
+                    // Put a space in between and to the name list
+                    userNames.add(firstName + " " + lastName);
+                }
+                // Notify the adapter of data update and refresh the view
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                // If load was canceled, inform user of error
+                showDataErrorMsg();
             }
         });
     }
@@ -316,7 +366,8 @@ public class TimelineSettings extends AppCompatActivity
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
+                // If we can't get the users table, then inform user of error
+                showRetErrorMsg();
             }
         });
     }
@@ -324,6 +375,11 @@ public class TimelineSettings extends AppCompatActivity
     // Helper methods to create and show Toasts with Error Messages
     private void showDataErrorMsg() {
         Toast toast = Toast.makeText(getApplicationContext(), DATA_ERR, Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+    private void showRetErrorMsg() {
+        Toast toast = Toast.makeText(getApplicationContext(), RET_ERR, Toast.LENGTH_LONG);
         toast.show();
     }
 
@@ -475,7 +531,8 @@ public class TimelineSettings extends AppCompatActivity
 
                             @Override
                             public void onCancelled(FirebaseError firebaseError) {
-
+                                // If we can't get Timeline users table, then inform user of error
+                                showRetErrorMsg();
                             }
                         });
                         // Timeline name has been changed
