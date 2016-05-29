@@ -179,10 +179,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                         }
                     });
 
-                    //tlMembers.add("" + "louis@solarapp.com dkimball@ucsd.edu trevor@a.com eunji@eunji.com");
+                    tlMembers.add("");
                 }
 
-                //inflateTimeline.notifyDataSetChanged();
+                inflateTimeline.notifyDataSetChanged();
             }
 
             @Override
