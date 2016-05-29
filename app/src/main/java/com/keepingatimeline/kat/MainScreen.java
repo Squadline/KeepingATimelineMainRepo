@@ -35,7 +35,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
     private Firebase database;
     private ArrayList<String> tlTitles = new ArrayList<>();
-    private ArrayList<String> tlFriends = new ArrayList<>();
+    private ArrayList<String> tlMembers = new ArrayList<>();
+    private ArrayList<String> tlIDs = new ArrayList<>();
     private TimelineAdapter inflateTimeline;
     private ListView timelineList;
     private String holder;
@@ -48,6 +49,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private String currentFirst;                // First name of the current user
     private String currentLast;                 // Last name of the current user
     private String currentEmail;                // Email of the current user
+    private String memberList;
 
     // String constants for Firebase children
     private final String USERS_STR = "Users";
@@ -113,10 +115,13 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 currentFirst = currentFirst + "";
                 currentLast = currentLast + "";
 
-                userName.setText(currentFirst + " " + currentLast);
+                String fullName = currentFirst + " " + currentLast;
+
+                userName.setText(fullName);
 
                 // Get the email of the current user
                 currentEmail = dataSnapshot.child(EMAIL_STR).getValue().toString();
+                currentEmail = currentEmail + "";
 
                 userEmail.setText(currentEmail);
             }
@@ -129,7 +134,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         });
 
 
-        inflateTimeline = new TimelineAdapter(this, tlTitles, tlFriends);
+        inflateTimeline = new TimelineAdapter(this, tlTitles, tlMembers);
         timelineList = (ListView) findViewById(R.id.timelineList);
         timelineList.setAdapter(inflateTimeline);
 
@@ -141,34 +146,43 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("DB_Load", "Asking Firebase for data.");
+
                 tlTitles.clear();
-                tlFriends.clear();
+                tlMembers.clear();
+                tlIDs.clear();
+
                 for (DataSnapshot tlSnapshot: dataSnapshot.getChildren()){
-                    tlFriends.add("" + tlSnapshot.getValue()); //actual title
-                    tlTitles.add("" + tlSnapshot.getKey());
-                    //System.out.println(tlSnapshot.getValue());
+
+                    tlTitles.add("" + tlSnapshot.getValue());
+                    tlIDs.add("" + tlSnapshot.getKey());
                     uidTimeline = tlSnapshot.getKey();
 
-
-                    /*Firebase database2 = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines/" + uidTimeline + "/Users");
+                    Firebase database2 = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines/" + uidTimeline + "/Users");
                     database2.addValueEventListener(new ValueEventListener() {
                         @Override
-                        tlTitles.clear();
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot userShot: dataSnapshot.getChildren())
+                            memberList = "";
+
+                            for (DataSnapshot usersShot: dataSnapshot.getChildren())
                             {
-                                tlTitles.add((String)userShot.getValue());
+                                memberList = memberList + " " + usersShot.getValue().toString();
                             }
+
+                            tlMembers.add("" + memberList);
+
+                            inflateTimeline.notifyDataSetChanged();
                         }
 
                         @Override
                         public void onCancelled(FirebaseError firebaseError) {
 
                         }
-                    });*/
-                }
-                inflateTimeline.notifyDataSetChanged();
+                    });
 
+                    tlMembers.add("");
+                }
+
+                inflateTimeline.notifyDataSetChanged();
             }
 
             @Override
@@ -182,11 +196,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         timelineList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String timelineName = tlFriends.get(position);
+                String timelineName = tlTitles.get(position);
 
                 Intent viewTimelineActivity = new Intent("com.keepingatimeline.kat.ViewTimeline");
                 viewTimelineActivity.putExtra("Timeline Name", timelineName);
-                viewTimelineActivity.putExtra("Timeline ID", tlTitles.get(position));
+                viewTimelineActivity.putExtra("Timeline ID", tlIDs.get(position));
                 startActivity(viewTimelineActivity);
             }
 

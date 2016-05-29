@@ -49,7 +49,7 @@ public class Timelineshower extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timelineshower_front);
-
+/*
         timelineAdapter = new TimelineAdapter(this, holder,small);
         ListView list = (ListView) findViewById(R.id.listView);
         list.setAdapter(timelineAdapter);

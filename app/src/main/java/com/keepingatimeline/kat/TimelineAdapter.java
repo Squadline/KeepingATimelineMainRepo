@@ -22,25 +22,20 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
 
     private Context ctx;
     private ArrayList<String> tlTitles;
-    private ArrayList<String> tlFriends;
-    private Firebase current;
-    private String temp;
-    private String holder;
-    private int position2;
+    private ArrayList<String> tlMembers;
 
-    public TimelineAdapter(Context context, ArrayList<String> tlTitles, ArrayList<String> tlFriends)
+    public TimelineAdapter(Context context, ArrayList<String> tlTitles, ArrayList<String> tlMembers)
     {
         super();
 
         this.ctx = context;
         this.tlTitles = tlTitles;
-        this.tlFriends = tlFriends;
+        this.tlMembers = tlMembers;
     }
 
     @Override
     public int getCount()
     {
-        Log.d("getView", "Count: " + tlTitles.size());
         return tlTitles.size();
     }
 
@@ -59,9 +54,6 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
 
     public View getView(final int position, View convertView, ViewGroup parent)
     {
-        // Log.d("getView", "getView was called, " + position);
-
-        this.position2 = position;
 
         if (convertView == null) {
             LayoutInflater listInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -69,14 +61,16 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
         }
 
         TextView textL = (TextView)convertView.findViewById(R.id.timelineTitle);
-        textL.setText(tlFriends.get(position));
+        textL.setText(tlTitles.get(position));
 
+        /*
         Context context = parent.getContext();
         Typeface myCustomFont = Typeface.createFromAsset(context.getAssets(), parent.getContext().getString(R.string.primaryFont));
         textL.setTypeface(myCustomFont);
+        */
 
-        TextView textS = (TextView)convertView.findViewById(R.id.timelineFriends);
-        textS.setText(tlTitles.get(position));
+        TextView textS = (TextView)convertView.findViewById(R.id.timelineMembers);
+        textS.setText(tlMembers.get(position));
 
         return convertView;
     }
