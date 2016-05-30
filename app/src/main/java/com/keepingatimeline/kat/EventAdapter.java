@@ -48,7 +48,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             photoPhoto = (ImageView) v.findViewById(R.id.photo_photo);
 
             Context context = v.getContext();
-            Typeface photoTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoMedium));
+            Typeface photoTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoRegular));
             photoTitle.setTypeface(photoTitleFont);
         }
     }
@@ -67,13 +67,13 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             quoteSpeaker = (TextView) v.findViewById(R.id.quote_speaker);
 
             Context context = v.getContext();
-            Typeface quoteTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoMedium));
+            Typeface quoteTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoRegular));
             quoteTitle.setTypeface(quoteTitleFont);
 
             Typeface quoteTextFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.MerriweatherRegular));
             quoteText.setTypeface(quoteTextFont);
 
-            Typeface quoteSpeakerFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoMediumItalic));
+            Typeface quoteSpeakerFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoMedium));
             quoteSpeaker.setTypeface(quoteSpeakerFont);
         }
     }
@@ -90,7 +90,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             textText = (TextView) v.findViewById(R.id.text_text);
 
             Context context = v.getContext();
-            Typeface textTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoMedium));
+            Typeface textTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoRegular));
             textTitle.setTypeface(textTitleFont);
         }
     }
@@ -158,7 +158,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 ((ViewHolderQuote)holder).quoteTitle.setText(event.getTitle());
                 ((ViewHolderQuote)holder).quoteDate.setText(event.getDate());
                 ((ViewHolderQuote)holder).quoteText.setText(fancyQuoteText);
-                ((ViewHolderQuote)holder).quoteSpeaker.setText("-" + event.getString2());
+                ((ViewHolderQuote)holder).quoteSpeaker.setText("–" + event.getString2());
                 break;
             case "text":
             default:

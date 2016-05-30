@@ -8,10 +8,10 @@
         android:id="@+id/photo_event_cardview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="4dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="0dp"
         card_view:cardCornerRadius="0dp"
-        card_view:cardElevation="0dp">
+        card_view:cardElevation="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,7 +20,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="48dp">
+                android:layout_height="56dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/photo_date"
@@ -47,7 +47,7 @@
                         android:layout_alignStart="@id/photo_title"
                         android:layout_below="@id/photo_title"
                         android:textColor="@color/grey600"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
 
                 </RelativeLayout>
 
@@ -95,7 +95,7 @@
                     android:layout_marginBottom="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
                     android:textColor="@color/grey800"
                     android:textSize="16sp" />
 
