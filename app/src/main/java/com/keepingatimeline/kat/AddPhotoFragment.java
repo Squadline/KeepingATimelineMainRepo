@@ -118,7 +118,7 @@ public class AddPhotoFragment extends Fragment {
 
     public String getPhoto() {
         Bitmap bm_original = BitmapFactory.decodeFile(imagePath);
-        bm_original = BitmapManip.shrink(bm_original);
+        bm_original = BitmapManip.shrinkToEvent(bm_original);
         try {
             ExifInterface exif = new ExifInterface(imagePath);
             int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
