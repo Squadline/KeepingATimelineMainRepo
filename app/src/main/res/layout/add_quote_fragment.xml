@@ -76,7 +76,7 @@
             android:gravity="top|start"
             android:hint="Quote"
             android:inputType="textMultiLine|textNoSuggestions"
-            android:lines="7"
+            android:lines="5"
             android:maxLength="200"
             android:padding="10dp" />
 

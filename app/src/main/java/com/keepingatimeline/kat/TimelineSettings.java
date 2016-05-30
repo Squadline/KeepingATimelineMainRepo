@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -56,7 +57,6 @@ public class TimelineSettings extends AppCompatActivity
     private TextView squadTitle;                // Name of timeline
     private TextView addFriend;                 // Add Friend button
     private TextView leaveSquad;                // Leave Squad button
-    private Button changeTitle;                 // Change Squad title button
     private Switch notifications;               // Notifications switch
     private ArrayAdapter<String> adapter;       // Adapter for list of users
     private ArrayList<String> users;            // List of user emails (for existing user comparison)
@@ -107,7 +107,6 @@ public class TimelineSettings extends AppCompatActivity
         squadTitle =  (TextView) findViewById(R.id.squad_title);
         addFriend = (TextView) findViewById(R.id.addPeople);
         leaveSquad = (TextView) findViewById(R.id.leaveSquad);
-        changeTitle = (Button) findViewById(R.id.changeTitle);
         notifications = (Switch) findViewById(R.id.notifications);
         NonScrollListView user_list = (NonScrollListView) findViewById(R.id.user_list);
 
@@ -235,15 +234,6 @@ public class TimelineSettings extends AppCompatActivity
             public void onClick(View v) {
                 // Show confirmation dialog
                 showLeaveSquadConfirm();
-            }
-        });
-
-        // If the Change Title button is clicked, show the Change Title dialog
-        changeTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Show Change Title dialog
-                showRenameDialog();
             }
         });
     }
@@ -553,6 +543,12 @@ public class TimelineSettings extends AppCompatActivity
         builder.create().show();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.timeline_settings_menu, menu);
+        return true;
+    }
+
     // Trevor's Stuff - Back button listener
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -560,6 +556,10 @@ public class TimelineSettings extends AppCompatActivity
             case android.R.id.home:
                 // Rerouted to back button listener method - Darren
                 onBackPressed();
+                return true;
+            case R.id.changeSquadName:
+                // Show Change Title dialog
+                showRenameDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

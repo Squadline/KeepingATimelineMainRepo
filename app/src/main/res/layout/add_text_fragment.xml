@@ -76,7 +76,7 @@
             android:gravity="top|start"
             android:hint="Text"
             android:inputType="textMultiLine|textNoSuggestions"
-            android:lines="9"
+            android:lines="7"
             android:padding="10dp" />
 
         <View

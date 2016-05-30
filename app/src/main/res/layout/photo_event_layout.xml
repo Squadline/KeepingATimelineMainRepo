@@ -76,8 +76,7 @@
                     android:id="@+id/photo_photo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:maxHeight="300dp" />
+                    android:adjustViewBounds="true" />
 
                 <View
                     android:id="@+id/photo_divider"
