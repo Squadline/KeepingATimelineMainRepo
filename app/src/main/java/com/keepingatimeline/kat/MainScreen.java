@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.batch.android.Batch;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -291,7 +292,27 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     protected void onStart() {
         super.onStart();
 
+        Batch.onStart(this);
+        Batch.User.editor().setIdentifier(holder).save();
         inflateTimeline.notifyDataSetChanged(); //updates adapter --Dana
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Batch.onStop(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Batch.onDestroy(this);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Batch.onNewIntent(this, intent);
     }
 
     /**
