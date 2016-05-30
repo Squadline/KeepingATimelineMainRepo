@@ -92,7 +92,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         setSupportActionBar(toolbar);
 
         titleBar = (TextView) findViewById(R.id.toolbar_title);
-        Typeface mainTitleFont = Typeface.createFromAsset(getAssets(), getString(R.string.squadLineFont));
+        Typeface mainTitleFont = Typeface.createFromAsset(getAssets(), getString(R.string.BebasNeueBold));
         titleBar.setTypeface(mainTitleFont);
 
         // Opens sidebar

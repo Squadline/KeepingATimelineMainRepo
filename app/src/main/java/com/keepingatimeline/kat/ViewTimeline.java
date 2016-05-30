@@ -165,7 +165,7 @@ public class ViewTimeline extends AppCompatActivity {
 
         // specify an adapter (see also next example)
         final ArrayList<Event> eventList = new ArrayList<Event>();
-        rvAdapter = new EventAdapter(eventList);
+        rvAdapter = new EventAdapter(this, eventList);
         rv.setAdapter(rvAdapter);
 
         firebaseRef = Vars.getTimeline(timelineID).child("Events");

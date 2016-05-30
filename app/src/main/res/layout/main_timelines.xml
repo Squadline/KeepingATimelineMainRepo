@@ -50,22 +50,13 @@
             android:id="@+id/recentEvent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignTop="@id/timelineTitle"
-            android:layout_gravity="end"
-            android:layout_toStartOf="@+id/chevron_right"
+            android:layout_marginEnd="8dp"
+            android:drawableEnd="@drawable/main_screen_chevron_right"
             android:text="5/17/2016"
             android:textColor="@color/grey600"
             android:textSize="14sp" />
-
-        <ImageView
-            android:id="@+id/chevron_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@id/recentEvent"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="-2.4dp"
-            android:src="@drawable/ic_chevron_right_grey" />
 
     </RelativeLayout>
 

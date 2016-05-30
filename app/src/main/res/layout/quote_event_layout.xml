@@ -8,8 +8,8 @@
         android:id="@+id/quote_event_cardview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
         card_view:cardCornerRadius="0dp"
         card_view:cardElevation="0dp">
 
@@ -33,7 +33,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
 
@@ -44,7 +47,7 @@
                         android:layout_alignStart="@id/quote_title"
                         android:layout_below="@id/quote_title"
                         android:textColor="@color/grey600"
-                        android:textSize="13sp" />
+                        android:textSize="12sp" />
 
                 </RelativeLayout>
 
@@ -71,24 +74,27 @@
 
                 <TextView
                     android:id="@+id/quote_text"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:textColor="@color/black"
+                    android:gravity="center_horizontal"
+                    android:textColor="@android:color/holo_red_dark"
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/quote_speaker"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignEnd="@id/quote_text"
                     android:layout_below="@id/quote_text"
                     android:layout_marginBottom="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="4dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
+                    android:textColor="@color/grey800"
                     android:textSize="18sp" />
 
             </RelativeLayout>

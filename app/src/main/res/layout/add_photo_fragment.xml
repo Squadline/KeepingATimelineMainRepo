@@ -42,8 +42,8 @@
                 android:layout_marginStart="0.5dp"
                 android:layout_toStartOf="@+id/datePhotoInput"
                 android:background="@color/white"
-                android:gravity="start"
                 android:clickable="true"
+                android:gravity="start"
                 android:padding="10dp"
                 android:text="Date" />
 
@@ -55,10 +55,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="0.5dp"
                 android:background="@color/white"
-                android:gravity="end"
                 android:clickable="true"
                 android:focusable="true"
                 android:focusableInTouchMode="false"
+                android:gravity="end"
                 android:padding="10dp" />
 
         </RelativeLayout>
@@ -89,10 +89,10 @@
             android:layout_marginEnd="0.5dp"
             android:layout_marginStart="0.5dp"
             android:background="@drawable/text_ripple"
-            android:gravity="start"
             android:clickable="true"
             android:focusable="true"
             android:focusableInTouchMode="false"
+            android:gravity="start"
             android:padding="10dp"
             android:text="Upload image" />
 

@@ -2,7 +2,11 @@ package com.keepingatimeline.kat;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +23,12 @@ import java.util.ArrayList;
 public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final ArrayList<Event> eventList;
+    private Context ctx;
 
     // saves off the passed eventList, removing null events from it
-    public EventAdapter(ArrayList<Event> eventListParam) {
+    public EventAdapter(Context context, ArrayList<Event> eventListParam) {
         this.eventList = eventListParam;
+        this.ctx = context;
     }
 
     // Provide a reference to the views for each data item
@@ -40,6 +46,10 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             photoDate = (TextView) v.findViewById(R.id.photo_date);
             photoText = (TextView) v.findViewById(R.id.photo_text);
             photoPhoto = (ImageView) v.findViewById(R.id.photo_photo);
+
+            Context context = v.getContext();
+            Typeface photoTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoMedium));
+            photoTitle.setTypeface(photoTitleFont);
         }
     }
 
@@ -60,8 +70,11 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             Typeface quoteTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoMedium));
             quoteTitle.setTypeface(quoteTitleFont);
 
-            Typeface quoteTextFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoItalic));
+            Typeface quoteTextFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.MerriweatherRegular));
             quoteText.setTypeface(quoteTextFont);
+
+            Typeface quoteSpeakerFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoMediumItalic));
+            quoteSpeaker.setTypeface(quoteSpeakerFont);
         }
     }
 
@@ -75,6 +88,10 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             textTitle = (TextView) v.findViewById(R.id.text_title);
             textDate = (TextView) v.findViewById(R.id.text_date);
             textText = (TextView) v.findViewById(R.id.text_text);
+
+            Context context = v.getContext();
+            Typeface textTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoMedium));
+            textTitle.setTypeface(textTitleFont);
         }
     }
 
@@ -125,9 +142,22 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 ((ViewHolderPhoto)holder).photoPhoto.setImageBitmap(BitmapCache.getBitmapFromMemCache(event.getString2()));
                 break;
             case "quote":
+
+                SpannableString fancyQuoteText = new SpannableString("\"" + event.getString1() + "\"");
+                Drawable leftQuotation = ctx.getDrawable(R.drawable.quotation_left);
+                Drawable rightQuotation = ctx.getDrawable(R.drawable.quotation_right);
+
+                leftQuotation.setBounds(0, 0, leftQuotation.getIntrinsicWidth(), leftQuotation.getIntrinsicHeight());
+                rightQuotation.setBounds(0, 0, rightQuotation.getIntrinsicWidth(), rightQuotation.getIntrinsicHeight());
+
+                ImageSpan leftSpan = new ImageSpan(leftQuotation, ImageSpan.ALIGN_BASELINE);
+                ImageSpan rightSpan = new ImageSpan(rightQuotation, ImageSpan.ALIGN_BASELINE);
+                fancyQuoteText.setSpan(leftSpan, 0, 1, 0);
+                fancyQuoteText.setSpan(rightSpan, (fancyQuoteText.length() - 1), fancyQuoteText.length(), 0);
+
                 ((ViewHolderQuote)holder).quoteTitle.setText(event.getTitle());
                 ((ViewHolderQuote)holder).quoteDate.setText(event.getDate());
-                ((ViewHolderQuote)holder).quoteText.setText("\"" + event.getString1() + "\"");
+                ((ViewHolderQuote)holder).quoteText.setText(fancyQuoteText);
                 ((ViewHolderQuote)holder).quoteSpeaker.setText("-" + event.getString2());
                 break;
             case "text":
