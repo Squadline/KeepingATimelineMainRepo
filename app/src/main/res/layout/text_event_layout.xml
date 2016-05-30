@@ -76,7 +76,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
-                android:textColor="@color/black"
+                android:textColor="#000066"
                 android:textSize="18sp" />
 
         </LinearLayout>
