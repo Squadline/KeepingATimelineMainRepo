@@ -6,62 +6,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.keepingatimeline.kat.MainScreen">
+    tools:context="com.keepingatimeline.kat.ViewTimeline">
 
-    <LinearLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/appPrimary"
-            android:minHeight="?attr/actionBarSize"
-            app:contentInsetEnd="0dp"
-            app:contentInsetStart="0dp">
+            app:elevation="0dp">
 
-            <!-- Toolbar Settings -->
-            <TextView
-                android:id="@+id/timeline_title"
-                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                android:layout_width="wrap_content"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/white" />
+                android:background="@color/appPrimary"
+                android:minHeight="?attr/actionBarSize"
+                app:contentInsetEnd="0dp"
+                app:contentInsetStart="0dp"
+                app:layout_scrollFlags="scroll|enterAlways">
 
-        </android.support.v7.widget.Toolbar>
+                <!-- Toolbar Settings -->
+                <TextView
+                    android:id="@+id/timeline_title"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.2dp"
-            android:background="@color/black" />
+            </android.support.v7.widget.Toolbar>
 
-        <RelativeLayout
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/timeline_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
+            android:background="#CFD8DC"
+            android:clipToPadding="false"
+            android:paddingBottom="0dp"
+            app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/timeline_recyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#CFD8DC" />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/addEventFAB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/ic_add_white"
+            app:layout_anchor="@id/timeline_recyclerview"
+            app:layout_anchorGravity="bottom|right|end" />
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/addEventFAB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="@dimen/fab_margin"
-                android:src="@drawable/ic_add_white" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
     <ExpandableListView
         android:id="@+id/right_drawer"
@@ -71,7 +71,7 @@
         android:background="#FFFFFF"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:fitsSystemWindows="true" />
+        android:groupIndicator="@null"
+        android:dividerHeight="0dp" />
 
 </android.support.v4.widget.DrawerLayout>

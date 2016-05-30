@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/appPrimary">
+    android:background="@color/appPrimary"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/addPhotoEvent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/appPrimary"
         android:orientation="vertical">
 
         <EditText
@@ -27,7 +26,7 @@
             android:layout_height="0.2dp"
             android:layout_marginEnd="0.5dp"
             android:layout_marginStart="0.5dp"
-            android:background="@color/black" />
+            android:background="@color/grey500" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -42,8 +41,8 @@
                 android:layout_marginStart="0.5dp"
                 android:layout_toStartOf="@+id/datePhotoInput"
                 android:background="@color/white"
-                android:gravity="start"
                 android:clickable="true"
+                android:gravity="start"
                 android:padding="10dp"
                 android:text="Date" />
 
@@ -55,31 +54,17 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="0.5dp"
                 android:background="@color/white"
-                android:gravity="end"
                 android:clickable="true"
                 android:focusable="true"
                 android:focusableInTouchMode="false"
+                android:gravity="end"
                 android:padding="10dp" />
 
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.2dp"
-            android:layout_marginEnd="0.5dp"
-            android:layout_marginStart="0.5dp"
-            android:background="@color/black" />
-
-        <View
-            android:layout_width="match_parent"
             android:layout_height="20dp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.2dp"
-            android:layout_marginEnd="0.5dp"
-            android:layout_marginStart="0.5dp"
-            android:background="@color/black" />
 
         <TextView
             android:id="@+id/photoFile"
@@ -89,10 +74,10 @@
             android:layout_marginEnd="0.5dp"
             android:layout_marginStart="0.5dp"
             android:background="@drawable/text_ripple"
-            android:gravity="start"
             android:clickable="true"
             android:focusable="true"
             android:focusableInTouchMode="false"
+            android:gravity="start"
             android:padding="10dp"
             android:text="Upload image" />
 
@@ -101,7 +86,7 @@
             android:layout_height="0.2dp"
             android:layout_marginEnd="0.5dp"
             android:layout_marginStart="0.5dp"
-            android:background="@color/black" />
+            android:background="@color/grey500" />
 
         <EditText
             android:id="@+id/photoDescription"
@@ -113,16 +98,9 @@
             android:gravity="top|start"
             android:hint="Description"
             android:inputType="textMultiLine|textNoSuggestions"
-            android:lines="7"
+            android:lines="5"
             android:padding="10dp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.2dp"
-            android:layout_marginEnd="0.5dp"
-            android:layout_marginStart="0.5dp"
-            android:background="@color/black" />
 
     </LinearLayout>
 
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>

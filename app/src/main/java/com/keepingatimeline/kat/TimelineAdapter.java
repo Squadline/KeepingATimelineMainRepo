@@ -63,11 +63,10 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
         TextView textL = (TextView)convertView.findViewById(R.id.timelineTitle);
         textL.setText(tlTitles.get(position));
 
-        /*
-        Context context = parent.getContext();
-        Typeface myCustomFont = Typeface.createFromAsset(context.getAssets(), parent.getContext().getString(R.string.primaryFont));
-        textL.setTypeface(myCustomFont);
-        */
+
+        Typeface tlTitleFont = Typeface.createFromAsset(ctx.getAssets(), ctx.getString(R.string.RobotoMedium));
+        textL.setTypeface(tlTitleFont);
+
 
         TextView textS = (TextView)convertView.findViewById(R.id.timelineMembers);
         textS.setText(tlMembers.get(position));

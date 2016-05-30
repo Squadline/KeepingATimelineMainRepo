@@ -24,15 +24,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Squad"
+            android:text="Details"
             android:textColor="@color/white" />
 
     </android.support.v7.widget.Toolbar>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.2dp"
-        android:background="@color/black" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -72,15 +67,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="20dp" />
 
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Change Title"
-                android:id="@+id/changeTitle"
-                android:layout_gravity="center_horizontal"
-                android:clickable="true" />
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.2dp"
@@ -91,16 +77,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@color/white"
+                android:checked="true"
                 android:drawablePadding="16dp"
                 android:drawableStart="@drawable/ic_notifications_blue"
-                android:fontFamily="sans-serif"
                 android:gravity="center_vertical"
                 android:paddingEnd="16dp"
                 android:paddingStart="16dp"
                 android:text="Notifications"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:checked="true" />
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -158,6 +143,7 @@
                 android:background="@color/grey500" />
 
             <TextView
+                android:id="@+id/leaveSquad"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/text_ripple"
@@ -167,8 +153,16 @@
                 android:paddingStart="16dp"
                 android:text="Leave Squad"
                 android:textColor="#FF1300"
-                android:textSize="16sp"
-                android:id="@+id/leaveSquad" />
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@color/grey500" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
 
             <View
                 android:layout_width="match_parent"

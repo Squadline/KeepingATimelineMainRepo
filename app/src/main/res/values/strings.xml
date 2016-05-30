@@ -25,6 +25,14 @@
     <!--Firebase Constants-->
     <string name="firebase_address">https://fiery-fire-8218.firebaseio.com/</string>
 
-    <string name="squadLineFont">fonts/BebasNeue Bold.ttf</string>
-    <string name="primaryFont">fonts/Roboto-Medium.ttf</string>
+    <!--Fonts-->
+    <string name="BebasNeueRegular">fonts/BebasNeue Regular.ttf</string>
+    <string name="BebasNeueBold">fonts/BebasNeue Bold.ttf</string>
+    <string name="RobotoItalic">fonts/Roboto-Italic.ttf</string>
+    <string name="RobotoRegular">fonts/Roboto-Regular.ttf</string>
+    <string name="RobotoMedium">fonts/Roboto-Medium.ttf</string>
+    <string name="RobotoMediumItalic">fonts/Roboto-MediumItalic.ttf</string>
+    <string name="MerriweatherLight">fonts/Merriweather Light.ttf</string>
+    <string name="MerriweatherRegular">fonts/Merriweather-Regular.ttf</string>
+    <string name="MerriweatherBold">fonts/Merriweather-Bold.ttf</string>
 </resources>

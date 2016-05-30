@@ -69,6 +69,8 @@ public class ViewTimeline extends AppCompatActivity {
     private List<String> mExpandableListTitle;
     private Map<String, List<String>> mExpandableListData;
     private TextView mSelectedItemView;
+    //private List<String> dates;
+
 
     // Timeline Settings request code - Darren
     private final int T_SETTINGS = 1;
@@ -103,23 +105,6 @@ public class ViewTimeline extends AppCompatActivity {
             timelineName = (String) savedInstanceState.getSerializable("Timeline Name");
         }
 
-        //find the specified drawer layout
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
-        mActivityTitle = getTitle().toString();
-
-        //find the specified right drawer
-        mExpandableListView = (ExpandableListView) findViewById(R.id.right_drawer);
-        //mSelectedItemView = (TextView) findViewById(R.id.selected_item);
-
-        //fetches all the data inside the class (uses the title as data) using the current object
-        mExpandableListData = getData();
-
-        //keyset method used to get a set view of the keys contained inside the map
-        mExpandableListTitle = new ArrayList(mExpandableListData.keySet());
-
-        //sets up the items inside the drawer
-        addDrawerItems();
-
         //sets title of the actionbar to the title of the timeline clicked
         firebaseRef = Vars.getTimeline(timelineID);
         auth = Vars.getUID();
@@ -136,7 +121,7 @@ public class ViewTimeline extends AppCompatActivity {
         });
 
         squadTitle = (TextView) findViewById(R.id.timeline_title);
-        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), getString(R.string.primaryFont));
+        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), getString(R.string.RobotoMedium));
         squadTitle.setTypeface(myCustomFont);
         squadTitle.setText(timelineName);
 
@@ -165,7 +150,7 @@ public class ViewTimeline extends AppCompatActivity {
 
         // specify an adapter (see also next example)
         final ArrayList<Event> eventList = new ArrayList<Event>();
-        rvAdapter = new EventAdapter(eventList);
+        rvAdapter = new EventAdapter(this, eventList);
         rv.setAdapter(rvAdapter);
 
         firebaseRef = Vars.getTimeline(timelineID).child("Events");
@@ -192,6 +177,39 @@ public class ViewTimeline extends AppCompatActivity {
             @Override
             public void onCancelled(FirebaseError firebaseError) {
 
+            }
+        });
+        //find the specified drawer layout
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
+        mActivityTitle = getTitle().toString();
+
+        //find the specified right drawer
+        mExpandableListView = (ExpandableListView) findViewById(R.id.right_drawer);
+        //mSelectedItemView = (TextView) findViewById(R.id.selected_item);
+
+        Firebase fb = Vars.getTimeline(timelineID);
+        //dates = new ArrayList<>();
+
+        fb.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                /*
+                for (DataSnapshot date: dataSnapshot.child("Events").getChildren())
+                {
+                    String curr_date = date.child("date").getValue().toString();
+                    dates.add(curr_date);
+                }
+                */
+                //update method
+                mExpandableListData = getData(eventList);
+                mExpandableListTitle = new ArrayList(mExpandableListData.keySet());
+                addDrawerItems();
+                ((CustomExpandableListAdapter)mExpandableListView.getExpandableListAdapter()).notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
             }
         });
     }
@@ -280,35 +298,12 @@ public class ViewTimeline extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
     }
 
-    public Map<String, List<String>> getData() {
-        //Todo: Conversion from raw date date to the separate strings and such
-        //Given that the data will be formatted in such a way like 5/19/2015 as a string
-        //Somehow, I need to fetch all the raw date date from the database
-        //Then i would need to iterate through them and separate everything.
+    public Map<String, List<String>> getData(ArrayList<Event> whole) {
 
-        final List<String> dates = new ArrayList<>();
-
-        Firebase fb = Vars.getTimeline(timelineID);
-
-        fb.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot date: dataSnapshot.child("Events").getChildren())
-                {
-                    String curr_date = date.child("date").getValue().toString();
-                    dates.add(curr_date);
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The read failed: " + firebaseError.getMessage());
-            }
-        });
-
+        //sorts the dates
+        //List<String> dates
         LinkedHashMap<String, List<String>> expandableListData = new LinkedHashMap<>();
 
-        String[] GivenDates = {"5/7/14", "5/9/14", "5/11/14", "5/15/14", "6/12/14", "6/14/14", "7/14/14", "8/15/15", "1/24/16"};
         String[] Months = {"", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
         int month_data = 0;
@@ -318,10 +313,10 @@ public class ViewTimeline extends AppCompatActivity {
         String curr_m_y = "";
 
         //Goes through all the given dates
-        for(int i = 0; i < dates.size(); i++)
+        for(int i = 1; i < whole.size(); i++)
         {
             //Separates given string into pieces using scanner
-            Scanner scanner = new Scanner(dates.get(i)).useDelimiter("[^0-9]+");
+            Scanner scanner = new Scanner(whole.get(i).getDate()).useDelimiter("[^0-9]+");
             month_data = scanner.nextInt();
             day_data = scanner.nextInt();
             year_data = scanner.nextInt();
@@ -341,7 +336,7 @@ public class ViewTimeline extends AppCompatActivity {
             else if(month_year.equals(curr_m_y))
             {
                 months_date.add(Integer.toString(day_data));
-                if(GivenDates.length-1 == i)
+                if(whole.size()-1 == i)
                 {
                     expandableListData.put(month_year, new ArrayList<String>(months_date));
                 }
@@ -353,22 +348,13 @@ public class ViewTimeline extends AppCompatActivity {
                 months_date.clear();
                 months_date.add(Integer.toString(day_data));
 
-                if(GivenDates.length-1 == i)
+                if(whole.size()-1 == i)
                 {
                     expandableListData.put(month_year, new ArrayList<String>(months_date));
                 }
             }
         }
         Iterator<Map.Entry<String, List<String>>> s = expandableListData.entrySet().iterator();
-
-        /*
-        while ( s.hasNext() ) {
-            Map.Entry pair = (Map.Entry)s.next();
-            for( String date : (List<String>)pair.getValue() ) {
-                System.out.println(date);
-            }
-        }
-        */
 
         return expandableListData;
     }
