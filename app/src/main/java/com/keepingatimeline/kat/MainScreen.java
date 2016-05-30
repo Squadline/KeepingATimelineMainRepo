@@ -297,6 +297,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         inflateTimeline.notifyDataSetChanged(); //updates adapter --Dana
     }
 
+    // Batch stuff - Darren
     @Override
     protected void onStop() {
         super.onStop();
