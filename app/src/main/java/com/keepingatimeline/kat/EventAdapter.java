@@ -70,7 +70,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             Typeface quoteTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoRegular));
             quoteTitle.setTypeface(quoteTitleFont);
 
-            Typeface quoteTextFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.MerriweatherRegular));
+            Typeface quoteTextFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoSlabRegular));
             quoteText.setTypeface(quoteTextFont);
 
             Typeface quoteSpeakerFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoMedium));
