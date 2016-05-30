@@ -271,7 +271,7 @@ public class TimelineSettings extends AppCompatActivity
                     String firstName = dataSnapshot.child(UID).child(FIRST_NAME).getValue().toString();
                     String lastName = dataSnapshot.child(UID).child(LAST_NAME).getValue().toString();
 
-                    // Put a space in between and to the name list
+                    // Put a space in between and add to the name list
                     userNames.add(firstName + " " + lastName);
                 }
                 // Notify the adapter of data update and refresh the view
@@ -299,8 +299,10 @@ public class TimelineSettings extends AppCompatActivity
         final String email = dialog.getEmail();
 
         // Verify that it is actually an email address format
-        // Evaluates to true if there is no @, or if there is no period after the @
-        if (email.indexOf('@') < 0 || email.lastIndexOf('.') < email.indexOf('@')) {
+        // Evaluates to true if there is no @, if there is nothing between the period and the @
+        // or if there is nothing after the period
+        if (email.indexOf('@') < 0 || email.lastIndexOf('.') < email.indexOf('@') + 2
+                || email.lastIndexOf('.') > email.length() - 2) {
             // Print out the Toast email error message
             showEmailErrorMsg();
 
