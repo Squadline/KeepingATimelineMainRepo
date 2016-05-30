@@ -67,6 +67,7 @@ public class TimelineSettings extends AppCompatActivity
 
     private boolean returnName;                 // Whether or not to pass back timeline name
     private boolean deleted;                    // Whether or not this timeline has been deleted
+    private boolean invalid;                    // Whether or not this timeline is valid
 
     // String constants for Firebase children
     private final String TITLE_STR = "Title";
@@ -120,6 +121,9 @@ public class TimelineSettings extends AppCompatActivity
         // By default, the timeline exists
         deleted = false;
 
+        // By default, the timeline is valid
+        invalid = false;
+
         // Instantiate list of user emails, names, IDs, and the adapter to the ListView
         // Assign the name list to the adapter, since that's what we will display
         users = new ArrayList<String>();
@@ -159,6 +163,9 @@ public class TimelineSettings extends AppCompatActivity
         // (i.e. if app somehow starts on timeline settings page)
         // then notify user that data cannot be loaded
         if (currentTimelineID == null) {
+            // Timeline is invalid
+            invalid = true;
+
             // Print out data loading error message on Toast
             showDataErrorMsg();
 
@@ -184,6 +191,9 @@ public class TimelineSettings extends AppCompatActivity
                 // attempting to get the title will return a null value
                 // Print out data loading error message on Toast and stop data retrieval
                 if (dataSnapshot.child(TITLE_STR).getValue() == null ) {
+                    // Timeline is invalid
+                    invalid = true;
+
                     // Print out Toast error
                     showDataErrorMsg();
 
@@ -261,7 +271,7 @@ public class TimelineSettings extends AppCompatActivity
                     String firstName = dataSnapshot.child(UID).child(FIRST_NAME).getValue().toString();
                     String lastName = dataSnapshot.child(UID).child(LAST_NAME).getValue().toString();
 
-                    // Put a space in between and to the name list
+                    // Put a space in between and add to the name list
                     userNames.add(firstName + " " + lastName);
                 }
                 // Notify the adapter of data update and refresh the view
@@ -289,8 +299,10 @@ public class TimelineSettings extends AppCompatActivity
         final String email = dialog.getEmail();
 
         // Verify that it is actually an email address format
-        // Evaluates to true if there is no @, or if there is no period after the @
-        if (email.indexOf('@') < 0 || email.lastIndexOf('.') < email.indexOf('@')) {
+        // Evaluates to true if there is no @, if there is nothing between the period and the @
+        // or if there is nothing after the period
+        if (email.indexOf('@') < 0 || email.lastIndexOf('.') < email.indexOf('@') + 2
+                || email.lastIndexOf('.') > email.length() - 2) {
             // Print out the Toast email error message
             showEmailErrorMsg();
 
@@ -469,6 +481,12 @@ public class TimelineSettings extends AppCompatActivity
 
     // Helper method to show a Change Title dialog
     private void showRenameDialog() {
+        // We don't want the user to change the name while viewing an invalid timeline
+        // So just do nothing if the user presses the button
+        if (invalid) {
+            return;
+        }
+
         // Create the dialog builder and layout inflater
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
