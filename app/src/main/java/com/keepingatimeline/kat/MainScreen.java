@@ -359,21 +359,23 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                 database = Vars.getFirebase().child("Timelines");
                                 database = database.push();
                                 String tKey = database.getKey();
-                                Map<String, String> post = new HashMap<String, String>();
-                                Map<String, String> post1 = new HashMap<String, String>();
-                                Map<String, String> event = new HashMap<String, String>();
-                                Map<String, Object> event1 = new HashMap<String, Object>();
-                                post.put("Admin", emailAdd);
-                                post.put("Title", newName);
-                                database.setValue(post);
 
-                                Firebase user =  database.child("Users");
+                                Map<String, String> timeline = new HashMap<String, String>();
+                                timeline.put("Admin", emailAdd);
+                                timeline.put("Title", newName);
+                                database.setValue(timeline);
+
+                                Firebase timelineUsers =  database.child("Users");
+                                Map<String, String> post1 = new HashMap<String, String>();
                                 post1.put(Vars.getUID(), emailAdd);
-                                user.setValue(post1);
+                                timelineUsers.setValue(post1);
 
                                 database = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder + "/Timelines");
-                                event1.put(tKey, newName);
-                                database.updateChildren(event1);
+                                database = database.child(tKey);
+                                Map<String, Object> userTimelines = new HashMap<String, Object>();
+                                Map<String, String> otherUsers = new HashMap<String, String>();
+                                userTimelines.put(tKey, otherUsers);
+                                database.updateChildren(userTimelines);
                             }
 
                             @Override
