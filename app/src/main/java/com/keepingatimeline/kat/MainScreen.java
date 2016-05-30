@@ -27,7 +27,6 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -278,7 +277,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String timelineName = tlTitles.get(position);
 
-                Intent viewTimelineActivity = new Intent("com.keepingatimeline.kat.ViewTimeline");
+                Intent viewTimelineActivity = new Intent(MainScreen.this, ViewTimeline.class);
                 viewTimelineActivity.putExtra("Timeline Name", timelineName);
                 viewTimelineActivity.putExtra("Timeline ID", tlIDs.get(position));
                 startActivity(viewTimelineActivity);

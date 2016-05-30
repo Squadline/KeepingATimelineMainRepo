@@ -403,13 +403,13 @@ public class TimelineSettings extends AppCompatActivity
 
         // If current user is the last one in the Squad, inform them of auto-deletion
         if (users.size() == 1) {
-            warning += "\n\nWARNING: You are the only user in this Squad. If you leave, this Squad"
+            warning += "\n\nWARNING: You are the only user in this squad. If you leave, this squad"
                                 + " will be permanently deleted.";
         }
 
         // Set the title, message, and buttons
         builder.setTitle("Leave Squad")
-                .setMessage("Do you really want to leave this Squad?" + warning)
+                .setMessage("Do you really want to leave this squad?" + warning)
                 // If user does want to leave
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
@@ -486,7 +486,7 @@ public class TimelineSettings extends AppCompatActivity
         // Set the view, title, message, and buttons for the dialog
         builder.setView(view)
                 .setTitle("Rename Squad")
-                .setMessage("Please enter a new title.")
+                .setMessage("Enter a new name for the squad.")
                 // If the user confirms the title change
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
