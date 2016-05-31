@@ -346,6 +346,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                 Map<String, String> timeline = new HashMap<String, String>();
                                 timeline.put("Title", newName);
                                 timeline.put("LastModified", todaysDate);
+                                timeline.put("TimelinePic", "");
                                 database.setValue(timeline);
 
                                 Firebase timelineUsers = database.child("Users");
