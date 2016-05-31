@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:paddingEnd="20dp"
+    android:paddingStart="20dp"
+    android:paddingTop="10dp">
+
+    <EditText
+        android:id="@+id/changeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/editEventTitles"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/changeQuote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/editQuote"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/changeEventDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/editSource"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/changeEventSource"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/editDate"
+        android:inputType="textPassword" />
+</LinearLayout>
