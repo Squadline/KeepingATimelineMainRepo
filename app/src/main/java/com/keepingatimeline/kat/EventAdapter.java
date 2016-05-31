@@ -102,12 +102,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                     dialog.cancel();
                                 }
                             });
-                            EditText title = (EditText) v.findViewById(R.id.changePhotoTitle);
-                            title.setText(photoTitle.getText());
-                            EditText text = (EditText) v.findViewById(R.id.changePhotoDescription);
-                            text.setText(photoText.getText());
-                            EditText date = (EditText) v.findViewById(R.id.changePhotoDate);
-                            date.setText(photoDate.getText());
+
                             builder.create().show();
                             return true;
                         }
@@ -209,14 +204,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                     dialog.cancel();
                                 }
                             });
-                            EditText title = (EditText) v.findViewById(R.id.changeQuoteTitle);
-                            title.setText(quoteTitle.getText());
-                            EditText quote = (EditText) v.findViewById(R.id.changeQuote);
-                            quote.setText(quoteText.getText());
-                            EditText date = (EditText) v.findViewById(R.id.changeQuoteDate);
-                            date.setText(quoteDate.getText());
-                            EditText speaker = (EditText) v.findViewById(R.id.changeQuoteSource);
-                            speaker.setText(quoteSpeaker.getText());
+
                             builder.create().show();
                             return true;
                         }
@@ -309,12 +297,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                     dialog.cancel();
                                 }
                             });
-                            EditText title = (EditText) v.findViewById(R.id.changeTextTitle);
-                            title.setText(textTitle.getText());
-                            EditText quote = (EditText) v.findViewById(R.id.changeText);
-                            quote.setText(textText.getText());
-                            EditText date = (EditText) v.findViewById(R.id.changeTextDate);
-                            date.setText(textDate.getText());
+
                             builder.create().show();
                             return true;
                         }
@@ -441,7 +424,10 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private void updateEvent(Event event, int position) {
         event.setKey(eventList.get(position).getKey());
-        if(!event.getType().equals("quote")) event.setString2(eventList.get(position).getString2());
+        if(event.getTitle().isEmpty()) event.setTitle(eventList.get(position).getTitle());
+        if(event.getDate().isEmpty()) event.setDate(eventList.get(position).getDate());
+        if(!event.getString1().isEmpty()) event.setString1(eventList.get(position).getString1());
+        if(!event.getType().equals("quote") && event.getString2().isEmpty()) event.setString2(eventList.get(position).getString2());
 
         Vars.getTimeline(timelineID).child("LastModified").setValue(DateGen.getCurrentDate());
         Vars.getTimeline(timelineID).child("Events/" + event.getKey()).setValue(event);
