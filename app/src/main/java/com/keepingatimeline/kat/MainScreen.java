@@ -44,19 +44,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private Firebase database;
     private ArrayList<Timeline> timelines = new ArrayList<>();
 
-    // Used for displaying members of each timeline
-    private String displayMembers;
-    private int curMemCount;
-    private int tlMemPos;
-
     private TimelineAdapter inflateTimeline;
     private ListView timelineList;
     private String holder;
     private String newName;
     private TextView titleBar;
     private String nameAdd;
-    private String uidTimeline;                 //UID of timeline
-    private String uidMember;
 
     private String currentFirst;                // First name of the current user
     private String currentLast;                 // Last name of the current user
