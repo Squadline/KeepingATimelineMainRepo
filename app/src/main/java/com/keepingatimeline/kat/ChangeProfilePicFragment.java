@@ -2,10 +2,10 @@ package com.keepingatimeline.kat;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
+
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.ColorStateList;
+
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,14 +20,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
+
 import android.widget.Button;
-import android.widget.EditText;
+
 import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Calendar;
+
 
 /**
  * Created by poopyfeet on 5/30/16.
@@ -42,6 +42,7 @@ public class ChangeProfilePicFragment extends DialogFragment{
     private String imagePath;
     private Activity activityRef;
     private AlertDialog dialog;                 // Dialog to display
+    private TextView profileTextView;
     private ChangeProfilePicListener pListener;
 
     // Define an interface that positive button listeners must implement
@@ -56,7 +57,7 @@ public class ChangeProfilePicFragment extends DialogFragment{
         // Call super method
         super.onAttach(activity);
         activityRef = activity;
-
+        imagePath = "";
         //Try to set activity as positive button listener
         try {
             pListener = (ChangeProfilePicListener) activity;
@@ -77,7 +78,18 @@ public class ChangeProfilePicFragment extends DialogFragment{
 
         builder.setTitle("Change Profile Picture");
         builder.setMessage("Select an image and save!");
+
+        profileTextView = (TextView) view.findViewById(R.id.uploadTextView);
+
+        profileTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+            }
+        });
         // Set the dialog view to the inflated xml
+
         builder.setView(view);
 
 
@@ -121,36 +133,10 @@ public class ChangeProfilePicFragment extends DialogFragment{
             }
         });
 
-
-
         return dialog;
 
     } // end onCreateDialog
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-
-        View ChangeProfilePicView = inflater.inflate(R.layout.dialog_change_profile_picture, container, false);
-
-        uploadPhotoInput = (TextView) ChangeProfilePicView.findViewById(R.id.uploadTextView);
-
-        // Change color of TextView to hint color
-        //uploadPhotoInput.setTextColor();
-
-        // Months are indexed starting at 0, add 1 to month value
-
-
-        uploadPhotoInput.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
-            }
-        });
-
-        return ChangeProfilePicView;
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -174,6 +160,9 @@ public class ChangeProfilePicFragment extends DialogFragment{
     }
 
     public String getPhoto() {
+        if(imagePath.length() == 0) {
+            return "";
+        }
         Log.d("Editing Prof Pic", imagePath);
         Bitmap bm_original = BitmapFactory.decodeFile(imagePath);
 
