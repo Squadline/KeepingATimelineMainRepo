@@ -503,18 +503,42 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        /*
-                        // If the same name was entered, then take no action
-                        if ((firstNameInput.getText().toString().equals(currentFirstName)) && (lastNameInput.getText().toString().equals(currentLastName))) {
-                            return;
-                        }*/
-/*
-                        // Set the current user name to the entered one
-                        // Both locally and in the database
-                        currentFirstName = firstNameInput.getText().toString();
-                        currentLastName = lastNameInput.getText().toString();*/
+                        final Firebase database = Vars.getCurrentUser();
 
-                        //Vars.getTimeline(currentTimelineID).child(TITLE_STR).setValue(currentTimelineName);
+                        database.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String newFirstName = firstNameInput.getText().toString();
+                                String newLastName = lastNameInput.getText().toString();
+                                String currentFirstName = dataSnapshot.child("FirstName").getValue().toString();
+                                String currentLastName = dataSnapshot.child("LastName").getValue().toString();
+                                // If the same name was entered, then take no action
+                                if (newFirstName.equals(currentFirstName) && newLastName.equals(currentLastName)) {
+                                    return;
+                                }
+
+                                // Set the current user name to the entered one
+                                // Both locally and in the database
+                                database.child("FirstName").setValue(newFirstName);
+                                database.child("LastName").setValue(newLastName);
+
+                                for(DataSnapshot timeline : dataSnapshot.child("Timelines").getChildren()) {
+                                    Vars.getTimeline(timeline.getKey()).child(Vars.getUID()).setValue(newFirstName + " " + newLastName);
+                                    if(!newFirstName.equals(currentFirstName)) {
+                                        for (DataSnapshot user : timeline.getChildren()) {
+                                            String path = "Timelines/" + timeline.getKey() + "/" + user.getKey();
+                                            Vars.getUser(user.getKey()).child(path).setValue(newFirstName);
+                                        }
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
+
+                            }
+                        });
+
                     }
                 })
                 // If the user presses cancel
