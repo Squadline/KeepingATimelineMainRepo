@@ -64,6 +64,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private final String LAST_STR = "LastName";
     private final String EMAIL_STR = "EmailAddress";
     private final String DB_STR = "https://fiery-fire-8218.firebaseio.com/";
+    private TextView userName;
+    private TextView userEmail;
 
     /**
      * By: Dana, Byung, Jimmy, Trevor
@@ -103,8 +105,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         // sets name and email of current user in sidebar
         View navHeader = navigationView.getHeaderView(0);
-        final TextView userName = (TextView) navHeader.findViewById(R.id.user_name);
-        final TextView userEmail = (TextView) navHeader.findViewById(R.id.user_email);
+        userName = (TextView) navHeader.findViewById(R.id.user_name);
+        userEmail = (TextView) navHeader.findViewById(R.id.user_email);
 
         //.com/Users/uid
         //.com/Users/
@@ -516,6 +518,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                 if (newFirstName.equals(currentFirstName) && newLastName.equals(currentLastName)) {
                                     return;
                                 }
+
+                                //update Account Sidebar
+                                userName.setText(newFirstName + " " + newLastName);
 
                                 // Set the current user name to the entered one
                                 // Both locally and in the database
