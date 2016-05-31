@@ -339,8 +339,8 @@ public class TimelineSettings extends AppCompatActivity
                     // Get the user ID
                     String userID = user.getKey();
 
-                    String userName = user.child(FIRST_NAME).getValue().toString() + " " +
-                                      user.child(LAST_NAME).getValue().toString();
+                    String userFirstName = user.child(FIRST_NAME).getValue().toString();
+                    String userName = userFirstName + " " + user.child(LAST_NAME).getValue().toString();
 
                     // If the emails match (emails are case insensitive)
                     if (userEmail.equalsIgnoreCase(email)) {
@@ -353,19 +353,21 @@ public class TimelineSettings extends AppCompatActivity
                             temp = temp.substring(0, temp.indexOf(" ")); //parses to get first name
                             timelineData.put(userIDs.get(index), temp);
                         }
+                        timelineData.put(userID, userFirstName);
                         userTimelines.put(currentTimelineID, timelineData);
                         database.updateChildren(userTimelines);
 
                         // New HashMap containing user information to store in the Timeline
                         HashMap<String, Object> newUser = new HashMap<String, Object>();
+                        newUser.put(userID, userFirstName);
 
                         for(String member : userIDs) {
                             database = Vars.getUser(member).child("Timelines/" + currentTimelineID);
-                            newUser.put(userID, userName.substring(0, userName.indexOf(" ")));
                             database.updateChildren(newUser);
                         }
 
                         // Add the user's ID and email and put it in the Timeline's Users table
+                        newUser = new HashMap<String, Object>();
                         newUser.put(userID, userName);
                         Vars.getTimeline(currentTimelineID).child(USERS_STR).updateChildren(newUser);
 

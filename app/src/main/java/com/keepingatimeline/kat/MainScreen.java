@@ -50,7 +50,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private String holder;
     private String newName;
     private TextView titleBar;
-    private String emailAdd;
+    private String nameAdd;
     private String uidTimeline;                 //UID of timeline
     private String uidMember;
 
@@ -166,13 +166,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     timelineTitles.add(tlSnapshot.child("Title").getValue().toString());
 
                     ArrayList<String> otherUsers = new ArrayList<String>();
-                    if(currentFirst != null && !currentFirst.isEmpty()) otherUsers.add(currentFirst);
 
                     for (DataSnapshot entry : tlSnapshot.getChildren()) {
                         if(!entry.getKey().toString().equals("Title")) {
-                            String temp = entry.getValue().toString();
-                            //temp = temp.substring(0, temp.indexOf(" "));
-                            otherUsers.add(temp);
+                            otherUsers.add(entry.getValue().toString());
                         }
                     }
 
@@ -275,33 +272,32 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     public void onClick(DialogInterface dialog, int which) {
                         Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
                         holder = ref.getAuth().getUid().toString();
-                        ref = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder + "/EmailAddress");
+                        ref = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder);
 
-                        ref.addValueEventListener(new ValueEventListener() {
+                        ref.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                emailAdd = dataSnapshot.getValue().toString();
+                                nameAdd = dataSnapshot.child("FirstName").getValue().toString() + " ";
+                                nameAdd += dataSnapshot.child("LastName").getValue().toString();
                                 newName = nameTLInput.getText().toString();
                                 database = Vars.getFirebase().child("Timelines");
                                 database = database.push();
                                 String tKey = database.getKey();
 
                                 Map<String, String> timeline = new HashMap<String, String>();
-                                timeline.put("Admin", emailAdd);
                                 timeline.put("Title", newName);
                                 database.setValue(timeline);
 
                                 Firebase timelineUsers =  database.child("Users");
                                 Map<String, String> post1 = new HashMap<String, String>();
-                                post1.put(Vars.getUID(), emailAdd);
+                                post1.put(Vars.getUID(), nameAdd);
                                 timelineUsers.setValue(post1);
 
                                 database = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder + "/Timelines");
                                 database = database.child(tKey);
                                 Map<String, Object> userTimelines = new HashMap<String, Object>();
-                                Map<String, String> otherUsers = new HashMap<String, String>();
                                 userTimelines.put("Title", newName);
-                                userTimelines.put(tKey, otherUsers);
+                                userTimelines.put(Vars.getUID(), dataSnapshot.child("FirstName").getValue().toString());
                                 database.updateChildren(userTimelines);
                             }
 
