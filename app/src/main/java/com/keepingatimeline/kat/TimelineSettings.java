@@ -65,6 +65,7 @@ public class TimelineSettings extends AppCompatActivity
     private String lastModified;
     private String squadImage;
 
+
     private Firebase db;                        // Database object
 
     private boolean returnName;                 // Whether or not to pass back timeline name
@@ -189,6 +190,7 @@ public class TimelineSettings extends AppCompatActivity
                     return;
                 }
 
+
                 // If we get an invalid timeline ID
                 // attempting to get the title will return a null value
                 // Print out data loading error message on Toast and stop data retrieval
@@ -210,8 +212,7 @@ public class TimelineSettings extends AppCompatActivity
 
                 if(!squadImage.isEmpty()) {
                     Bitmap bm_image = PictureCompactor.StringB64ToBitmap(squadImage);
-
-                    //make further changes here
+                    timelineCircleView.setImageBitmap(bm_image);
                 }
 
                 // Reset the list of user emails and IDs
