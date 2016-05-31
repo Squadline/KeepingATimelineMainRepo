@@ -14,9 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,8 +57,7 @@ public class TimelineSettings extends AppCompatActivity
     private TextView addFriend;                 // Add Friend button
     private TextView leaveSquad;                // Leave Squad button
     private ArrayAdapter<String> adapter;       // Adapter for list of users
-    private ArrayList<String> users;            // List of user emails (for existing user comparison)
-    private ArrayList<String> userNames;        // List of user names  (for user display)
+    private ArrayList<String> users;        // List of user names  (for user display)
     private ArrayList<String> userIDs;          // List of user IDs    (for easy iteration when searching)
 
     private Firebase db;                        // Database object
@@ -126,9 +123,9 @@ public class TimelineSettings extends AppCompatActivity
         // Instantiate list of user emails, names, IDs, and the adapter to the ListView
         // Assign the name list to the adapter, since that's what we will display
         users = new ArrayList<String>();
-        userNames = new ArrayList<String>();
+        users = new ArrayList<String>();
         userIDs = new ArrayList<String>();
-        adapter = new ArrayAdapter<String>(this, R.layout.settings_user_list, userNames);
+        adapter = new ArrayAdapter<String>(this, R.layout.settings_user_list, users);
 
         // Set the ListView's adapter
         user_list.setAdapter(adapter);
@@ -255,7 +252,7 @@ public class TimelineSettings extends AppCompatActivity
     // This method is for displaying user names instead of emails
     private void updateUserNames() {
         // Clear the list of user names
-        userNames.clear();
+        users.clear();
 
         // Get the users table in the database
         Firebase allUsers = Vars.getFirebase().child(DB_USERS);
@@ -271,7 +268,7 @@ public class TimelineSettings extends AppCompatActivity
                     String lastName = dataSnapshot.child(UID).child(LAST_NAME).getValue().toString();
 
                     // Put a space in between and add to the name list
-                    userNames.add(firstName + " " + lastName);
+                    users.add(firstName + " " + lastName);
                 }
                 // Notify the adapter of data update and refresh the view
                 adapter.notifyDataSetChanged();
@@ -309,16 +306,6 @@ public class TimelineSettings extends AppCompatActivity
             return;
         }
 
-        // Verify that entered user is not already in the timeline
-        // If the user is, print out already exists error message
-        if (users.contains(email)) {
-            // Print out Toast error message
-            showAddAlreadyExistsMsg(email);
-
-            // No further actions will be taken
-            return;
-        }
-
         // Get the table of users to search for the entered email
         // We only need to get this table once, so add a single value event listener
         Vars.getFirebase().child(DB_USERS).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -342,12 +329,15 @@ public class TimelineSettings extends AppCompatActivity
 
                     // If the emails match (emails are case insensitive)
                     if (userEmail.equalsIgnoreCase(email)) {
+                        //case: the user is already part of this timeline
+                        if(user.child("Timeline/" + currentTimelineID).exists()) return;
+
                         Firebase database = Vars.getUser(userID).child("Timelines");
                         Map<String, Object> userTimelines = new HashMap<String, Object>();
                         Map<String, String> timelineData = new HashMap<String, String>();
                         timelineData.put("Title", currentTimelineName);
                         for(int index = 0; index < users.size(); index++) {
-                            String temp = userNames.get(index);
+                            String temp = users.get(index);
                             temp = temp.substring(0, temp.indexOf(" ")); //parses to get first name
                             timelineData.put(userIDs.get(index), temp);
                         }
