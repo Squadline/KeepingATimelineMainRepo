@@ -76,6 +76,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+    private CircleImageView profilePic;
 
     /**
      * By: Dana, Byung, Jimmy, Trevor

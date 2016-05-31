@@ -92,7 +92,7 @@ public class RegistrationScreen extends AppCompatActivity {
                         post.put("FirstName", name1st.getText().toString());
                         post.put("LastName", name2nd.getText().toString());
                         post.put("EmailAddress", user);
-                        post.put("Timelines", "0");
+                        post.put("ProfilePic", "");
                         d.setValue(post);
                         d = d.child("Timelines");
                         //child.put("My first squadline", "Me");
