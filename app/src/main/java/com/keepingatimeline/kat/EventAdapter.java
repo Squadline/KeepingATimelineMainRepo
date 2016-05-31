@@ -3,6 +3,8 @@ package com.keepingatimeline.kat;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -81,12 +83,14 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         public TextView quoteDate;
         public TextView quoteText;
         public TextView quoteSpeaker;
+        public ImageView editQuote;
         public ViewHolderQuote(View v) {
             super(v);
             quoteTitle = (TextView) v.findViewById(R.id.quote_title);
             quoteDate = (TextView) v.findViewById(R.id.quote_date);
             quoteText = (TextView) v.findViewById(R.id.quote_text);
             quoteSpeaker = (TextView) v.findViewById(R.id.quote_speaker);
+            editQuote = (ImageView) v.findViewById(R.id.editQuoteEvent);
 
             Context context = v.getContext();
             Typeface quoteTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoRegular));
@@ -189,7 +193,6 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 view = new ViewHolderText(itemView);
                 break;
         }
-
         return view;
     }
 
@@ -221,6 +224,25 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 ((ViewHolderQuote)holder).quoteDate.setText(event.getDate());
                 ((ViewHolderQuote)holder).quoteText.setText(fancyQuoteText);
                 ((ViewHolderQuote)holder).quoteSpeaker.setText("–" + event.getString2());
+                ((ViewHolderQuote)holder).editQuote.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        PopupMenu popup = new PopupMenu(v.getContext(), v);
+                        popup.getMenuInflater().inflate(R.menu.event_settings_menu, popup.getMenu());
+                        popup.show();
+
+                        popup.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                builder.setTitle("Lol").setMessage("Hope this works");
+                                builder.create().show();
+                                return true;
+                            }
+                        });
+                    }
+                });
                 break;
             case "text":
             default:

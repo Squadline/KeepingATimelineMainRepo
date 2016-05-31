@@ -2,6 +2,8 @@ package com.keepingatimeline.kat;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.batch.android.Batch;
+import com.batch.android.BatchPushService;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -217,6 +220,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     protected void onStart() {
         super.onStart();
 
+        Batch.Push.setSmallIconResourceId(R.mipmap.ic_launcher_5);
+        Batch.Push.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.mipmap.ic_launcher_5));
         Batch.onStart(this);
         Batch.User.editor().setIdentifier(holder).save();
         inflateTimeline.notifyDataSetChanged(); //updates adapter --Dana
