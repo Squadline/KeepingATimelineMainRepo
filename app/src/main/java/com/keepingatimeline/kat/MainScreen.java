@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -358,6 +359,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                 userTimelines.put("LastModified", todaysDate);
                                 userTimelines.put(Vars.getUID(), dataSnapshot.child("FirstName").getValue().toString());
                                 database.updateChildren(userTimelines);
+
+                                String snackMessage = newName + " has been created.";
+                                Snackbar.make(findViewById(android.R.id.content), snackMessage, Snackbar.LENGTH_LONG).show();
                             }
 
                             @Override
@@ -415,7 +419,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         } else if (id == R.id.navLogOut) {
 
             Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
-            CharSequence logoutToast = ref.getAuth().getProviderData().get("email") + " has logged out " + ref.getAuth().getUid();
+            CharSequence logoutToast = ref.getAuth().getProviderData().get("email") + " has logged out.";
 
             Toast logout = Toast.makeText(getApplicationContext(), logoutToast, Toast.LENGTH_SHORT);
             logout.show();
@@ -452,7 +456,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         // check if new pass == confirm pass
         if (!newPass.equals(conPass)) {
 
-            Toast.makeText(getApplicationContext(), "New passwords do not match! :0",
+            Toast.makeText(getApplicationContext(), "ERROR: The new password does not match the confirm password.",
                     Toast.LENGTH_LONG).show();
             return;
         }
@@ -460,9 +464,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         // check check if currpass == new pass, aka no point
 
         if (newPass.equals(curPass)) {
-            Toast.makeText(getApplicationContext(), "Current password same as new password!"
-                            + "Please change the password to something different!",
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "ERROR: The new password supplied is the same as the previous password. Please supply a different new password.", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -473,20 +475,24 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     public void onError(FirebaseError err) {
                         if (err.getCode() == FirebaseError.INVALID_PASSWORD) {
                             Toast.makeText(getApplicationContext(),
-                                    "Error: Current password is incorrect",
+                                    "ERROR: The current password is incorrect.",
                                     Toast.LENGTH_LONG).show();
 
                         } else {
                             Toast.makeText(getApplicationContext(),
-                                    "Error: " + err.getMessage(),
+                                    "ERROR: " + err.getMessage(),
                                     Toast.LENGTH_LONG).show();
                         }
                     }
 
                     @Override
                     public void onSuccess() {
-                        Toast.makeText(getApplicationContext(), "Password successfully changed",
-                                Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "Password successfully changed",
+                                //Toast.LENGTH_LONG).show();
+
+                        String snackMessage = "Your password has been changed.";
+                        Snackbar.make(findViewById(android.R.id.content), snackMessage, Snackbar.LENGTH_LONG).show();
+
                         dialog.getDialog().cancel();
                         return;
                     }
@@ -549,6 +555,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                         }
                                     }
                                 }
+
+                                String snackMessage = "Your name has been changed.";
+                                Snackbar.make(findViewById(android.R.id.content), snackMessage, Snackbar.LENGTH_LONG).show();
                             }
 
                             @Override
@@ -579,13 +588,16 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         String uid = Vars.getFirebase().getAuth().getUid();
         String photo = dialog.getPhoto();
         if (photo.length() == 0) {
-            Toast.makeText(getApplicationContext(), "No Photo Entered!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "ERROR: The photo you have chosen is not valid. Please try again.", Toast.LENGTH_SHORT).show();
             return;
         } else {
             profilePic.setImageBitmap(PictureCompactor.StringB64ToBitmap(photo));
         }
         Vars.getFirebase().child("Users/" + uid + "/ProfilePic").setValue(photo);
-        Toast.makeText(getApplicationContext(), "Profile Picture Saved!", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Profile Picture Saved!", Toast.LENGTH_SHORT).show();
+
+        String snackMessage = "Your profile picture has been changed.";
+        Snackbar.make(findViewById(android.R.id.content), snackMessage, Snackbar.LENGTH_LONG).show();
 
         dialog.getDialog().cancel();
     }

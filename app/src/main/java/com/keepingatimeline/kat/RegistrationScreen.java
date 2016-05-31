@@ -1,11 +1,9 @@
 package com.keepingatimeline.kat;
 
-
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -98,6 +96,13 @@ public class RegistrationScreen extends AppCompatActivity {
                         //child.put("My first squadline", "Me");
                         //d.setValue(child);
 
+                        Context context = getApplicationContext();
+                        CharSequence text = "Your account has been successfully created.";
+                        int duration = Toast.LENGTH_LONG;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+
                         finish();
                     }
 
@@ -116,16 +121,6 @@ public class RegistrationScreen extends AppCompatActivity {
                         name2nd.setText("");
                     }
                 });
-                /*
-                Runnable r = new Runnable() {
-                    @Override
-                    public void run(){
-                        finish();
-                    }
-                };
-                Handler delayer = new Handler();
-                delayer.postDelayed(r, 2000);
-                */
             }
         });
 

@@ -95,7 +95,7 @@ public class ChangeProfilePicFragment extends DialogFragment{
 
         // Set positive button's text to Add
         // Don't do anything because this will be overridden
-        builder.setPositiveButton("Done", null);
+        builder.setPositiveButton("Upload", null);
         // Set negative button's text to Cancel
         builder.setNegativeButton("Cancel",  new DialogInterface.OnClickListener() {
             @Override

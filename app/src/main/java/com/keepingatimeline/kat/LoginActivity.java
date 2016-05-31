@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -136,8 +137,9 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess() {
 
-                        Toast.makeText(getApplicationContext(), "Email has been sent.", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "Email has been sent.", Toast.LENGTH_LONG).show();
 
+                        Snackbar.make(findViewById(android.R.id.content), "Email has been sent.", Snackbar.LENGTH_LONG).show();
                     }
 
                     @Override
