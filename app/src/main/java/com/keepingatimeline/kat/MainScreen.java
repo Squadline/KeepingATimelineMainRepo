@@ -222,7 +222,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         super.onStart();
 
         Batch.Push.setSmallIconResourceId(R.mipmap.ic_launcher_5);
-        Batch.Push.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.mipmap.ic_launcher_5));
+        Batch.Push.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.mipmap.ic_squadline_red));
         Batch.onStart(this);
         Batch.User.editor().setIdentifier(holder).save();
         inflateTimeline.notifyDataSetChanged(); //updates adapter --Dana
