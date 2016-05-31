@@ -70,6 +70,7 @@ public class ViewTimeline extends AppCompatActivity {
     private List<String> mExpandableListTitle;
     private Map<String, List<String>> mExpandableListData;
     private TextView mSelectedItemView;
+    private LinkedHashMap<String, List<String>> expandableListData;
     //private List<String> dates;
 
 
@@ -204,7 +205,7 @@ public class ViewTimeline extends AppCompatActivity {
                 //update method
                 mExpandableListData = getData(eventList);
                 mExpandableListTitle = new ArrayList(mExpandableListData.keySet());
-                addDrawerItems();
+                addDrawerItems(eventList);
                 ((CustomExpandableListAdapter)mExpandableListView.getExpandableListAdapter()).notifyDataSetChanged();
             }
 
@@ -280,13 +281,94 @@ public class ViewTimeline extends AppCompatActivity {
 
 
     //add the items inside the drawer
-    private void addDrawerItems() {
+    private void addDrawerItems(final ArrayList<Event> whole) {
 
         //takes in the object itself, a lit of titles, and all the date related to the title
         mExpandableListAdapter = new CustomExpandableListAdapter(this, mExpandableListTitle, mExpandableListData);
 
         //sets data behind this customizable drawer view
         mExpandableListView.setAdapter(mExpandableListAdapter);
+        mExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+                int index = 0;
+                int index_2 = 0;
+                String first = "";
+                String second = "";
+
+                for(String key : expandableListData.keySet())
+                {
+                    if(index == groupPosition)
+                    {
+                        first = key;
+                        for(String str : expandableListData.get(first))
+                        {
+                            if(index_2 == childPosition)
+                            {
+                                second = str;
+                                break;
+                            }
+                            index_2++;
+                        }
+                        break;
+                    }
+                    index++;
+                }
+
+                String month = "";
+                int year = 0;
+                int num_month = 0;
+
+                String[] part = first.split("(?=\\d)(?<!\\d)");
+
+                month = part[0];
+                month = month.replaceAll("\\s+","");
+                year = Integer.parseInt(part[1]);
+
+                System.err.println(month + "Dicks");
+
+                String[] Months = {"", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+                for(int i = 0; i < Months.length; i++)
+                {
+                    if(month.equals(Months[i]))
+                    {
+                        num_month = i;
+                    }
+                }
+
+                /*
+                Scanner scanner = new Scanner(first).useDelimiter("[^0-9]+");
+                month = scanner.nextInt();
+                year = scanner.nextInt();
+                */
+
+                String result = Integer.toString(num_month)+ "/" + second + "/" + Integer.toString(year) ;
+
+                System.out.println(result);
+
+                String result_2 = "";
+                int resultant = 0;
+
+                for( int i = 0; i < whole.size(); i++ )
+                {
+                    //System.out.println(whole.get(i).getDate());
+                    if(whole.get(i).getDate().equals(result))
+                    {
+                        resultant = i;
+                        System.out.println(i);
+                        result_2 = whole.get(i).getDate();
+                        rv.smoothScrollToPosition(i);
+                        break;
+                    }
+                }
+                //System.err.println(resultant);
+                //System.err.println(result_2);
+                //System.err.println(result);
+                rv.smoothScrollToPosition(resultant);
+                return true;
+            }
+        });
     }
 
     @Override
@@ -303,7 +385,7 @@ public class ViewTimeline extends AppCompatActivity {
 
         //sorts the dates
         //List<String> dates
-        LinkedHashMap<String, List<String>> expandableListData = new LinkedHashMap<>();
+        expandableListData = new LinkedHashMap<>();
 
         String[] Months = {"", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
@@ -312,9 +394,10 @@ public class ViewTimeline extends AppCompatActivity {
         int year_data = 0;
         List<String> months_date = new ArrayList<String>();
         String curr_m_y = "";
+        int temp_day = 0;
 
         //Goes through all the given dates
-        for(int i = 1; i < whole.size(); i++)
+        for(int i = 0; i < whole.size(); i++)
         {
             //Separates given string into pieces using scanner
             Scanner scanner = new Scanner(whole.get(i).getDate()).useDelimiter("[^0-9]+");
@@ -333,10 +416,20 @@ public class ViewTimeline extends AppCompatActivity {
             {
                 curr_m_y = month_year;
                 months_date.add(Integer.toString(day_data));
+                temp_day = day_data;
+                if(whole.size()-1 == i)
+                {
+                    expandableListData.put(month_year, new ArrayList<String>(months_date));
+                }
             }
             else if(month_year.equals(curr_m_y))
             {
-                months_date.add(Integer.toString(day_data));
+
+                if( !(temp_day == day_data) )
+                {
+                    months_date.add(Integer.toString(day_data));
+                    temp_day = day_data;
+                }
                 if(whole.size()-1 == i)
                 {
                     expandableListData.put(month_year, new ArrayList<String>(months_date));
@@ -348,7 +441,7 @@ public class ViewTimeline extends AppCompatActivity {
                 curr_m_y = month_year;
                 months_date.clear();
                 months_date.add(Integer.toString(day_data));
-
+                temp_day = day_data;
                 if(whole.size()-1 == i)
                 {
                     expandableListData.put(month_year, new ArrayList<String>(months_date));
