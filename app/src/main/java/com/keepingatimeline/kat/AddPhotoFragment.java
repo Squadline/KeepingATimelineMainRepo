@@ -72,7 +72,7 @@ public class AddPhotoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 DialogFragment newFragment = new DatePickerPhoto();
-                newFragment.show(getFragmentManager(),"Date Picker");
+                newFragment.show(getFragmentManager(),"DateGen Picker");
             }
         });
 
