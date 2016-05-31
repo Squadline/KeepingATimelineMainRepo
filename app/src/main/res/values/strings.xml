@@ -33,4 +33,12 @@
     <string name="RobotoMedium">fonts/Roboto-Medium.ttf</string>
     <string name="RobotoSlabRegular">fonts/RobotoSlab-Regular.ttf</string>
     <string name="RobotoSlabBold">fonts/RobotoSlab-Bold.ttf</string>
+
+    <!--Edit Event Strings-->
+    <string name="editEventTitles">New Title</string>
+    <string name="editText">New Text</string>
+    <string name="editDate">New Date</string>
+    <string name="editDescription">New Description</string>
+    <string name="editQuote">New Quote</string>
+    <string name="editSource">New Source</string>
 </resources>
