@@ -3,15 +3,19 @@ package com.keepingatimeline.kat;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -47,6 +51,26 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             photoText = (TextView) v.findViewById(R.id.photo_text);
             photoPhoto = (ImageView) v.findViewById(R.id.photo_photo);
 
+            final ImageButton editImageButton = (ImageButton) v.findViewById(R.id.editPhotoEvent);
+            editImageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v){
+
+                    PopupMenu popup = new PopupMenu(v.getContext(), editImageButton);
+                    popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+
+                            //do stuff
+                            return true;
+                        }
+                    });
+
+                    popup.show();
+                }
+            });
+
             Context context = v.getContext();
             Typeface photoTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoRegular));
             photoTitle.setTypeface(photoTitleFont);
@@ -65,6 +89,26 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             quoteDate = (TextView) v.findViewById(R.id.quote_date);
             quoteText = (TextView) v.findViewById(R.id.quote_text);
             quoteSpeaker = (TextView) v.findViewById(R.id.quote_speaker);
+
+            final ImageButton editQuoteButton = (ImageButton) v.findViewById(R.id.editQuoteEvent);
+            editQuoteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v){
+
+                    PopupMenu popup = new PopupMenu(v.getContext(), editQuoteButton);
+                    popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+
+                            //do stuff
+                            return true;
+                        }
+                    });
+
+                    popup.show();
+                }
+            });
 
             Context context = v.getContext();
             Typeface quoteTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoRegular));
@@ -88,6 +132,26 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             textTitle = (TextView) v.findViewById(R.id.text_title);
             textDate = (TextView) v.findViewById(R.id.text_date);
             textText = (TextView) v.findViewById(R.id.text_text);
+
+            final ImageButton editTextButton = (ImageButton) v.findViewById(R.id.editTextEvent);
+            editTextButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v){
+
+                    PopupMenu popup = new PopupMenu(v.getContext(), editTextButton);
+                    popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+
+                            //do stuff
+                            return true;
+                        }
+                    });
+
+                    popup.show();
+                }
+            });
 
             Context context = v.getContext();
             Typeface textTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoRegular));
