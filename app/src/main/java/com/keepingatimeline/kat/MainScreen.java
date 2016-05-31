@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -31,17 +32,17 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+        ChangePasswordFragment.ChangePasswordListener, ChangeProfilePicFragment.ChangeProfilePicListener{
 
     private Firebase database;
-    private ArrayList<String> timelineTitles = new ArrayList<>();
-    private ArrayList<String> timelineMembers = new ArrayList<>();
-    private ArrayList<String> timelineIDs = new ArrayList<>();
+    private ArrayList<Timeline> timelines = new ArrayList<>();
 
     // Used for displaying members of each timeline
     private String displayMembers;
@@ -120,6 +121,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get the name of  the current user
+
                 currentFirst = dataSnapshot.child(NAME_STR).getValue().toString();
                 currentLast = dataSnapshot.child(LAST_STR).getValue().toString();
 
@@ -146,7 +148,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         });
 
 
-        inflateTimeline = new TimelineAdapter(this, timelineTitles, timelineMembers);
+        inflateTimeline = new TimelineAdapter(this, timelines);
         timelineList = (ListView) findViewById(R.id.timelineList);
         timelineList.setAdapter(inflateTimeline);
 
@@ -161,14 +163,14 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
                 // All of the stuff that doesn't make sense was written by Trevor
 
-                timelineTitles.clear();
-                timelineIDs.clear();
-                timelineMembers.clear();
+                timelines.clear();
 
                 for (DataSnapshot tlSnapshot : dataSnapshot.getChildren()) {
 
-                    timelineIDs.add(tlSnapshot.getKey());
-                    timelineTitles.add(tlSnapshot.child("Title").getValue().toString());
+                    Timeline newTimeline = new Timeline();
+                    newTimeline.setId(tlSnapshot.getKey());
+                    newTimeline.setTitle(tlSnapshot.child("Title").getValue().toString());
+                    newTimeline.setLastmodified(tlSnapshot.child("LastModified").getValue().toString());
 
                     ArrayList<String> otherUsers = new ArrayList<String>();
 
@@ -189,8 +191,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                         else if(index == otherUsers.size() - 2) members += " & ";
                     }
 
-                    timelineMembers.add(members);
+                    newTimeline.setMembers(members);
+
+                    timelines.add(newTimeline);
                 }
+                mergeSort(timelines);
 
                 inflateTimeline.notifyDataSetChanged();
             }
@@ -206,11 +211,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         timelineList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String timelineName = timelineTitles.get(position);
+                String timelineName = timelines.get(position).getTitle();
 
                 Intent viewTimelineActivity = new Intent(MainScreen.this, ViewTimeline.class);
                 viewTimelineActivity.putExtra("Timeline Name", timelineName);
-                viewTimelineActivity.putExtra("Timeline ID", timelineIDs.get(position));
+                viewTimelineActivity.putExtra("Timeline ID", timelines.get(position).getId());
                 startActivity(viewTimelineActivity);
             }
 
@@ -353,8 +358,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         if (id == R.id.navChangeName) {
             showChangeNameDialog();
         } else if (id == R.id.navChangePassword) {
-            showChangePassword(); // shows change password dialog - by me!!!
+            DialogFragment dialog = new ChangePasswordFragment();
+            dialog.show(getSupportFragmentManager(), "ChangePasswordFragment");
+
         } else if (id == R.id.navChangePhoto) {
+            DialogFragment dialog = new ChangeProfilePicFragment();
+            dialog.show(getSupportFragmentManager(), "ChangeProfilePicFragment");
 
         } else if (id == R.id.navHelp) {
             getMainScreenHelp(); // sets up the help dialogue --Dana
@@ -380,117 +389,67 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         return true;
     }
 
-    private void showChangePassword(){
-
+    @Override
+    public void onDialogPositiveClick(final ChangePasswordFragment dialog) {
         final String emailStr = Vars.getFirebase().getAuth().getProviderData().get("email").toString();
+        String curPass = dialog.getCurPass();
+        String newPass = dialog.getNewPass();
+        String conPass = dialog.getConPass();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        View v = inflater.inflate(R.layout.dialog_change_password, null);
-        builder.setTitle("Change Password");
-        builder.setMessage("Enter your current password, then enter a new password and confirm it.");
+        // FORM CHECKING
 
-        builder.setView(v);
+        // check if anything is empty
+        if (newPass.length() == 0 ||
+                curPass.length() == 0 ||
+                conPass.length() == 0) {
 
-        final EditText curPass = (EditText) v.findViewById(R.id.currentPasswordInput);
-        final EditText newPass = (EditText) v.findViewById(R.id.newPasswordInput);
-        final EditText conPass = (EditText) v.findViewById(R.id.confirmPasswordInput);
+        }
+        // check if new pass == confirm pass
+        if( !newPass.equals(conPass)) {
 
+            Toast.makeText(getApplicationContext(), "New passwords do not match! :0",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
 
-        builder.setNegativeButton("Cancel", null);
+        // check check if currpass == new pass, aka no point
 
+        if( newPass.equals(curPass)) {
+            Toast.makeText(getApplicationContext(), "Current password same as new password!"
+                            + "Please change the password to something different!",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
 
-        builder.setPositiveButton("Save", null);
-
-        //change password dialog
-        final AlertDialog changePDialog = builder.create();
-        changePDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface d) {
-                Button confirm = changePDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                confirm.setOnClickListener( new View.OnClickListener() {
+        // SERVER CHECKING
+        Vars.getFirebase().changePassword(emailStr, curPass,
+                newPass, new Firebase.ResultHandler() {
                     @Override
-                    public void onClick(View v) {
-                        // FORM CHECKING
-
-                        // check if anything is empty
-                        if (newPass.getText().toString().length() == 0 ||
-                                curPass .getText().toString().length() == 0 ||
-                                conPass.getText().toString().length() == 0) {
-
-                        }
-                        // check if new pass == confirm pass
-                        if( !newPass.getText().toString().equals(conPass.getText().toString())) {
-
-                            Toast.makeText(getApplicationContext(), "New passwords do not match! :0",
+                    public void onError(FirebaseError err)
+                    {
+                        if( err.getCode() == FirebaseError.INVALID_PASSWORD)
+                        {
+                            Toast.makeText(getApplicationContext(),
+                                    "Error: Current password is incorrect",
                                     Toast.LENGTH_LONG).show();
-                            return;
-                        }
 
-                        // check check if currpass == new pass, aka no point
-
-                        if( newPass.getText().toString().equals(curPass.getText().toString())) {
-                            Toast.makeText(getApplicationContext(), "Current password same as new password!"
-                                    + "Please change the password to something different!",
+                        } else {
+                            Toast.makeText(getApplicationContext(),
+                                    "Error: " + err.getMessage(),
                                     Toast.LENGTH_LONG).show();
-                            return;
                         }
-
-                        // SERVER CHECKING
-                        Vars.getFirebase().changePassword(emailStr, curPass.getText().toString(),
-                                newPass.getText().toString(), new Firebase.ResultHandler() {
-                                    @Override
-                                    public void onError(FirebaseError err)
-                                    {
-                                        if( err.getCode() == FirebaseError.INVALID_PASSWORD)
-                                        {
-                                            Toast.makeText(getApplicationContext(),
-                                                    "Error: Current password is incorrect",
-                                                    Toast.LENGTH_LONG).show();
-
-                                        } else {
-                                            Toast.makeText(getApplicationContext(),
-                                                    "Error: " + err.getMessage(),
-                                                    Toast.LENGTH_LONG).show();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onSuccess()
-                                    {
-                                        Toast.makeText(getApplicationContext(),  "Password successfully changed",
-                                                Toast.LENGTH_LONG).show();
-                                        changePDialog.cancel();
-                                        return;
-                                    }
-
-                                });
-
-                /*firebaseRef.changePassword( oldPassword, nP, nPConfirm );
-                {
-                    if ok, close dialog and toast success
-                    if bad, stay in dialog and toast oldP incorrecto o whatever
-                }
-                */
-
-                        // dialog.dismiss();
                     }
-                });
-                Button cancel = changePDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-                cancel.setOnClickListener( new View.OnClickListener() {
+
                     @Override
-                    public void onClick(View v) {
-                        //close this dialog
-                        changePDialog.cancel();
+                    public void onSuccess()
+                    {
+                        Toast.makeText(getApplicationContext(),  "Password successfully changed",
+                                Toast.LENGTH_LONG).show();
+                        dialog.getDialog().cancel();
                         return;
                     }
+
                 });
-            }
-
-
-
-        });
-        changePDialog.show();
     }
 
     private void showChangeNameDialog() {
@@ -568,6 +527,15 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         builder.create().show();
     }
 
+
+    // saves data for editing profile picture
+    @Override
+    public void onDialogPositiveClick(final ChangeProfilePicFragment dialog) {
+        String uid = Vars.getFirebase().getAuth().getUid();
+        String photo = dialog.getPhoto();
+        Vars.getFirebase().child("Users/"+ uid + "/ProfilePic").setValue(photo);
+    }
+
     // displays a help dialogue --Dana
     private void getMainScreenHelp(){
         AlertDialog.Builder helpDialogBuilder = new AlertDialog.Builder(this);
@@ -595,5 +563,73 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         AlertDialog dialogHelp = helpDialogBuilder.create();
         dialogHelp.show();
+    }
+
+    private ArrayList<Timeline> mergeSort(ArrayList<Timeline> whole) {
+        ArrayList<Timeline> left = new ArrayList<Timeline>();
+        ArrayList<Timeline> right = new ArrayList<Timeline>();
+        int center;
+
+        if (whole.size() <= 1) {
+            return whole;
+        } else {
+            center = whole.size()/2;
+            // copy the left half of whole into the left.
+            for (int i=0; i<center; i++) {
+                left.add(whole.get(i));
+            }
+
+            //copy the right half of whole into the new arraylist.
+            for (int i=center; i<whole.size(); i++) {
+                right.add(whole.get(i));
+            }
+
+            // Sort the left and right halves of the arraylist.
+            left  = mergeSort(left);
+            right = mergeSort(right);
+
+            // Merge the results back together.
+            merge(left, right, whole);
+        }
+        return whole;
+    }
+
+    private void merge(ArrayList<Timeline> left, ArrayList<Timeline> right, ArrayList<Timeline> whole) {
+        int leftIndex = 0;
+        int rightIndex = 0;
+        int wholeIndex = 0;
+
+        // As long as neither the left nor the right ArrayList has
+        // been used up, keep taking the smaller of left.get(leftIndex)
+        // or right.get(rightIndex) and adding it at both.get(bothIndex).
+        while (leftIndex < left.size() && rightIndex < right.size()) {
+            if ( !DateGen.compareDates(left.get(leftIndex).getLastmodified(),
+                    right.get(rightIndex).getLastmodified())) {
+                whole.set(wholeIndex, left.get(leftIndex));
+                leftIndex++;
+            } else {
+                whole.set(wholeIndex, right.get(rightIndex));
+                rightIndex++;
+            }
+            wholeIndex++;
+        }
+
+        ArrayList<Timeline> rest;
+        int restIndex;
+        if (leftIndex >= left.size()) {
+            // The left ArrayList has been used up...
+            rest = right;
+            restIndex = rightIndex;
+        } else {
+            // The right ArrayList has been used up...
+            rest = left;
+            restIndex = leftIndex;
+        }
+
+        // Copy the rest of whichever ArrayList (left or right) was not used up.
+        for (int i=restIndex; i<rest.size(); i++) {
+            whole.set(wholeIndex, rest.get(i));
+            wholeIndex++;
+        }
     }
 }

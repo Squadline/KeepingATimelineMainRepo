@@ -24,7 +24,7 @@ public class AddFriendFragment extends DialogFragment {
     private EditText addFriendInput;            // Text field for email input
     private String email;                       // Email entered
 
-    // Define an interface that positive button listeners must implement
+    // Define an interface that p ositive button listeners must implement
     public interface AddFriendListener {
         // Positive button listener onClick
         void onDialogPositiveClick(AddFriendFragment dialog);

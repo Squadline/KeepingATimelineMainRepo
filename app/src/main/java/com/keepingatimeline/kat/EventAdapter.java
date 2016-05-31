@@ -30,12 +30,14 @@ import java.util.ArrayList;
 public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final ArrayList<Event> eventList;
+    private final String timelineID;
     private Context ctx;
 
     // saves off the passed eventList, removing null events from it
-    public EventAdapter(Context context, ArrayList<Event> eventListParam) {
+    public EventAdapter(Context context, ArrayList<Event> eventListParam, String timelineID) {
         this.eventList = eventListParam;
         this.ctx = context;
+        this.timelineID = timelineID;
     }
 
     // Provide a reference to the views for each data item
@@ -43,6 +45,8 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolderPhoto extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
+        public int position;
+        public EventAdapter parent;
         public TextView photoTitle;
         public TextView photoDate;
         public TextView photoText;
@@ -73,7 +77,21 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                            builder.setTitle("Lol").setMessage("Hope this works");
+                            LayoutInflater inflater = LayoutInflater.from(v.getContext());
+                            builder.setView(inflater.inflate(R.layout.dialog_edit_photo_event, null));
+                            builder.setTitle("Edit Event").setMessage("Change the fields you would like to edit");
+                            builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
                             builder.create().show();
                             return true;
                         }
@@ -88,15 +106,15 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
+                                    parent.deleteEvent(position);
                                 }
-                            })
-                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
-                                        }
-                                    });
+                            });
+                            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
                             builder.create().show();
                             return true;
                         }
@@ -109,6 +127,8 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     public static class ViewHolderQuote extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
+        public int position;
+        public EventAdapter parent;
         public TextView quoteTitle;
         public TextView quoteDate;
         public TextView quoteText;
@@ -147,7 +167,21 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                            builder.setTitle("Lol").setMessage("Hope this works");
+                            LayoutInflater inflater = LayoutInflater.from(v.getContext());
+                            builder.setView(inflater.inflate(R.layout.dialog_edit_quote_event, null));
+                            builder.setTitle("Edit Event").setMessage("Change the fields you would like to edit");
+                            builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
                             builder.create().show();
                             return true;
                         }
@@ -162,15 +196,15 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
+                                    parent.deleteEvent(position);
                                 }
-                            })
-                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
-                                        }
-                                    });
+                            });
+                            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
                             builder.create().show();
                             return true;
                         }
@@ -183,6 +217,8 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     public static class ViewHolderText extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
+        public int position;
+        public EventAdapter parent;
         public TextView textTitle;
         public TextView textDate;
         public TextView textText;
@@ -214,7 +250,21 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                            builder.setTitle("Lol").setMessage("Hope this works");
+                            LayoutInflater inflater = LayoutInflater.from(v.getContext());
+                            builder.setView(inflater.inflate(R.layout.dialog_edit_text_event, null));
+                            builder.setTitle("Edit Event").setMessage("Change the fields you would like to edit");
+                            builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
                             builder.create().show();
                             return true;
                         }
@@ -229,15 +279,15 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
+                                    parent.deleteEvent(position);
                                 }
-                            })
-                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
-                                        }
-                                    });
+                            });
+                            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
                             builder.create().show();
                             return true;
                         }
@@ -289,6 +339,8 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         Event event = eventList.get(position);
         switch(event.getType()) {
             case "photo":
+                ((ViewHolderPhoto)holder).position = position;
+                ((ViewHolderPhoto)holder).parent = this;
                 ((ViewHolderPhoto)holder).photoTitle.setText(event.getTitle());
                 ((ViewHolderPhoto)holder).photoDate.setText(event.getDate());
                 ((ViewHolderPhoto)holder).photoText.setText(event.getString1());
@@ -308,6 +360,8 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 fancyQuoteText.setSpan(leftSpan, 0, 1, 0);
                 fancyQuoteText.setSpan(rightSpan, (fancyQuoteText.length() - 1), fancyQuoteText.length(), 0);
 
+                ((ViewHolderQuote)holder).position = position;
+                ((ViewHolderQuote)holder).parent = this;
                 ((ViewHolderQuote)holder).quoteTitle.setText(event.getTitle());
                 ((ViewHolderQuote)holder).quoteDate.setText(event.getDate());
                 ((ViewHolderQuote)holder).quoteText.setText(fancyQuoteText);
@@ -316,6 +370,8 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 break;
             case "text":
             default:
+                ((ViewHolderText)holder).position = position;
+                ((ViewHolderText)holder).parent = this;
                 ((ViewHolderText)holder).textTitle.setText(event.getTitle());
                 ((ViewHolderText)holder).textDate.setText(event.getDate());
                 ((ViewHolderText)holder).textText.setText(event.getString1());
@@ -326,5 +382,9 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public int getItemCount() {
         return eventList.size();
+    }
+
+    private void deleteEvent(int position) {
+        Vars.getTimeline(timelineID + "/Events/" + eventList.get(position).getKey()).setValue(null);
     }
 }

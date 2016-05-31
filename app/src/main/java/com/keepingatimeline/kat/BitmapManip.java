@@ -9,9 +9,10 @@ import android.graphics.Matrix;
  */
 public class BitmapManip {
 
-    private static final double MAX_WIDTH = 1024;
-    private static final double MAX_HEIGHT = 1024;
-
+    private static final double EVENT_MAX_WIDTH = 1024;
+    private static final double EVENT_MAX_HEIGHT = 1024;
+    private static final double ICON_MAX_WIDTH = 200;
+    private static final double ICON_MAX_HEIGHT = 200;
     private BitmapManip () { }
 
     public static Bitmap flipHorizontal(Bitmap original) {
@@ -46,22 +47,45 @@ public class BitmapManip {
         return Bitmap.createBitmap(original, 0, 0, original.getWidth(), original.getHeight(), matrix, true);
     }
 
-    public static Bitmap shrink(Bitmap original) {
+    // rename to
+    public static Bitmap shrinkToEvent(Bitmap original) {
         double newWidth = original.getWidth();
         double newHeight = original.getHeight();
-        if(newWidth > MAX_WIDTH) {
-            double wScale = MAX_WIDTH/newWidth;
-            newWidth = MAX_WIDTH;
+        if(newWidth > EVENT_MAX_WIDTH) {
+            double wScale = EVENT_MAX_WIDTH/newWidth;
+            newWidth = EVENT_MAX_WIDTH;
             newHeight = newHeight * wScale;
         }
-        if(newHeight > MAX_HEIGHT) {
-            double wScale = MAX_HEIGHT/newHeight;
-            newHeight = MAX_HEIGHT;
+        if(newHeight > EVENT_MAX_HEIGHT) {
+            double wScale = EVENT_MAX_HEIGHT/newHeight;
+            newHeight = EVENT_MAX_HEIGHT;
             newWidth = newWidth * wScale;
         }
 
         original = Bitmap.createScaledBitmap(original, (int) newWidth, (int) newHeight, false);
 
         return original.copy(Bitmap.Config.RGB_565, false);
+    }
+
+    // shrink to icon
+    // shrink bitmap before setting rgb
+    public static Bitmap shrinkToIcon(Bitmap orig) {
+        double newWidth = orig.getWidth();
+        double newHeight = orig.getHeight();
+        if( newWidth > ICON_MAX_WIDTH) {
+            double wScale = ICON_MAX_WIDTH/newWidth;
+            newWidth = ICON_MAX_WIDTH;
+            newHeight = newHeight * wScale;
+        }
+
+        if( newWidth > ICON_MAX_WIDTH) {
+            double wScale = ICON_MAX_HEIGHT/newHeight;
+            newHeight = ICON_MAX_HEIGHT;
+            newWidth = newWidth * wScale;
+        }
+
+        orig = Bitmap.createScaledBitmap(orig, (int) newWidth, (int) newHeight, false);
+
+        return orig.copy(Bitmap.Config.RGB_565, false);
     }
 }

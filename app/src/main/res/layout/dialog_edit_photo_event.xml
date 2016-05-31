@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:paddingEnd="20dp"
+    android:paddingStart="20dp"
+    android:paddingTop="10dp">
+
+    <EditText
+        android:id="@+id/changePhotoTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/editEventTitles"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/changePhotoDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/editDescription"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/changePhotoDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/editDate"
+        android:inputType="textPassword" />
+</LinearLayout>
