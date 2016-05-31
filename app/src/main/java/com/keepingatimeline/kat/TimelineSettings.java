@@ -41,13 +41,13 @@ import java.util.HashMap;
  *  Display Picture
  *  Change Picture    Toast, Dialog
  *  Rename Timeline   Dialog                    DONE
- *  Notifications
+ *  Notifications                               KINDA DONE
  *
  *  Add null checks to prevent crashing         DONE
  *  Change member display to names              DONE
  *  Add cancelled error messages                DONE
  *
- *  Toast messages or Notifications to show member changes?
+ *  Toast messages or Notifications to show member changes? NOPE
  */
 public class TimelineSettings extends AppCompatActivity
         implements AddFriendFragment.AddFriendListener {
@@ -57,7 +57,6 @@ public class TimelineSettings extends AppCompatActivity
     private TextView squadTitle;                // Name of timeline
     private TextView addFriend;                 // Add Friend button
     private TextView leaveSquad;                // Leave Squad button
-    private Switch notifications;               // Notifications switch
     private ArrayAdapter<String> adapter;       // Adapter for list of users
     private ArrayList<String> users;            // List of user emails (for existing user comparison)
     private ArrayList<String> userNames;        // List of user names  (for user display)
@@ -108,7 +107,6 @@ public class TimelineSettings extends AppCompatActivity
         squadTitle =  (TextView) findViewById(R.id.squad_title);
         addFriend = (TextView) findViewById(R.id.addPeople);
         leaveSquad = (TextView) findViewById(R.id.leaveSquad);
-        notifications = (Switch) findViewById(R.id.notifications);
         NonScrollListView user_list = (NonScrollListView) findViewById(R.id.user_list);
 
         // Set font for the title
