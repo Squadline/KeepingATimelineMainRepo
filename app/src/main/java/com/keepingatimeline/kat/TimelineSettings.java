@@ -14,9 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,13 +40,13 @@ import java.util.Map;
  *  Display Picture
  *  Change Picture    Toast, Dialog
  *  Rename Timeline   Dialog                    DONE
- *  Notifications
+ *  Notifications                               KINDA DONE
  *
  *  Add null checks to prevent crashing         DONE
  *  Change member display to names              DONE
  *  Add cancelled error messages                DONE
  *
- *  Toast messages or Notifications to show member changes?
+ *  Toast messages or Notifications to show member changes? NOPE
  */
 public class TimelineSettings extends AppCompatActivity
         implements AddFriendFragment.AddFriendListener {
@@ -58,11 +56,10 @@ public class TimelineSettings extends AppCompatActivity
     private TextView squadTitle;                // Name of timeline
     private TextView addFriend;                 // Add Friend button
     private TextView leaveSquad;                // Leave Squad button
-    private Switch notifications;               // Notifications switch
     private ArrayAdapter<String> adapter;       // Adapter for list of users
-    private ArrayList<String> users;            // List of user emails (for existing user comparison)
-    private ArrayList<String> userNames;        // List of user names  (for user display)
+    private ArrayList<String> users;        // List of user names  (for user display)
     private ArrayList<String> userIDs;          // List of user IDs    (for easy iteration when searching)
+    private String lastModified;
 
     private Firebase db;                        // Database object
 
@@ -109,7 +106,6 @@ public class TimelineSettings extends AppCompatActivity
         squadTitle =  (TextView) findViewById(R.id.squad_title);
         addFriend = (TextView) findViewById(R.id.addPeople);
         leaveSquad = (TextView) findViewById(R.id.leaveSquad);
-        notifications = (Switch) findViewById(R.id.notifications);
         NonScrollListView user_list = (NonScrollListView) findViewById(R.id.user_list);
 
         // Set font for the title
@@ -128,9 +124,9 @@ public class TimelineSettings extends AppCompatActivity
         // Instantiate list of user emails, names, IDs, and the adapter to the ListView
         // Assign the name list to the adapter, since that's what we will display
         users = new ArrayList<String>();
-        userNames = new ArrayList<String>();
+        users = new ArrayList<String>();
         userIDs = new ArrayList<String>();
-        adapter = new ArrayAdapter<String>(this, R.layout.settings_user_list, userNames);
+        adapter = new ArrayAdapter<String>(this, R.layout.settings_user_list, users);
 
         // Set the ListView's adapter
         user_list.setAdapter(adapter);
@@ -204,6 +200,7 @@ public class TimelineSettings extends AppCompatActivity
 
                 // Get value of the title child of timeline and update title
                 squadTitle.setText(dataSnapshot.child(TITLE_STR).getValue().toString());
+                lastModified = dataSnapshot.child("LastModified").getValue().toString();
 
                 // Reset the list of user emails and IDs
                 users.clear();
@@ -215,9 +212,6 @@ public class TimelineSettings extends AppCompatActivity
                     users.add(member.getValue().toString());
                     userIDs.add(member.getKey());
                 }
-
-                // Update the list of user names and the display
-                updateUserNames();
             }
 
             @Override
@@ -249,44 +243,6 @@ public class TimelineSettings extends AppCompatActivity
         });
     }
 
-    // Helper method to update list of timeline users' names
-
-    // Using this method will slow down timeline users retrieval
-    // since we are relying on two listeners for the database
-    // as well as downloading a snapshot of the Users table
-    // This method is for displaying user names instead of emails
-    private void updateUserNames() {
-        // Clear the list of user names
-        userNames.clear();
-
-        // Get the users table in the database
-        Firebase allUsers = Vars.getFirebase().child(DB_USERS);
-
-        // Retrieve a snapshot of the users ONCE
-        allUsers.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Visit all users in the timeline and add their names to the list
-                for (String UID : userIDs) {
-                    // Get the name values of the user
-                    String firstName = dataSnapshot.child(UID).child(FIRST_NAME).getValue().toString();
-                    String lastName = dataSnapshot.child(UID).child(LAST_NAME).getValue().toString();
-
-                    // Put a space in between and add to the name list
-                    userNames.add(firstName + " " + lastName);
-                }
-                // Notify the adapter of data update and refresh the view
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                // If load was canceled, inform user of error
-                showDataErrorMsg();
-            }
-        });
-    }
-
     // Listener for Add Friend dialog
     // Check for invalid email format
     // nonexistent email
@@ -306,16 +262,6 @@ public class TimelineSettings extends AppCompatActivity
                 || email.lastIndexOf('.') > email.length() - 2) {
             // Print out the Toast email error message
             showEmailErrorMsg();
-
-            // No further actions will be taken
-            return;
-        }
-
-        // Verify that entered user is not already in the timeline
-        // If the user is, print out already exists error message
-        if (users.contains(email)) {
-            // Print out Toast error message
-            showAddAlreadyExistsMsg(email);
 
             // No further actions will be taken
             return;
@@ -344,12 +290,16 @@ public class TimelineSettings extends AppCompatActivity
 
                     // If the emails match (emails are case insensitive)
                     if (userEmail.equalsIgnoreCase(email)) {
+                        //case: the user is already part of this timeline
+                        if(user.child("Timeline/" + currentTimelineID).exists()) return;
+
                         Firebase database = Vars.getUser(userID).child("Timelines");
                         Map<String, Object> userTimelines = new HashMap<String, Object>();
                         Map<String, String> timelineData = new HashMap<String, String>();
                         timelineData.put("Title", currentTimelineName);
+                        timelineData.put("LastModified", lastModified);
                         for(int index = 0; index < users.size(); index++) {
-                            String temp = userNames.get(index);
+                            String temp = users.get(index);
                             temp = temp.substring(0, temp.indexOf(" ")); //parses to get first name
                             timelineData.put(userIDs.get(index), temp);
                         }
