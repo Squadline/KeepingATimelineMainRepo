@@ -1,6 +1,5 @@
 package com.keepingatimeline.kat;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;

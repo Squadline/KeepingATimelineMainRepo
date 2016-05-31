@@ -1,14 +1,10 @@
 package com.keepingatimeline.kat;
 
-import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.view.menu.MenuView;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;

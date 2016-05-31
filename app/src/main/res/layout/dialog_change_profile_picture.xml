@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:paddingBottom="6dp"
     android:paddingEnd="20dp"
     android:paddingStart="20dp"
-    android:paddingTop="6dp">
+    android:paddingTop="6dp"
+    android:weightSum="1">
 
     <Button
         android:id="@+id/uploadPhotoButton"
-        android:layout_width="wrap_content"
+        android:layout_width="0dip"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginEnd="0.5dp"
-        android:layout_marginStart="0.5dp"
-        android:focusable="true"
-        android:focusableInTouchMode="false"
-        android:padding="10dp"
-        android:text="Upload Image" />
+        android:layout_marginEnd="2dp"
+        android:layout_weight="0.5"
+        android:text="Choose File" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/uploadPhotoName"
+        style="?android:attr/editTextStyle"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_weight="0.5"
+        android:background="@android:color/transparent"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:singleLine="true"
+        android:text="No file chosen" />
+
+</LinearLayout>
