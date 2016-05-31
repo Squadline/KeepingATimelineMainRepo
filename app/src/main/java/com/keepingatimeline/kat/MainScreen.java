@@ -31,6 +31,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -39,9 +40,7 @@ import java.util.Map;
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private Firebase database;
-    private ArrayList<String> timelineTitles = new ArrayList<>();
-    private ArrayList<String> timelineMembers = new ArrayList<>();
-    private ArrayList<String> timelineIDs = new ArrayList<>();
+    private ArrayList<Timeline> timelines = new ArrayList<>();
 
     // Used for displaying members of each timeline
     private String displayMembers;
@@ -146,7 +145,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         });
 
 
-        inflateTimeline = new TimelineAdapter(this, timelineTitles, timelineMembers);
+        inflateTimeline = new TimelineAdapter(this, timelines);
         timelineList = (ListView) findViewById(R.id.timelineList);
         timelineList.setAdapter(inflateTimeline);
 
@@ -161,14 +160,14 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
                 // All of the stuff that doesn't make sense was written by Trevor
 
-                timelineTitles.clear();
-                timelineIDs.clear();
-                timelineMembers.clear();
+                timelines.clear();
 
                 for (DataSnapshot tlSnapshot : dataSnapshot.getChildren()) {
 
-                    timelineIDs.add(tlSnapshot.getKey());
-                    timelineTitles.add(tlSnapshot.child("Title").getValue().toString());
+                    Timeline newTimeline = new Timeline();
+                    newTimeline.setId(tlSnapshot.getKey());
+                    newTimeline.setTitle(tlSnapshot.child("Title").getValue().toString());
+                    newTimeline.setLastmodified(tlSnapshot.child("LastModified").getValue().toString());
 
                     ArrayList<String> otherUsers = new ArrayList<String>();
 
@@ -189,8 +188,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                         else if(index == otherUsers.size() - 2) members += " & ";
                     }
 
-                    timelineMembers.add(members);
+                    newTimeline.setMembers(members);
+
+                    timelines.add(newTimeline);
                 }
+                mergeSort(timelines);
 
                 inflateTimeline.notifyDataSetChanged();
             }
@@ -206,11 +208,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         timelineList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String timelineName = timelineTitles.get(position);
+                String timelineName = timelines.get(position).getTitle();
 
                 Intent viewTimelineActivity = new Intent(MainScreen.this, ViewTimeline.class);
                 viewTimelineActivity.putExtra("Timeline Name", timelineName);
-                viewTimelineActivity.putExtra("Timeline ID", timelineIDs.get(position));
+                viewTimelineActivity.putExtra("Timeline ID", timelines.get(position).getId());
                 startActivity(viewTimelineActivity);
             }
 
@@ -595,5 +597,73 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         AlertDialog dialogHelp = helpDialogBuilder.create();
         dialogHelp.show();
+    }
+
+    private ArrayList<Timeline> mergeSort(ArrayList<Timeline> whole) {
+        ArrayList<Timeline> left = new ArrayList<Timeline>();
+        ArrayList<Timeline> right = new ArrayList<Timeline>();
+        int center;
+
+        if (whole.size() <= 1) {
+            return whole;
+        } else {
+            center = whole.size()/2;
+            // copy the left half of whole into the left.
+            for (int i=0; i<center; i++) {
+                left.add(whole.get(i));
+            }
+
+            //copy the right half of whole into the new arraylist.
+            for (int i=center; i<whole.size(); i++) {
+                right.add(whole.get(i));
+            }
+
+            // Sort the left and right halves of the arraylist.
+            left  = mergeSort(left);
+            right = mergeSort(right);
+
+            // Merge the results back together.
+            merge(left, right, whole);
+        }
+        return whole;
+    }
+
+    private void merge(ArrayList<Timeline> left, ArrayList<Timeline> right, ArrayList<Timeline> whole) {
+        int leftIndex = 0;
+        int rightIndex = 0;
+        int wholeIndex = 0;
+
+        // As long as neither the left nor the right ArrayList has
+        // been used up, keep taking the smaller of left.get(leftIndex)
+        // or right.get(rightIndex) and adding it at both.get(bothIndex).
+        while (leftIndex < left.size() && rightIndex < right.size()) {
+            if ( !DateGen.compareDates(left.get(leftIndex).getLastmodified(),
+                    right.get(rightIndex).getLastmodified())) {
+                whole.set(wholeIndex, left.get(leftIndex));
+                leftIndex++;
+            } else {
+                whole.set(wholeIndex, right.get(rightIndex));
+                rightIndex++;
+            }
+            wholeIndex++;
+        }
+
+        ArrayList<Timeline> rest;
+        int restIndex;
+        if (leftIndex >= left.size()) {
+            // The left ArrayList has been used up...
+            rest = right;
+            restIndex = rightIndex;
+        } else {
+            // The right ArrayList has been used up...
+            rest = left;
+            restIndex = leftIndex;
+        }
+
+        // Copy the rest of whichever ArrayList (left or right) was not used up.
+        for (int i=restIndex; i<rest.size(); i++) {
+            whole.set(wholeIndex, rest.get(i));
+            wholeIndex++;
+        }
     }
 }

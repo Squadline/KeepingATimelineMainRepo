@@ -151,7 +151,7 @@ public class ViewTimeline extends AppCompatActivity {
 
         // specify an adapter (see also next example)
         final ArrayList<Event> eventList = new ArrayList<Event>();
-        rvAdapter = new EventAdapter(this, eventList);
+        rvAdapter = new EventAdapter(this, eventList, timelineID);
         rv.setAdapter(rvAdapter);
 
         firebaseRef = Vars.getTimeline(timelineID).child("Events");
@@ -360,57 +360,9 @@ public class ViewTimeline extends AppCompatActivity {
         return expandableListData;
     }
 
-    //Returns if date1 is before date2
-    protected boolean compareDates(String date1, String date2) {
-        //Holds Data of first date
-        int month1 = 0;
-        int day1 = 0;
-        int year1 = 0;
 
-        //Holds Data of second date
-        int month2 = 0;
-        int day2 = 0;
-        int year2 = 0;
 
-        Scanner s1 = new Scanner(date1).useDelimiter("[^0-9]+");
-        Scanner s2 = new Scanner(date2).useDelimiter("[^0-9]+");
-
-        //Store dates into their separate categories
-        month1 = s1.nextInt();
-        day1 = s1.nextInt();
-        year1 = s1.nextInt();
-
-        month2 = s2.nextInt();
-        day2 = s2.nextInt();
-        year2 = s2.nextInt();
-
-        //Compare Years
-        if(year2 != year1) {
-            if(year2 > year1)
-                return true;
-            else
-                return false;
-        }
-        //Compare Months
-        else if(month2 != month1) {
-            if(month2 > month1)
-                return true;
-            else
-                return false;
-        }
-        //Compare Days
-        else if(day2 != day1) {
-            if(day2 > day1)
-                return true;
-            else
-                return false;
-        }
-        else
-            return true;
-
-    }
-
-    public ArrayList<Event> mergeSort(ArrayList<Event> whole) {
+    private ArrayList<Event> mergeSort(ArrayList<Event> whole) {
         ArrayList<Event> left = new ArrayList<Event>();
         ArrayList<Event> right = new ArrayList<Event>();
         int center;
@@ -448,7 +400,7 @@ public class ViewTimeline extends AppCompatActivity {
         // been used up, keep taking the smaller of left.get(leftIndex)
         // or right.get(rightIndex) and adding it at both.get(bothIndex).
         while (leftIndex < left.size() && rightIndex < right.size()) {
-            if ( !compareDates(left.get(leftIndex).getDate(),
+            if ( !DateGen.compareDates(left.get(leftIndex).getDate(),
                     right.get(rightIndex).getDate())) {
                 whole.set(wholeIndex, left.get(leftIndex));
                 leftIndex++;
