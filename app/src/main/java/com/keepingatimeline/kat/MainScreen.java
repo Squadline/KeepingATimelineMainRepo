@@ -56,6 +56,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private String newName;
     private TextView titleBar;
     private String nameAdd;
+    private int menuItemSelected;
 
     private String currentFirst;                // First name of the current user
     private String currentLast;                 // Last name of the current user
@@ -396,6 +397,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         }
     }
 
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -406,13 +408,14 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         } else if (id == R.id.navChangePassword) {
             DialogFragment dialog = new ChangePasswordFragment();
             dialog.show(getSupportFragmentManager(), "ChangePasswordFragment");
-
+            menuItemSelected = 1;
         } else if (id == R.id.navChangePhoto) {
             DialogFragment dialog = new ChangeProfilePicFragment();
             dialog.show(getSupportFragmentManager(), "ChangeProfilePicFragment");
-
+            menuItemSelected = 2;
         } else if (id == R.id.navHelp) {
             getMainScreenHelp(); // sets up the help dialogue --Dana
+            menuItemSelected = 3;
         } else if (id == R.id.navLogOut) {
 
             Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
@@ -426,8 +429,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             startActivity(loginActivity);
             this.finish();
 
-
         }
+
 
         //closes drawer after button has been selected
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);
