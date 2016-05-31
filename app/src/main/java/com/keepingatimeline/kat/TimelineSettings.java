@@ -27,6 +27,7 @@ import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Initial version written by: Darren
@@ -329,29 +330,44 @@ public class TimelineSettings extends AppCompatActivity
                 // We are using linear search because users are not sorted in the table by email
                 // Iterate through all users
                 for (DataSnapshot user : dataSnapshot.getChildren()) {
+
+                    // Get the stored email of the user to retain consistency in style
+                    // Entered email may have style inconsistencies with stored email
+                    // that may cause problems later on
+                    String userEmail = user.child(EMAIL_STR).getValue().toString();
+
+                    // Get the user ID
+                    String userID = user.getKey();
+
+                    String userName = user.child(FIRST_NAME).getValue().toString() + " " +
+                                      user.child(LAST_NAME).getValue().toString();
+
                     // If the emails match (emails are case insensitive)
-                    if (user.child(EMAIL_STR).getValue().toString().equalsIgnoreCase(email)) {
-                        // Get the stored email of the user to retain consistency in style
-                        // Entered email may have style inconsistencies with stored email
-                        // that may cause problems later on
-                        String userEmail = user.child(EMAIL_STR).getValue().toString();
-                        // Get the user ID
-                        String userID = user.getKey();
+                    if (userEmail.equalsIgnoreCase(email)) {
+                        Firebase database = Vars.getUser(userID).child("Timelines");
+                        Map<String, Object> userTimelines = new HashMap<String, Object>();
+                        Map<String, String> timelineData = new HashMap<String, String>();
+                        timelineData.put("Title", currentTimelineName);
+                        for(int index = 0; index < users.size(); index++) {
+                            String temp = userNames.get(index);
+                            temp = temp.substring(0, temp.indexOf(" ")); //parses to get first name
+                            timelineData.put(userIDs.get(index), temp);
+                        }
+                        userTimelines.put(currentTimelineID, timelineData);
+                        database.updateChildren(userTimelines);
 
                         // New HashMap containing user information to store in the Timeline
-                        HashMap<String, Object> added = new HashMap<String, Object>();
+                        HashMap<String, Object> newUser = new HashMap<String, Object>();
+
+                        for(String member : userIDs) {
+                            database = Vars.getUser(member).child("Timelines/" + currentTimelineID);
+                            newUser.put(userID, userName.substring(0, userName.indexOf(" ")));
+                            database.updateChildren(newUser);
+                        }
 
                         // Add the user's ID and email and put it in the Timeline's Users table
-                        added.put(userID, userEmail);
-                        Vars.getTimeline(currentTimelineID).child(USERS_STR).updateChildren(added);
-
-
-                        // New HashMap containing timeline information to store in the User
-                        HashMap<String, Object> newTime = new HashMap<String, Object>();
-
-                        // Add the Timeline's ID and name and put it in the User's Timeline table
-                        newTime.put(currentTimelineID, currentTimelineName);
-                        Vars.getFirebase().child(DB_USERS).child(userID).child(TIMELINE_STR).updateChildren(newTime);
+                        newUser.put(userID, userName);
+                        Vars.getTimeline(currentTimelineID).child(USERS_STR).updateChildren(newUser);
 
                         // Show Toast message for successful add and dismiss the dialog
                         showSuccessfulAddMsg(email);
@@ -441,6 +457,14 @@ public class TimelineSettings extends AppCompatActivity
                         // effectively removing the timeline from the table
                         removedSquad.put(currentTimelineID, null);
                         Vars.getFirebase().child(DB_USERS).child(Vars.getUID()).child(TIMELINE_STR).updateChildren(removedSquad);
+
+                        //updates all the other users' timeline data
+                        for(int index = 0; index < users.size(); index++) {
+                            if(!userIDs.get(index).equals(Vars.getUID())) {
+                                Firebase database = Vars.getUser(userIDs.get(index)).child(TIMELINE_STR + "/" + currentTimelineID);
+                                database.updateChildren(removedUser);
+                            }
+                        }
 
                         // If the current user was the only member
                         // the timeline will be automatically deleted
