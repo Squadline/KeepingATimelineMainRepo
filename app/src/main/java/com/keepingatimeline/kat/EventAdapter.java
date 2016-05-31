@@ -79,18 +79,21 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         public boolean onMenuItemClick(MenuItem item) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                             LayoutInflater inflater = LayoutInflater.from(v.getContext());
-                            builder.setView(inflater.inflate(R.layout.dialog_edit_photo_event, null));
+                            View view = inflater.inflate(R.layout.dialog_edit_photo_event, null);
+                            builder.setView(view);
+
+                            final EditText title = (EditText) view.findViewById(R.id.changePhotoTitle);
+                            final EditText text = (EditText) view.findViewById(R.id.changePhotoDescription);
+                            final EditText date = (EditText) view.findViewById(R.id.changePhotoDate);
+
                             builder.setTitle("Edit Event").setMessage("Change the fields you would like to edit");
                             builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Event newEvent = new Event();
                                     newEvent.setType("photo");
-                                    EditText title = (EditText) v.findViewById(R.id.changePhotoTitle);
                                     newEvent.setTitle(title.getText().toString());
-                                    EditText text = (EditText) v.findViewById(R.id.changePhotoDescription);
                                     newEvent.setString1(text.getText().toString());
-                                    EditText date = (EditText) v.findViewById(R.id.changePhotoDate);
                                     newEvent.setDate(date.getText().toString());
 
                                     parent.updateEvent(newEvent, position);
@@ -102,12 +105,11 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                     dialog.cancel();
                                 }
                             });
-                            EditText title = (EditText) v.findViewById(R.id.changePhotoTitle);
+
                             title.setText(photoTitle.getText());
-                            EditText text = (EditText) v.findViewById(R.id.changePhotoDescription);
                             text.setText(photoText.getText());
-                            EditText date = (EditText) v.findViewById(R.id.changePhotoDate);
                             date.setText(photoDate.getText());
+
                             builder.create().show();
                             return true;
                         }
@@ -184,20 +186,23 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         public boolean onMenuItemClick(MenuItem item) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                             LayoutInflater inflater = LayoutInflater.from(v.getContext());
-                            builder.setView(inflater.inflate(R.layout.dialog_edit_quote_event, null));
+                            View view = inflater.inflate(R.layout.dialog_edit_quote_event, null);
+                            builder.setView(view);
+
+                            final EditText title = (EditText) view.findViewById(R.id.changeQuoteTitle);
+                            final EditText quote = (EditText) view.findViewById(R.id.changeQuote);
+                            final EditText date = (EditText) view.findViewById(R.id.changeQuoteDate);
+                            final EditText speaker = (EditText) view.findViewById(R.id.changeQuoteSource);
+
                             builder.setTitle("Edit Event").setMessage("Change the fields you would like to edit");
                             builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Event newEvent = new Event();
                                     newEvent.setType("quote");
-                                    EditText title = (EditText) v.findViewById(R.id.changeQuoteTitle);
                                     newEvent.setTitle(title.getText().toString());
-                                    EditText quote = (EditText) v.findViewById(R.id.changeQuote);
                                     newEvent.setString1(quote.getText().toString());
-                                    EditText date = (EditText) v.findViewById(R.id.changeQuoteDate);
                                     newEvent.setDate(date.getText().toString());
-                                    EditText speaker = (EditText) v.findViewById(R.id.changeQuoteSource);
                                     newEvent.setString2(speaker.getText().toString());
 
                                     parent.updateEvent(newEvent, position);
@@ -209,14 +214,12 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                     dialog.cancel();
                                 }
                             });
-                            EditText title = (EditText) v.findViewById(R.id.changeQuoteTitle);
+
                             title.setText(quoteTitle.getText());
-                            EditText quote = (EditText) v.findViewById(R.id.changeQuote);
                             quote.setText(quoteText.getText());
-                            EditText date = (EditText) v.findViewById(R.id.changeQuoteDate);
                             date.setText(quoteDate.getText());
-                            EditText speaker = (EditText) v.findViewById(R.id.changeQuoteSource);
                             speaker.setText(quoteSpeaker.getText());
+
                             builder.create().show();
                             return true;
                         }
@@ -286,18 +289,21 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         public boolean onMenuItemClick(MenuItem item) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                             LayoutInflater inflater = LayoutInflater.from(v.getContext());
-                            builder.setView(inflater.inflate(R.layout.dialog_edit_text_event, null));
+                            View view = inflater.inflate(R.layout.dialog_edit_text_event, null);
+                            builder.setView(view);
+
+                            final EditText title = (EditText) view.findViewById(R.id.changeTextTitle);
+                            final EditText quote = (EditText) view.findViewById(R.id.changeText);
+                            final EditText date = (EditText) view.findViewById(R.id.changeTextDate);
+
                             builder.setTitle("Edit Event").setMessage("Change the fields you would like to edit");
                             builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Event newEvent = new Event();
                                     newEvent.setType("text");
-                                    EditText title = (EditText) v.findViewById(R.id.changeTextTitle);
                                     newEvent.setTitle(title.getText().toString());
-                                    EditText quote = (EditText) v.findViewById(R.id.changeText);
                                     newEvent.setString1(quote.getText().toString());
-                                    EditText date = (EditText) v.findViewById(R.id.changeTextDate);
                                     newEvent.setDate(date.getText().toString());
 
                                     parent.updateEvent(newEvent, position);
@@ -309,12 +315,11 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                     dialog.cancel();
                                 }
                             });
-                            EditText title = (EditText) v.findViewById(R.id.changeTextTitle);
+
                             title.setText(textTitle.getText());
-                            EditText quote = (EditText) v.findViewById(R.id.changeText);
                             quote.setText(textText.getText());
-                            EditText date = (EditText) v.findViewById(R.id.changeTextDate);
                             date.setText(textDate.getText());
+
                             builder.create().show();
                             return true;
                         }

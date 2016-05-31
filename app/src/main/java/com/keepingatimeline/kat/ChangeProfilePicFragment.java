@@ -42,7 +42,7 @@ public class ChangeProfilePicFragment extends DialogFragment{
     private String imagePath;
     private Activity activityRef;
     private AlertDialog dialog;                 // Dialog to display
-    private TextView profileTextView;
+    private Button profileButton;
     private ChangeProfilePicListener pListener;
 
     // Define an interface that positive button listeners must implement
@@ -64,7 +64,7 @@ public class ChangeProfilePicFragment extends DialogFragment{
         }
         // If this fails, it means that activity must implement the listener interface
         catch (ClassCastException cce) {
-            throw new ClassCastException(activity.toString() + "must implement ChangePasswordListener");
+            throw new ClassCastException(activity.toString() + "must implement ChangeProfilePicListener");
         }
     }
 
@@ -76,12 +76,12 @@ public class ChangeProfilePicFragment extends DialogFragment{
         View view = inflater.inflate(R.layout.dialog_change_profile_picture, null);
 
 
-        builder.setTitle("Change Profile Picture");
+        builder.setTitle("Change Picture");
         builder.setMessage("Select an image and save!");
 
-        profileTextView = (TextView) view.findViewById(R.id.uploadTextView);
+        profileButton = (Button) view.findViewById(R.id.uploadPhotoButton);
 
-        profileTextView.setOnClickListener(new View.OnClickListener() {
+        profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -153,8 +153,8 @@ public class ChangeProfilePicFragment extends DialogFragment{
 
             File imageFile = new File(imagePath);
             String imageName = imageFile.getName();
-            profileTextView.setText(imageName);
-            profileTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.trevorBlue));
+            profileButton.setText(imageName);
+            profileButton.setTextColor(ContextCompat.getColor(getContext(), R.color.trevorBlue));
         }
     }
 
