@@ -536,39 +536,25 @@ public class TimelineSettings extends AppCompatActivity
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // If the same name was entered, then take no action
-                        if (squadNameInput.getText().toString().equals(currentTimelineName)) {
+                        String newName = squadNameInput.getText().toString();
+                        if (newName.equals(currentTimelineName) || newName.equals("")) {
                             return;
                         }
 
                         // Set the current timeline name to the entered one
                         // Both locally and in the database
-                        currentTimelineName = squadNameInput.getText().toString();
+                        currentTimelineName = newName;
                         Vars.getTimeline(currentTimelineID).child(TITLE_STR).setValue(currentTimelineName);
 
                         // Get the list of the current timeline users
                         // We have to correct the timeline names on the user side as well
                         Firebase currentUsers = Vars.getTimeline(currentTimelineID).child(USERS_STR);
 
-                        // Get a snapshot of the list of users ONCE
-                        currentUsers.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                // Iterate through all the users
-                                for (DataSnapshot timelineUsers : dataSnapshot.getChildren()) {
-                                    // Get the user's UID
-                                    String userID = timelineUsers.getKey();
-                                    // Change the name of the timeline inside their Timelines table
-                                    Vars.getFirebase().child(DB_USERS).child(userID).child(TIMELINE_STR)
-                                            .child(currentTimelineID).setValue(currentTimelineName);
-                                }
-                            }
+                        //updates all occurrences of timeline name in user data
+                        for(String id : userIDs) {
+                            Vars.getUser(id).child("Timelines/" + currentTimelineID + "/Title").setValue(currentTimelineName);
+                        }
 
-                            @Override
-                            public void onCancelled(FirebaseError firebaseError) {
-                                // If we can't get Timeline users table, then inform user of error
-                                showRetErrorMsg();
-                            }
-                        });
                         // Timeline name has been changed
                         // There is a reason to return the name now
                         returnName = true;
