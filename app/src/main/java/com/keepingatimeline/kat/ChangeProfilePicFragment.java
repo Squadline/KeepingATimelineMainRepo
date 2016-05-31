@@ -38,7 +38,7 @@ public class ChangeProfilePicFragment extends DialogFragment{
 
     private static final int RESULT_LOAD_IMAGE = 1;
 
-    TextView uploadPhotoInput;
+
     private String imagePath;
     private Activity activityRef;
     private AlertDialog dialog;                 // Dialog to display
@@ -153,9 +153,8 @@ public class ChangeProfilePicFragment extends DialogFragment{
 
             File imageFile = new File(imagePath);
             String imageName = imageFile.getName();
-
-            uploadPhotoInput.setText(imageName);
-            uploadPhotoInput.setTextColor(ContextCompat.getColor(getContext(), R.color.trevorBlue));
+            profileTextView.setText(imageName);
+            profileTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.trevorBlue));
         }
     }
 

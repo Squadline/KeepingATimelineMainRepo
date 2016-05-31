@@ -582,10 +582,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             profilePic.setImageBitmap(PictureCompactor.StringB64ToBitmap(photo));
         }
         Vars.getFirebase().child("Users/" + uid + "/ProfilePic").setValue(photo);
+        Toast.makeText(getApplicationContext(), "Profile Picture Saved!", Toast.LENGTH_SHORT).show();
 
-
-        //profilePic.setImageBitmap(b);
-
+        dialog.getDialog().cancel();
     }
 
     // displays a help dialogue --Dana
