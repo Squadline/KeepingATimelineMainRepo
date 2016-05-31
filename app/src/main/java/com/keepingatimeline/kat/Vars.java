@@ -32,11 +32,16 @@ public final class Vars {
         else return getFirebase().child("Timelines/" + timelineID);
     }
 
+    public static  Firebase getUser(String userID) {
+        if(userID == null) return getFirebase();
+        else return getFirebase().child("Users/" + userID);
+    }
+
     public static String getUserEmail(){
         return currUserEmail;
     }
 
-    public static Firebase getUser() {
+    public static Firebase getCurrentUser() {
         return getFirebase().child("Users").child(getUID());
     }
 }

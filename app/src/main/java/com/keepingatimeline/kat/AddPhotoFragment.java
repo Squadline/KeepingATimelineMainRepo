@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,8 +118,10 @@ public class AddPhotoFragment extends Fragment {
     }
 
     public String getPhoto() {
+        Log.d("Adding Pic", imagePath);
         Bitmap bm_original = BitmapFactory.decodeFile(imagePath);
-        bm_original = BitmapManip.shrinkToEvent(bm_original);
+
+        bm_original = BitmapManip.shrink(bm_original);
         try {
             ExifInterface exif = new ExifInterface(imagePath);
             int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);

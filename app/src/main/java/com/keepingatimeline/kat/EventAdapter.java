@@ -5,7 +5,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
@@ -15,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -51,29 +49,29 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             photoText = (TextView) v.findViewById(R.id.photo_text);
             photoPhoto = (ImageView) v.findViewById(R.id.photo_photo);
 
-            final ImageButton editImageButton = (ImageButton) v.findViewById(R.id.editPhotoEvent);
-            editImageButton.setOnClickListener(new View.OnClickListener() {
+            Context context = v.getContext();
+            Typeface photoTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoRegular));
+            photoTitle.setTypeface(photoTitleFont);
+
+
+            final ImageView editPhotoEvent = (ImageView) v.findViewById(R.id.editPhotoEvent);
+            editPhotoEvent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v){
 
-                    PopupMenu popup = new PopupMenu(v.getContext(), editImageButton);
-                    popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+                    PopupMenu editMenu = new PopupMenu(v.getContext(), editPhotoEvent);
+                    editMenu.getMenuInflater().inflate(R.menu.event_menu, editMenu.getMenu());
 
-                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    editMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         public boolean onMenuItemClick(MenuItem item) {
-
                             //do stuff
                             return true;
                         }
                     });
 
-                    popup.show();
+                    editMenu.show();
                 }
             });
-
-            Context context = v.getContext();
-            Typeface photoTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoRegular));
-            photoTitle.setTypeface(photoTitleFont);
         }
     }
 
@@ -90,26 +88,6 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             quoteText = (TextView) v.findViewById(R.id.quote_text);
             quoteSpeaker = (TextView) v.findViewById(R.id.quote_speaker);
 
-            final ImageButton editQuoteButton = (ImageButton) v.findViewById(R.id.editQuoteEvent);
-            editQuoteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v){
-
-                    PopupMenu popup = new PopupMenu(v.getContext(), editQuoteButton);
-                    popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-
-                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        public boolean onMenuItemClick(MenuItem item) {
-
-                            //do stuff
-                            return true;
-                        }
-                    });
-
-                    popup.show();
-                }
-            });
-
             Context context = v.getContext();
             Typeface quoteTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoRegular));
             quoteTitle.setTypeface(quoteTitleFont);
@@ -119,6 +97,26 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             Typeface quoteSpeakerFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoMedium));
             quoteSpeaker.setTypeface(quoteSpeakerFont);
+
+
+            final ImageView editQuoteEvent = (ImageView) v.findViewById(R.id.editQuoteEvent);
+            editQuoteEvent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v){
+
+                    PopupMenu editMenu = new PopupMenu(v.getContext(), editQuoteEvent);
+                    editMenu.getMenuInflater().inflate(R.menu.event_menu, editMenu.getMenu());
+
+                    editMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+                            //do stuff
+                            return true;
+                        }
+                    });
+
+                    editMenu.show();
+                }
+            });
         }
     }
 
@@ -133,29 +131,29 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             textDate = (TextView) v.findViewById(R.id.text_date);
             textText = (TextView) v.findViewById(R.id.text_text);
 
-            final ImageButton editTextButton = (ImageButton) v.findViewById(R.id.editTextEvent);
-            editTextButton.setOnClickListener(new View.OnClickListener() {
+            Context context = v.getContext();
+            Typeface textTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoRegular));
+            textTitle.setTypeface(textTitleFont);
+
+
+            final ImageView editTextEvent = (ImageView) v.findViewById(R.id.editTextEvent);
+            editTextEvent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v){
 
-                    PopupMenu popup = new PopupMenu(v.getContext(), editTextButton);
-                    popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+                    PopupMenu editMenu = new PopupMenu(v.getContext(), editTextEvent);
+                    editMenu.getMenuInflater().inflate(R.menu.event_menu, editMenu.getMenu());
 
-                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    editMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         public boolean onMenuItemClick(MenuItem item) {
-
                             //do stuff
                             return true;
                         }
                     });
 
-                    popup.show();
+                    editMenu.show();
                 }
             });
-
-            Context context = v.getContext();
-            Typeface textTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoRegular));
-            textTitle.setTypeface(textTitleFont);
         }
     }
 
