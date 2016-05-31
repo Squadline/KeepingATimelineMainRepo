@@ -418,7 +418,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         } else if (id == R.id.navChangePassword) {
             showChangePassword(); // shows change password dialog - by me!!!
         } else if (id == R.id.navChangePhoto) {
-
+            showChangeNameDialog();
         } else if (id == R.id.navHelp) {
             getMainScreenHelp(); // sets up the help dialogue --Dana
         } else if (id == R.id.navLogOut) {
@@ -554,8 +554,56 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         });
         changePDialog.show();
-
     }
+
+    private void showChangeNameDialog() {
+        // Create the dialog builder and layout inflater
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        // Inflate the dialog xml
+        // Parent is null because it is a dialog layout
+        View view = inflater.inflate(R.layout.dialog_change_name, null);
+
+        // Get the EditText field in the dialog and preset it to current user name
+        final EditText firstNameInput = (EditText) view.findViewById(R.id.firstNameInput);
+        final EditText lastNameInput = (EditText) view.findViewById(R.id.lastNameInput);
+
+        // Set the view, title, message, and buttons for the dialog
+        builder.setView(view)
+                .setTitle("Change Name")
+                .setMessage("change stuff cuz can")
+                // If the user confirms the title change
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        /*
+                        // If the same name was entered, then take no action
+                        if ((firstNameInput.getText().toString().equals(currentFirstName)) && (lastNameInput.getText().toString().equals(currentLastName))) {
+                            return;
+                        }*/
+/*
+                        // Set the current user name to the entered one
+                        // Both locally and in the database
+                        currentFirstName = firstNameInput.getText().toString();
+                        currentLastName = lastNameInput.getText().toString();*/
+
+                        //Vars.getTimeline(currentTimelineID).child(TITLE_STR).setValue(currentTimelineName);
+                    }
+                })
+                // If the user presses cancel
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Cancel the dialog
+                        dialog.cancel();
+                    }
+                });
+
+        // Create and show the dialog
+        builder.create().show();
+    }
+
     // displays a help dialogue --Dana
     private void getMainScreenHelp(){
         AlertDialog.Builder helpDialogBuilder = new AlertDialog.Builder(this);
