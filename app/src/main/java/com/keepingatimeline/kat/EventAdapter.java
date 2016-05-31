@@ -1,10 +1,14 @@
 package com.keepingatimeline.kat;
 
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.view.menu.MenuView;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -143,19 +147,46 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             final ImageView editTextEvent = (ImageView) v.findViewById(R.id.editTextEvent);
             editTextEvent.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v){
+                public void onClick(final View v){
 
-                    PopupMenu editMenu = new PopupMenu(v.getContext(), editTextEvent);
-                    editMenu.getMenuInflater().inflate(R.menu.event_menu, editMenu.getMenu());
+                    PopupMenu popup = new PopupMenu(v.getContext(), v);
+                    popup.getMenuInflater().inflate(R.menu.event_settings_menu, popup.getMenu());
+                    popup.show();
 
-                    editMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    popup.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+
+                        @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            //do stufff
+                            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                            builder.setTitle("Lol").setMessage("Hope this works");
+                            builder.create().show();
                             return true;
                         }
                     });
 
-                    editMenu.show();
+                    popup.getMenu().getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                            builder.setTitle("Delete Event").setMessage("Delete This Event?");
+                            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                            builder.create().show();
+                            return true;
+                        }
+                    });
+
                 }
             });
         }
@@ -193,6 +224,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 view = new ViewHolderText(itemView);
                 break;
         }
+
         return view;
     }
 
@@ -224,25 +256,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 ((ViewHolderQuote)holder).quoteDate.setText(event.getDate());
                 ((ViewHolderQuote)holder).quoteText.setText(fancyQuoteText);
                 ((ViewHolderQuote)holder).quoteSpeaker.setText("–" + event.getString2());
-                ((ViewHolderQuote)holder).editQuote.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(final View v) {
-                        PopupMenu popup = new PopupMenu(v.getContext(), v);
-                        popup.getMenuInflater().inflate(R.menu.event_settings_menu, popup.getMenu());
-                        popup.show();
 
-                        popup.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                                builder.setTitle("Lol").setMessage("Hope this works");
-                                builder.create().show();
-                                return true;
-                            }
-                        });
-                    }
-                });
                 break;
             case "text":
             default:
