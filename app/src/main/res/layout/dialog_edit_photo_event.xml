@@ -9,21 +9,21 @@
     android:paddingTop="10dp">
 
     <EditText
-        android:id="@+id/changeTitle"
+        android:id="@+id/changePhotoTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/editEventTitles"
         android:inputType="textPassword" />
 
     <EditText
-        android:id="@+id/changeText"
+        android:id="@+id/changePhotoDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/editDescription"
         android:inputType="textPassword" />
 
     <EditText
-        android:id="@+id/changeEventDate"
+        android:id="@+id/changePhotoDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/editDate"

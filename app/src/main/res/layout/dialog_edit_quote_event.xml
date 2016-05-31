@@ -9,7 +9,7 @@
     android:paddingTop="10dp">
 
     <EditText
-        android:id="@+id/changeTitle"
+        android:id="@+id/changeQuoteTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/editEventTitles"
@@ -23,14 +23,14 @@
         android:inputType="textPassword" />
 
     <EditText
-        android:id="@+id/changeEventDate"
+        android:id="@+id/changeQuoteDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/editSource"
         android:inputType="textPassword" />
 
     <EditText
-        android:id="@+id/changeEventSource"
+        android:id="@+id/changeQuoteSource"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/editDate"
