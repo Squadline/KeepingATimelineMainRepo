@@ -39,14 +39,11 @@ import java.util.Map;
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private Firebase database;
-    private ArrayList<String> tlTitles = new ArrayList<>();
-    private ArrayList<String> tlMembers = new ArrayList<>();
-    private ArrayList<String> tlIDs = new ArrayList<>();
+    private ArrayList<String> timelineTitles = new ArrayList<>();
+    private ArrayList<String> timelineMembers = new ArrayList<>();
+    private ArrayList<String> timelineIDs = new ArrayList<>();
 
     // Used for displaying members of each timeline
-    private ArrayList<Integer> tlMemberCount = new ArrayList<>();
-    private ArrayList<String> memberArray = new ArrayList<>();
-    private ArrayList<String> tempMembers = new ArrayList<>();
     private String displayMembers;
     private int curMemCount;
     private int tlMemPos;
@@ -56,7 +53,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private String holder;
     private String newName;
     private TextView titleBar;
-    private String emailAdd;
+    private String nameAdd;
     private String uidTimeline;                 //UID of timeline
     private String uidMember;
 
@@ -70,6 +67,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private final String LAST_STR = "LastName";
     private final String EMAIL_STR = "EmailAddress";
     private final String DB_STR = "https://fiery-fire-8218.firebaseio.com/";
+    private TextView userName;
+    private TextView userEmail;
 
     /**
      * By: Dana, Byung, Jimmy, Trevor
@@ -109,8 +108,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         // sets name and email of current user in sidebar
         View navHeader = navigationView.getHeaderView(0);
-        final TextView userName = (TextView) navHeader.findViewById(R.id.user_name);
-        final TextView userEmail = (TextView) navHeader.findViewById(R.id.user_email);
+        userName = (TextView) navHeader.findViewById(R.id.user_name);
+        userEmail = (TextView) navHeader.findViewById(R.id.user_email);
 
         //.com/Users/uid
         //.com/Users/
@@ -147,7 +146,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         });
 
 
-        inflateTimeline = new TimelineAdapter(this, tlTitles, tlMembers);
+        inflateTimeline = new TimelineAdapter(this, timelineTitles, timelineMembers);
         timelineList = (ListView) findViewById(R.id.timelineList);
         timelineList.setAdapter(inflateTimeline);
 
@@ -162,110 +161,37 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
                 // All of the stuff that doesn't make sense was written by Trevor
 
-                tlTitles.clear();
-                tlIDs.clear();
+                timelineTitles.clear();
+                timelineIDs.clear();
+                timelineMembers.clear();
 
-                tlMembers.clear();
-                tlMemberCount.clear();
-                memberArray.clear();
-                tempMembers.clear();
+                for (DataSnapshot tlSnapshot : dataSnapshot.getChildren()) {
 
-                displayMembers = "";
-                tlMemPos = 0;
-                curMemCount = 1;
+                    timelineIDs.add(tlSnapshot.getKey());
+                    timelineTitles.add(tlSnapshot.child("Title").getValue().toString());
 
-                for (DataSnapshot tlSnapshot: dataSnapshot.getChildren()) {
+                    ArrayList<String> otherUsers = new ArrayList<String>();
 
-                    tlTitles.add("" + tlSnapshot.getValue());
-                    tlIDs.add("" + tlSnapshot.getKey());
-                    uidTimeline = tlSnapshot.getKey();
-
-                    // Gets the users of each timeline
-                    Firebase tlUsers = new Firebase("https://fiery-fire-8218.firebaseio.com/Timelines/" + uidTimeline + "/Users");
-                    tlUsers.addValueEventListener(new ValueEventListener() {
-
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-
-                            // Keeps count of number of members in each timeline
-                            int memCount = 0;
-
-                            for (DataSnapshot usersSnapShot: dataSnapshot.getChildren()) {
-                                uidMember = usersSnapShot.getKey();
-
-                                // Gets the names of each user
-                                Firebase dbUsers = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + uidMember + "/FirstName");
-                                dbUsers.addValueEventListener(new ValueEventListener() {
-
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                                        // Checks member count of current timeline
-                                        if (curMemCount < tlMemberCount.get(tlMemPos)) {
-
-                                            // Add members to temporary array
-                                            tempMembers.add("" + dataSnapshot.getValue().toString());
-                                            curMemCount++;
-                                        }
-                                        else {
-
-                                            // Sorts array alphabetically
-                                            tempMembers.add("" + dataSnapshot.getValue().toString());
-                                            Collections.sort(tempMembers, String.CASE_INSENSITIVE_ORDER);
-
-                                            // Builds string of members from array
-                                            for (int i = 0; i < tempMembers.size(); i++) {
-
-                                                if (displayMembers.equals("")) {
-                                                    displayMembers = displayMembers + tempMembers.get(i);
-                                                }
-                                                else if (i == (tempMembers.size() - 1)) {
-                                                    displayMembers = displayMembers + " & " + tempMembers.get(i);
-                                                }
-                                                else {
-                                                    displayMembers = displayMembers + ", " + tempMembers.get(i);
-                                                }
-
-                                            }
-
-                                            memberArray.add(displayMembers);
-
-                                            // Reset variables to track members of next timeline
-                                            displayMembers = "";
-                                            curMemCount = 1;
-                                            tlMemPos++;
-
-                                            tempMembers.clear();
-                                        }
-
-                                        Collections.copy(tlMembers, memberArray);
-                                        tlMembers.addAll(memberArray);
-                                        inflateTimeline.notifyDataSetChanged();
-                                    }
-
-                                    @Override
-                                    public void onCancelled(FirebaseError firebaseError) {
-
-                                    }
-                                });
-
-                                memCount++;
-                            }
-
-                            // Array to keep count of number of members in the timeline
-                            tlMemberCount.add(memCount);
+                    for (DataSnapshot entry : tlSnapshot.getChildren()) {
+                        if(!entry.getKey().toString().equals("Title")) {
+                            otherUsers.add(entry.getValue().toString());
                         }
+                    }
 
-                        @Override
-                        public void onCancelled(FirebaseError firebaseError) {
+                    Collections.sort(otherUsers, String.CASE_INSENSITIVE_ORDER);
 
-                        }
-                    });
+                    String members = "";
 
-                    tlMembers.add("");
+                    for(int index = 0; index < otherUsers.size(); index++) {
+                        members += otherUsers.get(index);
+                        if(index < otherUsers.size() - 2) members += ", ";
+                        else if(index == otherUsers.size() - 2) members += " & ";
+                    }
+
+                    timelineMembers.add(members);
                 }
 
-                //inflateTimeline.notifyDataSetChanged();
+                inflateTimeline.notifyDataSetChanged();
             }
 
             @Override
@@ -279,11 +205,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         timelineList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String timelineName = tlTitles.get(position);
+                String timelineName = timelineTitles.get(position);
 
                 Intent viewTimelineActivity = new Intent(MainScreen.this, ViewTimeline.class);
                 viewTimelineActivity.putExtra("Timeline Name", timelineName);
-                viewTimelineActivity.putExtra("Timeline ID", tlIDs.get(position));
+                viewTimelineActivity.putExtra("Timeline ID", timelineIDs.get(position));
                 startActivity(viewTimelineActivity);
             }
 
@@ -353,31 +279,33 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     public void onClick(DialogInterface dialog, int which) {
                         Firebase ref = new Firebase("https://fiery-fire-8218.firebaseio.com/");
                         holder = ref.getAuth().getUid().toString();
-                        ref = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder + "/EmailAddress");
+                        ref = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder);
 
-                        ref.addValueEventListener(new ValueEventListener() {
+                        ref.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                emailAdd = dataSnapshot.getValue().toString();
+                                nameAdd = dataSnapshot.child("FirstName").getValue().toString() + " ";
+                                nameAdd += dataSnapshot.child("LastName").getValue().toString();
                                 newName = nameTLInput.getText().toString();
                                 database = Vars.getFirebase().child("Timelines");
                                 database = database.push();
                                 String tKey = database.getKey();
-                                Map<String, String> post = new HashMap<String, String>();
-                                Map<String, String> post1 = new HashMap<String, String>();
-                                Map<String, String> event = new HashMap<String, String>();
-                                Map<String, Object> event1 = new HashMap<String, Object>();
-                                post.put("Admin", emailAdd);
-                                post.put("Title", newName);
-                                database.setValue(post);
 
-                                Firebase user =  database.child("Users");
-                                post1.put(Vars.getUID(), emailAdd);
-                                user.setValue(post1);
+                                Map<String, String> timeline = new HashMap<String, String>();
+                                timeline.put("Title", newName);
+                                database.setValue(timeline);
+
+                                Firebase timelineUsers =  database.child("Users");
+                                Map<String, String> post1 = new HashMap<String, String>();
+                                post1.put(Vars.getUID(), nameAdd);
+                                timelineUsers.setValue(post1);
 
                                 database = new Firebase("https://fiery-fire-8218.firebaseio.com/Users/" + holder + "/Timelines");
-                                event1.put(tKey, newName);
-                                database.updateChildren(event1);
+                                database = database.child(tKey);
+                                Map<String, Object> userTimelines = new HashMap<String, Object>();
+                                userTimelines.put("Title", newName);
+                                userTimelines.put(Vars.getUID(), dataSnapshot.child("FirstName").getValue().toString());
+                                database.updateChildren(userTimelines);
                             }
 
                             @Override
@@ -419,7 +347,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         int id = item.getItemId();
 
         if (id == R.id.navChangeName) {
-
+            showChangeNameDialog();
         } else if (id == R.id.navChangePassword) {
             showChangePassword(); // shows change password dialog - by me!!!
         } else if (id == R.id.navChangePhoto) {
@@ -559,8 +487,83 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         });
         changePDialog.show();
-
     }
+
+    private void showChangeNameDialog() {
+        // Create the dialog builder and layout inflater
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        // Inflate the dialog xml
+        // Parent is null because it is a dialog layout
+        View view = inflater.inflate(R.layout.dialog_change_name, null);
+
+        // Get the EditText field in the dialog and preset it to current user name
+        final EditText firstNameInput = (EditText) view.findViewById(R.id.firstNameInput);
+        final EditText lastNameInput = (EditText) view.findViewById(R.id.lastNameInput);
+
+        // Set the view, title, message, and buttons for the dialog
+        builder.setView(view)
+                .setTitle("Change Name")
+                .setMessage("change stuff cuz can")
+                // If the user confirms the title change
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        final Firebase database = Vars.getCurrentUser();
+
+                        database.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String newFirstName = firstNameInput.getText().toString();
+                                String newLastName = lastNameInput.getText().toString();
+                                String currentFirstName = dataSnapshot.child("FirstName").getValue().toString();
+                                String currentLastName = dataSnapshot.child("LastName").getValue().toString();
+                                // If the same name was entered, then take no action
+                                if (newFirstName.equals(currentFirstName) && newLastName.equals(currentLastName)) {
+                                    return;
+                                }
+
+                                //update Account Sidebar
+                                userName.setText(newFirstName + " " + newLastName);
+
+                                // Set the current user name to the entered one
+                                // Both locally and in the database
+                                database.child("FirstName").setValue(newFirstName);
+                                database.child("LastName").setValue(newLastName);
+
+                                for(DataSnapshot timeline : dataSnapshot.child("Timelines").getChildren()) {
+                                    Vars.getTimeline(timeline.getKey()).child(Vars.getUID()).setValue(newFirstName + " " + newLastName);
+                                    if(!newFirstName.equals(currentFirstName)) {
+                                        for (DataSnapshot user : timeline.getChildren()) {
+                                            String path = "Timelines/" + timeline.getKey() + "/" + user.getKey();
+                                            Vars.getUser(user.getKey()).child(path).setValue(newFirstName);
+                                        }
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
+
+                            }
+                        });
+
+                    }
+                })
+                // If the user presses cancel
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Cancel the dialog
+                        dialog.cancel();
+                    }
+                });
+
+        // Create and show the dialog
+        builder.create().show();
+    }
+
     // displays a help dialogue --Dana
     private void getMainScreenHelp(){
         AlertDialog.Builder helpDialogBuilder = new AlertDialog.Builder(this);
