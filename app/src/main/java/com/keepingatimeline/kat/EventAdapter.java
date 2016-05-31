@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -83,15 +84,30 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    Event newEvent = new Event();
+                                    newEvent.setType("photo");
+                                    EditText title = (EditText) v.findViewById(R.id.changePhotoTitle);
+                                    newEvent.setTitle(title.getText().toString());
+                                    EditText text = (EditText) v.findViewById(R.id.changePhotoDescription);
+                                    newEvent.setString1(text.getText().toString());
+                                    EditText date = (EditText) v.findViewById(R.id.changePhotoDate);
+                                    newEvent.setDate(date.getText().toString());
 
+                                    parent.updateEvent(newEvent, position);
                                 }
-                            })
-                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
-                                        }
-                                    });
+                            });
+                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                            EditText title = (EditText) v.findViewById(R.id.changePhotoTitle);
+                            title.setText(photoTitle.getText());
+                            EditText text = (EditText) v.findViewById(R.id.changePhotoDescription);
+                            text.setText(photoText.getText());
+                            EditText date = (EditText) v.findViewById(R.id.changePhotoDate);
+                            date.setText(photoDate.getText());
                             builder.create().show();
                             return true;
                         }
@@ -173,15 +189,34 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    Event newEvent = new Event();
+                                    newEvent.setType("quote");
+                                    EditText title = (EditText) v.findViewById(R.id.changeQuoteTitle);
+                                    newEvent.setTitle(title.getText().toString());
+                                    EditText quote = (EditText) v.findViewById(R.id.changeQuote);
+                                    newEvent.setString1(quote.getText().toString());
+                                    EditText date = (EditText) v.findViewById(R.id.changeQuoteDate);
+                                    newEvent.setDate(date.getText().toString());
+                                    EditText speaker = (EditText) v.findViewById(R.id.changeQuoteSource);
+                                    newEvent.setString2(speaker.getText().toString());
 
+                                    parent.updateEvent(newEvent, position);
                                 }
-                            })
-                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
-                                        }
-                                    });
+                            });
+                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                            EditText title = (EditText) v.findViewById(R.id.changeQuoteTitle);
+                            title.setText(quoteTitle.getText());
+                            EditText quote = (EditText) v.findViewById(R.id.changeQuote);
+                            quote.setText(quoteText.getText());
+                            EditText date = (EditText) v.findViewById(R.id.changeQuoteDate);
+                            date.setText(quoteDate.getText());
+                            EditText speaker = (EditText) v.findViewById(R.id.changeQuoteSource);
+                            speaker.setText(quoteSpeaker.getText());
                             builder.create().show();
                             return true;
                         }
@@ -256,15 +291,30 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    Event newEvent = new Event();
+                                    newEvent.setType("text");
+                                    EditText title = (EditText) v.findViewById(R.id.changeTextTitle);
+                                    newEvent.setTitle(title.getText().toString());
+                                    EditText quote = (EditText) v.findViewById(R.id.changeText);
+                                    newEvent.setString1(quote.getText().toString());
+                                    EditText date = (EditText) v.findViewById(R.id.changeTextDate);
+                                    newEvent.setDate(date.getText().toString());
 
+                                    parent.updateEvent(newEvent, position);
                                 }
-                            })
-                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
-                                        }
-                                    });
+                            });
+                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                            EditText title = (EditText) v.findViewById(R.id.changeTextTitle);
+                            title.setText(textTitle.getText());
+                            EditText quote = (EditText) v.findViewById(R.id.changeText);
+                            quote.setText(textText.getText());
+                            EditText date = (EditText) v.findViewById(R.id.changeTextDate);
+                            date.setText(textDate.getText());
                             builder.create().show();
                             return true;
                         }
@@ -344,7 +394,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 ((ViewHolderPhoto)holder).photoTitle.setText(event.getTitle());
                 ((ViewHolderPhoto)holder).photoDate.setText(event.getDate());
                 ((ViewHolderPhoto)holder).photoText.setText(event.getString1());
-                ((ViewHolderPhoto)holder).photoPhoto.setImageBitmap(BitmapCache.getBitmapFromMemCache(event.getString2()));
+                ((ViewHolderPhoto)holder).photoPhoto.setImageBitmap(BitmapCache.getBitmapFromMemCache(event.getKey()));
                 break;
             case "quote":
 
@@ -385,6 +435,15 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     private void deleteEvent(int position) {
-        Vars.getTimeline(timelineID + "/Events/" + eventList.get(position).getKey()).setValue(null);
+        Vars.getTimeline(timelineID).child("LastModified").setValue(DateGen.getCurrentDate());
+        Vars.getTimeline(timelineID).child("Events/" + eventList.get(position).getKey()).setValue(null);
+    }
+
+    private void updateEvent(Event event, int position) {
+        event.setKey(eventList.get(position).getKey());
+        if(!event.getType().equals("quote")) event.setString2(eventList.get(position).getString2());
+
+        Vars.getTimeline(timelineID).child("LastModified").setValue(DateGen.getCurrentDate());
+        Vars.getTimeline(timelineID).child("Events/" + event.getKey()).setValue(event);
     }
 }

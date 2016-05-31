@@ -50,20 +50,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private Firebase database;
     private ArrayList<Timeline> timelines = new ArrayList<>();
 
-    private CircleImageView profilePic;
-    // Used for displaying members of each timeline
-    private String displayMembers;
-    private int curMemCount;
-    private int tlMemPos;
-
     private TimelineAdapter inflateTimeline;
     private ListView timelineList;
     private String holder;
     private String newName;
     private TextView titleBar;
     private String nameAdd;
-    private String uidTimeline;                 //UID of timeline
-    private String uidMember;
 
     private String currentFirst;                // First name of the current user
     private String currentLast;                 // Last name of the current user
@@ -84,6 +76,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+    private CircleImageView profilePic;
 
     /**
      * By: Dana, Byung, Jimmy, Trevor
@@ -353,6 +346,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                 Map<String, String> timeline = new HashMap<String, String>();
                                 timeline.put("Title", newName);
                                 timeline.put("LastModified", todaysDate);
+                                timeline.put("TimelinePic", "");
                                 database.setValue(timeline);
 
                                 Firebase timelineUsers = database.child("Users");
@@ -589,10 +583,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             profilePic.setImageBitmap(PictureCompactor.StringB64ToBitmap(photo));
         }
         Vars.getFirebase().child("Users/" + uid + "/ProfilePic").setValue(photo);
+        Toast.makeText(getApplicationContext(), "Profile Picture Saved!", Toast.LENGTH_SHORT).show();
 
-
-        //profilePic.setImageBitmap(b);
-
+        dialog.getDialog().cancel();
     }
 
     // displays a help dialogue --Dana

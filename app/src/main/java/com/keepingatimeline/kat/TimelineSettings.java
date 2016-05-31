@@ -2,6 +2,7 @@ package com.keepingatimeline.kat;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.app.AlertDialog;
 import android.graphics.Typeface;
 import android.support.v4.app.DialogFragment;
@@ -60,6 +61,7 @@ public class TimelineSettings extends AppCompatActivity
     private ArrayList<String> users;        // List of user names  (for user display)
     private ArrayList<String> userIDs;          // List of user IDs    (for easy iteration when searching)
     private String lastModified;
+    private String squadImage;
 
     private Firebase db;                        // Database object
 
@@ -201,6 +203,13 @@ public class TimelineSettings extends AppCompatActivity
                 // Get value of the title child of timeline and update title
                 squadTitle.setText(dataSnapshot.child(TITLE_STR).getValue().toString());
                 lastModified = dataSnapshot.child("LastModified").getValue().toString();
+                squadImage = dataSnapshot.child("TimelinePic").getValue().toString();
+
+                if(!squadImage.isEmpty()) {
+                    Bitmap bm_image = PictureCompactor.StringB64ToBitmap(squadImage);
+
+                    //make further changes here
+                }
 
                 // Reset the list of user emails and IDs
                 users.clear();

@@ -1,6 +1,7 @@
 package com.keepingatimeline.kat;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,7 +11,10 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import org.w3c.dom.Text;
 
@@ -73,6 +77,23 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
 
         TextView textD = (TextView) convertView.findViewById(R.id.recentEvent);
         textD.setText(timelines.get(position).getLastmodified());
+
+        Vars.getTimeline(timelines.get(position).getId()).child("TimelinePic").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String image = dataSnapshot.getValue().toString();
+                if(image.isEmpty()) return;
+
+                Bitmap bm_image = PictureCompactor.StringB64ToBitmap(image);
+
+                //make the change to the timeline pic down here
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
         return convertView;
     }

@@ -166,8 +166,7 @@ public class ViewTimeline extends AppCompatActivity {
                     Log.d("Event Key", event.getKey());
                     if(event.getType().equals("photo")) {
                         Bitmap temp = PictureCompactor.StringB64ToBitmap(event.getString2());
-                        event.setString2(eventSnapshot.getKey());
-                        BitmapCache.addBitmapToMemoryCache(event.getString2(), temp);
+                        BitmapCache.addBitmapToMemoryCache(event.getKey(), temp);
                     }
                     eventList.add(event);
                 }
