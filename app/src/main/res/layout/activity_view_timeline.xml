@@ -37,7 +37,7 @@
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:textColor="@color/white"
-                    android:textSize="20sp" />
+                    android:textSize="22sp" />
 
             </android.support.v7.widget.Toolbar>
 
@@ -49,7 +49,7 @@
             android:layout_height="match_parent"
             android:background="#CFD8DC"
             android:clipToPadding="false"
-            android:paddingBottom="0dp"
+            android:paddingBottom="72dp"
             app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior" />
 
         <android.support.design.widget.FloatingActionButton

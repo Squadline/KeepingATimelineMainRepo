@@ -215,10 +215,17 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                 }
                             });
 
+                            // Won't show quotation marks in the dialog
+                            String quoteString = quoteText.getText().toString();
+                            String editQuoteString = quoteString.substring(1, quoteString.length() - 1);
+
+                            // Won't show hyphen in the dialog
+                            String editSourceString = quoteSpeaker.getText().toString().substring(1);
+
                             title.setText(quoteTitle.getText());
-                            quote.setText(quoteText.getText());
+                            quote.setText(editQuoteString);
                             date.setText(quoteDate.getText());
-                            speaker.setText(quoteSpeaker.getText());
+                            speaker.setText(editSourceString);
 
                             builder.create().show();
                             return true;

@@ -19,20 +19,21 @@
         android:id="@+id/changeQuoteDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/editSource" />
+        android:hint="@string/editDate" />
 
     <EditText
         android:id="@+id/changeQuote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="top|start"
         android:hint="@string/editQuote"
-        android:inputType="textNoSuggestions" />
+        android:inputType="textMultiLine|textNoSuggestions" />
 
     <EditText
         android:id="@+id/changeQuoteSource"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/editDate"
+        android:hint="@string/editSource"
         android:inputType="textNoSuggestions" />
 
 </LinearLayout>
