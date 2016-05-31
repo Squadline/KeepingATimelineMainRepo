@@ -11,7 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 public class AddEvent extends AppCompatActivity {
 
@@ -105,6 +108,22 @@ public class AddEvent extends AppCompatActivity {
                         event.setType("text");
                         break;
                 }
+
+                Vars.getTimeline(timelineID).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String todaysDate = DateGen.getCurrentDate();
+                        Vars.getTimeline(timelineID).child("LastModified").setValue(todaysDate);
+                        for(DataSnapshot users : dataSnapshot.child("Users").getChildren()) {
+                            Vars.getUser(users.getKey()).child("Timelines/" + timelineID + "/LastModified").setValue(todaysDate);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
 
                 ref.setValue(event);
                 finish();

@@ -284,6 +284,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                         ref.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
+                                String todaysDate = DateGen.getCurrentDate();
                                 nameAdd = dataSnapshot.child("FirstName").getValue().toString() + " ";
                                 nameAdd += dataSnapshot.child("LastName").getValue().toString();
                                 newName = nameTLInput.getText().toString();
@@ -293,7 +294,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
                                 Map<String, String> timeline = new HashMap<String, String>();
                                 timeline.put("Title", newName);
-                                timeline.put("LastModified", DateGen.getCurrentDate());
+                                timeline.put("LastModified", todaysDate);
                                 database.setValue(timeline);
 
                                 Firebase timelineUsers =  database.child("Users");
@@ -305,6 +306,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                 database = database.child(tKey);
                                 Map<String, Object> userTimelines = new HashMap<String, Object>();
                                 userTimelines.put("Title", newName);
+                                userTimelines.put("LastModified", todaysDate);
                                 userTimelines.put(Vars.getUID(), dataSnapshot.child("FirstName").getValue().toString());
                                 database.updateChildren(userTimelines);
                             }
