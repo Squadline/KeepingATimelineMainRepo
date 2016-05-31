@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -36,7 +37,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+        ChangePasswordFragment.ChangePasswordListener, ChangeProfilePicFragment.ChangeProfilePicListener{
 
     private Firebase database;
     private ArrayList<String> timelineTitles = new ArrayList<>();
@@ -120,6 +122,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get the name of  the current user
+
                 currentFirst = dataSnapshot.child(NAME_STR).getValue().toString();
                 currentLast = dataSnapshot.child(LAST_STR).getValue().toString();
 
@@ -353,8 +356,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         if (id == R.id.navChangeName) {
             showChangeNameDialog();
         } else if (id == R.id.navChangePassword) {
-            showChangePassword(); // shows change password dialog - by me!!!
+            DialogFragment dialog = new ChangePasswordFragment();
+            dialog.show(getSupportFragmentManager(), "ChangePasswordFragment");
+
         } else if (id == R.id.navChangePhoto) {
+            DialogFragment dialog = new ChangeProfilePicFragment();
+            dialog.show(getSupportFragmentManager(), "ChangeProfilePicFragment");
 
         } else if (id == R.id.navHelp) {
             getMainScreenHelp(); // sets up the help dialogue --Dana
@@ -380,117 +387,67 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         return true;
     }
 
-    private void showChangePassword(){
-
+    @Override
+    public void onDialogPositiveClick(final ChangePasswordFragment dialog) {
         final String emailStr = Vars.getFirebase().getAuth().getProviderData().get("email").toString();
+        String curPass = dialog.getCurPass();
+        String newPass = dialog.getNewPass();
+        String conPass = dialog.getConPass();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        View v = inflater.inflate(R.layout.dialog_change_password, null);
-        builder.setTitle("Change Password");
-        builder.setMessage("Enter your current password, then enter a new password and confirm it.");
+        // FORM CHECKING
 
-        builder.setView(v);
+        // check if anything is empty
+        if (newPass.length() == 0 ||
+                curPass.length() == 0 ||
+                conPass.length() == 0) {
 
-        final EditText curPass = (EditText) v.findViewById(R.id.currentPasswordInput);
-        final EditText newPass = (EditText) v.findViewById(R.id.newPasswordInput);
-        final EditText conPass = (EditText) v.findViewById(R.id.confirmPasswordInput);
+        }
+        // check if new pass == confirm pass
+        if( !newPass.equals(conPass)) {
 
+            Toast.makeText(getApplicationContext(), "New passwords do not match! :0",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
 
-        builder.setNegativeButton("Cancel", null);
+        // check check if currpass == new pass, aka no point
 
+        if( newPass.equals(curPass)) {
+            Toast.makeText(getApplicationContext(), "Current password same as new password!"
+                            + "Please change the password to something different!",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
 
-        builder.setPositiveButton("Save", null);
-
-        //change password dialog
-        final AlertDialog changePDialog = builder.create();
-        changePDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface d) {
-                Button confirm = changePDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                confirm.setOnClickListener( new View.OnClickListener() {
+        // SERVER CHECKING
+        Vars.getFirebase().changePassword(emailStr, curPass,
+                newPass, new Firebase.ResultHandler() {
                     @Override
-                    public void onClick(View v) {
-                        // FORM CHECKING
-
-                        // check if anything is empty
-                        if (newPass.getText().toString().length() == 0 ||
-                                curPass .getText().toString().length() == 0 ||
-                                conPass.getText().toString().length() == 0) {
-
-                        }
-                        // check if new pass == confirm pass
-                        if( !newPass.getText().toString().equals(conPass.getText().toString())) {
-
-                            Toast.makeText(getApplicationContext(), "New passwords do not match! :0",
+                    public void onError(FirebaseError err)
+                    {
+                        if( err.getCode() == FirebaseError.INVALID_PASSWORD)
+                        {
+                            Toast.makeText(getApplicationContext(),
+                                    "Error: Current password is incorrect",
                                     Toast.LENGTH_LONG).show();
-                            return;
-                        }
 
-                        // check check if currpass == new pass, aka no point
-
-                        if( newPass.getText().toString().equals(curPass.getText().toString())) {
-                            Toast.makeText(getApplicationContext(), "Current password same as new password!"
-                                    + "Please change the password to something different!",
+                        } else {
+                            Toast.makeText(getApplicationContext(),
+                                    "Error: " + err.getMessage(),
                                     Toast.LENGTH_LONG).show();
-                            return;
                         }
-
-                        // SERVER CHECKING
-                        Vars.getFirebase().changePassword(emailStr, curPass.getText().toString(),
-                                newPass.getText().toString(), new Firebase.ResultHandler() {
-                                    @Override
-                                    public void onError(FirebaseError err)
-                                    {
-                                        if( err.getCode() == FirebaseError.INVALID_PASSWORD)
-                                        {
-                                            Toast.makeText(getApplicationContext(),
-                                                    "Error: Current password is incorrect",
-                                                    Toast.LENGTH_LONG).show();
-
-                                        } else {
-                                            Toast.makeText(getApplicationContext(),
-                                                    "Error: " + err.getMessage(),
-                                                    Toast.LENGTH_LONG).show();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onSuccess()
-                                    {
-                                        Toast.makeText(getApplicationContext(),  "Password successfully changed",
-                                                Toast.LENGTH_LONG).show();
-                                        changePDialog.cancel();
-                                        return;
-                                    }
-
-                                });
-
-                /*firebaseRef.changePassword( oldPassword, nP, nPConfirm );
-                {
-                    if ok, close dialog and toast success
-                    if bad, stay in dialog and toast oldP incorrecto o whatever
-                }
-                */
-
-                        // dialog.dismiss();
                     }
-                });
-                Button cancel = changePDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-                cancel.setOnClickListener( new View.OnClickListener() {
+
                     @Override
-                    public void onClick(View v) {
-                        //close this dialog
-                        changePDialog.cancel();
+                    public void onSuccess()
+                    {
+                        Toast.makeText(getApplicationContext(),  "Password successfully changed",
+                                Toast.LENGTH_LONG).show();
+                        dialog.getDialog().cancel();
                         return;
                     }
+
                 });
-            }
-
-
-
-        });
-        changePDialog.show();
     }
 
     private void showChangeNameDialog() {
@@ -566,6 +523,15 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         // Create and show the dialog
         builder.create().show();
+    }
+
+
+    // saves data for editing profile picture
+    @Override
+    public void onDialogPositiveClick(final ChangeProfilePicFragment dialog) {
+        String uid = Vars.getFirebase().getAuth().getUid();
+        String photo = dialog.getPhoto();
+        Vars.getFirebase().child("Users/"+ uid + "/ProfilePic").setValue(photo);
     }
 
     // displays a help dialogue --Dana
