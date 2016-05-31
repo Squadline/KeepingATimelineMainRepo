@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.firebase.client.Firebase;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 /**
@@ -21,28 +23,26 @@ import java.util.ArrayList;
 public class TimelineAdapter extends BaseAdapter implements ListAdapter {
 
     private Context ctx;
-    private ArrayList<String> tlTitles;
-    private ArrayList<String> tlMembers;
+    private ArrayList<Timeline> timelines;
 
-    public TimelineAdapter(Context context, ArrayList<String> tlTitles, ArrayList<String> tlMembers)
+    public TimelineAdapter(Context context, ArrayList<Timeline> timelines)
     {
         super();
 
         this.ctx = context;
-        this.tlTitles = tlTitles;
-        this.tlMembers = tlMembers;
+        this.timelines = timelines;
     }
 
     @Override
     public int getCount()
     {
-        return tlTitles.size();
+        return timelines.size();
     }
 
     @Override
     public String getItem(int position)
     {
-        return tlTitles.get(position);
+        return timelines.get(position).getTitle();
     }
 
     @Override
@@ -61,7 +61,7 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
         }
 
         TextView textL = (TextView)convertView.findViewById(R.id.timelineTitle);
-        textL.setText(tlTitles.get(position));
+        textL.setText(timelines.get(position).getTitle());
 
 
         Typeface tlTitleFont = Typeface.createFromAsset(ctx.getAssets(), ctx.getString(R.string.RobotoMedium));
@@ -69,7 +69,10 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
 
 
         TextView textS = (TextView)convertView.findViewById(R.id.timelineMembers);
-        textS.setText(tlMembers.get(position));
+        textS.setText(timelines.get(position).getMembers());
+
+        TextView textD = (TextView) convertView.findViewById(R.id.recentEvent);
+        textD.setText(timelines.get(position).getLastmodified());
 
         return convertView;
     }

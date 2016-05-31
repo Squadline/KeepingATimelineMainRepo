@@ -59,6 +59,7 @@ public class TimelineSettings extends AppCompatActivity
     private ArrayAdapter<String> adapter;       // Adapter for list of users
     private ArrayList<String> users;        // List of user names  (for user display)
     private ArrayList<String> userIDs;          // List of user IDs    (for easy iteration when searching)
+    private String lastModified;
 
     private Firebase db;                        // Database object
 
@@ -199,6 +200,7 @@ public class TimelineSettings extends AppCompatActivity
 
                 // Get value of the title child of timeline and update title
                 squadTitle.setText(dataSnapshot.child(TITLE_STR).getValue().toString());
+                lastModified = dataSnapshot.child("LastModified").getValue().toString();
 
                 // Reset the list of user emails and IDs
                 users.clear();
@@ -210,9 +212,6 @@ public class TimelineSettings extends AppCompatActivity
                     users.add(member.getValue().toString());
                     userIDs.add(member.getKey());
                 }
-
-                // Update the list of user names and the display
-                updateUserNames();
             }
 
             @Override
@@ -240,44 +239,6 @@ public class TimelineSettings extends AppCompatActivity
             public void onClick(View v) {
                 // Show confirmation dialog
                 showLeaveSquadConfirm();
-            }
-        });
-    }
-
-    // Helper method to update list of timeline users' names
-
-    // Using this method will slow down timeline users retrieval
-    // since we are relying on two listeners for the database
-    // as well as downloading a snapshot of the Users table
-    // This method is for displaying user names instead of emails
-    private void updateUserNames() {
-        // Clear the list of user names
-        users.clear();
-
-        // Get the users table in the database
-        Firebase allUsers = Vars.getFirebase().child(DB_USERS);
-
-        // Retrieve a snapshot of the users ONCE
-        allUsers.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Visit all users in the timeline and add their names to the list
-                for (String UID : userIDs) {
-                    // Get the name values of the user
-                    String firstName = dataSnapshot.child(UID).child(FIRST_NAME).getValue().toString();
-                    String lastName = dataSnapshot.child(UID).child(LAST_NAME).getValue().toString();
-
-                    // Put a space in between and add to the name list
-                    users.add(firstName + " " + lastName);
-                }
-                // Notify the adapter of data update and refresh the view
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                // If load was canceled, inform user of error
-                showDataErrorMsg();
             }
         });
     }
@@ -336,6 +297,7 @@ public class TimelineSettings extends AppCompatActivity
                         Map<String, Object> userTimelines = new HashMap<String, Object>();
                         Map<String, String> timelineData = new HashMap<String, String>();
                         timelineData.put("Title", currentTimelineName);
+                        timelineData.put("LastModified", lastModified);
                         for(int index = 0; index < users.size(); index++) {
                             String temp = users.get(index);
                             temp = temp.substring(0, temp.indexOf(" ")); //parses to get first name

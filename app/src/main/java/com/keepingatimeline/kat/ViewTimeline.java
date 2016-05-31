@@ -70,6 +70,7 @@ public class ViewTimeline extends AppCompatActivity {
     private List<String> mExpandableListTitle;
     private Map<String, List<String>> mExpandableListData;
     private TextView mSelectedItemView;
+    private LinkedHashMap<String, List<String>> expandableListData;
     //private List<String> dates;
 
 
@@ -151,7 +152,7 @@ public class ViewTimeline extends AppCompatActivity {
 
         // specify an adapter (see also next example)
         final ArrayList<Event> eventList = new ArrayList<Event>();
-        rvAdapter = new EventAdapter(this, eventList);
+        rvAdapter = new EventAdapter(this, eventList, timelineID);
         rv.setAdapter(rvAdapter);
 
         firebaseRef = Vars.getTimeline(timelineID).child("Events");
@@ -204,7 +205,7 @@ public class ViewTimeline extends AppCompatActivity {
                 //update method
                 mExpandableListData = getData(eventList);
                 mExpandableListTitle = new ArrayList(mExpandableListData.keySet());
-                addDrawerItems();
+                addDrawerItems(eventList);
                 ((CustomExpandableListAdapter)mExpandableListView.getExpandableListAdapter()).notifyDataSetChanged();
             }
 
@@ -280,13 +281,94 @@ public class ViewTimeline extends AppCompatActivity {
 
 
     //add the items inside the drawer
-    private void addDrawerItems() {
+    private void addDrawerItems(final ArrayList<Event> whole) {
 
         //takes in the object itself, a lit of titles, and all the date related to the title
         mExpandableListAdapter = new CustomExpandableListAdapter(this, mExpandableListTitle, mExpandableListData);
 
         //sets data behind this customizable drawer view
         mExpandableListView.setAdapter(mExpandableListAdapter);
+        mExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+                int index = 0;
+                int index_2 = 0;
+                String first = "";
+                String second = "";
+
+                for(String key : expandableListData.keySet())
+                {
+                    if(index == groupPosition)
+                    {
+                        first = key;
+                        for(String str : expandableListData.get(first))
+                        {
+                            if(index_2 == childPosition)
+                            {
+                                second = str;
+                                break;
+                            }
+                            index_2++;
+                        }
+                        break;
+                    }
+                    index++;
+                }
+
+                String month = "";
+                int year = 0;
+                int num_month = 0;
+
+                String[] part = first.split("(?=\\d)(?<!\\d)");
+
+                month = part[0];
+                month = month.replaceAll("\\s+","");
+                year = Integer.parseInt(part[1]);
+
+                System.err.println(month + "Dicks");
+
+                String[] Months = {"", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+                for(int i = 0; i < Months.length; i++)
+                {
+                    if(month.equals(Months[i]))
+                    {
+                        num_month = i;
+                    }
+                }
+
+                /*
+                Scanner scanner = new Scanner(first).useDelimiter("[^0-9]+");
+                month = scanner.nextInt();
+                year = scanner.nextInt();
+                */
+
+                String result = Integer.toString(num_month)+ "/" + second + "/" + Integer.toString(year) ;
+
+                System.out.println(result);
+
+                String result_2 = "";
+                int resultant = 0;
+
+                for( int i = 0; i < whole.size(); i++ )
+                {
+                    //System.out.println(whole.get(i).getDate());
+                    if(whole.get(i).getDate().equals(result))
+                    {
+                        resultant = i;
+                        System.out.println(i);
+                        result_2 = whole.get(i).getDate();
+                        rv.smoothScrollToPosition(i);
+                        break;
+                    }
+                }
+                //System.err.println(resultant);
+                //System.err.println(result_2);
+                //System.err.println(result);
+                rv.smoothScrollToPosition(resultant);
+                return true;
+            }
+        });
     }
 
     @Override
@@ -303,7 +385,7 @@ public class ViewTimeline extends AppCompatActivity {
 
         //sorts the dates
         //List<String> dates
-        LinkedHashMap<String, List<String>> expandableListData = new LinkedHashMap<>();
+        expandableListData = new LinkedHashMap<>();
 
         String[] Months = {"", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
@@ -312,9 +394,10 @@ public class ViewTimeline extends AppCompatActivity {
         int year_data = 0;
         List<String> months_date = new ArrayList<String>();
         String curr_m_y = "";
+        int temp_day = 0;
 
         //Goes through all the given dates
-        for(int i = 1; i < whole.size(); i++)
+        for(int i = 0; i < whole.size(); i++)
         {
             //Separates given string into pieces using scanner
             Scanner scanner = new Scanner(whole.get(i).getDate()).useDelimiter("[^0-9]+");
@@ -333,10 +416,20 @@ public class ViewTimeline extends AppCompatActivity {
             {
                 curr_m_y = month_year;
                 months_date.add(Integer.toString(day_data));
+                temp_day = day_data;
+                if(whole.size()-1 == i)
+                {
+                    expandableListData.put(month_year, new ArrayList<String>(months_date));
+                }
             }
             else if(month_year.equals(curr_m_y))
             {
-                months_date.add(Integer.toString(day_data));
+
+                if( !(temp_day == day_data) )
+                {
+                    months_date.add(Integer.toString(day_data));
+                    temp_day = day_data;
+                }
                 if(whole.size()-1 == i)
                 {
                     expandableListData.put(month_year, new ArrayList<String>(months_date));
@@ -348,7 +441,7 @@ public class ViewTimeline extends AppCompatActivity {
                 curr_m_y = month_year;
                 months_date.clear();
                 months_date.add(Integer.toString(day_data));
-
+                temp_day = day_data;
                 if(whole.size()-1 == i)
                 {
                     expandableListData.put(month_year, new ArrayList<String>(months_date));
@@ -360,57 +453,9 @@ public class ViewTimeline extends AppCompatActivity {
         return expandableListData;
     }
 
-    //Returns if date1 is before date2
-    protected boolean compareDates(String date1, String date2) {
-        //Holds Data of first date
-        int month1 = 0;
-        int day1 = 0;
-        int year1 = 0;
 
-        //Holds Data of second date
-        int month2 = 0;
-        int day2 = 0;
-        int year2 = 0;
 
-        Scanner s1 = new Scanner(date1).useDelimiter("[^0-9]+");
-        Scanner s2 = new Scanner(date2).useDelimiter("[^0-9]+");
-
-        //Store dates into their separate categories
-        month1 = s1.nextInt();
-        day1 = s1.nextInt();
-        year1 = s1.nextInt();
-
-        month2 = s2.nextInt();
-        day2 = s2.nextInt();
-        year2 = s2.nextInt();
-
-        //Compare Years
-        if(year2 != year1) {
-            if(year2 > year1)
-                return true;
-            else
-                return false;
-        }
-        //Compare Months
-        else if(month2 != month1) {
-            if(month2 > month1)
-                return true;
-            else
-                return false;
-        }
-        //Compare Days
-        else if(day2 != day1) {
-            if(day2 > day1)
-                return true;
-            else
-                return false;
-        }
-        else
-            return true;
-
-    }
-
-    public ArrayList<Event> mergeSort(ArrayList<Event> whole) {
+    private ArrayList<Event> mergeSort(ArrayList<Event> whole) {
         ArrayList<Event> left = new ArrayList<Event>();
         ArrayList<Event> right = new ArrayList<Event>();
         int center;
@@ -448,7 +493,7 @@ public class ViewTimeline extends AppCompatActivity {
         // been used up, keep taking the smaller of left.get(leftIndex)
         // or right.get(rightIndex) and adding it at both.get(bothIndex).
         while (leftIndex < left.size() && rightIndex < right.size()) {
-            if ( !compareDates(left.get(leftIndex).getDate(),
+            if ( !DateGen.compareDates(left.get(leftIndex).getDate(),
                     right.get(rightIndex).getDate())) {
                 whole.set(wholeIndex, left.get(leftIndex));
                 leftIndex++;

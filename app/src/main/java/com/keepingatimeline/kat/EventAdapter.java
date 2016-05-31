@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,12 +30,14 @@ import java.util.ArrayList;
 public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final ArrayList<Event> eventList;
+    private final String timelineID;
     private Context ctx;
 
     // saves off the passed eventList, removing null events from it
-    public EventAdapter(Context context, ArrayList<Event> eventListParam) {
+    public EventAdapter(Context context, ArrayList<Event> eventListParam, String timelineID) {
         this.eventList = eventListParam;
         this.ctx = context;
+        this.timelineID = timelineID;
     }
 
     // Provide a reference to the views for each data item
@@ -44,6 +45,8 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolderPhoto extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
+        public int position;
+        public EventAdapter parent;
         public TextView photoTitle;
         public TextView photoDate;
         public TextView photoText;
@@ -63,19 +66,46 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             final ImageView editPhotoEvent = (ImageView) v.findViewById(R.id.editPhotoEvent);
             editPhotoEvent.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v){
+                public void onClick(final View v){
 
-                    PopupMenu editMenu = new PopupMenu(v.getContext(), editPhotoEvent);
-                    editMenu.getMenuInflater().inflate(R.menu.event_menu, editMenu.getMenu());
+                    PopupMenu popup = new PopupMenu(v.getContext(), v);
+                    popup.getMenuInflater().inflate(R.menu.event_settings_menu, popup.getMenu());
+                    popup.show();
 
-                    editMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    popup.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+
+                        @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            //do stuff
+                            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                            builder.setTitle("Lol").setMessage("Hope this works");
+                            builder.create().show();
                             return true;
                         }
                     });
 
-                    editMenu.show();
+                    popup.getMenu().getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                            builder.setTitle("Delete Event").setMessage("Delete This Event?");
+                            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    parent.deleteEvent(position);
+                                }
+                            });
+                            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                            builder.create().show();
+                            return true;
+                        }
+                    });
+
                 }
             });
         }
@@ -83,6 +113,8 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     public static class ViewHolderQuote extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
+        public int position;
+        public EventAdapter parent;
         public TextView quoteTitle;
         public TextView quoteDate;
         public TextView quoteText;
@@ -110,19 +142,46 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             final ImageView editQuoteEvent = (ImageView) v.findViewById(R.id.editQuoteEvent);
             editQuoteEvent.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v){
+                public void onClick(final View v){
 
-                    PopupMenu editMenu = new PopupMenu(v.getContext(), editQuoteEvent);
-                    editMenu.getMenuInflater().inflate(R.menu.event_menu, editMenu.getMenu());
+                    PopupMenu popup = new PopupMenu(v.getContext(), v);
+                    popup.getMenuInflater().inflate(R.menu.event_settings_menu, popup.getMenu());
+                    popup.show();
 
-                    editMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    popup.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+
+                        @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            //do stuff
+                            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                            builder.setTitle("Lol").setMessage("Hope this works");
+                            builder.create().show();
                             return true;
                         }
                     });
 
-                    editMenu.show();
+                    popup.getMenu().getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                            builder.setTitle("Delete Event").setMessage("Delete This Event?");
+                            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    parent.deleteEvent(position);
+                                }
+                            });
+                            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                            builder.create().show();
+                            return true;
+                        }
+                    });
+
                 }
             });
         }
@@ -130,6 +189,8 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     public static class ViewHolderText extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
+        public int position;
+        public EventAdapter parent;
         public TextView textTitle;
         public TextView textDate;
         public TextView textText;
@@ -142,6 +203,9 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             Context context = v.getContext();
             Typeface textTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoRegular));
             textTitle.setTypeface(textTitleFont);
+
+            Typeface textTextFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.LiberationSansRegular));
+            textText.setTypeface(textTextFont);
 
 
             final ImageView editTextEvent = (ImageView) v.findViewById(R.id.editTextEvent);
@@ -173,15 +237,15 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
+                                    parent.deleteEvent(position);
                                 }
-                            })
-                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
-                                        }
-                                    });
+                            });
+                            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
                             builder.create().show();
                             return true;
                         }
@@ -233,6 +297,8 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         Event event = eventList.get(position);
         switch(event.getType()) {
             case "photo":
+                ((ViewHolderPhoto)holder).position = position;
+                ((ViewHolderPhoto)holder).parent = this;
                 ((ViewHolderPhoto)holder).photoTitle.setText(event.getTitle());
                 ((ViewHolderPhoto)holder).photoDate.setText(event.getDate());
                 ((ViewHolderPhoto)holder).photoText.setText(event.getString1());
@@ -252,6 +318,8 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 fancyQuoteText.setSpan(leftSpan, 0, 1, 0);
                 fancyQuoteText.setSpan(rightSpan, (fancyQuoteText.length() - 1), fancyQuoteText.length(), 0);
 
+                ((ViewHolderQuote)holder).position = position;
+                ((ViewHolderQuote)holder).parent = this;
                 ((ViewHolderQuote)holder).quoteTitle.setText(event.getTitle());
                 ((ViewHolderQuote)holder).quoteDate.setText(event.getDate());
                 ((ViewHolderQuote)holder).quoteText.setText(fancyQuoteText);
@@ -260,6 +328,8 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 break;
             case "text":
             default:
+                ((ViewHolderText)holder).position = position;
+                ((ViewHolderText)holder).parent = this;
                 ((ViewHolderText)holder).textTitle.setText(event.getTitle());
                 ((ViewHolderText)holder).textDate.setText(event.getDate());
                 ((ViewHolderText)holder).textText.setText(event.getString1());
@@ -270,5 +340,9 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public int getItemCount() {
         return eventList.size();
+    }
+
+    private void deleteEvent(int position) {
+        Vars.getTimeline(timelineID + "/Events/" + eventList.get(position).getKey()).setValue(null);
     }
 }
