@@ -20,6 +20,8 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by Jimmy on 5/11/2016.
  * Made useful by Trevor on 5/17/2016.
@@ -64,6 +66,9 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
             convertView = listInflater.inflate(R.layout.main_timelines, parent, false);
         }
 
+        final CircleImageView squadCircleView = (CircleImageView) convertView.findViewById(R.id.squad_image);
+
+
         TextView textL = (TextView)convertView.findViewById(R.id.timelineTitle);
         textL.setText(timelines.get(position).getTitle());
 
@@ -87,6 +92,7 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
                 Bitmap bm_image = PictureCompactor.StringB64ToBitmap(image);
 
                 //make the change to the timeline pic down here
+                squadCircleView.setImageBitmap(bm_image);
             }
 
             @Override

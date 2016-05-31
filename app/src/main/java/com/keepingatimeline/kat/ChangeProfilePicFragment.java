@@ -64,7 +64,7 @@ public class ChangeProfilePicFragment extends DialogFragment{
         }
         // If this fails, it means that activity must implement the listener interface
         catch (ClassCastException cce) {
-            throw new ClassCastException(activity.toString() + "must implement ChangePasswordListener");
+            throw new ClassCastException(activity.toString() + "must implement ChangeProfilePicListener");
         }
     }
 
@@ -76,7 +76,7 @@ public class ChangeProfilePicFragment extends DialogFragment{
         View view = inflater.inflate(R.layout.dialog_change_profile_picture, null);
 
 
-        builder.setTitle("Change Profile Picture");
+        builder.setTitle("Change Picture");
         builder.setMessage("Select an image and save!");
 
         profileTextView = (TextView) view.findViewById(R.id.uploadTextView);
