@@ -173,7 +173,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     ArrayList<String> otherUsers = new ArrayList<String>();
 
                     for (DataSnapshot entry : tlSnapshot.getChildren()) {
-                        if(!entry.getKey().toString().equals("Title")) {
+                        if(!entry.getKey().toString().equals("Title") &&
+                                !entry.getKey().toString().equals("LastModified")) {
                             otherUsers.add(entry.getValue().toString());
                         }
                     }
