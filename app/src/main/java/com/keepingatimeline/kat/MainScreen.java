@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
@@ -31,6 +32,9 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -38,8 +42,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-        ChangePasswordFragment.ChangePasswordListener, ChangeProfilePicFragment.ChangeProfilePicListener{
+        ChangePasswordFragment.ChangePasswordListener, ChangeProfilePicFragment.ChangeProfilePicListener {
 
     private Firebase database;
     private ArrayList<Timeline> timelines = new ArrayList<>();
@@ -54,23 +60,29 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private String currentFirst;                // First name of the current user
     private String currentLast;                 // Last name of the current user
     private String currentEmail;                // Email of the current user
+    private String currentPic;                  // profile pic in str form
 
     // String constants for Firebase children
     private final String USERS_STR = "Users";
     private final String NAME_STR = "FirstName";
     private final String LAST_STR = "LastName";
     private final String EMAIL_STR = "EmailAddress";
+    private final String PROFILE_STR = "ProfilePic";
     private final String DB_STR = "https://fiery-fire-8218.firebaseio.com/";
     private TextView userName;
     private TextView userEmail;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     /**
      * By: Dana, Byung, Jimmy, Trevor
      * Description:
-     *      Contains various snippets of code that implement the following functionality:
-     *          Left Scrollbar (account settings and such)
-     *          Right Scrollbar (to be moved when timeline function becomes fully functional)
-     *
+     * Contains various snippets of code that implement the following functionality:
+     * Left Scrollbar (account settings and such)
+     * Right Scrollbar (to be moved when timeline function becomes fully functional)
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +116,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         View navHeader = navigationView.getHeaderView(0);
         userName = (TextView) navHeader.findViewById(R.id.user_name);
         userEmail = (TextView) navHeader.findViewById(R.id.user_email);
-
+        profilePic = (CircleImageView) navHeader.findViewById(R.id.profile_image);
         //.com/Users/uid
         //.com/Users/
 
@@ -114,7 +126,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get the name of  the current user
-
+                currentPic = dataSnapshot.child(PROFILE_STR).getValue().toString();
                 currentFirst = dataSnapshot.child(NAME_STR).getValue().toString();
                 currentLast = dataSnapshot.child(LAST_STR).getValue().toString();
 
@@ -131,6 +143,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 currentEmail = currentEmail + "";
 
                 userEmail.setText(currentEmail);
+
+                if (currentPic.length() != 0) {
+                    profilePic.setImageBitmap(PictureCompactor.StringB64ToBitmap(currentPic));
+                }
             }
 
             @Override
@@ -168,7 +184,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     ArrayList<String> otherUsers = new ArrayList<String>();
 
                     for (DataSnapshot entry : tlSnapshot.getChildren()) {
-                        if(!entry.getKey().toString().equals("Title") &&
+                        if (!entry.getKey().toString().equals("Title") &&
                                 !entry.getKey().toString().equals("LastModified")) {
                             otherUsers.add(entry.getValue().toString());
                         }
@@ -178,10 +194,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
                     String members = "";
 
-                    for(int index = 0; index < otherUsers.size(); index++) {
+                    for (int index = 0; index < otherUsers.size(); index++) {
                         members += otherUsers.get(index);
-                        if(index < otherUsers.size() - 2) members += ", ";
-                        else if(index == otherUsers.size() - 2) members += " & ";
+                        if (index < otherUsers.size() - 2) members += ", ";
+                        else if (index == otherUsers.size() - 2) members += " & ";
                     }
 
                     newTimeline.setMembers(members);
@@ -213,24 +229,59 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             }
 
         });
-        }
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
 
         Batch.Push.setSmallIconResourceId(R.drawable.ic_launcher);
         Batch.Push.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.ic_launcher));
         Batch.onStart(this);
         Batch.User.editor().setIdentifier(holder).save();
         inflateTimeline.notifyDataSetChanged(); //updates adapter --Dana
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "MainScreen Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.keepingatimeline.kat/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
     }
 
     // Batch stuff - Darren
     @Override
     protected void onStop() {
         super.onStop();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "MainScreen Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.keepingatimeline.kat/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
         Batch.onStop(this);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.disconnect();
     }
 
     @Override
@@ -296,7 +347,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                 timeline.put("LastModified", todaysDate);
                                 database.setValue(timeline);
 
-                                Firebase timelineUsers =  database.child("Users");
+                                Firebase timelineUsers = database.child("Users");
                                 Map<String, String> post1 = new HashMap<String, String>();
                                 post1.put(Vars.getUID(), nameAdd);
                                 timelineUsers.setValue(post1);
@@ -398,7 +449,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         }
         // check if new pass == confirm pass
-        if( !newPass.equals(conPass)) {
+        if (!newPass.equals(conPass)) {
 
             Toast.makeText(getApplicationContext(), "New passwords do not match! :0",
                     Toast.LENGTH_LONG).show();
@@ -407,7 +458,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         // check check if currpass == new pass, aka no point
 
-        if( newPass.equals(curPass)) {
+        if (newPass.equals(curPass)) {
             Toast.makeText(getApplicationContext(), "Current password same as new password!"
                             + "Please change the password to something different!",
                     Toast.LENGTH_LONG).show();
@@ -418,10 +469,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         Vars.getFirebase().changePassword(emailStr, curPass,
                 newPass, new Firebase.ResultHandler() {
                     @Override
-                    public void onError(FirebaseError err)
-                    {
-                        if( err.getCode() == FirebaseError.INVALID_PASSWORD)
-                        {
+                    public void onError(FirebaseError err) {
+                        if (err.getCode() == FirebaseError.INVALID_PASSWORD) {
                             Toast.makeText(getApplicationContext(),
                                     "Error: Current password is incorrect",
                                     Toast.LENGTH_LONG).show();
@@ -434,9 +483,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     }
 
                     @Override
-                    public void onSuccess()
-                    {
-                        Toast.makeText(getApplicationContext(),  "Password successfully changed",
+                    public void onSuccess() {
+                        Toast.makeText(getApplicationContext(), "Password successfully changed",
                                 Toast.LENGTH_LONG).show();
                         dialog.getDialog().cancel();
                         return;
@@ -488,9 +536,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                 database.child("FirstName").setValue(newFirstName);
                                 database.child("LastName").setValue(newLastName);
 
-                                for(DataSnapshot timeline : dataSnapshot.child("Timelines").getChildren()) {
+                                for (DataSnapshot timeline : dataSnapshot.child("Timelines").getChildren()) {
                                     Vars.getTimeline(timeline.getKey()).child(Vars.getUID()).setValue(newFirstName + " " + newLastName);
-                                    if(!newFirstName.equals(currentFirstName)) {
+                                    if (!newFirstName.equals(currentFirstName)) {
                                         for (DataSnapshot user : timeline.getChildren()) {
                                             String path = "Timelines/" + timeline.getKey() + "/" + user.getKey();
                                             Vars.getUser(user.getKey()).child(path).setValue(newFirstName);
@@ -526,11 +574,21 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     public void onDialogPositiveClick(final ChangeProfilePicFragment dialog) {
         String uid = Vars.getFirebase().getAuth().getUid();
         String photo = dialog.getPhoto();
-        Vars.getFirebase().child("Users/"+ uid + "/ProfilePic").setValue(photo);
+        if (photo.length() == 0) {
+            Toast.makeText(getApplicationContext(), "No Photo Entered!", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            profilePic.setImageBitmap(PictureCompactor.StringB64ToBitmap(photo));
+        }
+        Vars.getFirebase().child("Users/" + uid + "/ProfilePic").setValue(photo);
+
+
+        //profilePic.setImageBitmap(b);
+
     }
 
     // displays a help dialogue --Dana
-    private void getMainScreenHelp(){
+    private void getMainScreenHelp() {
         AlertDialog.Builder helpDialogBuilder = new AlertDialog.Builder(this);
 
         helpDialogBuilder.setTitle("Help");
