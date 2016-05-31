@@ -205,7 +205,7 @@ public class TimelineSettings extends AppCompatActivity
                 lastModified = dataSnapshot.child("LastModified").getValue().toString();
                 squadImage = dataSnapshot.child("TimelinePic").getValue().toString();
 
-                if(!squadImage.isEmpty() {
+                if(!squadImage.isEmpty()) {
                     Bitmap bm_image = PictureCompactor.StringB64ToBitmap(squadImage);
 
                     //make further changes here
