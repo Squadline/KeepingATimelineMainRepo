@@ -221,7 +221,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     protected void onStart() {
         super.onStart();
 
-        Batch.Push.setSmallIconResourceId(R.drawable.ic_launcher);
+        Batch.Push.setSmallIconResourceId(R.drawable.notification_icon);
         Batch.Push.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.ic_launcher));
         Batch.onStart(this);
         Batch.User.editor().setIdentifier(holder).save();
