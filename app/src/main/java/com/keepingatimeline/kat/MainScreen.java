@@ -2,6 +2,8 @@ package com.keepingatimeline.kat;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.batch.android.Batch;
+import com.batch.android.BatchPushService;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -64,6 +67,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     private final String LAST_STR = "LastName";
     private final String EMAIL_STR = "EmailAddress";
     private final String DB_STR = "https://fiery-fire-8218.firebaseio.com/";
+    private TextView userName;
+    private TextView userEmail;
 
     /**
      * By: Dana, Byung, Jimmy, Trevor
@@ -103,8 +108,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         // sets name and email of current user in sidebar
         View navHeader = navigationView.getHeaderView(0);
-        final TextView userName = (TextView) navHeader.findViewById(R.id.user_name);
-        final TextView userEmail = (TextView) navHeader.findViewById(R.id.user_email);
+        userName = (TextView) navHeader.findViewById(R.id.user_name);
+        userEmail = (TextView) navHeader.findViewById(R.id.user_email);
 
         //.com/Users/uid
         //.com/Users/
@@ -215,6 +220,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     protected void onStart() {
         super.onStart();
 
+        Batch.Push.setSmallIconResourceId(R.mipmap.ic_launcher_5);
+        Batch.Push.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.mipmap.ic_launcher_5));
         Batch.onStart(this);
         Batch.User.editor().setIdentifier(holder).save();
         inflateTimeline.notifyDataSetChanged(); //updates adapter --Dana
@@ -277,6 +284,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                         ref.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
+                                String todaysDate = DateGen.getCurrentDate();
                                 nameAdd = dataSnapshot.child("FirstName").getValue().toString() + " ";
                                 nameAdd += dataSnapshot.child("LastName").getValue().toString();
                                 newName = nameTLInput.getText().toString();
@@ -286,6 +294,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
                                 Map<String, String> timeline = new HashMap<String, String>();
                                 timeline.put("Title", newName);
+                                timeline.put("LastModified", todaysDate);
                                 database.setValue(timeline);
 
                                 Firebase timelineUsers =  database.child("Users");
@@ -297,6 +306,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                 database = database.child(tKey);
                                 Map<String, Object> userTimelines = new HashMap<String, Object>();
                                 userTimelines.put("Title", newName);
+                                userTimelines.put("LastModified", todaysDate);
                                 userTimelines.put(Vars.getUID(), dataSnapshot.child("FirstName").getValue().toString());
                                 database.updateChildren(userTimelines);
                             }
@@ -516,6 +526,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                                 if (newFirstName.equals(currentFirstName) && newLastName.equals(currentLastName)) {
                                     return;
                                 }
+
+                                //update Account Sidebar
+                                userName.setText(newFirstName + " " + newLastName);
 
                                 // Set the current user name to the entered one
                                 // Both locally and in the database

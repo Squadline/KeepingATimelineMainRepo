@@ -50,7 +50,7 @@ public class AddQuoteFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 DialogFragment newFragment = new DatePickerQuote();
-                newFragment.show(getFragmentManager(),"Date Picker");
+                newFragment.show(getFragmentManager(),"DateGen Picker");
             }
         });
 
