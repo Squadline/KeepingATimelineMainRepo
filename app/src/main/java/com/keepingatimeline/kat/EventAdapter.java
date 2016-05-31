@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -204,6 +203,9 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             Context context = v.getContext();
             Typeface textTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoRegular));
             textTitle.setTypeface(textTitleFont);
+
+            Typeface textTextFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.LiberationSansRegular));
+            textText.setTypeface(textTextFont);
 
 
             final ImageView editTextEvent = (ImageView) v.findViewById(R.id.editTextEvent);
