@@ -77,7 +77,21 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                            builder.setTitle("Lol").setMessage("Hope this works");
+                            LayoutInflater inflater = LayoutInflater.from(v.getContext());
+                            builder.setView(inflater.inflate(R.layout.dialog_edit_photo_event, null));
+                            builder.setTitle("Edit Event").setMessage("Change the fields you would like to edit");
+                            builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
                             builder.create().show();
                             return true;
                         }
@@ -153,7 +167,21 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                            builder.setTitle("Lol").setMessage("Hope this works");
+                            LayoutInflater inflater = LayoutInflater.from(v.getContext());
+                            builder.setView(inflater.inflate(R.layout.dialog_edit_quote_event, null));
+                            builder.setTitle("Edit Event").setMessage("Change the fields you would like to edit");
+                            builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
                             builder.create().show();
                             return true;
                         }
@@ -222,7 +250,21 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                            builder.setTitle("Lol").setMessage("Hope this works");
+                            LayoutInflater inflater = LayoutInflater.from(v.getContext());
+                            builder.setView(inflater.inflate(R.layout.dialog_edit_text_event, null));
+                            builder.setTitle("Edit Event").setMessage("Change the fields you would like to edit");
+                            builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
                             builder.create().show();
                             return true;
                         }
