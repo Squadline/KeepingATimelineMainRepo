@@ -2,7 +2,6 @@ package com.keepingatimeline.kat;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -20,14 +19,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.batch.android.Batch;
-import com.batch.android.BatchPushService;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -36,7 +33,6 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -510,12 +506,15 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         final EditText firstNameInput = (EditText) view.findViewById(R.id.firstNameInput);
         final EditText lastNameInput = (EditText) view.findViewById(R.id.lastNameInput);
 
+        firstNameInput.setText(currentFirst);
+        lastNameInput.setText(currentLast);
+
         // Set the view, title, message, and buttons for the dialog
         builder.setView(view)
                 .setTitle("Change Name")
-                .setMessage("change stuff cuz can")
+                .setMessage("Enter your first and last name.")
                 // If the user confirms the title change
-                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

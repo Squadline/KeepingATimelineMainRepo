@@ -3,26 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="10dp"
+    android:paddingBottom="6dp"
     android:paddingEnd="20dp"
     android:paddingStart="20dp"
-    android:paddingTop="10dp">
+    android:paddingTop="6dp">
 
     <EditText
         android:id="@+id/changeTextTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/editEventTitles" />
-
-    <EditText
-        android:id="@+id/changeText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/editText" />
+        android:hint="@string/editTitle"
+        android:inputType="textNoSuggestions" />
 
     <EditText
         android:id="@+id/changeTextDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/editDate" />
+
+    <EditText
+        android:id="@+id/changeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/editText"
+        android:inputType="textNoSuggestions" />
+
 </LinearLayout>

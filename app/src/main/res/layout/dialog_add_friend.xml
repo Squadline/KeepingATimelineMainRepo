@@ -3,8 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingBottom="6dp"
     android:paddingEnd="20dp"
-    android:paddingStart="20dp">
+    android:paddingStart="20dp"
+    android:paddingTop="6dp">
 
     <EditText
         android:id="@+id/addFriendInput"
