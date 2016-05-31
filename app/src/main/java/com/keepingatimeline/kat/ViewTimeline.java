@@ -326,8 +326,6 @@ public class ViewTimeline extends AppCompatActivity {
                 month = month.replaceAll("\\s+","");
                 year = Integer.parseInt(part[1]);
 
-                System.err.println(month + "Dicks");
-
                 String[] Months = {"", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
                 for(int i = 0; i < Months.length; i++)
                 {
@@ -337,35 +335,19 @@ public class ViewTimeline extends AppCompatActivity {
                     }
                 }
 
-                /*
-                Scanner scanner = new Scanner(first).useDelimiter("[^0-9]+");
-                month = scanner.nextInt();
-                year = scanner.nextInt();
-                */
-
                 String result = Integer.toString(num_month)+ "/" + second + "/" + Integer.toString(year) ;
 
                 System.out.println(result);
-
-                String result_2 = "";
-                int resultant = 0;
 
                 for( int i = 0; i < whole.size(); i++ )
                 {
                     //System.out.println(whole.get(i).getDate());
                     if(whole.get(i).getDate().equals(result))
                     {
-                        resultant = i;
-                        System.out.println(i);
-                        result_2 = whole.get(i).getDate();
                         rv.smoothScrollToPosition(i);
                         break;
                     }
                 }
-                //System.err.println(resultant);
-                //System.err.println(result_2);
-                //System.err.println(result);
-                rv.smoothScrollToPosition(resultant);
                 return true;
             }
         });
@@ -384,7 +366,6 @@ public class ViewTimeline extends AppCompatActivity {
     public Map<String, List<String>> getData(ArrayList<Event> whole) {
 
         //sorts the dates
-        //List<String> dates
         expandableListData = new LinkedHashMap<>();
 
         String[] Months = {"", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
