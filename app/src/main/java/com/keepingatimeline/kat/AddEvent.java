@@ -165,19 +165,21 @@ public class AddEvent extends AppCompatActivity {
     }
 
     private String parseQuote(String quote) {
-        if(quote.length() > 0 && quote.charAt(0) == '\"') {
+        quote = quote.trim();
+        while(quote.length() > 0 && quote.charAt(0) == '\"') {
             quote = quote.substring(1);
         }
-        if(quote.length() > 0 && quote.charAt(quote.length()-1) == '\"') {
+        while(quote.length() > 0 && quote.charAt(quote.length()-1) == '\"') {
             quote = quote.substring(0, quote.length()-1);
         }
-        return quote;
+        return quote.trim();
     }
 
     private String parseSpeaker(String speaker) {
-        if(speaker.length() > 0 && speaker.charAt(0) == '-') {
+        speaker = speaker.trim();
+        while(speaker.length() > 0 && speaker.charAt(0) == '-') {
             speaker = speaker.substring(1);
         }
-        return speaker;
+        return speaker.trim();
     }
 }
