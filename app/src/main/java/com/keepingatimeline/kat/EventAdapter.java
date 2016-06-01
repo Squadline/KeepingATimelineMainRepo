@@ -314,7 +314,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                     newEvent.setTitle(title.getText().toString());
                                     newEvent.setString1(quote.getText().toString());
                                     newEvent.setDate(date.getText().toString());
-                                    
+
                                     parent.updateEvent(newEvent, position);
                                 }
                             });

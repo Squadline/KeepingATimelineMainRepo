@@ -94,6 +94,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         Firebase ref = new Firebase(DB_STR);
         holder = ref.getAuth().getUid();
 
+        // Set the Batch notification icons
+        Batch.Push.setSmallIconResourceId(R.drawable.notification_icon);
+        Batch.Push.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.ic_launcher));
+
         // Uses a Toolbar as an ActionBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -240,8 +244,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
 
-        Batch.Push.setSmallIconResourceId(R.drawable.notification_icon);
-        Batch.Push.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.ic_launcher));
         Batch.onStart(this);
         Batch.User.editor().setIdentifier(holder).save();
 
