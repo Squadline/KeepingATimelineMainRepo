@@ -192,16 +192,15 @@ public class TimelineSettings extends AppCompatActivity
                     return;
                 }
 
-
                 // If we get an invalid timeline ID
                 // attempting to get the title will return a null value
                 // Print out data loading error message on Toast and stop data retrieval
-                if (dataSnapshot.child(TITLE_STR).getValue() == null ) {
+                if (dataSnapshot.child(TITLE_STR).getValue() == null) {
                     // Timeline is invalid
                     invalid = true;
 
                     // Print out Toast error
-                    showDataErrorMsg();
+                    // showDataErrorMsg();
 
                     // Perform no further actions with data
                     return;
@@ -477,12 +476,13 @@ public class TimelineSettings extends AppCompatActivity
                         // If the current user was the only member
                         // the timeline will be automatically deleted
                         if (users.size() == 1) {
-                            // Set the value of the timeline in the database to null
-                            // effectively deleting the timeline
-                            Vars.getTimeline(currentTimelineID).setValue(null);
                             // Set the deleted flag to true to prevent
                             // Toast data error messages from appearing
                             deleted = true;
+
+                            // Set the value of the timeline in the database to null
+                            // effectively deleting the timeline
+                            Vars.getTimeline(currentTimelineID).setValue(null);
                         }
 
                         // Dismiss the dialog
