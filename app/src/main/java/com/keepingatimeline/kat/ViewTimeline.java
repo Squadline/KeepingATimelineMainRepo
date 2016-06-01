@@ -107,21 +107,6 @@ public class ViewTimeline extends AppCompatActivity {
             timelineName = (String) savedInstanceState.getSerializable("Timeline Name");
         }
 
-        //sets title of the actionbar to the title of the timeline clicked
-        firebaseRef = Vars.getTimeline(timelineID);
-        auth = Vars.getUID();
-
-        firebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-            }
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-
         squadTitle = (TextView) findViewById(R.id.timeline_title);
         Typeface myCustomFont = Typeface.createFromAsset(getAssets(), getString(R.string.BebasNeueRegular));
         squadTitle.setTypeface(myCustomFont);

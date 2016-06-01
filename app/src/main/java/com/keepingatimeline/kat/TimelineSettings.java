@@ -392,6 +392,7 @@ public class TimelineSettings extends AppCompatActivity
 
         String snackMessage = "The squad photo has been changed.";
         Snackbar.make(findViewById(android.R.id.content), snackMessage, Snackbar.LENGTH_LONG).show();
+
     }
 
 

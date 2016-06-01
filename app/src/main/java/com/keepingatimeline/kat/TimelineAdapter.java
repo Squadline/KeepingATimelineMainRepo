@@ -83,26 +83,17 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
         TextView textD = (TextView) convertView.findViewById(R.id.recentEvent);
         textD.setText(timelines.get(position).getLastmodified());
 
-        Vars.getTimeline(timelines.get(position).getId()).child("TimelinePic").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String image = dataSnapshot.getValue().toString();
-                if(!image.isEmpty()) {
-                    Bitmap bm_image = PictureCompactor.StringB64ToBitmap(image);
+        Bitmap bm_image = BitmapCache.getBitmapFromMemCache(timelines.get(position).getId());
 
-                    //make the change to the timeline pic down here
-                    squadCircleView.setImageBitmap(bm_image);
-                }
-                else {
-                    squadCircleView.setImageResource(R.drawable.default_squad);
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
+        Log.d("Loading Thumbnails", "Updating Bitmaps: " + timelines.get(position).getTitle());
+        if(bm_image != null) {
+            //make the change to the timeline pic down here
+            Log.d("Loading Thumbnails", "Setting Bitmaps: " + timelines.get(position).getTitle());
+            squadCircleView.setImageBitmap(bm_image);
+        }
+        else {
+            squadCircleView.setImageResource(R.drawable.default_squad);
+        }
 
         return convertView;
     }

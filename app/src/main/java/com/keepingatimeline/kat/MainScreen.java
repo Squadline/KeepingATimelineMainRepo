@@ -2,6 +2,7 @@ package com.keepingatimeline.kat;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -204,11 +205,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     }
 
                     newTimeline.setMembers(members);
-
                     timelines.add(newTimeline);
                 }
                 mergeSort(timelines);
-
+                loadTimelineThumbnails();
                 inflateTimeline.notifyDataSetChanged();
             }
 
@@ -261,6 +261,14 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 Uri.parse("android-app://com.keepingatimeline.kat/http/host/path")
         );
         AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("MainScreen", "onResume called");
+
+        loadTimelineThumbnails();
     }
 
     // Batch stuff - Darren
@@ -703,6 +711,31 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         for (int i=restIndex; i<rest.size(); i++) {
             whole.set(wholeIndex, rest.get(i));
             wholeIndex++;
+        }
+    }
+
+    private void loadTimelineThumbnails() {
+        Log.d("Loading Thumbnails", "loadTimelineThumbnails  called");
+        for(final Timeline tl : timelines) {
+            final String tlID = tl.getId();
+            Vars.getTimeline(tlID).child("TimelinePic").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String image = dataSnapshot.getValue().toString();
+                    if (!image.isEmpty()) {
+                        Bitmap bm_image = PictureCompactor.StringB64ToBitmap(image);
+
+                        //make the change to the timeline pic down here
+                        BitmapCache.addBitmapToMemoryCache(tl.getId(), bm_image);
+                    }
+                    inflateTimeline.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+
+                }
+            });
         }
     }
 }
