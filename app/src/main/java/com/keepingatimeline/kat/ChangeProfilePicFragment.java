@@ -117,7 +117,7 @@ public class ChangeProfilePicFragment extends DialogFragment{
                 Button submit = ChangeProfilePicFragment.this.dialog.getButton(AlertDialog.BUTTON_POSITIVE);
 
                 // We override the original listener method because we do not want to exit the dialog
-                // until we verify that the entered email is valid
+                // until we verify that the entered photo is valid
                 submit.setOnClickListener(new View.OnClickListener() {
 
                     @Override

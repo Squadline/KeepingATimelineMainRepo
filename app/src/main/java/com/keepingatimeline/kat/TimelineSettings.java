@@ -54,17 +54,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class TimelineSettings extends AppCompatActivity
         implements AddFriendFragment.AddFriendListener, ChangeProfilePicFragment.ChangeProfilePicListener {
-    private CircleImageView timelineCircleView;
+    private CircleImageView timelineCircleView; // Picture of the current timeline
     private String currentTimelineID;           // ID of the current timeline
     private String currentTimelineName;         // Name of the current timeline
     private TextView squadTitle;                // Name of timeline
     private TextView addFriend;                 // Add Friend button
     private TextView leaveSquad;                // Leave Squad button
     private ArrayAdapter<String> adapter;       // Adapter for list of users
-    private ArrayList<String> users;        // List of user names  (for user display)
+    private ArrayList<String> users;            // List of user names  (for user display)
     private ArrayList<String> userIDs;          // List of user IDs    (for easy iteration when searching)
-    private String lastModified;
-    private String squadImage;
+    private String lastModified;                // Last modified date
+    private String squadImage;                  // String of the picture
 
 
     private Firebase db;                        // Database object
@@ -78,6 +78,8 @@ public class TimelineSettings extends AppCompatActivity
     private final String DB_USERS = "Users";                // Users table in main DB
     private final String USERS_STR = "Users";               // Users table in Timelines
     private final String TIMELINE_STR = "Timelines";
+    private final String PIC_STR = "TimelinePic";
+    private final String MOD_STR = "LastModified";
     private final String FIRST_NAME = "FirstName";
     private final String LAST_NAME = "LastName";
     private final String EMAIL_STR = "EmailAddress";
@@ -128,9 +130,8 @@ public class TimelineSettings extends AppCompatActivity
         // By default, the timeline is valid
         invalid = false;
 
-        // Instantiate list of user emails, names, IDs, and the adapter to the ListView
+        // Instantiate list of names, IDs, and the adapter to the ListView
         // Assign the name list to the adapter, since that's what we will display
-        users = new ArrayList<String>();
         users = new ArrayList<String>();
         userIDs = new ArrayList<String>();
         adapter = new ArrayAdapter<String>(this, R.layout.settings_user_list, users);
@@ -208,9 +209,13 @@ public class TimelineSettings extends AppCompatActivity
 
                 // Get value of the title child of timeline and update title
                 squadTitle.setText(dataSnapshot.child(TITLE_STR).getValue().toString());
-                lastModified = dataSnapshot.child("LastModified").getValue().toString();
-                squadImage = dataSnapshot.child("TimelinePic").getValue().toString();
 
+                // Get last modified date and image of squad, and update variables
+                lastModified = dataSnapshot.child(MOD_STR).getValue().toString();
+                squadImage = dataSnapshot.child(PIC_STR).getValue().toString();
+
+                // If the timeline has a picture, then convert to Bitmap and display it
+                // otherwise, the default picture will display (coded in the xml file)
                 if(!squadImage.isEmpty()) {
                     Bitmap bm_image = PictureCompactor.StringB64ToBitmap(squadImage);
                     timelineCircleView.setImageBitmap(bm_image);
@@ -226,6 +231,9 @@ public class TimelineSettings extends AppCompatActivity
                     users.add(member.getValue().toString());
                     userIDs.add(member.getKey());
                 }
+
+                // Notify the adapter of the data change and refresh the view
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -263,7 +271,7 @@ public class TimelineSettings extends AppCompatActivity
     // already in timeline
     // if not, add and display success
 
-    // Positive Button Listener interface method
+    // Add Friend Positive Button Listener interface method
     @Override
     public void onDialogPositiveClick(final AddFriendFragment dialog) {
         // Get the email entered in the dialog
@@ -299,35 +307,46 @@ public class TimelineSettings extends AppCompatActivity
                     // Get the user ID
                     String userID = user.getKey();
 
+                    // Get the first name of the user and append the last name to save full name
+                    // The first name is stored for later use
                     String userFirstName = user.child(FIRST_NAME).getValue().toString();
                     String userName = userFirstName + " " + user.child(LAST_NAME).getValue().toString();
 
                     // If the emails match (emails are case insensitive)
                     if (userEmail.equalsIgnoreCase(email)) {
-                        //case: the user is already part of this timeline
-                        if(user.child("Timeline/" + currentTimelineID).exists()) return;
+                        //If the user is already part of this timeline, notify user and end method
+                        if(user.child(TIMELINE_STR + "/" + currentTimelineID).exists()) {
+                            showAddAlreadyExistsMsg(userEmail);
+                            return;
+                        }
 
-                        Firebase database = Vars.getUser(userID).child("Timelines");
+                        // Get table of user's timelines and add all required information
+                        Firebase userTimelineTable = Vars.getUser(userID).child(TIMELINE_STR);
                         Map<String, Object> userTimelines = new HashMap<String, Object>();
                         Map<String, String> timelineData = new HashMap<String, String>();
-                        timelineData.put("Title", currentTimelineName);
-                        timelineData.put("LastModified", lastModified);
+                        timelineData.put(TITLE_STR, currentTimelineName);
+                        timelineData.put(MOD_STR, lastModified);
+
+                        // Get names of all users in the current timeline
                         for(int index = 0; index < users.size(); index++) {
                             String temp = users.get(index);
                             temp = temp.substring(0, temp.indexOf(" ")); //parses to get first name
                             timelineData.put(userIDs.get(index), temp);
                         }
+
+                        // Store the timeline data in added user's timeline table
                         timelineData.put(userID, userFirstName);
                         userTimelines.put(currentTimelineID, timelineData);
-                        database.updateChildren(userTimelines);
+                        userTimelineTable.updateChildren(userTimelines);
 
                         // New HashMap containing user information to store in the Timeline
                         HashMap<String, Object> newUser = new HashMap<String, Object>();
                         newUser.put(userID, userFirstName);
 
+                        // Add new user to all other users' timeline table
                         for(String member : userIDs) {
-                            database = Vars.getUser(member).child("Timelines/" + currentTimelineID);
-                            database.updateChildren(newUser);
+                            Vars.getUser(member).child(TIMELINE_STR + "/" + currentTimelineID)
+                                    .updateChildren(newUser);
                         }
 
                         // Add the user's ID and email and put it in the Timeline's Users table
@@ -356,7 +375,7 @@ public class TimelineSettings extends AppCompatActivity
         });
     }
 
-    // change squad profile pic
+    // Change squad profile pic
     @Override
     public void onDialogPositiveClick(final ChangeProfilePicFragment dialog) {
 
@@ -368,14 +387,15 @@ public class TimelineSettings extends AppCompatActivity
             timelineCircleView.setImageBitmap(PictureCompactor.StringB64ToBitmap(photo));
         }
 
-        Vars.getFirebase().child("Timelines/" + currentTimelineID + "/TimelinePic").setValue(photo);
-        //Toast.makeText(getApplicationContext(), "Timeline Picture Saved!", Toast.LENGTH_SHORT).show();
+        Vars.getFirebase().child(TIMELINE_STR + "/" + currentTimelineID + "/" + PIC_STR).setValue(photo);
+
+        dialog.getDialog().dismiss();
 
         String snackMessage = "The squad photo has been changed.";
         Snackbar.make(findViewById(android.R.id.content), snackMessage, Snackbar.LENGTH_LONG).show();
-
-        dialog.getDialog().cancel();
     }
+
+
     // Helper methods to create and show Toasts with Error Messages
     private void showDataErrorMsg() {
         Toast toast = Toast.makeText(getApplicationContext(), DATA_ERR, Toast.LENGTH_LONG);
@@ -444,11 +464,13 @@ public class TimelineSettings extends AppCompatActivity
                         removedSquad.put(currentTimelineID, null);
                         Vars.getFirebase().child(DB_USERS).child(Vars.getUID()).child(TIMELINE_STR).updateChildren(removedSquad);
 
-                        //updates all the other users' timeline data
-                        for(int index = 0; index < users.size(); index++) {
+                        //Iterate through all users in the timeline
+                        for(int index = 0; index < userIDs.size(); index++) {
+                            // Update users who aren't the current user
                             if(!userIDs.get(index).equals(Vars.getUID())) {
-                                Firebase database = Vars.getUser(userIDs.get(index)).child(TIMELINE_STR + "/" + currentTimelineID);
-                                database.updateChildren(removedUser);
+                                // Remove the current user from their local timelines
+                                Vars.getUser(userIDs.get(index)).child(TIMELINE_STR + "/" + currentTimelineID)
+                                        .updateChildren(removedUser);
                             }
                         }
 
@@ -519,8 +541,8 @@ public class TimelineSettings extends AppCompatActivity
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // If the same name was entered, then take no action
                         String newName = squadNameInput.getText().toString();
+                        // If the same name or empty name was entered, then take no action
                         if (newName.equals(currentTimelineName) || newName.equals("")) {
                             return;
                         }
@@ -530,13 +552,10 @@ public class TimelineSettings extends AppCompatActivity
                         currentTimelineName = newName;
                         Vars.getTimeline(currentTimelineID).child(TITLE_STR).setValue(currentTimelineName);
 
-                        // Get the list of the current timeline users
+                        // Iterate through the list of the current timeline users
                         // We have to correct the timeline names on the user side as well
-                        Firebase currentUsers = Vars.getTimeline(currentTimelineID).child(USERS_STR);
-
-                        //updates all occurrences of timeline name in user data
-                        for(String id : userIDs) {
-                            Vars.getUser(id).child("Timelines/" + currentTimelineID + "/Title").setValue(currentTimelineName);
+                        for(String uid : userIDs) {
+                            Vars.getUser(uid).child(TIMELINE_STR + "/" + currentTimelineID + "/" + TITLE_STR).setValue(currentTimelineName);
                         }
 
                         // Timeline name has been changed
@@ -557,68 +576,7 @@ public class TimelineSettings extends AppCompatActivity
         builder.create().show();
     }
 
-    private void showPictureDialog() {
-        if( invalid ) return;
-        // Create the dialog builder and layout inflater
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-        // Inflate the dialog xml
-        // Parent is null because it is a dialog layout
-        View view = inflater.inflate(R.layout.dialog_change_profile_picture, null);
-
-        // Get the EditText field in the dialog and preset it to current Timeline name
-        final EditText squadNameInput = (EditText) view.findViewById(R.id.squadNameInput);
-        squadNameInput.setText(currentTimelineName);
-
-        // Disable autocomplete and autocorrect for the title field
-        squadNameInput.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-
-        // Set the view, title, message, and buttons for the dialog
-        builder.setView(view)
-                .setTitle("Rename Squad")
-                .setMessage("Enter a new name for the squad.")
-                // If the user confirms the title change
-                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // If the same name was entered, then take no action
-                        String newName = squadNameInput.getText().toString();
-                        if (newName.equals(currentTimelineName) || newName.equals("")) {
-                            return;
-                        }
-
-                        // Set the current timeline name to the entered one
-                        // Both locally and in the database
-                        currentTimelineName = newName;
-                        Vars.getTimeline(currentTimelineID).child(TITLE_STR).setValue(currentTimelineName);
-
-                        // Get the list of the current timeline users
-                        // We have to correct the timeline names on the user side as well
-                        Firebase currentUsers = Vars.getTimeline(currentTimelineID).child(USERS_STR);
-
-                        //updates all occurrences of timeline name in user data
-                        for(String id : userIDs) {
-                            Vars.getUser(id).child("Timelines/" + currentTimelineID + "/Title").setValue(currentTimelineName);
-                        }
-
-                        // Timeline name has been changed
-                        // There is a reason to return the name now
-                        returnName = true;
-                    }
-                })
-                // If the user presses cancel
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Cancel the dialog
-                        dialog.cancel();
-                    }
-                });
-
-        // Create and show the dialog
-        builder.create().show();
-    }
-
+    // Trevor's Stuff - Options Menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.timeline_settings_menu, menu);
@@ -638,6 +596,11 @@ public class TimelineSettings extends AppCompatActivity
                 showRenameDialog();
                 return true;
             case R.id.changeSquadPhoto:
+                // Don't let the user change the profile picture of an invalid timeline
+                if (invalid) {
+                    return true;
+                }
+                // Show Change Profile Pic dialog
                 DialogFragment dialog = new ChangeProfilePicFragment();
                 dialog.show(getSupportFragmentManager(), "ChangeProfilePicFragment");
                 return true;
@@ -647,7 +610,6 @@ public class TimelineSettings extends AppCompatActivity
     }
 
     // Darren's stuff - Overridden back button listener
-
     @Override
     public void onBackPressed() {
         // If we want to return the name

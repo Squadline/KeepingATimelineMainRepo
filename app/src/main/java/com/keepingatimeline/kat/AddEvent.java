@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -84,6 +85,11 @@ public class AddEvent extends AppCompatActivity {
 
                 switch(position) {
                     case 0:
+                        if (data[3] == null) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Please select a picture.", Toast.LENGTH_SHORT);
+                            toast.show();
+                            return;
+                        }
                         event.setType("photo");
                         event.setTitle(data[0]);
                         event.setDate(data[1]);
@@ -149,13 +155,19 @@ public class AddEvent extends AppCompatActivity {
     }
 
     private String parseQuote(String quote) {
-        if(quote.charAt(0) == '\"') quote = quote.substring(1);
-        if(quote.charAt(quote.length()-1) == '\"') quote = quote.substring(0, quote.length()-1);
+        if(quote.length() > 0 && quote.charAt(0) == '\"') {
+            quote = quote.substring(1);
+        }
+        if(quote.length() > 0 && quote.charAt(quote.length()-1) == '\"') {
+            quote = quote.substring(0, quote.length()-1);
+        }
         return quote;
     }
 
     private String parseSpeaker(String speaker) {
-        if(speaker.charAt(0) == '-') speaker = speaker.substring(1);
+        if(speaker.length() > 0 && speaker.charAt(0) == '-') {
+            speaker = speaker.substring(1);
+        }
         return speaker;
     }
 }
