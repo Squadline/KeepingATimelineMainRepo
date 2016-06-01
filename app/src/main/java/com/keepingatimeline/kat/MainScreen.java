@@ -544,15 +544,19 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
                                 // Set the current user name to the entered one
                                 // Both locally and in the database
+                                currentFirst = newFirstName;
+                                currentLast = newLastName;
                                 database.child("FirstName").setValue(newFirstName);
                                 database.child("LastName").setValue(newLastName);
 
                                 for (DataSnapshot timeline : dataSnapshot.child("Timelines").getChildren()) {
-                                    Vars.getTimeline(timeline.getKey()).child(Vars.getUID()).setValue(newFirstName + " " + newLastName);
+                                    Vars.getTimeline(timeline.getKey()).child("Users").child(Vars.getUID()).setValue(newFirstName + " " + newLastName);
                                     if (!newFirstName.equals(currentFirstName)) {
                                         for (DataSnapshot user : timeline.getChildren()) {
-                                            String path = "Timelines/" + timeline.getKey() + "/" + user.getKey();
-                                            Vars.getUser(user.getKey()).child(path).setValue(newFirstName);
+                                            if (!user.getKey().equals("LastModified") && !user.getKey().equals("Title")) {
+                                                String path = "Timelines/" + timeline.getKey() + "/" + Vars.getUID();
+                                                Vars.getUser(user.getKey()).child(path).setValue(newFirstName);
+                                            }
                                         }
                                     }
                                 }
