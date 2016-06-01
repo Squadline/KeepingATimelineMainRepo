@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#CFD8DC"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     tools:context="com.keepingatimeline.kat.TimelineSettings">
 
@@ -45,8 +46,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/squad_image"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/default_squad" />
 
