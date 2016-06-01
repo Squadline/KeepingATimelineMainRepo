@@ -87,12 +87,15 @@ public class TimelineAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String image = dataSnapshot.getValue().toString();
-                if(image.isEmpty()) return;
+                if(!image.isEmpty()) {
+                    Bitmap bm_image = PictureCompactor.StringB64ToBitmap(image);
 
-                Bitmap bm_image = PictureCompactor.StringB64ToBitmap(image);
-
-                //make the change to the timeline pic down here
-                squadCircleView.setImageBitmap(bm_image);
+                    //make the change to the timeline pic down here
+                    squadCircleView.setImageBitmap(bm_image);
+                }
+                else {
+                    squadCircleView.setImageResource(R.drawable.default_squad);
+                }
             }
 
             @Override
