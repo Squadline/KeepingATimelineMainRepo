@@ -133,6 +133,10 @@ public class ViewTimeline extends AppCompatActivity {
         addEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Don't let events get created in null timelines
+                if (timelineID == null) {
+                    return;
+                }
                 Intent addEventActivity = new Intent("com.keepingatimeline.kat.AddEvent");
                 addEventActivity.putExtra("Timeline Name", timelineName);
                 addEventActivity.putExtra("Timeline ID", timelineID);
