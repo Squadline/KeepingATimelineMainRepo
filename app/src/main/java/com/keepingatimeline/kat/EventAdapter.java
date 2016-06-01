@@ -218,7 +218,11 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             String editQuoteString = quoteString.substring(1, quoteString.length() - 1);
 
                             // Won't show hyphen in the dialog
-                            String editSourceString = quoteSpeaker.getText().toString().substring(1);
+                            String editSourceString = quoteSpeaker.getText().toString();
+
+                            if (editSourceString.length() > 0) {
+                                editSourceString = editSourceString.substring(1);
+                            }
 
                             title.setText(quoteTitle.getText());
                             quote.setText(editQuoteString);
@@ -310,7 +314,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                     newEvent.setTitle(title.getText().toString());
                                     newEvent.setString1(quote.getText().toString());
                                     newEvent.setDate(date.getText().toString());
-
+                                    
                                     parent.updateEvent(newEvent, position);
                                 }
                             });
