@@ -118,6 +118,11 @@ public class AddPhotoFragment extends Fragment {
     }
 
     public String getPhoto() {
+        if (imagePath == null) {
+            Log.d("Adding Pic", "No picture selected");
+            return imagePath;
+        }
+
         Log.d("Adding Pic", imagePath);
         Bitmap bm_original = BitmapFactory.decodeFile(imagePath);
 
