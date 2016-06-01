@@ -199,9 +199,6 @@ public class TimelineSettings extends AppCompatActivity
                     // Timeline is invalid
                     invalid = true;
 
-                    // Print out Toast error
-                    // showDataErrorMsg();
-
                     // Perform no further actions with data
                     return;
                 }
