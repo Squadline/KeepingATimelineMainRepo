@@ -48,12 +48,14 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         public TextView photoDate;
         public TextView photoText;
         public ImageView photoPhoto;
+        public View photoDivider;
         public ViewHolderPhoto(View v) {
             super(v);
             photoTitle = (TextView) v.findViewById(R.id.photo_title);
             photoDate = (TextView) v.findViewById(R.id.photo_date);
             photoText = (TextView) v.findViewById(R.id.photo_text);
             photoPhoto = (ImageView) v.findViewById(R.id.photo_photo);
+            photoDivider = v.findViewById(R.id.photo_divider);
 
             Context context = v.getContext();
             Typeface photoTitleFont = Typeface.createFromAsset(context.getAssets(), context.getString(R.string.RobotoRegular));
@@ -397,6 +399,18 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         Event event = eventList.get(position);
         switch(event.getType()) {
             case "photo":
+
+                // Checks for empty photo title
+                if (event.getTitle() == "") {
+                    ((ViewHolderPhoto)holder).photoTitle.setVisibility(View.GONE);
+                }
+
+                // Checks for empty photo description
+                if (event.getString1() == "") {
+                    ((ViewHolderPhoto)holder).photoText.setVisibility(View.GONE);
+                    ((ViewHolderPhoto)holder).photoDivider.setVisibility(View.GONE);
+                }
+
                 ((ViewHolderPhoto)holder).position = position;
                 ((ViewHolderPhoto)holder).parent = this;
                 ((ViewHolderPhoto)holder).photoTitle.setText(event.getTitle());
@@ -418,16 +432,36 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 fancyQuoteText.setSpan(leftSpan, 0, 1, 0);
                 fancyQuoteText.setSpan(rightSpan, (fancyQuoteText.length() - 1), fancyQuoteText.length(), 0);
 
+                // Checks for empty quote title
+                if (event.getTitle() == "") {
+                    ((ViewHolderQuote)holder).quoteTitle.setVisibility(View.GONE);
+                }
+
+                // Checks for empty quote source
+                String quoteSourceText = "";
+                if (event.getString2() == "") {
+                    ((ViewHolderQuote)holder).quoteSpeaker.setVisibility(View.GONE);
+                }
+                else {
+                    quoteSourceText = "–" + event.getString2();
+                }
+
                 ((ViewHolderQuote)holder).position = position;
                 ((ViewHolderQuote)holder).parent = this;
                 ((ViewHolderQuote)holder).quoteTitle.setText(event.getTitle());
                 ((ViewHolderQuote)holder).quoteDate.setText(event.getDate());
                 ((ViewHolderQuote)holder).quoteText.setText(fancyQuoteText);
-                ((ViewHolderQuote)holder).quoteSpeaker.setText("–" + event.getString2());
+                ((ViewHolderQuote)holder).quoteSpeaker.setText(quoteSourceText);
 
                 break;
             case "text":
             default:
+
+                // Checks for empty photo title
+                if (event.getTitle() == "") {
+                    ((ViewHolderText)holder).textTitle.setVisibility(View.GONE);
+                }
+
                 ((ViewHolderText)holder).position = position;
                 ((ViewHolderText)holder).parent = this;
                 ((ViewHolderText)holder).textTitle.setText(event.getTitle());
