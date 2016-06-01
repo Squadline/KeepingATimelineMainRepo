@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -78,20 +79,37 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         public boolean onMenuItemClick(MenuItem item) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                             LayoutInflater inflater = LayoutInflater.from(v.getContext());
-                            builder.setView(inflater.inflate(R.layout.dialog_edit_photo_event, null));
+                            View view = inflater.inflate(R.layout.dialog_edit_photo_event, null);
+                            builder.setView(view);
+
+                            final EditText title = (EditText) view.findViewById(R.id.changePhotoTitle);
+                            final EditText text = (EditText) view.findViewById(R.id.changePhotoDescription);
+                            final EditText date = (EditText) view.findViewById(R.id.changePhotoDate);
+
                             builder.setTitle("Edit Event").setMessage("Change the fields you would like to edit");
                             builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    Event newEvent = new Event();
+                                    newEvent.setType("photo");
+                                    newEvent.setTitle(title.getText().toString());
+                                    newEvent.setString1(text.getText().toString());
+                                    newEvent.setDate(date.getText().toString());
 
+                                    parent.updateEvent(newEvent, position);
                                 }
-                            })
-                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
-                                        }
-                                    });
+                            });
+                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                            title.setText(photoTitle.getText());
+                            text.setText(photoText.getText());
+                            date.setText(photoDate.getText());
+
                             builder.create().show();
                             return true;
                         }
@@ -168,20 +186,40 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         public boolean onMenuItemClick(MenuItem item) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                             LayoutInflater inflater = LayoutInflater.from(v.getContext());
-                            builder.setView(inflater.inflate(R.layout.dialog_edit_quote_event, null));
+                            View view = inflater.inflate(R.layout.dialog_edit_quote_event, null);
+                            builder.setView(view);
+
+                            final EditText title = (EditText) view.findViewById(R.id.changeQuoteTitle);
+                            final EditText quote = (EditText) view.findViewById(R.id.changeQuote);
+                            final EditText date = (EditText) view.findViewById(R.id.changeQuoteDate);
+                            final EditText speaker = (EditText) view.findViewById(R.id.changeQuoteSource);
+
                             builder.setTitle("Edit Event").setMessage("Change the fields you would like to edit");
                             builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    Event newEvent = new Event();
+                                    newEvent.setType("quote");
+                                    newEvent.setTitle(title.getText().toString());
+                                    newEvent.setString1(quote.getText().toString());
+                                    newEvent.setDate(date.getText().toString());
+                                    newEvent.setString2(speaker.getText().toString());
 
+                                    parent.updateEvent(newEvent, position);
                                 }
-                            })
-                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
-                                        }
-                                    });
+                            });
+                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                            title.setText(quoteTitle.getText());
+                            quote.setText(quoteText.getText());
+                            date.setText(quoteDate.getText());
+                            speaker.setText(quoteSpeaker.getText());
+
                             builder.create().show();
                             return true;
                         }
@@ -251,20 +289,37 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         public boolean onMenuItemClick(MenuItem item) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                             LayoutInflater inflater = LayoutInflater.from(v.getContext());
-                            builder.setView(inflater.inflate(R.layout.dialog_edit_text_event, null));
+                            View view = inflater.inflate(R.layout.dialog_edit_text_event, null);
+                            builder.setView(view);
+
+                            final EditText title = (EditText) view.findViewById(R.id.changeTextTitle);
+                            final EditText quote = (EditText) view.findViewById(R.id.changeText);
+                            final EditText date = (EditText) view.findViewById(R.id.changeTextDate);
+
                             builder.setTitle("Edit Event").setMessage("Change the fields you would like to edit");
                             builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    Event newEvent = new Event();
+                                    newEvent.setType("text");
+                                    newEvent.setTitle(title.getText().toString());
+                                    newEvent.setString1(quote.getText().toString());
+                                    newEvent.setDate(date.getText().toString());
 
+                                    parent.updateEvent(newEvent, position);
                                 }
-                            })
-                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
-                                        }
-                                    });
+                            });
+                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                            title.setText(textTitle.getText());
+                            quote.setText(textText.getText());
+                            date.setText(textDate.getText());
+
                             builder.create().show();
                             return true;
                         }
@@ -344,7 +399,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 ((ViewHolderPhoto)holder).photoTitle.setText(event.getTitle());
                 ((ViewHolderPhoto)holder).photoDate.setText(event.getDate());
                 ((ViewHolderPhoto)holder).photoText.setText(event.getString1());
-                ((ViewHolderPhoto)holder).photoPhoto.setImageBitmap(BitmapCache.getBitmapFromMemCache(event.getString2()));
+                ((ViewHolderPhoto)holder).photoPhoto.setImageBitmap(BitmapCache.getBitmapFromMemCache(event.getKey()));
                 break;
             case "quote":
 
@@ -385,6 +440,15 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     private void deleteEvent(int position) {
-        Vars.getTimeline(timelineID + "/Events/" + eventList.get(position).getKey()).setValue(null);
+        Vars.getTimeline(timelineID).child("LastModified").setValue(DateGen.getCurrentDate());
+        Vars.getTimeline(timelineID).child("Events/" + eventList.get(position).getKey()).setValue(null);
+    }
+
+    private void updateEvent(Event event, int position) {
+        event.setKey(eventList.get(position).getKey());
+        if(!event.getType().equals("quote")) event.setString2(eventList.get(position).getString2());
+
+        Vars.getTimeline(timelineID).child("LastModified").setValue(DateGen.getCurrentDate());
+        Vars.getTimeline(timelineID).child("Events/" + event.getKey()).setValue(event);
     }
 }
