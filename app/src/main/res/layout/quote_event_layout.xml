@@ -81,7 +81,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="12dp"
                     android:gravity="center_horizontal"
-                    android:textColor="#B30000"
+                    android:textColor="#000066"
                     android:textSize="20sp" />
 
                 <TextView

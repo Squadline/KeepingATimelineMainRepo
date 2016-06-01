@@ -3,6 +3,7 @@ package com.keepingatimeline.kat;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.graphics.Typeface;
 import android.support.v4.app.DialogFragment;
@@ -89,7 +90,7 @@ public class TimelineSettings extends AppCompatActivity
     private final String RET_ERR = "Error retrieving table.";
     private final String EMAIL_ERR = "Please enter a valid email address.";
     private final String ADD_NOT_FOUND = "ERROR: User not found.";
-    private final String ADD_ALREADY_EXISTS = " is already in this Squad.";
+    private final String ADD_ALREADY_EXISTS = " is already in this squad.";
     private final String ADD_MSG = " has been successfully added.";
 
     @Override
@@ -361,14 +362,17 @@ public class TimelineSettings extends AppCompatActivity
 
         String photo = dialog.getPhoto();
         if (photo.length() == 0) {
-            Toast.makeText(getApplicationContext(), "No Photo Entered!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "ERROR: The photo you have chosen is not valid. Please try again.", Toast.LENGTH_SHORT).show();
             return;
         } else {
             timelineCircleView.setImageBitmap(PictureCompactor.StringB64ToBitmap(photo));
         }
 
         Vars.getFirebase().child("Timelines/" + currentTimelineID + "/TimelinePic").setValue(photo);
-        Toast.makeText(getApplicationContext(), "Timeline Picture Saved!", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Timeline Picture Saved!", Toast.LENGTH_SHORT).show();
+
+        String snackMessage = "The squad photo has been changed.";
+        Snackbar.make(findViewById(android.R.id.content), snackMessage, Snackbar.LENGTH_LONG).show();
 
         dialog.getDialog().cancel();
     }

@@ -19,10 +19,8 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import android.widget.Button;
-
 import android.widget.TextView;
 
 import java.io.File;
@@ -43,6 +41,7 @@ public class ChangeProfilePicFragment extends DialogFragment{
     private Activity activityRef;
     private AlertDialog dialog;                 // Dialog to display
     private Button profileButton;
+    private TextView profileImageName;
     private ChangeProfilePicListener pListener;
 
     // Define an interface that positive button listeners must implement
@@ -76,10 +75,11 @@ public class ChangeProfilePicFragment extends DialogFragment{
         View view = inflater.inflate(R.layout.dialog_change_profile_picture, null);
 
 
-        builder.setTitle("Change Picture");
-        builder.setMessage("Select an image and save!");
+        builder.setTitle("Change Photo");
+        builder.setMessage("Select an image to upload.");
 
         profileButton = (Button) view.findViewById(R.id.uploadPhotoButton);
+        profileImageName = (TextView) view.findViewById(R.id.uploadPhotoName);
 
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +95,7 @@ public class ChangeProfilePicFragment extends DialogFragment{
 
         // Set positive button's text to Add
         // Don't do anything because this will be overridden
-        builder.setPositiveButton("Save", null);
+        builder.setPositiveButton("Upload", null);
         // Set negative button's text to Cancel
         builder.setNegativeButton("Cancel",  new DialogInterface.OnClickListener() {
             @Override
@@ -153,8 +153,8 @@ public class ChangeProfilePicFragment extends DialogFragment{
 
             File imageFile = new File(imagePath);
             String imageName = imageFile.getName();
-            profileButton.setText(imageName);
-            profileButton.setTextColor(ContextCompat.getColor(getContext(), R.color.trevorBlue));
+            profileImageName.setText(imageName);
+            profileImageName.setTextColor(ContextCompat.getColor(getContext(), R.color.trevorBlue));
         }
     }
 

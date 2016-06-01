@@ -61,7 +61,7 @@
                 android:fontFamily="sans-serif"
                 android:gravity="center_horizontal"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="22sp" />
 
             <View
                 android:layout_width="match_parent"

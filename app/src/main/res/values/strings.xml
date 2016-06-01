@@ -35,10 +35,10 @@
     <string name="RobotoSlabBold">fonts/RobotoSlab-Bold.ttf</string>
 
     <!--Edit Event Strings-->
-    <string name="editEventTitles">New Title</string>
-    <string name="editText">New Text</string>
-    <string name="editDate">New Date</string>
-    <string name="editDescription">New Description</string>
-    <string name="editQuote">New Quote</string>
-    <string name="editSource">New Source</string>
+    <string name="editTitle">Title</string>
+    <string name="editText">Text</string>
+    <string name="editDate">Date</string>
+    <string name="editDescription">Description</string>
+    <string name="editQuote">Quote</string>
+    <string name="editSource">Source</string>
 </resources>

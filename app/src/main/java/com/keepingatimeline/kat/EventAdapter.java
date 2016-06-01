@@ -1,14 +1,10 @@
 package com.keepingatimeline.kat;
 
-import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.view.menu.MenuView;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -86,8 +82,8 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             final EditText text = (EditText) view.findViewById(R.id.changePhotoDescription);
                             final EditText date = (EditText) view.findViewById(R.id.changePhotoDate);
 
-                            builder.setTitle("Edit Event").setMessage("Change the fields you would like to edit");
-                            builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+                            builder.setTitle("Edit Info");
+                            builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Event newEvent = new Event();
@@ -120,7 +116,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                            builder.setTitle("Delete Event").setMessage("Delete This Event?");
+                            builder.setTitle("Delete Event").setMessage("Are you sure you want to delete this event?");
                             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -194,8 +190,8 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             final EditText date = (EditText) view.findViewById(R.id.changeQuoteDate);
                             final EditText speaker = (EditText) view.findViewById(R.id.changeQuoteSource);
 
-                            builder.setTitle("Edit Event").setMessage("Change the fields you would like to edit");
-                            builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+                            builder.setTitle("Edit Info");
+                            builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Event newEvent = new Event();
@@ -215,10 +211,17 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                 }
                             });
 
+                            // Won't show quotation marks in the dialog
+                            String quoteString = quoteText.getText().toString();
+                            String editQuoteString = quoteString.substring(1, quoteString.length() - 1);
+
+                            // Won't show hyphen in the dialog
+                            String editSourceString = quoteSpeaker.getText().toString().substring(1);
+
                             title.setText(quoteTitle.getText());
-                            quote.setText(quoteText.getText());
+                            quote.setText(editQuoteString);
                             date.setText(quoteDate.getText());
-                            speaker.setText(quoteSpeaker.getText());
+                            speaker.setText(editSourceString);
 
                             builder.create().show();
                             return true;
@@ -230,7 +233,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                            builder.setTitle("Delete Event").setMessage("Delete This Event?");
+                            builder.setTitle("Delete Event").setMessage("Are you sure you want to delete this event?");
                             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -296,8 +299,8 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             final EditText quote = (EditText) view.findViewById(R.id.changeText);
                             final EditText date = (EditText) view.findViewById(R.id.changeTextDate);
 
-                            builder.setTitle("Edit Event").setMessage("Change the fields you would like to edit");
-                            builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+                            builder.setTitle("Edit Info");
+                            builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Event newEvent = new Event();
@@ -330,7 +333,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                            builder.setTitle("Delete Event").setMessage("Delete This Event?");
+                            builder.setTitle("Delete Event").setMessage("Are you sure you want to delete this event?");
                             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
