@@ -456,7 +456,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         // check if new pass == confirm pass
         if (!newPass.equals(conPass)) {
 
-            Toast.makeText(getApplicationContext(), "ERROR: The new password does not match the confirm password.",
+            Toast.makeText(getApplicationContext(), "ERROR: The new password does not match the confirm password. Please try again.",
                     Toast.LENGTH_LONG).show();
             return;
         }
@@ -464,7 +464,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         // check check if currpass == new pass, aka no point
 
         if (newPass.equals(curPass)) {
-            Toast.makeText(getApplicationContext(), "ERROR: The new password supplied is the same as the previous password. Please supply a different new password.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "ERROR: The new password entered is the same as the previous password. Please try again.", Toast.LENGTH_LONG).show();
             return;
         }
 

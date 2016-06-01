@@ -27,9 +27,6 @@ import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
-/* Written by: Louis Leung
-   Main login screen, this is what launches on start
- */
 public class LoginActivity extends AppCompatActivity {
 
     private AlertDialog.Builder dialogBuilder;
