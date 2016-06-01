@@ -231,6 +231,9 @@ public class TimelineSettings extends AppCompatActivity
                     users.add(member.getValue().toString());
                     userIDs.add(member.getKey());
                 }
+
+                // Notify the adapter of the data change and refresh the view
+                adapter.notifyDataSetChanged();
             }
 
             @Override
