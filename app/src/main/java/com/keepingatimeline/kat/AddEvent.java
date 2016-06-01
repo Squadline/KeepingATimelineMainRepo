@@ -86,7 +86,7 @@ public class AddEvent extends AppCompatActivity {
                 switch(position) {
                     case 0:
                         if (data[3] == null) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Please select a picture.", Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(getApplicationContext(), "Please select an image.", Toast.LENGTH_SHORT);
                             toast.show();
                             return;
                         }
@@ -97,6 +97,11 @@ public class AddEvent extends AppCompatActivity {
                         event.setString2(data[3]);
                         break;
                     case 1:
+                        if (parseQuote(data[2]).length() <= 0) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Please enter a quote.", Toast.LENGTH_SHORT);
+                            toast.show();
+                            return;
+                        }
                         event.setType("quote");
                         event.setTitle(data[0]);
                         event.setDate(data[1]);
@@ -104,6 +109,11 @@ public class AddEvent extends AppCompatActivity {
                         event.setString2(parseSpeaker(data[3]));
                         break;
                     case 2:
+                        if (data[2].length() <= 0) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Please enter text.", Toast.LENGTH_SHORT);
+                            toast.show();
+                            return;
+                        }
                         event.setType("text");
                         event.setTitle(data[0]);
                         event.setDate(data[1]);
