@@ -25,16 +25,15 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true">
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp">
 
                     <TextView
                         android:id="@+id/text_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginStart="16dp"
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:textColor="@color/black"
@@ -44,7 +43,6 @@
                         android:id="@+id/text_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignStart="@id/text_title"
                         android:layout_below="@id/text_title"
                         android:textColor="@color/grey600"
                         android:textSize="14sp" />

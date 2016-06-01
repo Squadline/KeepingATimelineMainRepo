@@ -404,11 +404,18 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 if (event.getTitle() == "") {
                     ((ViewHolderPhoto)holder).photoTitle.setVisibility(View.GONE);
                 }
+                else {
+                    ((ViewHolderPhoto)holder).photoTitle.setVisibility(View.VISIBLE);
+                }
 
                 // Checks for empty photo description
                 if (event.getString1() == "") {
                     ((ViewHolderPhoto)holder).photoText.setVisibility(View.GONE);
                     ((ViewHolderPhoto)holder).photoDivider.setVisibility(View.GONE);
+                }
+                else {
+                    ((ViewHolderPhoto)holder).photoText.setVisibility(View.VISIBLE);
+                    ((ViewHolderPhoto)holder).photoDivider.setVisibility(View.VISIBLE);
                 }
 
                 ((ViewHolderPhoto)holder).position = position;
@@ -436,6 +443,9 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 if (event.getTitle() == "") {
                     ((ViewHolderQuote)holder).quoteTitle.setVisibility(View.GONE);
                 }
+                else {
+                    ((ViewHolderQuote)holder).quoteTitle.setVisibility(View.VISIBLE);
+                }
 
                 // Checks for empty quote source
                 String quoteSourceText = "";
@@ -443,6 +453,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     ((ViewHolderQuote)holder).quoteSpeaker.setVisibility(View.GONE);
                 }
                 else {
+                    ((ViewHolderQuote)holder).quoteSpeaker.setVisibility(View.VISIBLE);
                     quoteSourceText = "–" + event.getString2();
                 }
 
@@ -460,6 +471,9 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 // Checks for empty photo title
                 if (event.getTitle() == "") {
                     ((ViewHolderText)holder).textTitle.setVisibility(View.GONE);
+                }
+                else {
+                    ((ViewHolderText)holder).textTitle.setVisibility(View.VISIBLE);
                 }
 
                 ((ViewHolderText)holder).position = position;

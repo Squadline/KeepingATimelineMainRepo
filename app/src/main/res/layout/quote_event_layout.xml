@@ -25,16 +25,15 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true">
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp">
 
                     <TextView
                         android:id="@+id/quote_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginStart="16dp"
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:textColor="@color/black"
@@ -44,7 +43,6 @@
                         android:id="@+id/quote_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignStart="@id/quote_title"
                         android:layout_below="@id/quote_title"
                         android:textColor="@color/grey600"
                         android:textSize="14sp" />
@@ -77,9 +75,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginBottom="16dp"
                     android:layout_marginTop="12dp"
                     android:gravity="center_horizontal"
                     android:textColor="#000066"
