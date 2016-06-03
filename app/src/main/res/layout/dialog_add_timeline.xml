@@ -12,7 +12,7 @@
         android:id="@+id/addTimelineInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Name"
+        android:hint="@string/name"
         android:inputType="textNoSuggestions" />
 
 </LinearLayout>

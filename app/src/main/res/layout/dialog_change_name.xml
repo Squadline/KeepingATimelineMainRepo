@@ -12,16 +12,16 @@
         android:id="@+id/firstNameInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="First Name"
+        android:hint="@string/firstName"
         android:inputType="textPersonName|textNoSuggestions"
-        android:selectAllOnFocus="true"/>
+        android:selectAllOnFocus="true" />
 
     <EditText
         android:id="@+id/lastNameInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Last Name"
+        android:hint="@string/lastName"
         android:inputType="textPersonName|textNoSuggestions"
-        android:selectAllOnFocus="true"/>
+        android:selectAllOnFocus="true" />
 
 </LinearLayout>

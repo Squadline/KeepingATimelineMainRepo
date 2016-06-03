@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Add Event"
+                android:text="@string/addEventTitle"
                 android:textColor="@color/white" />
 
             <TextView
@@ -37,9 +37,9 @@
                 android:layout_gravity="end"
                 android:layout_marginEnd="16dp"
                 android:clickable="true"
-                android:text="Done"
+                android:text="@string/addEventDone"
                 android:textColor="@color/trevorBlue"
-                android:textSize="18dp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/cancelText"
@@ -48,9 +48,9 @@
                 android:layout_gravity="start"
                 android:layout_marginStart="16dp"
                 android:clickable="true"
-                android:text="Cancel"
+                android:text="@string/addEventCancel"
                 android:textColor="@color/grey200"
-                android:textSize="18dp" />
+                android:textSize="18sp" />
 
         </android.support.v7.widget.Toolbar>
 

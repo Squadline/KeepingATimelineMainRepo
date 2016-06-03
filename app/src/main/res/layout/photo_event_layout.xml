@@ -57,6 +57,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="8dp"
                     android:clickable="true"
+                    android:contentDescription="@string/editEventBtn"
                     android:src="@drawable/ic_more_horiz_grey" />
 
             </RelativeLayout>
@@ -75,6 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
+                    android:contentDescription="@string/eventImageDesc"
                     android:maxHeight="400dp" />
 
                 <View

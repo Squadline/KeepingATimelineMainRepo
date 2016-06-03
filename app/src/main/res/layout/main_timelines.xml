@@ -29,7 +29,7 @@
             android:layout_toStartOf="@+id/recentEvent"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="Title"
+            android:text="@string/tlTitle"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -41,7 +41,7 @@
             android:layout_marginEnd="16dp"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="Members"
+            android:text="@string/tlMembers"
             android:textColor="@color/grey600"
             android:textSize="14sp" />
 
@@ -53,7 +53,7 @@
             android:layout_alignTop="@id/timelineTitle"
             android:layout_marginEnd="8dp"
             android:drawableEnd="@drawable/main_screen_chevron_right"
-            android:text="5/17/2016"
+            android:text="@string/lastModified"
             android:textColor="@color/grey600"
             android:textSize="14sp" />
 
