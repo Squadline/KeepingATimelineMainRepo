@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CFD8DC"
+    android:background="@color/background2"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
     tools:context="com.keepingatimeline.kat.TimelineSettings">
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Details"
+            android:text="@string/settingsTitle"
             android:textColor="@color/white" />
 
     </android.support.v7.widget.Toolbar>
@@ -84,7 +84,7 @@
                 android:gravity="center_vertical"
                 android:paddingEnd="16dp"
                 android:paddingStart="16dp"
-                android:text="Add People"
+                android:text="@string/settingsAddPeople"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -132,7 +132,7 @@
                 android:gravity="center_vertical"
                 android:paddingEnd="16dp"
                 android:paddingStart="16dp"
-                android:text="Leave Squad"
+                android:text="@string/settingsLeave"
                 android:textColor="#FF1300"
                 android:textSize="16sp" />
 

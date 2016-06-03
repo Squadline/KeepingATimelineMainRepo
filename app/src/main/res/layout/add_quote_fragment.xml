@@ -17,7 +17,7 @@
             android:layout_marginEnd="0.5dp"
             android:layout_marginStart="0.5dp"
             android:background="@color/white"
-            android:hint="Title"
+            android:hint="@string/eventTitle"
             android:inputType="textNoSuggestions"
             android:padding="10dp" />
 
@@ -44,7 +44,7 @@
                 android:clickable="true"
                 android:gravity="start"
                 android:padding="10dp"
-                android:text="Date" />
+                android:text="@string/eventDate" />
 
             <TextView
                 android:id="@+id/dateQuoteInput"
@@ -74,7 +74,7 @@
             android:layout_marginStart="0.5dp"
             android:background="@color/white"
             android:gravity="top|start"
-            android:hint="Quote"
+            android:hint="@string/eventQuote"
             android:inputType="textMultiLine|textNoSuggestions"
             android:lines="5"
             android:maxLength="200"
@@ -94,7 +94,7 @@
             android:layout_marginEnd="0.5dp"
             android:layout_marginStart="0.5dp"
             android:background="@color/white"
-            android:hint="Source"
+            android:hint="@string/eventSource"
             android:inputType="textNoSuggestions"
             android:padding="10dp" />
 

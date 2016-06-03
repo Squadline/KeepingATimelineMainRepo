@@ -4,15 +4,18 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
-
-    <color name="trevorBlue">#007AFF</color>
-
     <color name="appPrimary">#2A3849</color>
     <color name="appSecondary">#212C3A</color>
     <color name="appAccent">#007AFF</color>
+    <color name="background1">#FFFFFF</color>
+    <color name="background2">#CFD8DC</color>
+    <color name="quoteColor">#000066</color>
+    <color name="textColor">#000066</color>
     <color name="fabColor">#F44336</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="trevorBlue">#007AFF</color>
 
     <color name="grey100">#F5F5F5</color>
     <color name="grey200">#EEEEEE</color>
@@ -23,32 +26,5 @@
     <color name="grey700">#616161</color>
     <color name="grey800">#424242</color>
     <color name="grey900">#212121</color>
-
-    <!--
-    <color name="loginPrimary">#354d60</color>
-    <color name="loginSecondary">#283A49</color>
-    <color name="loginAccent">#007AFF</color>
-
-    <color name="registrationPrimary">#523C52</color>
-    <color name="registrationSecondary">#3D2D3D</color>
-    <color name="registrationAccent">#007AFF</color>
-
-    <color name="mainPrimary">#3E5A70</color>
-    <color name="mainSecondary">#2e4353</color>
-    <color name="mainAccent">#3284FF</color>
-    <color name="sideBarMain">#546E7A</color>
-
-    <color name="viewPrimary">#455A64</color>
-    <color name="viewSecondary">#37474F</color>
-    <color name="viewAccent">#FF1300</color>
-
-    <color name="settingsPrimary">#455A64</color>
-    <color name="settingsSecondary">#37474F</color>
-    <color name="settingsAccent">#3284FF</color>
-
-    <color name="addEventPrimary">#455A64</color>
-    <color name="addEventSecondary">#37474F</color>
-    <color name="addEventAccent">#3284FF</color>
-    -->
 
 </resources>

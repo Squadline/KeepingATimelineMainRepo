@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="2dp"
         android:layout_weight="0.5"
-        android:text="Choose File" />
+        android:text="@string/chooseFile" />
 
     <TextView
         android:id="@+id/uploadPhotoName"
@@ -28,6 +28,6 @@
         android:ellipsize="end"
         android:gravity="start"
         android:singleLine="true"
-        android:text="No file chosen" />
+        android:text="@string/noFileChosen" />
 
 </LinearLayout>

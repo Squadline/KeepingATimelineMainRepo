@@ -17,7 +17,7 @@
             android:layout_marginEnd="0.5dp"
             android:layout_marginStart="0.5dp"
             android:background="@color/white"
-            android:hint="Title"
+            android:hint="@string/eventTitle"
             android:inputType="textNoSuggestions"
             android:padding="10dp" />
 
@@ -44,7 +44,7 @@
                 android:clickable="true"
                 android:gravity="start"
                 android:padding="10dp"
-                android:text="Date" />
+                android:text="@string/eventDate" />
 
             <TextView
                 android:id="@+id/datePhotoInput"
@@ -79,7 +79,7 @@
             android:focusableInTouchMode="false"
             android:gravity="start"
             android:padding="10dp"
-            android:text="Upload image" />
+            android:text="@string/eventPhoto" />
 
         <View
             android:layout_width="match_parent"
@@ -96,7 +96,7 @@
             android:layout_marginStart="0.5dp"
             android:background="@color/white"
             android:gravity="top|start"
-            android:hint="Description"
+            android:hint="@string/eventDescription"
             android:inputType="textMultiLine|textNoSuggestions"
             android:lines="5"
             android:padding="10dp" />

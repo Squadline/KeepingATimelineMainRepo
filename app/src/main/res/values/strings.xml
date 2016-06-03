@@ -4,10 +4,14 @@
     <!--Firebase Constants-->
     <string name="firebase_address">https://fiery-fire-8218.firebaseio.com/</string>
 
-    <!--Login Page Strings-->
+    <!--Common Strings-->
+    <string name="name">Name</string>
     <string name="email">Email</string>
-    <string name="emailHint">ggillespie@ucsd.edu</string>
     <string name="password">Password</string>
+    <string name="appIcon">App Icon</string>
+
+    <!--Login Page Strings-->
+    <string name="emailHint">ggillespie@ucsd.edu</string>
     <string name="loginBtn">Log In</string>
     <string name="forgotPassword">Forgot Password?</string>
     <string name="signUp">Sign Up</string>
@@ -16,7 +20,18 @@
     <string name="firstName">First Name</string>
     <string name="lastName">Last Name</string>
 
+    <!--Main Screen Strings-->
+    <string name="tlTitle">Title</string>
+    <string name="tlMembers">Members</string>
+    <string name="lastModified">01/01/2016</string>
+
+    <!--Event Strings-->
+    <string name="editEventBtn">Edit Event</string>
+    <string name="eventImageDesc">Photo Event</string>
+
     <!--Sidebar Strings-->
+    <string name="fullName">Burt Macklin</string>
+    <string name="headerEmail">bmacklin@ucsd.edu</string>
     <string name="changeName">Change Name</string>
     <string name="changePhoto">Change Photo</string>
     <string name="changePassword">Change Password</string>
@@ -25,6 +40,23 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <!--Timeline Settings Strings-->
+    <string name="settingsTitle">Details</string>
+    <string name="settingsAddPeople">Add People</string>
+    <string name="settingsLeave">Leave Squad</string>
+
+    <!--Add Event Strings-->
+    <string name="addEventTitle">Add Event</string>
+    <string name="addEventDone">Done</string>
+    <string name="addEventCancel">Cancel</string>
+    <string name="eventTitle">Title</string>
+    <string name="eventDate">Date</string>
+    <string name="eventQuote">Quote</string>
+    <string name="eventSource">Source</string>
+    <string name="eventPhoto">Upload image</string>
+    <string name="eventDescription">Description</string>
+    <string name="eventText">Text</string>
+
     <!--Edit Event Strings-->
     <string name="editTitle">Title</string>
     <string name="editText">Text</string>
@@ -32,6 +64,15 @@
     <string name="editDescription">Description</string>
     <string name="editQuote">Quote</string>
     <string name="editSource">Source</string>
+
+    <!--Change Photo Strings-->
+    <string name="chooseFile">Choose File</string>
+    <string name="noFileChosen">No file chosen</string>
+
+    <!--Change Password Strings-->
+    <string name="currentPassword">Current Password</string>
+    <string name="newPassword">New Password</string>
+    <string name="confirmPassword">Confirm Password</string>
 
     <!--Fonts-->
     <string name="BebasNeueRegular">fonts/BebasNeue Regular.ttf</string>

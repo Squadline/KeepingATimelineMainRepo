@@ -16,6 +16,7 @@
             android:id="@+id/imageView"
             android:layout_width="140dp"
             android:layout_height="140dp"
+            android:contentDescription="@string/appIcon"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/ic_squadline_red" />
