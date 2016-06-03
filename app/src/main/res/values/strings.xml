@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Squadline</string>
 
+    <!--Firebase Constants-->
+    <string name="firebase_address">https://fiery-fire-8218.firebaseio.com/</string>
+
     <!--Login Page Strings-->
     <string name="email">Email</string>
     <string name="emailHint">ggillespie@ucsd.edu</string>
@@ -22,8 +25,13 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <!--Firebase Constants-->
-    <string name="firebase_address">https://fiery-fire-8218.firebaseio.com/</string>
+    <!--Edit Event Strings-->
+    <string name="editTitle">Title</string>
+    <string name="editText">Text</string>
+    <string name="editDate">Date</string>
+    <string name="editDescription">Description</string>
+    <string name="editQuote">Quote</string>
+    <string name="editSource">Source</string>
 
     <!--Fonts-->
     <string name="BebasNeueRegular">fonts/BebasNeue Regular.ttf</string>
@@ -34,11 +42,4 @@
     <string name="RobotoSlabRegular">fonts/RobotoSlab-Regular.ttf</string>
     <string name="RobotoSlabBold">fonts/RobotoSlab-Bold.ttf</string>
 
-    <!--Edit Event Strings-->
-    <string name="editTitle">Title</string>
-    <string name="editText">Text</string>
-    <string name="editDate">Date</string>
-    <string name="editDescription">Description</string>
-    <string name="editQuote">Quote</string>
-    <string name="editSource">Source</string>
 </resources>
