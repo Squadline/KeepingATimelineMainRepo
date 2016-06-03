@@ -3,6 +3,17 @@
 
     <!--Firebase Constants-->
     <string name="firebase_address">https://fiery-fire-8218.firebaseio.com/</string>
+    <string name="TimelinesParentAddress">Timelines/</string>
+    <string name="TimelinesAddress">Timelines</string>
+    <string name="TimelinesChildAddress">/Timelines</string>
+    <string name="UsersParentAddress">Users/</string>
+    <string name="UsersAddress">Users</string>
+    <string name="UsersChildAddress">/Users</string>
+    <string name="EventsParentAddress">Events/</string>
+    <string name="EventsAddress">Events</string>
+    <string name="EventsChildAddress">/Events</string>
+    <string name="LastModifiedAddress">LastModified</string>
+    <string name="LastModifiedChildAddress">/LastModified</string>
 
     <!--Common Strings-->
     <string name="name">Name</string>
@@ -25,6 +36,10 @@
     <string name="tlMembers">Members</string>
     <string name="lastModified">01/01/2016</string>
     <string name="addTimeline">Add Timeline</string>
+
+    <!--Bundle Strings-->
+    <string name="TimelineIDKey">Timeline ID</string>
+    <string name="TimelineNameKey">Timeline Name</string>
 
     <!--View Timeline Strings-->
     <string name="editEventBtn">Edit Event</string>
@@ -61,6 +76,9 @@
     <string name="eventPhoto">Upload image</string>
     <string name="eventDescription">Description</string>
     <string name="eventText">Text</string>
+    <string name="ErrorSelectAnImage">Please select an image.</string>
+    <string name="ErrorEnterAQuote">Please enter a quote.</string>
+    <string name="ErrorEnterText">Please enter text.</string>
 
     <!--Edit Event Strings-->
     <string name="editEvent">Edit Event</string>
@@ -89,5 +107,10 @@
     <string name="RobotoMedium">fonts/Roboto-Medium.ttf</string>
     <string name="RobotoSlabRegular">fonts/RobotoSlab-Regular.ttf</string>
     <string name="RobotoSlabBold">fonts/RobotoSlab-Bold.ttf</string>
+
+    <!--Event Types-->
+    <string name="EventTypePhoto">photo</string>
+    <string name="EventTypeQuote">quote</string>
+    <string name="EventTypeText">text</string>
 
 </resources>

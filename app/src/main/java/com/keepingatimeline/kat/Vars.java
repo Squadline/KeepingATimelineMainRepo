@@ -8,6 +8,11 @@ import com.firebase.client.Firebase;
  */
 public final class Vars {
 
+    private static final String FIREBASE_ADDRESS = "https://fiery-fire-8218.firebaseio.com/";
+    private static final String EMPTY = "";
+    private static final String TIMELINE_ADDRESS = "Timelines/";
+    private static final String USER_ADDRESS = "Users/";
+
     private static Firebase FB_REF = null;
     private static String currUserEmail;
 
@@ -15,7 +20,7 @@ public final class Vars {
 
     public static Firebase getFirebase() {
         if(FB_REF == null) {
-            FB_REF = new Firebase("https://fiery-fire-8218.firebaseio.com/");
+            FB_REF = new Firebase(FIREBASE_ADDRESS);
         }
 
         return FB_REF;
@@ -23,18 +28,18 @@ public final class Vars {
 
     public static String getUID() {
         AuthData auth = getFirebase().getAuth();
-        if(auth == null) return "";
+        if(auth == null) return EMPTY;
         else return auth.getUid();
     }
 
     public static Firebase getTimeline(String timelineID) {
         if(timelineID == null) return getFirebase();
-        else return getFirebase().child("Timelines/" + timelineID);
+        else return getFirebase().child(TIMELINE_ADDRESS + timelineID);
     }
 
     public static  Firebase getUser(String userID) {
         if(userID == null) return getFirebase();
-        else return getFirebase().child("Users/" + userID);
+        else return getFirebase().child(USER_ADDRESS + userID);
     }
 
     public static String getUserEmail(){
@@ -42,6 +47,6 @@ public final class Vars {
     }
 
     public static Firebase getCurrentUser() {
-        return getFirebase().child("Users").child(getUID());
+        return getFirebase().child(USER_ADDRESS + getUID());
     }
 }

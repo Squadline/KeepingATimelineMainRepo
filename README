@@ -1,0 +1,66 @@
+Group Name: KATS (Keeping A Timeline Solutions)
+Team Manager: Michael Shum
+Team Manager Email: michael-shum@hotmail.com
+
+App Name: Squadline
+Repositories:
+    Source Code:
+        GitHub: https://github.com/Squadline/MainRepo.git
+    Compiled Code:
+        GitHub: https://github.com/Squadline/APK_Repo.git
+        Google Drive: https://drive.google.com/a/fourevergreen.net/folderview?id=0B6Rt83DvtSeuU05uTFZ0QzU3Tzg&usp=sharing#
+
+Minimum Number of Devices: 1 (Android phone)
+Minimum Requirements:
+--OS: Android 5.0 or later
+--Hardware: The app should function on almost any Android phone.
+
+Preferred Installation:
+1) Open up "Settings" on your Android device.
+2) Search for the "Unknown Sources" option, which should be under "Security".
+3) If "Unknown Sources" is not enabled, enable it.
+4) Download the "app-debug.apk" file from the GitHub or Google Drive link given above under "Compiled Code".
+5) Open the "app-debug.apk" file.
+    5a) If prompted, select the option to use the "Package Installer" application.
+6) Open up "Settings" on your Android device.
+7) [Optional] Find the "Unknown Sources" option and disable it.
+8) Search for "App permissions", which should be under "Privacy and safety".
+9) Select the "Storage" option.
+10) Find the "Squadline" app and make sure that storage permissions are enabled.
+
+Alternate Installation using Android Studio:
+--Use this method of installation if testing via Android Studio emulator.
+1) Download the source code using the above link under "Source Code".
+2) Open the repository using Android Studio.
+3) Click the "Run 'app'" button (left-pointing green arrow).
+4) Select an emulator running Android 5.0 or later (API 21+) or a connected Android device.
+5) Open up "Settings" on the Android device or emulator.
+6) Search for "App permissions", which should be under "Privacy and safety".
+7) Select the "Storage" option.
+8) Find the "Squadline" app and make sure that storage permissions are enabled.
+
+To Run:
+1) Select the app's icon on the home screen to run it.
+
+To Restart:
+1) Open the multitasking window and either swipe the app to the right or tap the "X" button to close it.
+2) Select the app's icon from the home screen.
+
+Login Credentials:
+Populated Account:
+    Email: ash@pallet.com (not a real email)
+    Password: pokemon
+Clean Account:
+    Email: alanturing@turingcomplete.com (not a real email)
+    Password: enigma
+Uncreated Account:
+    Email: onloanfromdmkimball@gmail.com (real email, password is cse110Student)
+    Password: cse110Student
+    (Note: Use this account for testing password resets.)
+
+Technical Points of Contact:
+Dana Kimball -- Senior System Analyst
+    Email: dkimball@ucsd.edu
+    Phone: (530) 383-9316
+
+
