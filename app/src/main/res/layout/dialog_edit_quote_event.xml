@@ -15,11 +15,12 @@
         android:hint="@string/editTitle"
         android:inputType="textNoSuggestions" />
 
-    <EditText
-        android:id="@+id/changeQuoteDate"
+    <DatePicker
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/editDate" />
+        android:id="@+id/changeQuoteDate" />
 
     <EditText
         android:id="@+id/changeQuote"
@@ -27,6 +28,7 @@
         android:layout_height="wrap_content"
         android:gravity="top|start"
         android:hint="@string/editQuote"
+        android:maxLines="4"
         android:inputType="textMultiLine|textNoSuggestions" />
 
     <EditText
@@ -34,6 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/editSource"
-        android:inputType="textNoSuggestions" />
+        android:inputType="textNoSuggestions"
+        android:layout_marginTop="0.5dp" />
 
 </LinearLayout>

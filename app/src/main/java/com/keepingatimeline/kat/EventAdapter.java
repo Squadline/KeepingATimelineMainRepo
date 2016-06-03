@@ -13,11 +13,13 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Created by Dana on 5/19/2016.
@@ -82,7 +84,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
                             final EditText title = (EditText) view.findViewById(R.id.changePhotoTitle);
                             final EditText text = (EditText) view.findViewById(R.id.changePhotoDescription);
-                            final EditText date = (EditText) view.findViewById(R.id.changePhotoDate);
+                            final DatePicker date = (DatePicker) view.findViewById(R.id.changePhotoDate);
 
                             builder.setTitle("Edit Info");
                             builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
@@ -92,8 +94,14 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                     newEvent.setType("photo");
                                     newEvent.setTitle(title.getText().toString());
                                     newEvent.setString1(text.getText().toString());
-                                    newEvent.setDate(date.getText().toString());
+                                    // Get the values from the DatePicker and combine into String
+                                    // Month values are 0 indexed
+                                    String dateString = (date.getMonth() + 1) + "/" + date.getDayOfMonth()
+                                            + "/" + date.getYear();
+                                    newEvent.setDate(dateString);
 
+                                    // Get rid of dialog before database updates
+                                    dialog.dismiss();
                                     parent.updateEvent(newEvent, position);
                                 }
                             });
@@ -104,9 +112,15 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                 }
                             });
 
+                            // Parse the stored date string
+                            Scanner scanner = new Scanner(photoDate.getText().toString()).useDelimiter("[^0-9]+");
+                            int month = scanner.nextInt();
+                            int day = scanner.nextInt();
+                            int year = scanner.nextInt();
+                            // Set the DatePicker to the stored date
+                            date.updateDate(year, month - 1, day);
                             title.setText(photoTitle.getText());
                             text.setText(photoText.getText());
-                            date.setText(photoDate.getText());
 
                             builder.create().show();
                             return true;
@@ -189,7 +203,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
                             final EditText title = (EditText) view.findViewById(R.id.changeQuoteTitle);
                             final EditText quote = (EditText) view.findViewById(R.id.changeQuote);
-                            final EditText date = (EditText) view.findViewById(R.id.changeQuoteDate);
+                            final DatePicker date = (DatePicker) view.findViewById(R.id.changeQuoteDate);
                             final EditText speaker = (EditText) view.findViewById(R.id.changeQuoteSource);
 
                             builder.setTitle("Edit Info");
@@ -199,10 +213,22 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                     Event newEvent = new Event();
                                     newEvent.setType("quote");
                                     newEvent.setTitle(title.getText().toString());
-                                    newEvent.setString1(quote.getText().toString());
-                                    newEvent.setDate(date.getText().toString());
+                                    String qStr = quote.getText().toString();
+                                    newEvent.setString1(parseQuote(qStr));
+                                    // Get the date values and combine into String
+                                    String dateString = (date.getMonth() + 1) + "/" + date.getDayOfMonth()
+                                            + "/" + date.getYear();
+                                    newEvent.setDate(dateString);
                                     newEvent.setString2(speaker.getText().toString());
 
+                                    // If the parsed quote is empty, reuse old data
+                                    if (parseQuote(qStr).equals("")) {
+                                        String origStr = quoteText.getText().toString();
+                                        newEvent.setString1(origStr.substring(1, origStr.length() - 1));
+                                    }
+
+                                    // Get rid of dialog before database updates
+                                    dialog.dismiss();
                                     parent.updateEvent(newEvent, position);
                                 }
                             });
@@ -224,9 +250,15 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                 editSourceString = editSourceString.substring(1);
                             }
 
+                            // Parse the stored date string
+                            Scanner scanner = new Scanner(quoteDate.getText().toString()).useDelimiter("[^0-9]+");
+                            int month = scanner.nextInt();
+                            int day = scanner.nextInt();
+                            int year = scanner.nextInt();
+                            // Set the date picker to the stored date
+                            date.updateDate(year, month - 1, day);
                             title.setText(quoteTitle.getText());
                             quote.setText(editQuoteString);
-                            date.setText(quoteDate.getText());
                             speaker.setText(editSourceString);
 
                             builder.create().show();
@@ -259,6 +291,18 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
                 }
             });
+        }
+
+        // Helper method to parse and trim the quote
+        private String parseQuote(String str) {
+            str = str.trim();
+            while (str.length() > 0 && str.charAt(0) == '"') {
+                str = str.substring(1);
+            }
+            while (str.length() > 0 && str.charAt(str.length() - 1) == '"') {
+                str = str.substring(0, str.length() - 1);
+            }
+            return str.trim();
         }
     }
 
@@ -303,7 +347,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
                             final EditText title = (EditText) view.findViewById(R.id.changeTextTitle);
                             final EditText quote = (EditText) view.findViewById(R.id.changeText);
-                            final EditText date = (EditText) view.findViewById(R.id.changeTextDate);
+                            final DatePicker date = (DatePicker) view.findViewById(R.id.changeTextDate);
 
                             builder.setTitle("Edit Info");
                             builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
@@ -313,8 +357,18 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                     newEvent.setType("text");
                                     newEvent.setTitle(title.getText().toString());
                                     newEvent.setString1(quote.getText().toString());
-                                    newEvent.setDate(date.getText().toString());
+                                    // Get the date values and combine into String
+                                    String dateString = (date.getMonth() + 1) + "/" + date.getDayOfMonth()
+                                            + "/" + date.getYear();
+                                    newEvent.setDate(dateString);
 
+                                    // If empty text was entered, use old data
+                                    if (quote.getText().toString().equals("")) {
+                                        newEvent.setString1(textText.getText().toString());
+                                    }
+
+                                    // Get rid of dialog before database updates
+                                    dialog.dismiss();
                                     parent.updateEvent(newEvent, position);
                                 }
                             });
@@ -325,9 +379,15 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                 }
                             });
 
+                            // Parse the stored date string
+                            Scanner scanner = new Scanner(textDate.getText().toString()).useDelimiter("[^0-9]+");
+                            int month = scanner.nextInt();
+                            int day = scanner.nextInt();
+                            int year = scanner.nextInt();
+                            // Set the date picker to the stored date
+                            date.updateDate(year, month - 1, day);
                             title.setText(textTitle.getText());
                             quote.setText(textText.getText());
-                            date.setText(textDate.getText());
 
                             builder.create().show();
                             return true;

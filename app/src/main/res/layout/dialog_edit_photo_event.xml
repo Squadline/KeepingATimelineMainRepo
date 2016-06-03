@@ -15,11 +15,12 @@
         android:hint="@string/editTitle"
         android:inputType="textNoSuggestions" />
 
-    <EditText
-        android:id="@+id/changePhotoDate"
+    <DatePicker
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/editDate" />
+        android:id="@+id/changePhotoDate" />
 
     <EditText
         android:id="@+id/changePhotoDescription"
