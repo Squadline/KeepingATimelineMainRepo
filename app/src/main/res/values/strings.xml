@@ -24,14 +24,17 @@
     <string name="tlTitle">Title</string>
     <string name="tlMembers">Members</string>
     <string name="lastModified">01/01/2016</string>
+    <string name="addTimeline">Add Timeline</string>
 
-    <!--Event Strings-->
+    <!--View Timeline Strings-->
     <string name="editEventBtn">Edit Event</string>
     <string name="eventImageDesc">Photo Event</string>
+    <string name="timelineSettings">Timeline Settings</string>
 
     <!--Sidebar Strings-->
     <string name="fullName">Burt Macklin</string>
     <string name="headerEmail">bmacklin@ucsd.edu</string>
+    <string name="account">Account</string>
     <string name="changeName">Change Name</string>
     <string name="changePhoto">Change Photo</string>
     <string name="changePassword">Change Password</string>
@@ -44,6 +47,8 @@
     <string name="settingsTitle">Details</string>
     <string name="settingsAddPeople">Add People</string>
     <string name="settingsLeave">Leave Squad</string>
+    <string name="changeSquadName">Change Squad Name</string>
+    <string name="changeSquadPhoto">Change Squad Photo</string>
 
     <!--Add Event Strings-->
     <string name="addEventTitle">Add Event</string>
@@ -58,6 +63,8 @@
     <string name="eventText">Text</string>
 
     <!--Edit Event Strings-->
+    <string name="editEvent">Edit Event</string>
+    <string name="deleteEvent">Delete Event</string>
     <string name="editTitle">Title</string>
     <string name="editText">Text</string>
     <string name="editDate">Date</string>

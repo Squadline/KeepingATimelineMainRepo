@@ -4,8 +4,8 @@
 
     <item
         android:id="@+id/add_timeline"
-        android:title="Add Timeline"
         android:icon="@drawable/ic_add_white"
+        android:title="@string/addTimeline"
         app:showAsAction="always" />
 
 </menu>

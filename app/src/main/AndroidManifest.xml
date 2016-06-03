@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.keepingatimeline.kat" >
+    package="com.keepingatimeline.kat">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -21,14 +21,15 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
         <service android:name="com.batch.android.BatchPushService" />
-        <receiver android:name="com.batch.android.BatchPushReceiver"
+        <receiver
+            android:name="com.batch.android.BatchPushReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -41,7 +42,7 @@
             android:configChanges="orientation"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.LoginPage" >
+            android:theme="@style/AppTheme.LoginPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,21 +59,9 @@
             android:configChanges="orientation"
             android:label=""
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.MainScreen" >
+            android:theme="@style/AppTheme.MainScreen">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.MainScreen" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".Timelineshower"
-            android:configChanges="orientation"
-            android:label="Timeline Shower"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" >
-            <intent-filter>
-                <action android:name="com.keepingatimeline.kat.Timelineshower" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -82,7 +71,7 @@
             android:configChanges="orientation"
             android:label=""
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.TimelineSettings" >
+            android:theme="@style/AppTheme.TimelineSettings">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.TimelineSettings" />
 
@@ -95,7 +84,7 @@
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.AddEvent"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" >
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.AddEvent" />
 
@@ -107,7 +96,7 @@
             android:configChanges="orientation"
             android:label=""
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.RegistrationPage" >
+            android:theme="@style/AppTheme.RegistrationPage">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.RegistrationScreen" />
 
@@ -119,7 +108,7 @@
             android:configChanges="orientation"
             android:label=""
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.ViewTimeline" >
+            android:theme="@style/AppTheme.ViewTimeline">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.ViewTimeline" />
 
