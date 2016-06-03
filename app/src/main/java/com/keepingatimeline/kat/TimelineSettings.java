@@ -26,6 +26,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,7 +38,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Class: TimelineSettings
  * Purpose: Display the settings of the timeline and list of users
  *
- * TODO:
  *  Add People        Toast, Dialog             DONE
  *  Leave Squad       Dialog                    DONE
  *  Auto-delete       Warning                   DONE
@@ -61,7 +61,8 @@ public class TimelineSettings extends AppCompatActivity
     private TextView addFriend;                 // Add Friend button
     private TextView leaveSquad;                // Leave Squad button
     private ArrayAdapter<String> adapter;       // Adapter for list of users
-    private ArrayList<String> users;            // List of user names  (for user display)
+    private ArrayList<String> users;            // List of user names
+    private ArrayList<String> sortedUsers;      // List of user names sorted alphabetically (for display)
     private ArrayList<String> userIDs;          // List of user IDs    (for easy iteration when searching)
     private String lastModified;                // Last modified date
     private String squadImage;                  // String of the picture
@@ -133,8 +134,9 @@ public class TimelineSettings extends AppCompatActivity
         // Instantiate list of names, IDs, and the adapter to the ListView
         // Assign the name list to the adapter, since that's what we will display
         users = new ArrayList<String>();
+        sortedUsers = new ArrayList<String>();
         userIDs = new ArrayList<String>();
-        adapter = new ArrayAdapter<String>(this, R.layout.settings_user_list, users);
+        adapter = new ArrayAdapter<String>(this, R.layout.settings_user_list, sortedUsers);
 
         // Set the ListView's adapter
         user_list.setAdapter(adapter);
@@ -194,7 +196,7 @@ public class TimelineSettings extends AppCompatActivity
 
                 // If we get an invalid timeline ID
                 // attempting to get the title will return a null value
-                // Print out data loading error message on Toast and stop data retrieval
+                // Stop data retrieval
                 if (dataSnapshot.child(TITLE_STR).getValue() == null) {
                     // Timeline is invalid
                     invalid = true;
@@ -217,16 +219,24 @@ public class TimelineSettings extends AppCompatActivity
                     timelineCircleView.setImageBitmap(bm_image);
                 }
 
-                // Reset the list of user emails and IDs
+                // Reset the list of user names and IDs
                 users.clear();
+                sortedUsers.clear();
                 userIDs.clear();
 
                 // Iterate through the users in the table
-                // and add their emails and IDs to the lists of timeline users
+                // and add their names and IDs to the lists of timeline users
                 for (DataSnapshot member : dataSnapshot.child(USERS_STR).getChildren()) {
                     users.add(member.getValue().toString());
+                    sortedUsers.add(member.getValue().toString());
                     userIDs.add(member.getKey());
                 }
+
+                // We are sorting a separate list of names so that
+                // the original list of users and the list of IDs
+                // retain their matching indices
+                // Sort the list of names while ignoring case
+                Collections.sort(sortedUsers, String.CASE_INSENSITIVE_ORDER);
 
                 // Notify the adapter of the data change and refresh the view
                 adapter.notifyDataSetChanged();
@@ -234,7 +244,7 @@ public class TimelineSettings extends AppCompatActivity
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                // If load was canceled, informed user of error
+                // If load was cancelled, informed user of error
                 showDataErrorMsg();
             }
         });
