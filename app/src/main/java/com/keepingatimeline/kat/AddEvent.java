@@ -18,6 +18,20 @@ import com.firebase.client.ValueEventListener;
 
 public class AddEvent extends AppCompatActivity {
 
+    private final String TIMELINE_ID_KEY = getString(R.string.TimelineIDKey);
+    private final String TIMELINE_NAME_KEY = getString(R.string.TimelineNameKey);
+    private final String EVENT_TYPE_PHOTO = getString(R.string.EventTypePhoto);
+    private final String EVENT_TYPE_QUOTE = getString(R.string.EventTypeQuote);
+    private final String EVENT_TYPE_TEXT = getString(R.string.EventTypeText);
+    private final String ERROR_SELECT_AN_IMAGE = getString(R.string.ErrorSelectAnImage);
+    private final String ERROR_ENTER_A_QUOTE = getString(R.string.ErrorEnterAQuote);
+    private final String ERROR_ENTER_TEXT = getString(R.string.ErrorEnterText);
+    private final String LAST_MODIFIED_ADDRESS = getString(R.string.LastModifiedAddress);
+    private final String LAST_MODIFIED_CHILD_ADDRESS = getString(R.string.LastModifiedChildAddress);
+    private final String USERS_ADDRESS = getString(R.string.UsersAddress);
+    private final String TIMELINES_PARENT_ADDRESS = getString(R.string.TimelinesParentAddress);
+    private final String EVENTS_ADDRESS = getString(R.string.EventsAddress);
+
     private String timelineID;
     private String timelineName;
     private ViewPager viewPager;
@@ -42,12 +56,12 @@ public class AddEvent extends AppCompatActivity {
                 timelineID = null;
                 timelineName = "";
             } else {
-                timelineID = extras.getString("Timeline ID");
-                timelineName = extras.getString("Timeline Name");
+                timelineID = extras.getString(TIMELINE_ID_KEY);
+                timelineName = extras.getString(TIMELINE_NAME_KEY);
             }
         } else {
-            timelineID = (String) savedInstanceState.getSerializable("Timeline ID");
-            timelineName = (String) savedInstanceState.getSerializable("Timeline Name");
+            timelineID = (String) savedInstanceState.getSerializable(TIMELINE_ID_KEY);
+            timelineName = (String) savedInstanceState.getSerializable(TIMELINE_NAME_KEY);
         }
 
         cancelText.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +92,7 @@ public class AddEvent extends AppCompatActivity {
                 int position = viewPager.getCurrentItem();
                 String[] data = fragViewer.getData(position);
                 Firebase ref = Vars.getTimeline(timelineID);
-                ref = ref.child("Events");
+                ref = ref.child(EVENTS_ADDRESS);
                 ref = ref.push();
                 Event event = new Event();
                 event.setKey(ref.getKey());
@@ -86,11 +100,11 @@ public class AddEvent extends AppCompatActivity {
                 switch(position) {
                     case 0:
                         if (data[3] == null) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Please select an image.", Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(getApplicationContext(), ERROR_SELECT_AN_IMAGE, Toast.LENGTH_SHORT);
                             toast.show();
                             return;
                         }
-                        event.setType("photo");
+                        event.setType(EVENT_TYPE_PHOTO);
                         event.setTitle(data[0]);
                         event.setDate(data[1]);
                         event.setString1(data[2]);
@@ -98,11 +112,11 @@ public class AddEvent extends AppCompatActivity {
                         break;
                     case 1:
                         if (parseQuote(data[2]).length() <= 0) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Please enter a quote.", Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(getApplicationContext(), ERROR_ENTER_A_QUOTE, Toast.LENGTH_SHORT);
                             toast.show();
                             return;
                         }
-                        event.setType("quote");
+                        event.setType(EVENT_TYPE_QUOTE);
                         event.setTitle(data[0]);
                         event.setDate(data[1]);
                         event.setString1(parseQuote(data[2]));
@@ -110,17 +124,17 @@ public class AddEvent extends AppCompatActivity {
                         break;
                     case 2:
                         if (data[2].length() <= 0) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Please enter text.", Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(getApplicationContext(), ERROR_ENTER_TEXT, Toast.LENGTH_SHORT);
                             toast.show();
                             return;
                         }
-                        event.setType("text");
+                        event.setType(EVENT_TYPE_TEXT);
                         event.setTitle(data[0]);
                         event.setDate(data[1]);
                         event.setString1(data[2]);
                         break;
                     default:
-                        event.setType("text");
+                        event.setType(EVENT_TYPE_TEXT);
                         break;
                 }
 
@@ -128,9 +142,9 @@ public class AddEvent extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String todaysDate = DateGen.getCurrentDate();
-                        Vars.getTimeline(timelineID).child("LastModified").setValue(todaysDate);
-                        for(DataSnapshot users : dataSnapshot.child("Users").getChildren()) {
-                            Vars.getUser(users.getKey()).child("Timelines/" + timelineID + "/LastModified").setValue(todaysDate);
+                        Vars.getTimeline(timelineID).child(LAST_MODIFIED_ADDRESS).setValue(todaysDate);
+                        for(DataSnapshot users : dataSnapshot.child(USERS_ADDRESS).getChildren()) {
+                            Vars.getUser(users.getKey()).child(TIMELINES_PARENT_ADDRESS + timelineID + LAST_MODIFIED_CHILD_ADDRESS).setValue(todaysDate);
                         }
                     }
 
