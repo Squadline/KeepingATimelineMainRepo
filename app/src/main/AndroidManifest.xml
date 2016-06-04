@@ -37,6 +37,16 @@
             </intent-filter>
         </receiver>
 
+        <service android:name=".PushService" />
+        <receiver
+            android:name=".PushReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name=".LoginActivity"
             android:configChanges="orientation"
@@ -108,6 +118,7 @@
             android:configChanges="orientation"
             android:label=""
             android:screenOrientation="portrait"
+            android:parentActivityName=".MainScreen"
             android:theme="@style/AppTheme.ViewTimeline">
             <intent-filter>
                 <action android:name="com.keepingatimeline.kat.ViewTimeline" />

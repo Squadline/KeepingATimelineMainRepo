@@ -28,7 +28,9 @@ myFirebaseRef.on("child_added", function(snapshot, prevChildKey) {
             "message": {
                "title": "Squadline",
                "body": "New Event in "
-            }
+            },
+            "custom_payload": "{\"key\":\"" + dataSnapshot.key() + "\", \"name\":\""
+                  + dataSnapshot.child("Title").val() + "\"}"
          };
 
          // Set recipients as all users of the timeline

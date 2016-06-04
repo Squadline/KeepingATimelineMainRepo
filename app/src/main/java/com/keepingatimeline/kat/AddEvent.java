@@ -154,6 +154,8 @@ public class AddEvent extends AppCompatActivity {
                     }
                 });
 
+                // Register event in created list
+                Squadline.addCreatedEvent(timelineID);
                 ref.setValue(event);
                 finish();
             }
