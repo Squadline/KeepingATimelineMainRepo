@@ -18,19 +18,19 @@ import com.firebase.client.ValueEventListener;
 
 public class AddEvent extends AppCompatActivity {
 
-    private final String TIMELINE_ID_KEY = getString(R.string.TimelineIDKey);
-    private final String TIMELINE_NAME_KEY = getString(R.string.TimelineNameKey);
-    private final String EVENT_TYPE_PHOTO = getString(R.string.EventTypePhoto);
-    private final String EVENT_TYPE_QUOTE = getString(R.string.EventTypeQuote);
-    private final String EVENT_TYPE_TEXT = getString(R.string.EventTypeText);
-    private final String ERROR_SELECT_AN_IMAGE = getString(R.string.ErrorSelectAnImage);
-    private final String ERROR_ENTER_A_QUOTE = getString(R.string.ErrorEnterAQuote);
-    private final String ERROR_ENTER_TEXT = getString(R.string.ErrorEnterText);
-    private final String LAST_MODIFIED_ADDRESS = getString(R.string.LastModifiedAddress);
-    private final String LAST_MODIFIED_CHILD_ADDRESS = getString(R.string.LastModifiedChildAddress);
-    private final String USERS_ADDRESS = getString(R.string.UsersAddress);
-    private final String TIMELINES_PARENT_ADDRESS = getString(R.string.TimelinesParentAddress);
-    private final String EVENTS_ADDRESS = getString(R.string.EventsAddress);
+    private final String TIMELINE_ID_KEY = "Timeline ID";
+    private final String TIMELINE_NAME_KEY = "Timeline Name";
+    private final String EVENT_TYPE_PHOTO = "photo";
+    private final String EVENT_TYPE_QUOTE = "quote";
+    private final String EVENT_TYPE_TEXT = "text";
+    private final String ERROR_SELECT_AN_IMAGE = "Please select an image.";
+    private final String ERROR_ENTER_A_QUOTE = "Please enter a quote.";
+    private final String ERROR_ENTER_TEXT = "Please enter text.";
+    private final String LAST_MODIFIED_ADDRESS = "LastModified";
+    private final String LAST_MODIFIED_CHILD_ADDRESS = "/LastModified";
+    private final String USERS_ADDRESS = "Users";
+    private final String TIMELINES_PARENT_ADDRESS = "Timelines/";
+    private final String EVENTS_ADDRESS = "Events";
 
     private String timelineID;
     private String timelineName;

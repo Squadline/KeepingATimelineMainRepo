@@ -41,8 +41,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  *  Add People        Toast, Dialog             DONE
  *  Leave Squad       Dialog                    DONE
  *  Auto-delete       Warning                   DONE
- *  Display Picture
- *  Change Picture    Toast, Dialog
+ *  Display Picture                             DONE
+ *  Change Picture    Toast, Dialog             DONE
  *  Rename Timeline   Dialog                    DONE
  *  Notifications                               KINDA DONE
  *
